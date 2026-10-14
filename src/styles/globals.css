@@ -1,29 +1,19 @@
 @import "tailwindcss";
 @import "./site-navigation.css";
 @import "./home.css";
+@import "./interior.css";
+@import "./design-system.css";
+@import "./manual.css";
 
-/* ============================================================================
-   SkyMythos design tokens
-   ----------------------------------------------------------------------------
-   Visual language: Light Editorial — precision engineering on cool paper.
-   The product's substance is determinism (frozen inputs, immutable artefacts,
-   content digests, sealed boundaries), so the interface borrows the conventions
-   of a technical specification sheet rather than a marketing landing page.
-
-   Two rules govern the palette:
-     1. Cool grey neutrals carry all structure. Colour never decorates.
-     2. Exactly one signal colour, used only for live or actionable state.
-        Green is deliberately absent: it is neither a brand nor a success colour
-        here, matching the SkyMythos Console so the site and product agree.
-   ========================================================================= */
+/* 整站共享浅色结构主义 token：品牌标题、技术事实、阅读正文采用统一语义。 */
 
 @theme {
   /* Typography -------------------------------------------------------------
-     The split is semantic, not decorative: human language is set in Plex Sans,
+     The split is semantic, not decorative: human language is set in Jakarta Sans,
      machine facts (digests, versions, paths, status, counters) in Plex Mono.
      CJK falls back to the platform stack — shipping a multi-megabyte CJK
      webfont to render headlines is not a trade this site should make. */
-  --font-sans: var(--font-plex-sans), "PingFang SC", "Hiragino Sans GB",
+  --font-sans: var(--font-jakarta), "PingFang SC", "Hiragino Sans GB",
     "Microsoft YaHei UI", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC",
     sans-serif;
   --font-mono: var(--font-plex-mono), "SFMono-Regular", "JetBrains Mono",
@@ -57,26 +47,26 @@
   --text-lead--line-height: 1.62;
 
   /* Surfaces --------------------------------------------------------------- */
-  --color-paper: #f4f5f6;
-  --color-paper-deep: #eceef0;
+  --color-paper: #f6f8fc;
+  --color-paper-deep: #edf1f8;
   --color-surface: #ffffff;
-  --color-sunken: #f7f8f9;
+  --color-sunken: #f5f7fc;
 
   /* Ink -------------------------------------------------------------------- */
-  --color-ink: #14171a;
-  --color-ink-2: #3b4249;
-  --color-ink-3: #6b737b;
-  --color-ink-4: #99a1a9;
+  --color-ink: #17243d;
+  --color-ink-2: #43536e;
+  --color-ink-3: #62738e;
+  --color-ink-4: #7f8da3;
 
   /* Rules — every divider in the layout comes from this scale ---------------- */
-  --color-rule: #dfe2e6;
-  --color-rule-soft: #eaecef;
-  --color-rule-strong: #c4cad0;
+  --color-rule: #29487718;
+  --color-rule-soft: #2948770f;
+  --color-rule-strong: #29487730;
 
   /* Signal — live execution, links, the single primary action --------------- */
-  --color-signal: #1d4ed8;
-  --color-signal-deep: #1639a3;
-  --color-signal-wash: #eef2fe;
+  --color-signal: #3156ff;
+  --color-signal-deep: #2444d8;
+  --color-signal-wash: #edf2ff;
 
   /* Caution — draft, rework, waiting for input ------------------------------ */
   --color-caution: #a2590b;
@@ -132,9 +122,9 @@
   --color-on-ink: #ffffff;
 
   /* Radii — a graded scale, so hierarchy reads without colour --------------- */
-  --radius-chip: 2px;
-  --radius-panel: 6px;
-  --radius-stage: 10px;
+  --radius-chip: 6px;
+  --radius-panel: 24px;
+  --radius-stage: 28px;
 }
 
 /* ============================================================================
@@ -212,7 +202,7 @@
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
     /* Anchored headings must clear the fixed masthead. */
-    scroll-padding-top: 6rem;
+    scroll-padding-top: calc(var(--site-header-height) + 16px);
   }
 
   body {
@@ -385,7 +375,7 @@
     font-weight: 600;
     color: var(--color-ink);
     letter-spacing: -0.014em;
-    scroll-margin-top: 6rem;
+    scroll-margin-top: 16px;
   }
 
   .prose-doc h3 {
@@ -395,7 +385,7 @@
     font-weight: 600;
     color: var(--color-ink);
     letter-spacing: -0.01em;
-    scroll-margin-top: 6rem;
+    scroll-margin-top: 16px;
   }
 
   .prose-doc h4 {
@@ -417,7 +407,7 @@
     text-decoration-thickness: 1px;
     text-underline-offset: 0.18em;
     text-decoration-color: color-mix(in srgb, var(--color-signal) 35%, transparent);
-    transition: text-decoration-color 120ms ease;
+    transition: text-decoration-color 240ms cubic-bezier(.32,.72,0,1);
   }
 
   .prose-doc a:hover {
@@ -519,7 +509,7 @@
    Two events only, both of them answering a real change in state:
      .reveal     — the single page-load sequence, staggering the hero spec panel
      .seal       — the digest stamp settling once the specification is frozen
-   Nothing animates on scroll, and nothing animates on hover except colour.
+   当前整站滚动入场和交互曲线位于 design-system.css；此处保留规格示例的局部动作。
    ========================================================================= */
 
 @keyframes spec-resolve {

@@ -116,16 +116,18 @@ export function HeroStage({ locale }: { locale: Locale }) {
             <span className="sr-only">{scene.alt}</span>
           </div>
           <div className="employee-actions">
-            <Link href="#digital-employees" className="employee-primary">{zh ? "认识数字员工" : "Meet the team"}<span aria-hidden="true">↗</span></Link>
+            <Link href="#digital-employees" className="employee-primary premium-action">{zh ? "认识数字员工" : "Meet the team"}<span className="premium-action__icon" aria-hidden="true">↗</span></Link>
             <Link href={localePath(locale, "/docs/getting-started/overview")} className="employee-secondary">{zh ? "开始探索" : "Get started"}<span aria-hidden="true">→</span></Link>
           </div>
         </div>
-        <div className="employee-backdrops" aria-hidden="true">
+        <div className="employee-backdrops premium-frame" aria-hidden="true">
+          <div className="employee-visual-core premium-core">
           {scenes.map((item, index) => (
             <div key={item.id} className="employee-backdrop" data-active={active === index}>
               <EmployeeScene scene={item.id} locale={locale} playback={reducedMotion ? "static" : running && active === index ? "running" : "paused"} elapsed={elapsed} />
             </div>
           ))}
+          </div>
         </div>
       </div>
       <div className="employee-footer">

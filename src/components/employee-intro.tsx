@@ -64,11 +64,13 @@ export function EmployeeIntro({ locale }: { locale: Locale }) {
         </div>
         <ol className="employee-intro-list">
         {copy.items.map((item, index) => (
-          <li key={item.title}>
+          <li key={item.title} className="premium-frame" data-featured={index === 0}>
+            <div className="employee-intro-card premium-core">
             <span aria-hidden="true" className="employee-intro-index">
               {String(index + 1).padStart(2, "0")}
             </span>
             <div><h3>{item.title}</h3><p>{item.description}</p></div>
+            </div>
           </li>
         ))}
         </ol>

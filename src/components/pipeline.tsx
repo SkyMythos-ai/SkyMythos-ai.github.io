@@ -155,7 +155,8 @@ export function Pipeline({ locale }: { locale: Locale }) {
           {groups.map((group, groupIndex) => (
             <div key={group.label} className="contents">
               {groupIndex > 0 ? <FlowArrow className="task-flow-group-arrow" /> : null}
-              <div className="task-flow-group" data-sandbox={group.sandbox} data-final={groupIndex === 2}>
+              <div className="task-flow-group premium-frame" data-sandbox={group.sandbox} data-final={groupIndex === 2}>
+                <div className="task-flow-group-core premium-core">
                 <p className="task-flow-group-label">{group.label}</p>
                 <ol start={group.offset + 1} className="task-flow-steps">
                   {group.steps.map((step, index) => (
@@ -171,6 +172,7 @@ export function Pipeline({ locale }: { locale: Locale }) {
                     </li>
                   ))}
                 </ol>
+                </div>
               </div>
             </div>
           ))}

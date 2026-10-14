@@ -96,7 +96,7 @@ export function LanguageSwitch({
       <div
         id={panelId}
         hidden={!open}
-        className="absolute right-0 top-full z-50 mt-3 w-40 rounded-lg border border-rule bg-surface p-1.5 shadow-lg"
+        className="site-language-panel absolute right-0 top-full mt-3 w-40 bg-surface p-1.5"
       >
         <ul aria-label={label}>
           {locales.map((option) => (

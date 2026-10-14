@@ -61,7 +61,7 @@ export function TableOfContents({
         setActiveId(lastPassed ? lastPassed.id : "");
       },
       // Trigger when a heading enters the band below the sticky masthead.
-      { rootMargin: "-88px 0px -70% 0px", threshold: 0 },
+      { rootMargin: "-136px 0px -70% 0px", threshold: 0 },
     );
 
     elements.forEach((element) => observer.observe(element));

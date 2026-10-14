@@ -10,7 +10,7 @@ SkyMythos 产品官网的源码。采用 Next.js 静态导出（`output: 'export
 | --- | --- |
 | 静态导出 | `output: 'export'`，产物在 `out/` |
 | 样式 | Tailwind CSS v4（CSS-first `@theme`） |
-| 字体 | IBM Plex Sans / IBM Plex Mono，构建期自托管；中文使用系统字体栈 |
+| 字体 | Plus Jakarta Sans / IBM Plex Mono，构建期自托管；中文使用系统字体栈 |
 | 文档正文 | Markdown 字符串 + `react-markdown`，构建期渲染 |
 | 语言 | 中文（默认，`/zh`）与英文（`/en`）两套完整路由树 |
 | SEO | 每页预渲染 HTML、canonical、hreflang、sitemap、robots、JSON-LD |
