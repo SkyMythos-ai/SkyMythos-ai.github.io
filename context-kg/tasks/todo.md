@@ -219,6 +219,14 @@
 - [x] 核对远端仓库、main 分支、管理权限和既有发布工作流；使用组织根站点路径。
 - [x] 提交已验证的本次官网改版，确认本地协作文件与生成产物未进入提交。
 - [x] 启用 GitHub Pages 的 GitHub Actions 来源，并推送触发构建发布。
-- [ ] 确认线上工作流成功、双语页面和静态资源可访问，记录站点链接与发布结果。
+- [x] 确认线上工作流成功、双语页面和静态资源可访问，记录站点链接与发布结果。
 
 授权：用户明确要求部署到 GitHub 并开启 GitHub Pages，包含必要的提交、推送与仓库 Pages 配置。
+
+## GitHub Pages 发布 Review
+
+- 已提交并推送到 `SkyMythos-ai/SkyMythos-ai.github.io` 的 `main`。官网改版提交为 `75b2c4d`，正式域名修复提交为 `e17e923`；本地 `.handoff/`、依赖及生成产物未进入提交。
+- GitHub Pages 已切换为 GitHub Actions 发布，保留 HTTPS；既有工作流会在推送 `main` 时构建并发布。正式入口为 [中文官网](https://skymythos-ai.github.io/zh/) 和 [英文官网](https://skymythos-ai.github.io/en/)。
+- 正式域名环境下生产构建生成 51 页，类型及 diff 检查通过。修正多根布局下缺少 `metadataBase` 导致 canonical 相对路径的问题，统一 canonical、语言替代链接与 Open Graph URL 为正式域名及尾斜杠路径。
+- [最终发布工作流](https://github.com/SkyMythos-ai/SkyMythos-ai.github.io/actions/runs/38551870061) 对应 `e17e9238562611183bb8ac7766199a8912ecd75c`，构建与部署均成功。
+- 在线 Chrome 验证中英文首页 HTTP 200、页面语言、绝对 canonical、三幕切换、手机无横向溢出、导航跳转收起及文档可读；真实动画推进、暂停和续播通过。所访问页面无浏览器异常或失败资源请求，`robots.txt` 与 `sitemap.xml` 返回 200 并引用正式域名。
