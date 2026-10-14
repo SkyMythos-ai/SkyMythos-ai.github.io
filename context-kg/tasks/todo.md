@@ -263,23 +263,6 @@
 
 依据：用户反馈“还不如之前”。先恢复已验证的清晰、简约版本；本轮不继续叠加新的视觉风格。
 
-# 自定义域名 HTTPS 排查（2026-10-14）
-
-- [x] 核验 Google、Cloudflare 公开 DNS 和 GitHub Pages 域名健康检查，确认根域名及 www 配置有效。
-- [x] 复现普通请求命中旧 GoDaddy 404、GitHub 边缘 HTTP 200 和 HTTPS 证书校验失败，区分 DNS 缓存与证书签发。
-- [x] 按 GitHub 官方建议重新绑定同一域名一次，重启证书申请。
-- [ ] 确认证书签发、HTTPS 严格校验成功，再开启 HTTPS 强制跳转并记录 Review。
-
-范围：仅排查并修复既有 skymythos.ai 绑定及 HTTPS；不修改网页源码，不提交或推送当前工作区的其他任务改动。验收为自定义域名使用有效证书返回中文页面，HTTP 正确跳转到 HTTPS。
-
-## 自定义域名 HTTPS 排查 Review
-
-- Google 与 Cloudflare DNS 返回 GitHub Pages 的四个 IPv4 地址；根域名无 AAAA 或限制性 CAA，www 的 CNAME 及继承的 GitHub IPv6 正确。
-- GitHub Pages 健康接口确认根域名、www 均有效、符合 HTTPS 条件、没有混入其他服务 IP、无 CAA 错误。仓库已发布并绑定 skymythos.ai。
-- 直接指定 GitHub Pages 边缘地址时，HTTP 中文页面返回 200，但严格 HTTPS 证书校验失败；普通域名请求仍命中 GoDaddy 404。二者分别涉及旧解析路径与证书未签发，不能混为站点发布失败。
-- 已通过 Pages API 临时移除并恢复同一自定义域名。恢复请求首次遇到网络 EOF，立即重试成功，随后查询确认 cname 已恢复为 skymythos.ai；未改变发布来源及网页产物。
-- 当前证书状态为 dns_changed，API 描述为检测到 DNS 变更、正在申请新证书；HTTPS 尚未验收。依据 [GitHub 官方 HTTPS 排查](https://docs.github.com/en/pages/getting-started-with-github-pages/securing-your-github-pages-site-with-https#troubleshooting-certificate-provisioning-certificate-not-yet-created-error) 重启一次申请后保持配置稳定，待签发完成验证。
-
 ## 原版恢复 Review
 
 - `src/` 与 README 完整恢复到技能应用前的 `4d1b92b`，`git diff 4d1b92b --exit-code -- src README.md` 返回零；恢复原有字体、导航、三幕承载方式及整页布局，移除本轮新增的视觉外壳与入场组件。
