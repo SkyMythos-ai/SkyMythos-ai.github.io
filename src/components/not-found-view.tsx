@@ -28,7 +28,7 @@ export function NotFoundView() {
 
   return (
     <div className="flex min-h-dvh items-center justify-center px-6">
-      <div className="premium-frame w-full max-w-[38rem]"><div className="premium-core p-8 md:p-12">
+      <div className="w-full max-w-[34rem] border-t border-rule pt-8">
         <div className="flex items-baseline justify-between gap-4">
           <Wordmark />
           <span className="fact-sm text-ink-4">404</span>
@@ -44,10 +44,9 @@ export function NotFoundView() {
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
             href={`/${defaultLocale}`}
-            className="premium-action"
+            className="inline-flex items-center rounded-sm bg-ink px-4 py-2.5 text-[0.875rem] font-medium text-on-ink transition-colors hover:bg-ink-2"
           >
             {zh.notFound.cta}
-            <span className="premium-action__icon" aria-hidden="true">↗</span>
           </Link>
           {locales
             .filter((locale) => locale !== defaultLocale)
@@ -55,7 +54,7 @@ export function NotFoundView() {
               <Link
                 key={locale}
                 href={`/${locale}`}
-                className="inline-flex min-h-12 items-center rounded-full bg-signal-wash px-6 text-sm text-signal transition-colors hover:bg-paper-deep"
+                className="inline-flex items-center rounded-sm border border-rule-strong px-4 py-2.5 text-[0.875rem] font-medium text-ink-2 transition-colors hover:border-ink-3 hover:text-ink"
               >
                 {localeLabels[locale]}
               </Link>
@@ -76,7 +75,7 @@ export function NotFoundView() {
             {en.notFound.cta}
           </Link>
         </div>
-      </div></div>
+      </div>
     </div>
   );
 }

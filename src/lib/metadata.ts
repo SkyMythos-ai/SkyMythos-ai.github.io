@@ -14,7 +14,7 @@ import { getDictionary } from "@/content/dictionary";
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#f6f8fc",
+  themeColor: "#f4f5f6",
   colorScheme: "light",
 };
 

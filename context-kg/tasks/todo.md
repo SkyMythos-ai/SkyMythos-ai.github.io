@@ -254,3 +254,18 @@
 - 源码提交 `0464bd9` 已推送 `main`，[自动发布](https://github.com/SkyMythos-ai/SkyMythos-ai.github.io/actions/runs/38569872296) 成功。线上验证发现 Pages 已另行绑定 `skymythos.ai`；保留该配置，并设置既有工作流的 `SITE_URL` 为 `https://skymythos.ai`。[正式域名重建发布](https://github.com/SkyMythos-ai/SkyMythos-ai.github.io/actions/runs/38570540654) 成功，仍对应相同源码提交。
 - 指定浏览器连接 GitHub Pages 边缘地址后，中英文首页 200、新浮岛/面板、三幕切换、手机导航、文档、真实动画、暂停续播、静态资源、robots 与 sitemap 检查全部通过；canonical、语言替代链接与站点索引引用自定义域名。
 - 普通访问的限制：域名切换期间曾解析到旧 GoDaddy 页面，浏览器导航到 HTTPS 旧站 404。最后 Google 与 Cloudflare DNS 均已返回 GitHub Pages 地址，但此环境的普通 HTTPS 请求仍命中旧站，Pages API 的证书状态仍为 `dns_changed`，HTTPS 未强制启用。直接边缘验证证明发布产物有效，不代表所有 DNS 缓存和 HTTPS 证书已就绪；本地预览 `http://localhost:4173/zh/` 可立即查看新版。
+
+# 恢复技能应用前的官网视觉
+
+- [x] 将网站源码与 README 恢复到 `4d1b92b`，保留当前发布域名、任务记录和用户安装的技能。
+- [x] 核对与原版本的源码一致性，验证双语页面、手机导航、三幕动画及构建。
+- [ ] 提交并重新发布，记录实际发布结果。
+
+依据：用户反馈“还不如之前”。先恢复已验证的清晰、简约版本；本轮不继续叠加新的视觉风格。
+
+## 原版恢复 Review
+
+- `src/` 与 README 完整恢复到技能应用前的 `4d1b92b`，`git diff 4d1b92b --exit-code -- src README.md` 返回零；恢复原有字体、导航、三幕承载方式及整页布局，移除本轮新增的视觉外壳与入场组件。
+- 当前自定义域名与 `SITE_URL` 保持，保留此前完整任务记录和用户安装的技能。Git 历史保留，以新提交发布恢复结果。
+- 中英文 1440/1280/1024/768/390/320 三幕布局、手机菜单关闭与回焦、语言互斥、锚点、折叠内容、概念/架构/文档及无脚本导航验证通过。三幕实际播放、暂停续播与减少动态通过；类型、51 页构建和 diff 检查通过。
+- 用户此次纠正已写入 `context-kg/tasks/lessons.md`。发布结果完成后补充。

@@ -1,9 +1,15 @@
-import { Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
+import { IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 
 /**
  * Typefaces.
  *
- * Jakarta 的几何字形用于品牌、标题与正文；Plex Mono 保留给版本、路径和机器事实。
+ * IBM Plex was chosen because it was drawn for technical documentation and
+ * instrumentation: its Sans carries dense explanatory prose without strain, and
+ * its Mono carries machine facts without looking like a novelty terminal font.
+ * The pairing maps directly onto the product's own split between human language
+ * and machine state, so the type system is doing semantic work rather than
+ * decorating. Plex also ships real CJK-adjacent weight structure, so Latin and
+ * Chinese headlines sit together without a visible weight mismatch.
  *
  * Both families are self-hosted by `next/font` at build time — no runtime request
  * to Google Fonts, which matters for a site that may be served from an intranet.
@@ -15,12 +21,12 @@ import { Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
  * page that loads instantly in China.
  */
 
-export const siteSans = Plus_Jakarta_Sans({
+export const plexSans = IBM_Plex_Sans({
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
   display: "swap",
-  variable: "--font-jakarta",
-  adjustFontFallback: false,
+  variable: "--font-plex-sans",
   fallback: [
     "PingFang SC",
     "Hiragino Sans GB",
@@ -37,6 +43,5 @@ export const plexMono = IBM_Plex_Mono({
   style: ["normal"],
   display: "swap",
   variable: "--font-plex-mono",
-  adjustFontFallback: false,
   fallback: ["SFMono-Regular", "Consolas", "Liberation Mono", "monospace"],
 });

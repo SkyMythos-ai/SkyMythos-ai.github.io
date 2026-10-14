@@ -43,7 +43,7 @@ export function Section({
     <section
       id={id}
       className={cn(
-        "site-section px-6 md:px-10 lg:px-14",
+        "px-6 md:px-10 lg:px-14",
         divided && "border-t border-rule",
         className,
       )}
@@ -54,7 +54,7 @@ export function Section({
           // between bands without letting the page lose its instrument feel.
           // Widened for the marketing ground, where a chapter has to occupy a
           // full viewport's worth of attention rather than sit in a document.
-          "site-section__inner mx-auto grid gap-x-10 gap-y-6 py-16 md:py-20 lg:py-24",
+          "mx-auto grid gap-x-10 gap-y-6 py-16 md:py-20 lg:py-24",
           rail
             ? "lg:grid-cols-[9rem_minmax(0,1fr)]"
             : "lg:grid-cols-[minmax(0,1fr)]",
@@ -69,7 +69,7 @@ export function Section({
             {rail ? <span className="rail-label block">{rail}</span> : null}
           </div>
         ) : null}
-        <div className="site-section__content min-w-0" data-reveal>{children}</div>
+        <div className="min-w-0">{children}</div>
       </div>
     </section>
   );

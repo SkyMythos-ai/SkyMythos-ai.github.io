@@ -3,7 +3,6 @@ import { getDictionary } from "@/content/dictionary";
 import type { Locale } from "@/lib/i18n";
 import { Masthead } from "@/components/masthead";
 import { Colophon } from "@/components/colophon";
-import { MotionEntrance } from "@/components/motion-entrance";
 
 /**
  * SiteChrome — the masthead, the main column and the colophon.
@@ -30,13 +29,12 @@ export function SiteChrome({
     <div className="flex min-h-dvh flex-col">
       <a
         href="#main"
-        className="skip-link sr-only focus:not-sr-only"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-sm focus:bg-ink focus:px-3 focus:py-2 focus:text-[0.8125rem] focus:text-on-ink"
       >
         {dictionary.nav.skipToContent}
       </a>
 
       <Masthead locale={locale} />
-      <MotionEntrance />
 
       <main id="main" className="flex-1">
         {children}

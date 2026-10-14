@@ -55,7 +55,7 @@ export default async function DocsIndexPage({ params }: PageProps) {
   const totalPages = corpus.pages.length;
 
   return (
-    <div className="manual-index-page">
+    <>
       <PageHeader
         rail={dictionary.nav.docs}
         title={dictionary.docs.title}
@@ -63,26 +63,25 @@ export default async function DocsIndexPage({ params }: PageProps) {
         meta={`${totalPages} ${locale === "zh" ? "篇" : "pages"}`}
       />
 
-      <div className="manual-index-grid">
       {nav.map((group) => (
-        <Section key={group.id} className="manual-index-section premium-frame" rail={group.title} width="wide">
+        <Section key={group.id} rail={group.title} divided width="wide">
           <p className="measure mb-8 text-[0.9375rem] leading-[1.7] text-ink-3">
             {group.description}
           </p>
 
-          <ul className="manual-index-list">
+          <ul>
             {group.pages.map((page, index) => (
-              <li key={page.slug}>
+              <li key={page.slug} className="border-t border-rule">
                 <Link
                   href={localePath(locale, `/docs/${page.slug}`)}
-                  className="manual-index-link group"
+                  className="group grid gap-x-6 gap-y-2 py-5 transition-colors lg:grid-cols-[2.5rem_minmax(0,1fr)_6rem]"
                 >
                   <span className="fact-sm text-ink-4 lg:pt-[3px]">
                     {String(index + 1).padStart(2, "0")}
                   </span>
 
                   <div className="min-w-0">
-                    <span className="manual-index-title flex items-center gap-2 text-[0.9375rem] font-medium text-ink">
+                    <span className="flex items-center gap-2 text-[0.9375rem] font-medium text-ink">
                       {page.title}
                       <svg
                         aria-hidden="true"
@@ -100,7 +99,7 @@ export default async function DocsIndexPage({ params }: PageProps) {
                     </span>
                   </div>
 
-                  <span className="fact-sm text-ink-4 manual-index-time">
+                  <span className="fact-sm text-ink-4 lg:pt-[3px] lg:text-right">
                     {readingMinutes(page.body)} {dictionary.docs.minutes}
                   </span>
                 </Link>
@@ -109,7 +108,8 @@ export default async function DocsIndexPage({ params }: PageProps) {
           </ul>
         </Section>
       ))}
-      </div>
-    </div>
+
+      <div className="pb-24 md:pb-28" />
+    </>
   );
 }

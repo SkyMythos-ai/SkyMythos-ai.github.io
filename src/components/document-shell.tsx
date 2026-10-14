@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { siteSans, plexMono } from "@/lib/fonts";
+import { plexSans, plexMono } from "@/lib/fonts";
 import { localeHtmlLang, type Locale } from "@/lib/i18n";
 import "@/styles/globals.css";
 
@@ -31,7 +31,7 @@ export function DocumentShell({
     <html
       lang={localeHtmlLang[locale]}
       suppressHydrationWarning
-      className={`${siteSans.variable} ${plexMono.variable}`}
+      className={`${plexSans.variable} ${plexMono.variable}`}
     >
       <body>{children}</body>
     </html>

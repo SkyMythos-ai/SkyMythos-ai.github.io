@@ -129,16 +129,7 @@ export default async function DocPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="manual-layout">
-        <div className="manual-tools no-print">
-          <details className="manual-mobile-index">
-            <summary>{dictionary.docs.sidebarLabel}</summary>
-            <nav aria-label={dictionary.docs.sidebarLabel}>
-              {nav.map((group) => <div key={group.id}><p>{group.title}</p>{group.pages.map((item) => <Link key={item.slug} href={localePath(locale, `/docs/${item.slug}`)} aria-current={item.slug === slug ? "page" : undefined}>{item.title}</Link>)}</div>)}
-            </nav>
-          </details>
-          {toc.length > 0 && <details className="manual-mobile-index"><summary>{dictionary.docs.onThisPage}</summary><nav aria-label={dictionary.docs.onThisPage}>{toc.map((entry) => <a key={entry.id} href={`#${entry.id}`}>{entry.text}</a>)}</nav></details>}
-        </div>
+      <div className="mx-auto flex max-w-[90rem] px-6 md:px-10 lg:px-14">
         <DocsSidebar
           locale={locale}
           nav={nav}
@@ -152,8 +143,13 @@ export default async function DocPage({ params }: PageProps) {
           the gutter: it travels with the column and stops where the column stops,
           instead of running the full height of the viewport.
         */}
-        <div className="manual-frame premium-frame">
-        <article className="manual-article premium-core">
+        <article
+          className={cn(
+            "min-w-0 flex-1 py-10 md:py-12",
+            "border-x border-rule bg-surface",
+            "px-6 md:px-10 lg:px-12",
+          )}
+        >
           <div className={cn("mx-auto", readingMeasure)}>
             {/*
               The trail lives in `DocHeader` — the manual links back to its own
@@ -176,18 +172,16 @@ export default async function DocPage({ params }: PageProps) {
             {/* Previous / next walk the whole manual in reading order. */}
             <nav
               aria-label={dictionary.docs.backToIndex}
-              className="manual-pagination mt-16 grid gap-4 pt-8 sm:grid-cols-2"
+              className="mt-16 grid gap-4 border-t border-rule pt-8 sm:grid-cols-2"
             >
               {previous ? (
                 <Link
                   href={localePath(locale, `/docs/${previous.slug}`)}
-                  className="manual-page-link group premium-frame"
+                  className="group rounded-panel border border-rule p-4 transition-colors hover:border-rule-strong"
                 >
-                  <span className="premium-core manual-page-link-core">
                   <span className="rail-label">{dictionary.docs.previous}</span>
                   <span className="mt-1.5 block text-[0.9375rem] font-medium text-ink">
                     {previous.title}
-                  </span>
                   </span>
                 </Link>
               ) : (
@@ -198,21 +192,19 @@ export default async function DocPage({ params }: PageProps) {
                 <Link
                   href={localePath(locale, `/docs/${next.slug}`)}
                   className={cn(
-                    "manual-page-link group premium-frame sm:text-right",
+                    "group rounded-panel border border-rule p-4 transition-colors",
+                    "hover:border-rule-strong sm:text-right",
                   )}
                 >
-                  <span className="premium-core manual-page-link-core">
                   <span className="rail-label">{dictionary.docs.next}</span>
                   <span className="mt-1.5 block text-[0.9375rem] font-medium text-ink">
                     {next.title}
-                  </span>
                   </span>
                 </Link>
               ) : null}
             </nav>
           </div>
         </article>
-        </div>
 
         <TableOfContents entries={toc} label={dictionary.docs.onThisPage} />
       </div>

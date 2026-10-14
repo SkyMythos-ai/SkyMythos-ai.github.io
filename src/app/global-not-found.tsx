@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { siteSans, plexMono } from "@/lib/fonts";
+import { plexSans, plexMono } from "@/lib/fonts";
 import { productName } from "@/lib/site";
 import { NotFoundView } from "@/components/not-found-view";
 import "@/styles/globals.css";
@@ -33,7 +33,7 @@ export default function GlobalNotFound() {
     <html
       lang="zh-CN"
       suppressHydrationWarning
-      className={`${siteSans.variable} ${plexMono.variable}`}
+      className={`${plexSans.variable} ${plexMono.variable}`}
     >
       <body>
         <NotFoundView />

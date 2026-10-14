@@ -31,14 +31,14 @@ export function PageHeader({
   className?: string;
 }) {
   return (
-    <section className={cn("page-heading px-6 md:px-10 lg:px-14", className)}>
+    <section className={cn("border-b border-rule px-6 md:px-10 lg:px-14", className)}>
       <div className="mx-auto max-w-[90rem] pb-16 pt-16 md:pb-20 md:pt-20">
         <div className="flex items-baseline justify-between gap-4">
           <span className="rail-label">{rail}</span>
           {meta ? <span className="fact-sm text-ink-4">{meta}</span> : null}
         </div>
 
-        <h1 className="page-heading__title mt-7 max-w-[20ch] text-chapter font-semibold">{title}</h1>
+        <h1 className="mt-7 max-w-[20ch] text-chapter font-semibold">{title}</h1>
 
         <p className="measure mt-6 text-lead text-ink-2">{lede}</p>
       </div>
@@ -85,7 +85,7 @@ export function DocHeader({
   minutesLabel: string;
 }) {
   return (
-    <header className="manual-heading pb-8">
+    <header className="border-b border-rule pb-8">
       <div className="flex items-baseline justify-between gap-4">
         <nav aria-label={indexLabel} className="fact-sm min-w-0">
           <Link

@@ -6,7 +6,7 @@ import { LanguageSwitch } from "@/components/language-switch";
 import { NavLink } from "@/components/nav-link";
 import { MobileNavigation } from "@/components/mobile-navigation";
 
-/** 共享浮岛顶栏：内外两层保持同心曲线，所有页面复用同一导航。 */
+/** 共享顶栏：品牌、响应式导航、语言下拉和开始入口。 */
 export function Masthead({ locale }: { locale: Locale }) {
   const dictionary = getDictionary(locale);
 
@@ -28,66 +28,63 @@ export function Masthead({ locale }: { locale: Locale }) {
 
   return (
     <header className="site-masthead no-print">
-      <div className="site-masthead__shell">
-        <div className="site-masthead__bar">
+      <div className="site-masthead__bar">
+        <Link
+          href={localePath(locale, "/")}
+          className="site-masthead__brand"
+          aria-label={dictionary.nav.home}
+        >
+          <Wordmark />
+        </Link>
+
+        <nav aria-label={dictionary.nav.home} className="site-masthead__desktop-nav">
+          {links.map((link) => (
+            <NavLink
+              key={link.href}
+              href={localePath(locale, link.href)}
+              match={link.match ? localePath(locale, link.match) : undefined}
+              exact={link.exact}
+            >
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="site-masthead__actions">
+          <LanguageSwitch locale={locale} label={dictionary.nav.switchLanguage} />
           <Link
-            href={localePath(locale, "/")}
-            className="site-masthead__brand"
-            aria-label={dictionary.nav.home}
+            href={localePath(locale, "/docs/getting-started/overview")}
+            className="site-masthead__start site-masthead__desktop-start"
           >
-            <Wordmark />
+            {dictionary.nav.getStarted}
+            <span aria-hidden="true">↗</span>
           </Link>
+        </div>
 
-          <nav aria-label={dictionary.nav.home} className="site-masthead__desktop-nav">
-            {links.map((link) => (
-              <NavLink
-                key={link.href}
-                href={localePath(locale, link.href)}
-                match={link.match ? localePath(locale, link.match) : undefined}
-                exact={link.exact}
-              >
-                {link.label}
-              </NavLink>
-            ))}
-          </nav>
-
-          <div className="site-masthead__actions">
-            <LanguageSwitch locale={locale} label={dictionary.nav.switchLanguage} className="site-masthead__language" />
+        {/* 原生 disclosure 保持无 JavaScript 时可用，展开面板独立于顶栏高度。 */}
+        <MobileNavigation label={dictionary.nav.openMenu}>
+          <nav aria-label={dictionary.nav.home} className="site-masthead__mobile-panel">
+            <div className="site-masthead__mobile-links">
+              {links.map((link) => (
+                <NavLink
+                  key={link.href}
+                  href={localePath(locale, link.href)}
+                  match={link.match ? localePath(locale, link.match) : undefined}
+                  exact={link.exact}
+                >
+                  {link.label}
+                </NavLink>
+              ))}
+            </div>
             <Link
               href={localePath(locale, "/docs/getting-started/overview")}
-              className="site-masthead__start site-masthead__desktop-start"
+              className="site-masthead__start"
             >
               {dictionary.nav.getStarted}
-              <span className="site-masthead__start-icon" aria-hidden="true">↗</span>
+              <span aria-hidden="true">↗</span>
             </Link>
-          </div>
-
-          {/* 原生 disclosure 保持无 JavaScript 时可用，增强后提供焦点与滚动约束。 */}
-          <MobileNavigation label={dictionary.nav.openMenu}>
-            <nav aria-label={dictionary.nav.home} className="site-masthead__mobile-panel">
-              <p className="site-masthead__mobile-caption" aria-hidden="true">SkyMythos.ai</p>
-              <div className="site-masthead__mobile-links">
-                {links.map((link) => (
-                  <NavLink
-                    key={link.href}
-                    href={localePath(locale, link.href)}
-                    match={link.match ? localePath(locale, link.match) : undefined}
-                    exact={link.exact}
-                  >
-                    {link.label}
-                  </NavLink>
-                ))}
-              </div>
-              <Link
-                href={localePath(locale, "/docs/getting-started/overview")}
-                className="site-masthead__start"
-              >
-                {dictionary.nav.getStarted}
-                <span className="site-masthead__start-icon" aria-hidden="true">↗</span>
-              </Link>
-            </nav>
-          </MobileNavigation>
-        </div>
+          </nav>
+        </MobileNavigation>
       </div>
     </header>
   );

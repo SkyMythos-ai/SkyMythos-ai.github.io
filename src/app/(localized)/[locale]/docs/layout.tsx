@@ -25,5 +25,5 @@ export default async function DocsLayout({
   const { locale: raw } = await params;
   const locale = toLocale(raw);
 
-  return <div className="scope-manual"><SiteChrome locale={locale}>{children}</SiteChrome></div>;
+  return <SiteChrome locale={locale}>{children}</SiteChrome>;
 }

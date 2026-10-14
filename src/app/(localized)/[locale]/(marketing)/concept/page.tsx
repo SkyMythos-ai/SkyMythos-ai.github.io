@@ -55,21 +55,11 @@ export default async function ConceptPage({ params }: PageProps) {
           constraintsHeading: "硬约束",
           count: `${objectCount} 个领域对象`,
           nextHeading: "下一步",
-          objectRail: "对象关系",
-          referenceRail: "领域索引",
-          referenceHeading: "每个对象，都有明确的边界。",
-          referenceLede: "展开一个对象，查看它的职责、状态权威与不可越过的约束。",
-          lifecycleNote: "先冻结，再执行。完成之后，才进入长期知识。",
         }
       : {
           constraintsHeading: "Hard constraints",
           count: `${objectCount} domain objects`,
           nextHeading: "Where to go next",
-          objectRail: "Relationships",
-          referenceRail: "Domain index",
-          referenceHeading: "Every object has a clear boundary.",
-          referenceLede: "Open an object to explore its responsibility, state authority and hard constraints.",
-          lifecycleNote: "Freeze first. Execute next. Consolidate knowledge after completion.",
         };
 
   const onward =
@@ -110,7 +100,7 @@ export default async function ConceptPage({ params }: PageProps) {
         ];
 
   return (
-    <div className="concept-page">
+    <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -121,125 +111,115 @@ export default async function ConceptPage({ params }: PageProps) {
         title={dictionary.concept.title}
         lede={locale === "zh" ? "一份冻结的规格，一个隔离的沙箱，一条可追溯的交付链。" : "One frozen specification. One isolated sandbox. A traceable path to delivery."}
         meta={terms.count}
-        className="interior-opening"
       />
 
-      <Section rail={terms.objectRail} index="01" divided width="wide" className="interior-section concept-overview">
-        <div data-reveal>
-          <SectionHeading title={locale === "zh" ? "从任务，看懂对象关系" : "The objects behind every task"} />
-        </div>
-        <div className="premium-frame concept-system" data-reveal>
-          <figure className="premium-core concept-system__core">
-            <figcaption className="concept-scope">
-              <div className="concept-scope__path">
-                <span>Organization</span><span aria-hidden="true">/</span>
-                <span>Workspace</span><span aria-hidden="true">/</span>
-                <span>Project</span>
-              </div>
-              <p>{locale === "zh" ? "治理与协作范围" : "Governance and collaboration scope"}</p>
-            </figcaption>
-            <div className="concept-execution">
-              <div className="concept-node">
-                <div className="concept-node__core">
-                  <span className="concept-node__eyebrow">01 / {locale === "zh" ? "输入" : "Input"}</span>
-                  <h3>Task</h3>
-                  <p>{locale === "zh" ? "一次研发执行" : "One R&D execution"}</p>
-                  <div className="concept-node__fact">
-                    <strong>TaskSpec</strong>
-                    <p>{locale === "zh" ? "冻结规格 · 运行中不可变" : "Frozen spec · Immutable during execution"}</p>
-                  </div>
-                </div>
-              </div>
-              <span aria-hidden="true" className="concept-flow-arrow">→</span>
-              <div className="concept-node concept-node--sandbox">
-                <div className="concept-node__core">
-                  <span className="concept-node__eyebrow">02 / {locale === "zh" ? "隔离执行" : "Isolated execution"}</span>
-                  <div className="concept-node__title">
-                    <h3>Sandbox</h3>
-                    <span>{locale === "zh" ? "每任务一个" : "One per task"}</span>
-                  </div>
-                  <p>{locale === "zh" ? "Supervisor · 唯一调度权威" : "Supervisor · Sole scheduling authority"}</p>
-                  <div className="concept-flow-snapshot">
-                    <strong>{locale === "zh" ? "Flow 快照" : "Flow snapshot"}</strong>
-                    <p>{locale === "zh" ? "由 WorkNode 调用按依赖组成" : "WorkNode invocations connected by dependencies"}</p>
-                    <div className="concept-flow-snapshot__chain"><span>WorkNode</span><span aria-hidden="true">→</span><span>Attempt</span></div>
-                    <p>{locale === "zh" ? "每次执行：独立会话 + 独立 worktree" : "Each attempt: its own session and worktree"}</p>
-                  </div>
-                </div>
-              </div>
-              <span aria-hidden="true" className="concept-flow-arrow">→</span>
-              <div className="concept-node">
-                <div className="concept-node__core">
-                  <span className="concept-node__eyebrow">03 / {locale === "zh" ? "交接" : "Handoff"}</span>
-                  <h3>Artifact</h3>
-                  <p>{locale === "zh" ? "产物 + 清单 + 结果摘要" : "Outputs + manifest + result summary"}</p>
-                  <div className="concept-node__fact"><p>{locale === "zh" ? "质量门禁通过后冻结，下游只读。" : "Frozen after quality gates pass. Read-only downstream."}</p></div>
-                </div>
+      <Section divided width="wide">
+        <SectionHeading title={locale === "zh" ? "从任务，看懂对象关系" : "The objects behind every task"} />
+        <figure className="rounded-xl border border-rule bg-paper p-5 md:p-8">
+          <figcaption className="mb-8 flex flex-wrap items-center gap-3 text-xs text-ink-3">
+            <span className="rounded border border-rule px-3 py-2">Organization</span>
+            <span aria-hidden="true">›</span>
+            <span className="rounded border border-rule px-3 py-2">Workspace</span>
+            <span aria-hidden="true">›</span>
+            <span className="rounded border border-rule px-3 py-2">Project</span>
+            <span>{locale === "zh" ? "治理与协作范围" : "Governance and collaboration scope"}</span>
+          </figcaption>
+          <div className="grid items-center gap-5 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,2fr)_auto_minmax(0,1fr)]">
+            <div className="rounded-lg border border-rule-strong p-5">
+              <h3 className="text-lg font-semibold text-ink">Task</h3>
+              <p className="mt-1 text-xs text-ink-3">{locale === "zh" ? "一次研发执行" : "One R&D execution"}</p>
+              <div className="mt-5 border-t border-rule pt-4">
+                <p className="text-sm font-medium text-ink">TaskSpec</p>
+                <p className="mt-1 text-xs text-ink-3">{locale === "zh" ? "冻结规格 · 运行中不可变" : "Frozen spec · Immutable during execution"}</p>
               </div>
             </div>
-            <dl className="concept-cognition">
-              <div><dt>Knowledge</dt><dd>{locale === "zh" ? "带来源、可审阅的正式知识" : "Sourced, reviewable formal knowledge"}</dd></div>
-              <div><dt>Memory</dt><dd>{locale === "zh" ? "独立的个人记忆权威，Agent 不直接写入" : "Separate personal-memory authority; no direct agent writes"}</dd></div>
-            </dl>
-          </figure>
-        </div>
-      </Section>
-
-      <Section rail={terms.referenceRail} index="02" divided width="wide" className="interior-section concept-reference">
-        <div className="interior-editorial-split">
-          <div className="interior-section-intro" data-reveal>
-            <SectionHeading title={terms.referenceHeading} lede={terms.referenceLede} />
-            <p className="interior-index-note">{terms.count}</p>
-          </div>
-          <div className="premium-frame" data-reveal>
-            <div className="premium-core interior-disclosure-board">
-              {dictionary.concept.objects.map((object) => (
-                <details key={object.name} className="interior-disclosure">
-                  <summary>
-                    <span className="interior-disclosure__index">{object.rail}</span>
-                    <span className="interior-disclosure__heading"><strong>{object.name}</strong><span>{object.role}</span></span>
-                    <span className="interior-disclosure__toggle" aria-hidden="true" />
-                  </summary>
-                  <div className="interior-disclosure__body">
-                    <h3 className="rail-label">{terms.constraintsHeading}</h3>
-                    <ul className="interior-constraints">
-                      {object.constraints.map((constraint) => <li key={constraint}>{constraint}</li>)}
-                    </ul>
-                    {object.note ? <p className="interior-context-note">{object.note}</p> : null}
-                  </div>
-                </details>
-              ))}
+            <span aria-hidden="true" className="justify-self-center text-2xl text-ink-4 lg:rotate-0 rotate-90">→</span>
+            <div className="rounded-lg border border-signal/40 bg-signal-wash/60 p-5">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <h3 className="text-lg font-semibold text-signal">Sandbox</h3>
+                <span className="text-xs text-signal">{locale === "zh" ? "每任务一个" : "One per task"}</span>
+              </div>
+              <p className="mt-2 text-xs text-ink-3">{locale === "zh" ? "Supervisor · 唯一调度权威" : "Supervisor · Sole scheduling authority"}</p>
+              <div className="mt-5 rounded border border-rule bg-paper p-4">
+                <p className="text-sm font-medium text-ink">{locale === "zh" ? "Flow 快照" : "Flow snapshot"}</p>
+                <p className="mt-1 text-xs text-ink-3">{locale === "zh" ? "由 WorkNode 调用按依赖组成" : "WorkNode invocations connected by dependencies"}</p>
+                <div className="mt-4 flex items-center gap-2 text-xs text-ink-2">
+                  <span className="rounded border border-rule px-3 py-2">WorkNode</span>
+                  <span aria-hidden="true">→</span>
+                  <span className="rounded border border-rule px-3 py-2">Attempt</span>
+                </div>
+                <p className="mt-3 text-xs text-ink-3">{locale === "zh" ? "每次执行：独立会话 + 独立 worktree" : "Each attempt: its own session and worktree"}</p>
+              </div>
+            </div>
+            <span aria-hidden="true" className="justify-self-center text-2xl text-ink-4 lg:rotate-0 rotate-90">→</span>
+            <div className="rounded-lg border border-rule-strong p-5">
+              <h3 className="text-lg font-semibold text-ink">Artifact</h3>
+              <p className="mt-2 text-xs leading-relaxed text-ink-3">{locale === "zh" ? "产物 + 清单 + 结果摘要" : "Outputs + manifest + result summary"}</p>
+              <p className="mt-5 border-t border-rule pt-4 text-xs leading-relaxed text-ink-3">{locale === "zh" ? "质量门禁通过后冻结，下游只读。" : "Frozen after quality gates pass. Read-only downstream."}</p>
             </div>
           </div>
+          <div className="mt-7 grid gap-4 border-t border-rule pt-5 sm:grid-cols-2">
+            <p className="text-xs leading-relaxed text-ink-3"><strong className="mr-2 font-medium text-ink">Knowledge</strong>{locale === "zh" ? "带来源、可审阅的正式知识" : "Sourced, reviewable formal knowledge"}</p>
+            <p className="text-xs leading-relaxed text-ink-3"><strong className="mr-2 font-medium text-ink">Memory</strong>{locale === "zh" ? "独立的个人记忆权威，Agent 不直接写入" : "Separate personal-memory authority; no direct agent writes"}</p>
+          </div>
+        </figure>
+
+        <div className="mt-10 grid gap-x-10 md:grid-cols-2">
+          {dictionary.concept.objects.map((object) => (
+            <details key={object.name} className="border-t border-rule py-1">
+              <summary className="cursor-pointer py-5 text-sm font-semibold text-ink">
+                <span className="fact-sm mr-3 text-ink-4">{object.rail}</span>
+                {object.name}
+                <span className="mt-2 block pl-7 text-xs font-normal leading-relaxed text-ink-3">{object.role}</span>
+              </summary>
+              <div className="pb-6 pl-7">
+                <h3 className="rail-label mb-3">{terms.constraintsHeading}</h3>
+                <ul className="list-disc space-y-3 pl-4 text-sm leading-relaxed text-ink-2">
+                  {object.constraints.map((constraint) => <li key={constraint}>{constraint}</li>)}
+                </ul>
+                {object.note ? <p className="mt-4 border-l-2 border-signal/30 pl-4 text-sm leading-relaxed text-ink-3">{object.note}</p> : null}
+              </div>
+            </details>
+          ))}
         </div>
       </Section>
 
-      <Section rail={dictionary.concept.lifecycleRail} index="03" divided width="wide" className="interior-section concept-lifecycle">
-        <div className="interior-heading-row" data-reveal>
-          <SectionHeading title={dictionary.concept.lifecycleHeading} />
-          <p>{terms.lifecycleNote}</p>
-        </div>
-        <div className="premium-frame interior-flow-frame" data-reveal>
-          <div className="premium-core"><Pipeline locale={locale} /></div>
-        </div>
+      <Section rail={dictionary.concept.lifecycleRail} divided width="wide">
+        <SectionHeading title={dictionary.concept.lifecycleHeading} />
+        <Pipeline locale={locale} />
       </Section>
 
-      <Section divided width="wide" className="interior-section interior-onward">
-        <div className="interior-onward__layout" data-reveal>
-          <div><h2 className="rail-label">{terms.nextHeading}</h2><p>{locale === "zh" ? "从领域模型，走向系统实现。" : "From the domain model to the system behind it."}</p></div>
-          <ul>
-            {onward.map((item) => (
-              <li key={item.href}>
-                <Link href={localePath(locale, item.href)} className="premium-action interior-onward__link">
-                  <span>{item.title}</span>
-                  <span className="premium-action__icon" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.25"><path d="M5 15 15 5M5 5h10v10" /></svg></span>
-                </Link>
-                <p>{item.detail}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
+      {/* ── Onward ──────────────────────────────────────────────────────── */}
+      <Section divided className="pb-24 md:pb-28">
+        <h2 className="rail-label mb-6">{terms.nextHeading}</h2>
+        <ul className="grid gap-x-10 gap-y-6 sm:grid-cols-3">
+          {onward.map((item) => (
+            <li key={item.href}>
+              <Link
+                href={localePath(locale, item.href)}
+                className="group block border-t border-rule pt-4 transition-colors"
+              >
+                <span className="flex items-center gap-2 text-[0.9375rem] font-medium text-ink">
+                  {item.title}
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 10 10"
+                    className="h-2.5 w-2.5 text-ink-4 transition-transform group-hover:translate-x-0.5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                  >
+                    <path d="M2 5h6M5.4 2.4 8 5l-2.6 2.6" />
+                  </svg>
+                </span>
+                <span className="mt-1.5 block text-[0.875rem] leading-[1.65] text-ink-3">
+                  {item.detail}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
       </Section>
-    </div>
+    </>
   );
 }
