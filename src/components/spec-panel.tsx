@@ -103,9 +103,9 @@ export function SpecPanel({ locale }: { locale: Locale }) {
 
   return (
     <div className="relative">
-      {/* Panel shell: outer enclosure with the concentric inner radius. */}
-      <div className="rounded-[10px] border border-rule-strong bg-surface p-[3px] shadow-[0_1px_2px_rgba(20,23,26,0.04),0_12px_32px_-12px_rgba(20,23,26,0.10)]">
-        <div className="overflow-hidden rounded-[7px] border border-rule-soft">
+      {/* 中性薄面承载冻结字段，颜色只标记解析状态。 */}
+      <div className="spec-panel border border-rule-strong bg-surface">
+        <div className="overflow-hidden rounded-[3px]">
           {/* Panel header: title plus a live indicator. */}
           <div className="flex items-center justify-between gap-3 border-b border-rule-soft bg-sunken px-3.5 py-2.5">
             <span className="fact-sm text-ink-3">{dictionary.hero.specPanelLabel}</span>
@@ -129,7 +129,7 @@ export function SpecPanel({ locale }: { locale: Locale }) {
               {rows.map((row, index) => (
                 <div
                   key={row.key}
-                  className="reveal grid grid-cols-[minmax(0,7.5rem)_minmax(0,1fr)] items-baseline gap-x-3 px-3.5 py-2"
+                  className="spec-row reveal grid grid-cols-[minmax(0,7.5rem)_minmax(0,1fr)] items-baseline gap-x-3 px-3.5 py-2"
                   style={{ animationDelay: `${120 + index * 85}ms` }}
                 >
                   <dt className="fact-sm truncate text-ink-4">{row.key}</dt>

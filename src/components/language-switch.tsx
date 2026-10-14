@@ -74,7 +74,7 @@ export function LanguageSwitch({
           setOpen((value) => !value);
         }}
         className={cn(
-          "inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full",
+          "site-language-trigger inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-sm",
           "text-ink-2 transition-colors hover:bg-paper-deep hover:text-ink",
           "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal",
           open && "bg-paper-deep text-ink",
@@ -96,7 +96,7 @@ export function LanguageSwitch({
       <div
         id={panelId}
         hidden={!open}
-        className="absolute right-0 top-full z-50 mt-3 w-40 rounded-lg border border-rule bg-surface p-1.5 shadow-lg"
+        className="site-language-panel absolute right-0 top-full z-50 mt-3 w-40 rounded-md border border-rule bg-surface p-1.5"
       >
         <ul aria-label={label}>
           {locales.map((option) => (
@@ -108,7 +108,7 @@ export function LanguageSwitch({
                 aria-current={option === locale ? "true" : undefined}
                 onClick={() => setOpen(false)}
                 className={cn(
-                  "flex min-h-10 items-center justify-between rounded-md px-3 text-sm text-ink-2",
+                  "site-language-option flex min-h-10 items-center justify-between rounded-sm px-3 text-sm text-ink-2",
                   "transition-colors hover:bg-paper-deep hover:text-ink focus-visible:bg-paper-deep focus-visible:outline-2 focus-visible:outline-signal",
                   option === locale && "bg-paper-deep font-medium text-ink",
                 )}

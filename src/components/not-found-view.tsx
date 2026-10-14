@@ -27,14 +27,14 @@ export function NotFoundView() {
   const en = getDictionary("en");
 
   return (
-    <div className="flex min-h-dvh items-center justify-center px-6">
-      <div className="w-full max-w-[34rem] border-t border-rule pt-8">
+    <div className="scope-dark scope-marketing not-found-view flex min-h-dvh items-center justify-center px-6 py-16">
+      <div className="w-full max-w-[38rem] border-t border-rule pt-8">
         <div className="flex items-baseline justify-between gap-4">
           <Wordmark />
           <span className="fact-sm text-ink-4">404</span>
         </div>
 
-        <h1 className="mt-6 text-[1.75rem] leading-tight tracking-[-0.02em]">
+        <h1 className="mt-8 text-[2.25rem] font-normal leading-tight tracking-[-0.025em]">
           {zh.notFound.title}
         </h1>
         <p className="mt-3 text-[0.9375rem] leading-[1.7] text-ink-3">
@@ -44,7 +44,7 @@ export function NotFoundView() {
         <div className="mt-6 flex flex-wrap gap-3">
           <Link
             href={`/${defaultLocale}`}
-            className="inline-flex items-center rounded-sm bg-ink px-4 py-2.5 text-[0.875rem] font-medium text-on-ink transition-colors hover:bg-ink-2"
+            className="site-button inline-flex items-center rounded-[3px] bg-ink px-4 py-2.5 text-[0.875rem] font-medium text-on-ink transition-colors hover:bg-ink-2"
           >
             {zh.notFound.cta}
           </Link>
@@ -54,7 +54,7 @@ export function NotFoundView() {
               <Link
                 key={locale}
                 href={`/${locale}`}
-                className="inline-flex items-center rounded-sm border border-rule-strong px-4 py-2.5 text-[0.875rem] font-medium text-ink-2 transition-colors hover:border-ink-3 hover:text-ink"
+                className="site-button inline-flex items-center rounded-[3px] border border-rule-strong px-4 py-2.5 text-[0.875rem] font-medium text-ink-2 transition-colors hover:border-ink-3 hover:text-ink"
               >
                 {localeLabels[locale]}
               </Link>
@@ -62,7 +62,7 @@ export function NotFoundView() {
         </div>
 
         <div className="mt-8 border-t border-rule-soft pt-6">
-          <h2 className="text-[1.0625rem] font-semibold text-ink">
+          <h2 className="text-[1.0625rem] font-medium text-ink">
             {en.notFound.title}
           </h2>
           <p className="measure mt-2 text-[0.9375rem] leading-[1.7] text-ink-3">

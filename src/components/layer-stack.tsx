@@ -36,19 +36,19 @@ export function LayerStack({
   authorityLabel: string;
 }) {
   return (
-    <figure className="mt-12">
+    <figure className="layer-stack mt-12">
       <ol className="relative">
         {layers.map((layer, index) => (
           <li
             key={layer.name}
-            className="group relative grid grid-cols-[2.75rem_minmax(0,1fr)] gap-x-4 sm:grid-cols-[2.75rem_minmax(0,13rem)_minmax(0,1fr)] sm:gap-x-6"
+            className="layer-row group relative"
           >
             {/*
               The rail is the stack's spine. It runs the full height of every row
               except the last, where it stops at the node rather than trailing off
               into the whitespace below and implying a seventh layer.
             */}
-            <div className="relative flex justify-center">
+            <div className="layer-index relative flex justify-center">
               <span
                 aria-hidden="true"
                 className={
@@ -62,11 +62,11 @@ export function LayerStack({
               </span>
             </div>
 
-            <h3 className="col-start-2 mt-3 text-[0.9375rem] font-semibold leading-snug text-ink sm:col-start-2">
+            <h3 className="layer-name mt-3 text-[0.9375rem] font-medium leading-snug text-ink">
               {layer.name}
             </h3>
 
-            <div className="col-start-2 min-w-0 pb-8 sm:col-start-3">
+            <div className="layer-description min-w-0 pb-8">
               <p className="text-[0.875rem] leading-[1.65] text-ink-2">
                 {layer.responsibility}
               </p>

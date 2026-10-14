@@ -74,11 +74,11 @@ export default async function ArchitecturePage({ params }: PageProps) {
       />
 
       {/* ── Components ─────────────────────────────────────────────────── */}
-      <Section rail={dictionary.architecture.layersRail} divided width="wide">
+      <Section rail={dictionary.architecture.layersRail} divided width="wide" className="architecture-components">
         <SectionHeading title={dictionary.architecture.layersHeading} />
 
         <ArchitectureMap locale={locale} />
-        <details className="mt-8 border-t border-rule pt-5">
+        <details className="interior-disclosure mt-12 border-t border-rule py-5">
           <summary className="cursor-pointer text-sm text-ink-2">{locale === "zh" ? "查看组件职责与状态权威" : "Component responsibilities and state authority"}</summary>
           <LayerStack layers={dictionary.architecture.layers} authorityLabel={terms.authorityHeading} />
         </details>
@@ -93,7 +93,7 @@ export default async function ArchitecturePage({ params }: PageProps) {
 
         <div>
           {dictionary.architecture.decisions.map((decision) => (
-            <details key={decision.title} className="border-t border-rule py-5">
+            <details key={decision.title} className="interior-disclosure border-t border-rule py-5">
               <summary className="cursor-pointer text-lg font-medium">{decision.title}</summary>
               <p className="measure mt-4 text-sm leading-relaxed text-ink-2">{decision.decision}</p>
               <p className="measure mt-4 border-l-2 border-caution/35 pl-4 text-sm leading-relaxed text-ink-3"><strong className="text-caution">{terms.consequenceHeading}：</strong>{decision.consequence}</p>
@@ -112,13 +112,13 @@ export default async function ArchitecturePage({ params }: PageProps) {
         <div className="mt-10 flex flex-wrap items-center gap-3">
           <Link
             href={localePath(locale, "/docs/operations/roles")}
-            className="inline-flex items-center rounded-sm border border-rule-strong px-4 py-2.5 text-[0.875rem] font-medium text-ink-2 transition-colors hover:border-ink-3 hover:text-ink"
+            className="site-button inline-flex items-center rounded-[3px] border border-rule-strong px-4 py-2.5 text-[0.875rem] font-medium text-ink-2 transition-colors hover:border-ink-3 hover:text-ink"
           >
             {locale === "zh" ? "平台运维与角色" : "Platform operations and roles"}
           </Link>
           <Link
             href={localePath(locale, "/docs/concepts/sandbox")}
-            className="inline-flex items-center rounded-sm border border-rule-strong px-4 py-2.5 text-[0.875rem] font-medium text-ink-2 transition-colors hover:border-ink-3 hover:text-ink"
+            className="site-button inline-flex items-center rounded-[3px] border border-rule-strong px-4 py-2.5 text-[0.875rem] font-medium text-ink-2 transition-colors hover:border-ink-3 hover:text-ink"
           >
             {locale === "zh" ? "沙箱与执行模型" : "Sandbox and execution model"}
           </Link>

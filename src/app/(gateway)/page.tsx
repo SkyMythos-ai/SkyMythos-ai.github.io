@@ -41,7 +41,7 @@ export default function RootPage() {
       <meta httpEquiv="refresh" content={`0;url=/${defaultLocale}/`} />
       <link rel="canonical" href={`/${defaultLocale}`} />
 
-      <div className="flex min-h-dvh items-center justify-center px-6">
+      <div className="scope-dark scope-marketing flex min-h-dvh items-center justify-center px-6">
         <div className="w-full max-w-[30rem] border-t border-rule pt-8">
           <Wordmark size="large" />
 

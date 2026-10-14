@@ -113,61 +113,61 @@ export default async function ConceptPage({ params }: PageProps) {
         meta={terms.count}
       />
 
-      <Section divided width="wide">
+      <Section divided width="wide" className="concept-relations">
         <SectionHeading title={locale === "zh" ? "从任务，看懂对象关系" : "The objects behind every task"} />
-        <figure className="rounded-xl border border-rule bg-paper p-5 md:p-8">
-          <figcaption className="mb-8 flex flex-wrap items-center gap-3 text-xs text-ink-3">
-            <span className="rounded border border-rule px-3 py-2">Organization</span>
+        <figure className="concept-map">
+          <figcaption className="concept-scope">
+            <span className="concept-scope-node">Organization</span>
             <span aria-hidden="true">›</span>
-            <span className="rounded border border-rule px-3 py-2">Workspace</span>
+            <span className="concept-scope-node">Workspace</span>
             <span aria-hidden="true">›</span>
-            <span className="rounded border border-rule px-3 py-2">Project</span>
+            <span className="concept-scope-node">Project</span>
             <span>{locale === "zh" ? "治理与协作范围" : "Governance and collaboration scope"}</span>
           </figcaption>
-          <div className="grid items-center gap-5 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,2fr)_auto_minmax(0,1fr)]">
-            <div className="rounded-lg border border-rule-strong p-5">
-              <h3 className="text-lg font-semibold text-ink">Task</h3>
+          <div className="concept-chain">
+            <div className="concept-object">
+              <h3 className="text-lg font-medium text-ink">Task</h3>
               <p className="mt-1 text-xs text-ink-3">{locale === "zh" ? "一次研发执行" : "One R&D execution"}</p>
               <div className="mt-5 border-t border-rule pt-4">
                 <p className="text-sm font-medium text-ink">TaskSpec</p>
                 <p className="mt-1 text-xs text-ink-3">{locale === "zh" ? "冻结规格 · 运行中不可变" : "Frozen spec · Immutable during execution"}</p>
               </div>
             </div>
-            <span aria-hidden="true" className="justify-self-center text-2xl text-ink-4 lg:rotate-0 rotate-90">→</span>
-            <div className="rounded-lg border border-signal/40 bg-signal-wash/60 p-5">
+            <span aria-hidden="true" className="concept-arrow">→</span>
+            <div className="concept-sandbox">
               <div className="flex flex-wrap items-baseline justify-between gap-2">
-                <h3 className="text-lg font-semibold text-signal">Sandbox</h3>
+                <h3 className="text-lg font-medium text-signal">Sandbox</h3>
                 <span className="text-xs text-signal">{locale === "zh" ? "每任务一个" : "One per task"}</span>
               </div>
               <p className="mt-2 text-xs text-ink-3">{locale === "zh" ? "Supervisor · 唯一调度权威" : "Supervisor · Sole scheduling authority"}</p>
-              <div className="mt-5 rounded border border-rule bg-paper p-4">
+              <div className="concept-flow">
                 <p className="text-sm font-medium text-ink">{locale === "zh" ? "Flow 快照" : "Flow snapshot"}</p>
                 <p className="mt-1 text-xs text-ink-3">{locale === "zh" ? "由 WorkNode 调用按依赖组成" : "WorkNode invocations connected by dependencies"}</p>
-                <div className="mt-4 flex items-center gap-2 text-xs text-ink-2">
-                  <span className="rounded border border-rule px-3 py-2">WorkNode</span>
+                <div className="concept-invocation">
+                  <span className="concept-invocation-node">WorkNode</span>
                   <span aria-hidden="true">→</span>
-                  <span className="rounded border border-rule px-3 py-2">Attempt</span>
+                  <span className="concept-invocation-node">Attempt</span>
                 </div>
                 <p className="mt-3 text-xs text-ink-3">{locale === "zh" ? "每次执行：独立会话 + 独立 worktree" : "Each attempt: its own session and worktree"}</p>
               </div>
             </div>
-            <span aria-hidden="true" className="justify-self-center text-2xl text-ink-4 lg:rotate-0 rotate-90">→</span>
-            <div className="rounded-lg border border-rule-strong p-5">
-              <h3 className="text-lg font-semibold text-ink">Artifact</h3>
+            <span aria-hidden="true" className="concept-arrow">→</span>
+            <div className="concept-object">
+              <h3 className="text-lg font-medium text-ink">Artifact</h3>
               <p className="mt-2 text-xs leading-relaxed text-ink-3">{locale === "zh" ? "产物 + 清单 + 结果摘要" : "Outputs + manifest + result summary"}</p>
               <p className="mt-5 border-t border-rule pt-4 text-xs leading-relaxed text-ink-3">{locale === "zh" ? "质量门禁通过后冻结，下游只读。" : "Frozen after quality gates pass. Read-only downstream."}</p>
             </div>
           </div>
-          <div className="mt-7 grid gap-4 border-t border-rule pt-5 sm:grid-cols-2">
+          <div className="concept-foundation">
             <p className="text-xs leading-relaxed text-ink-3"><strong className="mr-2 font-medium text-ink">Knowledge</strong>{locale === "zh" ? "带来源、可审阅的正式知识" : "Sourced, reviewable formal knowledge"}</p>
             <p className="text-xs leading-relaxed text-ink-3"><strong className="mr-2 font-medium text-ink">Memory</strong>{locale === "zh" ? "独立的个人记忆权威，Agent 不直接写入" : "Separate personal-memory authority; no direct agent writes"}</p>
           </div>
         </figure>
 
-        <div className="mt-10 grid gap-x-10 md:grid-cols-2">
+        <div className="concept-objects mt-12 grid gap-x-10 md:grid-cols-2">
           {dictionary.concept.objects.map((object) => (
-            <details key={object.name} className="border-t border-rule py-1">
-              <summary className="cursor-pointer py-5 text-sm font-semibold text-ink">
+            <details key={object.name} className="interior-disclosure border-t border-rule py-1">
+              <summary className="cursor-pointer py-5 text-sm font-medium text-ink">
                 <span className="fact-sm mr-3 text-ink-4">{object.rail}</span>
                 {object.name}
                 <span className="mt-2 block pl-7 text-xs font-normal leading-relaxed text-ink-3">{object.role}</span>
@@ -190,7 +190,7 @@ export default async function ConceptPage({ params }: PageProps) {
       </Section>
 
       {/* ── Onward ──────────────────────────────────────────────────────── */}
-      <Section divided className="pb-24 md:pb-28">
+      <Section divided className="interior-onward pb-24 md:pb-28">
         <h2 className="rail-label mb-6">{terms.nextHeading}</h2>
         <ul className="grid gap-x-10 gap-y-6 sm:grid-cols-3">
           {onward.map((item) => (

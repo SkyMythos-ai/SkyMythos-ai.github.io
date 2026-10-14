@@ -1,104 +1,276 @@
-import type { Locale } from "@/lib/i18n";
 import { EMPLOYEE_SCENE_DURATION, type EmployeeScene } from "@/content/employee-story";
-import { createKnowledgePainter } from "@/components/employee-knowledge-visual";
 
-type Point = [number, number];
-const clamp = (n: number) => Math.max(0, Math.min(1, n));
-const progress = (t: number, start: number, end: number) => { const p = clamp((t-start)/(end-start)); return p*p*(3-2*p); };
-const during = (t: number, start: number, end: number) => progress(t,start,start+.2)*(1-progress(t,end-.2,end));
-function curve(points: [Point, Point, Point, Point], p: number): Point {
-  const q=1-p, [a,b,c,d]=points;
-  return [q*q*q*a[0]+3*q*q*p*b[0]+3*q*p*p*c[0]+p*p*p*d[0],q*q*q*a[1]+3*q*q*p*b[1]+3*q*p*p*c[1]+p*p*p*d[1]];
+type Point = readonly [number, number];
+
+type Parts = Record<string, SVGElement>;
+
+type Attributes = Record<string, number | string>;
+
+function sceneParts(svg: SVGSVGElement, prefix: string): Parts {
+  return Object.fromEntries(Array.from(svg.querySelectorAll<SVGElement>("[data-part]"))
+    .filter((element) => element.dataset.part?.startsWith(prefix))
+    .map((element) => [element.dataset.part!.slice(prefix.length), element]));
 }
 
-/** 唯一外部时钟驱动确定性分镜；图形内容的形成与复用就是动作本身。 */
-export function createEmblemPainter(svg: SVGSVGElement, scene: EmployeeScene["id"], locale: Locale) {
-  const parts = new Map(Array.from(svg.querySelectorAll<SVGElement>("[data-motion]")).map(e=>[e.dataset.motion!,e]));
-  const attr = (name: string, key: string, value: string | number) => parts.get(name)?.setAttribute(key,String(value));
-  const opacity = (name: string, value: number) => attr(name,"opacity",clamp(value).toFixed(3));
-  const draw = (name: string, value: number) => attr(name,"stroke-dasharray",`${(clamp(value)*100).toFixed(2)} 100`);
-  const move = (name: string, point: Point) => attr(name,"transform",`translate(${point[0].toFixed(2)} ${point[1].toFixed(2)})`);
-  function travelling(name: string, t: number, start: number, end: number, points: [Point, Point, Point, Point]) {
-    move(name,curve(points,progress(t,start,end)));
-    opacity(name,during(t,start-.1,end+.2));
-  }
-  function caption(t: number, phases: Array<[number,string,string]>) {
-    const phase = phases.findLast(([at])=>t>=at) ?? phases[0];
-    const element = parts.get("caption");
-    const text = phase[locale === "zh" ? 1 : 2];
-    if (element && element.textContent !== text) element.textContent=text;
-    svg.dataset.stage=String(phase[0]);
-  }
-
-  function identity(t: number) {
-    travelling("task-first",t,.15,1.7,[[176,282],[202,282],[213,267],[235,267]]);
-    travelling("task-next",t,7.6,8.7,[[176,282],[202,282],[213,267],[235,267]]);
-    draw("work-thread",progress(t,.15,1.7));
-    opacity("identity-response",.1+.6*(during(t,1.3,3.4)+during(t,8.3,10.1)));
-    draw("result-thread",progress(t,1.8,2.8));
-    const first = progress(t,2.25,3.3);
-    const second = 1-progress(t,8.7,9.2)+progress(t,9.3,10.4);
-    opacity("result-content",first*second);
-    draw("result-check",progress(t,3.1,3.7)*(1-progress(t,8.7,9.2)+progress(t,10.1,10.6)));
-    travelling("feedback-evidence",t,3.4,5.4,[[522,265],[578,206],[562,176],[492,179]]);
-    draw("feedback-check",progress(t,4.25,4.85));
-    draw("memory-thread",progress(t,3.4,5.4));
-    opacity("memory-record",progress(t,5.0,5.8));
-    draw("learning-loop",progress(t,5.0,6.5));
-    opacity("skill-method",progress(t,5.8,6.7));
-    draw("skill-function",progress(t,5.8,6.7));
-    travelling("memory-reuse",t,7.9,8.8,[[433,189],[409,200],[397,214],[379,231]]);
-    travelling("skill-reuse",t,7.9,8.8,[[268,393],[281,369],[280,346],[291,331]]);
-    const task=parts.get("task-label");
-    if(task) task.textContent=locale === "zh" ? (t>=7.5 ? "下一次任务" : "工作任务") : (t>=7.5 ? "Next task" : "Task");
-    caption(t,[[0,"Agent 自主执行任务","The agent gets to work"],[3.4,"工作反馈经过验证","Validate feedback from real work"],[5.8,"沉淀为 Memory 与 Skill","Retain Memory. Form a Skill."],[7.6,"调用经验与方法，再次完成工作","Use experience in the next task"],[10.6,"让经验与方法，参与下一次工作","Bring experience into the next task"]]);
-  }
-
-  function collaboration(t: number) {
-    travelling("goal-packet",t,0,1.0,[[320,135],[320,169],[320,197],[320,234]]);
-    opacity("hub-response",.08+.6*(during(t,.7,2.2)+during(t,8.1,9.7)));
-    const routes: Array<[string,number,number,[Point,Point,Point,Point]]> = [
-      ["a",.9,2.2,[[253,239],[229,216],[208,191],[171,172]]],
-      ["b",1.1,2.4,[[391,239],[426,211],[450,194],[487,180]]],
-      ["c",5.4,6.6,[[246,302],[218,347],[173,359],[153,390]]],
-      ["d",5.55,6.8,[[392,302],[420,350],[470,362],[488,394]]],
-    ];
-    for(const [name,start,end,points] of routes) {
-      draw(`dispatch-${name}`,progress(t,start,end));
-      travelling(`packet-${name}`,t,start,end,points);
-      opacity(`status-${name}`,.15+.85*during(t,end-.2,end+2.0));
-      draw(`ready-${name}`,progress(t,end+1.1,end+1.5));
+/** 按确认稿分镜计算，不累计位置；暂停或倒回仍得到相同画面。 */
+function createIdentityPainter(svg: SVGSVGElement): (seconds: number) => void {
+  const clamp = (value: number) => Math.max(0, Math.min(1, value));
+  const curve = (value: number) => {
+    const x = clamp(value);
+    if (x === 0 || x === 1)
+      return x;
+    let low = 0;
+    let high = 1;
+    let u = x;
+    for (let index = 0; index < 12; index += 1) {
+      u = (low + high) / 2;
+      const inverse = 1 - u;
+      const estimate = 3 * inverse * inverse * u * 0.22 + 3 * inverse * u * u * 0.36 + u * u * u;
+      if (estimate < x)
+        low = u;
+      else
+        high = u;
     }
-    opacity("plan-sheet",progress(t,2.1,2.65));
-    opacity("plan-lines",progress(t,2.65,4.15));
-    draw("produce-plan",progress(t,2.15,2.8));
-    opacity("code-sheet",progress(t,2.3,2.85));
-    draw("produce-code",progress(t,2.35,3.0));
-    draw("code-glyph",progress(t,2.75,3.8));
-    for(let i=0;i<3;i++)draw(`code-line-${i}`,progress(t,3.4+i*.35,4+i*.35));
-    draw("return-plan",progress(t,4.3,5.0));
-    draw("return-code",progress(t,4.6,5.3));
-    travelling("plan-packet",t,4.3,5.0,[[172,272],[185,272],[199,272],[212,272]]);
-    travelling("code-packet",t,4.6,5.3,[[470,272],[456,272],[441,272],[428,272]]);
-    draw("produce-review",progress(t,6.6,7.25));
-    draw("produce-test",progress(t,6.8,7.45));
-    opacity("review-note",progress(t,6.25,7.0));
-    draw("review-check",progress(t,7.2,7.7));
-    opacity("test-note",progress(t,6.55,7.3));
-    draw("test-check",progress(t,7.45,8.0));
-    travelling("review-packet",t,8.1,8.85,[[262,372],[283,378],[283,390],[294,404]]);
-    travelling("test-packet",t,8.3,9.0,[[380,370],[359,379],[357,390],[347,404]]);
-    opacity("delivered",progress(t,9.0,9.4));
-    draw("deliver-check",progress(t,9.1,9.75));
-    caption(t,[[0,"一个目标，交给协作中枢","One goal enters the team"],[1.0,"分发任务，多 Agent 并行工作","Dispatch work to multiple agents"],[2.65,"方案与代码，逐步形成","Plan and code take shape"],[5.4,"交接成果，审查与验证","Hand off, review and verify"],[9.0,"多 Agent 分工，汇成一次交付","Many agents. One shared delivery."]]);
-  }
+    return 1 - Math.pow(1 - u, 3);
+  };
+  const progress = (time: number, start: number, end: number) => curve((time - start) / (end - start));
+  const interpolate = (from: number, to: number, amount: number) => from + (to - from) * amount;
+  const parts = sceneParts(svg, "identity-");
+  return (rawTime: number) => {
+    const time = Math.max(0, Math.min(12, Number(rawTime) || 0));
+    const set = (name: string, attributes: Attributes) => {
+      const element = parts[name];
+      if (!element)
+        return;
+      Object.keys(attributes).forEach((attribute) => element.setAttribute(attribute, String(attributes[attribute])));
+    };
+    const move = (name: string, x: number, y: number, opacity: number, scale = 1) => set(name, { transform: `translate(${x.toFixed(3)} ${y.toFixed(3)}) scale(${scale.toFixed(4)})`, opacity: clamp(opacity).toFixed(4) });
+    const firstInput = progress(time, 0.95, 2.2);
+    const secondInput = progress(time, 9.05, 10.2);
+    const feed = time < 6 ? firstInput : secondInput;
+    const feedVisible = time < 6
+      ? progress(time, 0.8, 1.12) * (1 - progress(time, 1.9, 2.24))
+      : progress(time, 8.95, 9.2) * (1 - progress(time, 9.85, 10.22));
+    move('input', interpolate(141, 263, feed), interpolate(166, 234, feed), feedVisible, interpolate(1, 0.7, feed));
+    move('task-one', 106, interpolate(153, 137, progress(time, 0, 0.8)), progress(time, 0, 0.65) * (1 - progress(time, 4.9, 5.55)));
+    move('task-two', 106, interpolate(150, 137, progress(time, 7.95, 8.6)), progress(time, 7.95, 8.55));
+    const processing = progress(time, 1.8, 2.35) * (1 - progress(time, 4.45, 5.1));
+    const reusedProcessing = progress(time, 9.05, 9.65);
+    set('process', { opacity: Math.max(processing, reusedProcessing) });
+    const resultTravel = progress(time, 2.35, 3.3);
+    const feedbackReturn = progress(time, 4.95, 5.65);
+    move('feedback', interpolate(interpolate(389, 509, resultTravel), 407, feedbackReturn), interpolate(interpolate(253, 160, resultTravel), 278, feedbackReturn), progress(time, 2.35, 2.75) * (1 - progress(time, 5.45, 5.85)), interpolate(interpolate(0.68, 1, resultTravel), 0.5, feedbackReturn));
+    const verified = progress(time, 3.2, 3.7) * (1 - progress(time, 4.85, 5.25));
+    const reusedVerified = progress(time, 10.05, 10.65);
+    move('verify', 509, 160, Math.max(verified, reusedVerified));
+    const clampMotion = progress(time, 3.4, 4.35);
+    set('verify-left', { transform: `translate(${interpolate(-14, 0, clampMotion)} ${interpolate(-8, 0, clampMotion)})` });
+    set('verify-right', { transform: `translate(${interpolate(14, 0, clampMotion)} ${interpolate(8, 0, clampMotion)})` });
+    set('check', { transform: `translate(25 47) scale(${interpolate(0.65, 1, progress(time, 3.8, 4.45))})`, opacity: Math.max(progress(time, 3.8, 4.15), reusedVerified) });
+    const finalOutputTravel = progress(time, 9.9, 10.75);
+    move('result', interpolate(389, 509, finalOutputTravel), interpolate(253, 160, finalOutputTravel), progress(time, 9.9, 10.3), interpolate(0.68, 1, finalOutputTravel));
+    const memoryIn = progress(time, 5.2, 6.25);
+    move('memory', 148, interpolate(428, 414, memoryIn), progress(time, 5.1, 5.75));
+    for (let index = 0; index < 3; index += 1) {
+      const formed = progress(time, 5.55 + index * 0.3, 6.85 + index * 0.25);
+      const finalY = 6 - index * 13;
+      move(`record-${index}`, interpolate(259, 0, formed), interpolate(-136, finalY, formed), progress(time, 5.55 + index * 0.3, 6.1 + index * 0.3), 1);
+    }
+    set('memory-label', { opacity: progress(time, 5.75, 6.4), transform: `translate(0 ${interpolate(9, 0, progress(time, 5.75, 6.45))})` });
+    const skillIn = progress(time, 5.5, 6.45);
+    move('skill', 493, interpolate(427, 412, skillIn), progress(time, 5.35, 5.95));
+    const leftJoin = progress(time, 5.85, 7.0);
+    move('skill-left', interpolate(-86, 0, leftJoin), interpolate(-134, 0, leftJoin), progress(time, 5.85, 6.3));
+    const rightJoin = progress(time, 6.15, 7.25);
+    move('skill-right', interpolate(-86, 0, rightJoin), interpolate(-134, 0, rightJoin), progress(time, 6.15, 6.6));
+    const insert = progress(time, 6.65, 7.75);
+    move('skill-insert', 0, interpolate(-29, 0, insert), progress(time, 6.6, 7.15));
+    set('skill-label', { opacity: progress(time, 6.0, 6.65), transform: `translate(0 ${interpolate(9, 0, progress(time, 6.0, 6.7))})` });
+    const memoryCall = progress(time, 8.15, 9.25);
+    const skillCall = progress(time, 8.5, 9.55);
+    move('memory-call', interpolate(148, 233, memoryCall), interpolate(386, 276, memoryCall), progress(time, 8.1, 8.4) * (1 - progress(time, 9.03, 9.38)), interpolate(0.85, 0.7, memoryCall));
+    move('skill-call', interpolate(493, 410, skillCall), interpolate(390, 276, skillCall), progress(time, 8.45, 8.75) * (1 - progress(time, 9.33, 9.68)), interpolate(0.85, 0.7, skillCall));
+    move('memory-dock', -87, 30, progress(time, 8.95, 9.35));
+    move('skill-dock', 89, 30, progress(time, 9.25, 9.65));
+    svg.setAttribute('data-phase', time < 2 ? 'identity' : time < 5 ? 'verify' : time < 8 ? 'retain' : time < 10.5 ? 'reuse' : 'result');
+    svg.setAttribute('data-time', time.toFixed(3));
+  };
+}
 
-  const knowledge = scene === "experience" ? createKnowledgePainter(svg,locale) : null;
+/** 按确认稿分镜计算，不累计位置；暂停或倒回仍得到相同画面。 */
+function createCollaborationPainter(svg: SVGSVGElement): (seconds: number) => void {
+  const clamp = (n: number) => Math.max(0, Math.min(1, n));
+  const round = (n: number) => Number(n.toFixed(4));
+  const blend = (a: number, b: number, u: number) => a + (b - a) * u;
+  // cubic-bezier(.22,.8,.2,1)，任意时间点均可重建，无独立时钟。
+  function ease(u: number) {
+    u = clamp(u);
+    if (u === 0 || u === 1)
+      return u;
+    let lo = 0, hi = 1, v = u;
+    for (let i = 0; i < 11; i++) {
+      v = (lo + hi) / 2;
+      const x = 3 * (1 - v) * (1 - v) * v * .22 + 3 * (1 - v) * v * v * .2 + v * v * v;
+      if (x < u)
+        lo = v;
+      else
+        hi = v;
+    }
+    return 3 * (1 - v) * (1 - v) * v * .8 + 3 * (1 - v) * v * v + v * v * v;
+  }
+  const progress = (t: number, start: number, duration: number) => ease((t - start) / duration);
+  const windowAlpha = (t: number, start: number, end: number, fade = .26) => progress(t, start, fade) * (1 - progress(t, end - fade, fade));
+  const parts = sceneParts(svg, "collab-");
+  return (time: number) => {
+    const t = Math.max(0, Math.min(12, Number(time) || 0));
+    const set = (name: string, opacity: number, transform?: string) => {
+      const node = parts[name];
+      if (!node)
+        return;
+      node.setAttribute('opacity', String(round(opacity)));
+      if (transform !== undefined)
+        node.setAttribute('transform', transform);
+    };
+    const arrive = (name: string, start: number, duration: number, dx = 0, dy = 10) => {
+      const u = progress(t, start, duration);
+      set(name, u, `translate(${round(dx * (1 - u))} ${round(dy * (1 - u))})`);
+    };
+    const token = (name: string, start: number, duration: number, route: (u: number) => Point) => {
+      const u = progress(t, start, duration);
+      const xy = route(u);
+      set(name, windowAlpha(t, start, start + duration, .17), `translate(${round(xy[0])} ${round(xy[1])})`);
+    };
+    const bezier = (a: Point, b: Point, c: Point, d: Point, u: number) => {
+      const v = 1 - u;
+      const coordinate = (i: 0 | 1) => v * v * v * a[i] + 3 * v * v * u * b[i] + 3 * v * u * u * c[i] + u * u * u * d[i];
+      return [coordinate(0), coordinate(1)] as const;
+    };
+    svg.dataset.time = String(round(t));
+    svg.dataset.phase = t < 2 ? 'goal' : t < 5 ? 'parallel' : t < 8 ? 'checks' : t < 10.5 ? 'integrate' : 'delivered';
+    // 主体始终在场；不同工作内容按真实交接顺序形成。
+    ['plan-unit', 'code-unit', 'review-unit', 'test-unit', 'hub'].forEach(name => set(name, 1));
+    set('goal', 1 - .34 * progress(t, 1.1, .7), `translate(0 ${round(-3 * progress(t, 1.1, .7))})`);
+    token('goal-token', .35, 1.35, u => [320, blend(78, 227, u)]);
+    token('plan-token', 1.8, .9, u => bezier([249, 235], [225, 235], [240, 161], [210, 161], u));
+    token('code-token', 1.85, .95, u => bezier([391, 235], [421, 235], [407, 171], [430, 171], u));
+    set('route-plan', .72 * windowAlpha(t, 1.8, 5.0, .6));
+    set('route-code', .72 * windowAlpha(t, 1.85, 5.0, .6));
+    arrive('plan-root', 2.3, .8, -5, 7);
+    arrive('plan-a', 2.75, .65, 0, 8);
+    arrive('plan-b', 3.02, .65, 0, 8);
+    arrive('plan-c', 3.29, .65, 0, 8);
+    // 保留状态标记的绝对落位，避免父组坐标与动画坐标耦合。
+    const planReady = progress(t, 4.1, .6);
+    set('plan-ready', planReady, `translate(203 ${round(196 + 6 * (1 - planReady))})`);
+    arrive('code-line-1', 2.5, .7, 8, 0);
+    arrive('code-line-2', 2.9, .7, 8, 0);
+    arrive('code-line-3', 3.3, .7, 8, 0);
+    const codeReady = progress(t, 4.15, .6);
+    set('code-ready', codeReady, `translate(582 ${round(216 + 4 * (1 - codeReady))})`);
+    // 方案进入审查，代码进入验证；四角各司其职，非同一动画复制。
+    token('review-token', 4.95, 1.15, u => bezier([108, 211], [30, 255], [36, 319], [80, 382], u));
+    token('test-token', 5.05, 1.1, u => bezier([529, 227], [607, 260], [607, 329], [562, 380], u));
+    arrive('review-source', 5.9, .6, -7, 0);
+    arrive('review-diff', 6.4, .7, 7, 0);
+    const reviewPass = progress(t, 7.1, .6);
+    set('review-pass', reviewPass, `translate(192 ${round(430 + 5 * (1 - reviewPass))})`);
+    for (let i = 1; i <= 3; i++) {
+      const u = progress(t, 5.95 + (i - 1) * .42, .9);
+      set('test-bar-' + i, u, `translate(445 0) scale(${round(u)} 1) translate(-445 0)`);
+    }
+    const testPass = progress(t, 7.25, .55);
+    set('test-pass', testPass, `translate(580 ${round(425 + 4 * (1 - testPass))})`);
+    token('return-review', 8, 1.0, u => bezier([216, 398], [243, 398], [223, 287], [249, 287], u));
+    token('return-test', 8.15, 1.0, u => bezier([429, 395], [398, 395], [415, 287], [391, 287], u));
+    set('route-review', .72 * windowAlpha(t, 7.8, 9.4, .45));
+    set('route-test', .72 * windowAlpha(t, 7.95, 9.55, .45));
+    arrive('output', 8.7, .9, 0, -14);
+    arrive('output-plan', 8.9, .65, -10, 0);
+    arrive('output-code', 9.08, .65, 10, 0);
+    arrive('output-review', 9.37, .65, -7, 7);
+    arrive('output-test', 9.57, .65, 7, 7);
+    arrive('output-caption', 10.0, .7, 0, 8);
+  };
+}
+
+/** 按确认稿分镜计算，不累计位置；暂停或倒回仍得到相同画面。 */
+function createKnowledgePainter(svg: SVGSVGElement): (seconds: number) => void {
+  const clamp = (n: number) => Math.max(0, Math.min(1, n));
+  const progress = (t: number, a: number, b: number) => clamp((t - a) / (b - a));
+  // 按时间求解 cubic-bezier(.32,.72,0,1)，与帧数无关。
+  function ease(value: number) {
+    const x = clamp(value);
+    if (x === 0 || x === 1)
+      return x;
+    const bezier = (s: number, a: number, b: number) => 3 * (1 - s) * (1 - s) * s * a + 3 * (1 - s) * s * s * b + s * s * s;
+    let lo = 0;
+    let hi = 1;
+    for (let i = 0; i < 14; i += 1) {
+      const mid = (lo + hi) / 2;
+      if (bezier(mid, .32, 0) < x)
+        lo = mid;
+      else
+        hi = mid;
+    }
+    return bezier((lo + hi) / 2, .72, 1);
+  }
+  const between = (a: number, b: number, n: number) => a + (b - a) * n;
+  const parts = sceneParts(svg, "");
+  return (rawTime: number) => {
+    const t = Math.max(0, Math.min(12, Number(rawTime) || 0));
+    const set = (key: string, transform: string | null, opacity: number | null) => {
+      const node = parts[key];
+      if (!node)
+        return;
+      if (transform != null)
+        node.setAttribute('transform', transform);
+      if (opacity != null)
+        node.setAttribute('opacity', String(opacity));
+    };
+    const organized = ease(progress(t, 0, 3));
+    set('index', `translate(290 ${between(136, 128, organized)})`, 1);
+    ([['practice', 96, .35], ['decisions', 66, .15], ['docs', 36, 0]] as const).forEach(([key, y, delay]) => {
+      const settle = ease(progress(t, delay, 2.9));
+      set(`layer-${key}`, `translate(0 ${y + 12 * (1 - settle)})`, .65 + .35 * settle);
+    });
+    ([
+      ['docs', 119, 96, 392, 221, .25, 1.9],
+      ['decisions', 171, 224, 414, 251, .7, 2.35],
+      ['practice', 122, 351, 419, 293, 1.05, 2.85],
+    ] as const).forEach(([key, sx, sy, ex, ey, start, end]) => {
+      const n = ease(progress(t, start, end));
+      const alpha = ease(progress(t, start, start + .25)) * (1 - ease(progress(t, end - .2, end + .2)));
+      const x = between(sx, ex, n);
+      const y = between(sy, ey, n) - 21 * Math.sin(Math.PI * n);
+      set(`packet-${key}`, `translate(${x} ${y}) scale(${between(1, .86, n)})`, alpha);
+    });
+    const queryUp = ease(progress(t, 3.05, 4.65));
+    const scan = ease(progress(t, 4.65, 5.55));
+    const qx = between(329, 379, queryUp) + 24 * scan;
+    const qy = between(446, 239, queryUp) + 10 * scan;
+    const queryAlpha = ease(progress(t, 3.02, 3.3)) * (1 - ease(progress(t, 5.65, 6.05)));
+    set('query', `translate(${qx} ${qy})`, queryAlpha);
+    const hit = ease(progress(t, 4.6, 5.65));
+    set('selected', `translate(426 ${between(269, 261, hit)})`, hit);
+    const copy = ease(progress(t, 6.1, 8.9));
+    const copyX = between(405, 517, copy) + 38 * Math.sin(Math.PI * copy);
+    const copyY = between(250, 489, copy);
+    const copyScale = between(1.03, 1, copy);
+    set('citation', `translate(${copyX} ${copyY}) scale(${copyScale})`, ease(progress(t, 6.05, 6.35)));
+    const answer = ease(progress(t, 9, 10.45));
+    set('answer', `translate(23 ${between(8, 0, answer)})`, answer);
+    svg.dataset.phase = t < 3 ? 'index' : t < 6 ? 'retrieve' : t < 9 ? 'copy-citation' : t < 10.5 ? 'compose' : 'hold';
+  };
+}
+
+/** 全部动作只读取 HeroStage 给定的秒数，更新 transform、opacity 和 data。 */
+export function createEmblemPainter(svg: SVGSVGElement, scene: EmployeeScene["id"]): (seconds: number) => void {
+  const paint = scene === "identity" ? createIdentityPainter(svg)
+    : scene === "collaboration" ? createCollaborationPainter(svg)
+      : createKnowledgePainter(svg);
   return (seconds: number) => {
-    const time=Math.max(0,Math.min(EMPLOYEE_SCENE_DURATION/1000,seconds));
-    svg.dataset.time=time.toFixed(3);
-    if(scene === "identity")identity(time);
-    else if(scene === "collaboration")collaboration(time);
-    else knowledge?.(time);
+    const time = Math.max(0, Math.min(EMPLOYEE_SCENE_DURATION / 1000, Number(seconds) || 0));
+    paint(time);
+    svg.dataset.time = time.toFixed(3);
   };
 }

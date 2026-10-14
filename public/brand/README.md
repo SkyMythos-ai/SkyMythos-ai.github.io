@@ -6,7 +6,7 @@
 - `logo-wordmark*.svg`：SkyMythos.ai 官方字标。
 - `-dark`：用于深色背景；无后缀版本用于浅色背景。
 
-共享 `Wordmark` 根据页面的 `.scope-dark` 选择版本。站点图标 `src/app/icon.svg` 复制自同目录 `favicon.svg`；`src/app/apple-icon.png` 是该文件的 180 × 180 PNG 导出。
+共享 `Wordmark` 的图标始终使用 `logo-mark.svg` 的品牌蓝，字标根据页面的 `.scope-dark` 选择版本。站点图标 `src/app/icon.svg` 复制自同目录 `favicon.svg`；`src/app/apple-icon.png` 是该文件的 180 × 180 PNG 导出。
 
 ## 数字员工主视觉
 
@@ -25,6 +25,6 @@
 
 ## 页面与视觉层次
 
-首页使用 1280px 共用版心，桌面图文在真实网格中占位，平板与手机上下排列。三幕以实体内沿、细蓝边缘、文档折角和固定空间刻度体现数字材质；形状层次与品牌标识保持独立，动画仍由同一时钟驱动。
+首页使用 1280px 共用版心，桌面图文在真实网格中占位，平板与手机上下排列。三幕使用中性石墨薄面、精确边缘与局部工作色；Memory、Skill、协作工作面和知识索引各有独立构图，减少厚彩侧边、塑料高光和奖励徽章。形状层次与品牌标识保持独立，动画仍由同一时钟驱动。
 
-`src/styles/home.css` 管理首页与图形文字样式；`site-navigation.css` 管理单行导航和共享页的顶栏偏移。手机保留关键名称、职责、资料与来源编号，精简重复的辅助说明。介绍、流程、架构与页尾均使用同一布局基线。
+`src/components/employee-visual-material.ts` 管理插图材质；`src/styles/home.css` 管理首页与图形文字样式，`site-navigation.css` 管理单行导航和共享页的顶栏偏移，`interior.css` 管理概念与架构的薄面布局。营销采用深石墨，文档使用同一设计语言的中性浅色阅读面。手机保留关键名称、职责、资料与来源编号，精简重复的辅助说明。介绍、流程、架构与页尾均使用同一布局基线。

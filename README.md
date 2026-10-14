@@ -11,6 +11,8 @@ SkyMythos 产品官网的源码。采用 Next.js 静态导出（`output: 'export
 | 静态导出 | `output: 'export'`，产物在 `out/` |
 | 样式 | Tailwind CSS v4（CSS-first `@theme`） |
 | 字体 | IBM Plex Sans / IBM Plex Mono，构建期自托管；中文使用系统字体栈 |
+| 视觉 | 深石墨营销画布、中性浅色文档阅读面；薄面、细线与局部语义色 |
+| 主视觉 | 双语原生 SVG；三幕共用 12 秒播放时钟，支持暂停和静态成果 |
 | 文档正文 | Markdown 字符串 + `react-markdown`，构建期渲染 |
 | 语言 | 中文（默认，`/zh`）与英文（`/en`）两套完整路由树 |
 | SEO | 每页预渲染 HTML、canonical、hreflang、sitemap、robots、JSON-LD |
@@ -97,7 +99,11 @@ src/
 
 `##` 与 `###` 标题会自动生成锚点 id，并出现在右侧的「本页内容」里。标题文本重复会导致锚点冲突，请在同一个文件内保持标题唯一。
 
-**改设计令牌**：编辑 `src/styles/globals.css` 的 `@theme` 区块。站点只有一条结构性规则：中性灰承载全部结构，只有一个信号色用于可操作与执行中状态。绿色既不是品牌色也不是成功色。
+**改设计令牌**：编辑 `src/styles/globals.css` 的 `@theme` 区块。营销页采用 `.scope-dark`，文档使用中性浅色阅读面；两者共用文字、边线、按钮和状态语义。中性色承载结构，品牌蓝维持身份，少量低饱和辅助色标记工作与证据。
+
+**改三幕动画**：`src/components/employee-visual-material.ts` 管理确认后的石墨材质，`employee-work-visual.tsx` 与 `employee-knowledge-visual.tsx` 管理原生 SVG 构图，`employee-emblem-motion.ts` 管理确定性分镜。`HeroStage` 持有唯一播放时间，`EmployeeScene` 只跟随该时间绘制；静态导出和减少动态显示完整成果，手动选择播放一次后保留结果。修改须同时检查中文、英文和手机标签，保持验证后沉淀、审查验证后交付、引用保留来源的机制顺序。
+
+首页、共享导航和内页的布局分别由 `src/styles/home.css`、`site-navigation.css` 和 `interior.css` 维护。产品页面不包含设计预览的材质比较控件。
 
 ## 许可
 

@@ -1,21 +1,11 @@
 @import "tailwindcss";
 @import "./site-navigation.css";
 @import "./home.css";
+@import "./interior.css";
 
-/* ============================================================================
-   SkyMythos design tokens
-   ----------------------------------------------------------------------------
-   Visual language: Light Editorial — precision engineering on cool paper.
-   The product's substance is determinism (frozen inputs, immutable artefacts,
-   content digests, sealed boundaries), so the interface borrows the conventions
-   of a technical specification sheet rather than a marketing landing page.
-
-   Two rules govern the palette:
-     1. Cool grey neutrals carry all structure. Colour never decorates.
-     2. Exactly one signal colour, used only for live or actionable state.
-        Green is deliberately absent: it is neither a brand nor a success colour
-        here, matching the SkyMythos Console so the site and product agree.
-   ========================================================================= */
+/* 确认后的官网视觉：石墨营销画布与中性浅色阅读面共用语义 token。
+   结构使用中性色，少量低饱和色只标记工作、交接和证据；品牌蓝保持身份。
+   三幕的薄面材质在 employee-visual-material.ts 中维护，页面不复制插图色板。 */
 
 @theme {
   /* Typography -------------------------------------------------------------
@@ -57,34 +47,35 @@
   --text-lead--line-height: 1.62;
 
   /* Surfaces --------------------------------------------------------------- */
-  --color-paper: #f4f5f6;
+  --color-paper: #f5f5f3;
   --color-paper-deep: #eceef0;
-  --color-surface: #ffffff;
-  --color-sunken: #f7f8f9;
+  --color-surface: #fafaf9;
+  --color-sunken: #f0f2f2;
 
   /* Ink -------------------------------------------------------------------- */
-  --color-ink: #14171a;
-  --color-ink-2: #3b4249;
-  --color-ink-3: #6b737b;
-  --color-ink-4: #99a1a9;
+  --color-ink: #22242a;
+  --color-ink-2: #3e444e;
+  --color-ink-3: #636972;
+  --color-ink-4: #69707a;
 
   /* Rules — every divider in the layout comes from this scale ---------------- */
-  --color-rule: #dfe2e6;
-  --color-rule-soft: #eaecef;
-  --color-rule-strong: #c4cad0;
+  --color-rule: #d7dbe1;
+  --color-rule-soft: #e4e6e9;
+  --color-rule-strong: #bac2cc;
 
   /* Signal — live execution, links, the single primary action --------------- */
-  --color-signal: #1d4ed8;
-  --color-signal-deep: #1639a3;
-  --color-signal-wash: #eef2fe;
+  --color-brand: #3156ff;
+  --color-signal: #526892;
+  --color-signal-deep: #405477;
+  --color-signal-wash: #dde3ef;
 
   /* Caution — draft, rework, waiting for input ------------------------------ */
-  --color-caution: #a2590b;
-  --color-caution-wash: #fdf5e9;
+  --color-caution: #845e39;
+  --color-caution-wash: #eee5d9;
 
   /* Stop — failed, blocked. Never used for emphasis ------------------------ */
-  --color-stop: #b02a33;
-  --color-stop-wash: #fceff0;
+  --color-stop: #993f47;
+  --color-stop-wash: #f1e1e3;
 
   /* Terminal — the one dark surface, reserved for real command output ------ */
   --color-shell: #14171a;
@@ -107,34 +98,35 @@
      on a near-black ground halates — the strokes bloom and the letterforms
      lose their edges. #f0f0f2 keeps the contrast while holding the shape. */
   --color-night: #0b0b0e;
-  --color-night-2: #121218;
-  --color-night-3: #1a1a22;
+  --color-night-2: #15171d;
+  --color-night-3: #20232b;
 
-  --color-night-ink: #f0f0f2;
-  --color-night-ink-2: #c6c5ce;
-  --color-night-ink-3: #a4a3ad;
-  --color-night-ink-4: #77767f;
+  --color-night-ink: #eff0f3;
+  --color-night-ink-2: #c2c5ce;
+  --color-night-ink-3: #a3a5af;
+  --color-night-ink-4: #8a8e9a;
 
-  /* Rules on the dark ground are white at low alpha rather than a fixed grey:
-     a fixed grey cannot sit correctly over both the ground and a raised panel. */
-  --color-night-rule: #ffffff1f;
-  --color-night-rule-soft: #ffffff12;
-  --color-night-rule-strong: #ffffff38;
+  /* 深色结构线和薄面使用同一石墨层级，避免浅色边框与厚投影。 */
+  --color-night-rule: #303541;
+  --color-night-rule-soft: #21242c;
+  --color-night-rule-strong: #525967;
 
   /* The indigo has to be lifted for the dark ground: #1d4ed8 fails contrast
      against near-black, and a link nobody can read is not a link. */
-  --color-night-signal: #93aaff;
-  --color-night-signal-wash: #1d2133;
+  --color-night-signal: #91a5e7;
+  --color-night-signal-wash: #252d43;
 
   /* Foreground for anything sitting *on* the ink colour. Because `ink` inverts
      between grounds, a primary button cannot hard-code `text-white` — it would
      become white-on-white the moment the ground flipped. */
-  --color-on-ink: #ffffff;
+  --color-on-ink: #f5f5f3;
 
   /* Radii — a graded scale, so hierarchy reads without colour --------------- */
-  --radius-chip: 2px;
-  --radius-panel: 6px;
-  --radius-stage: 10px;
+  --radius-sm: 3px;
+  --radius-chip: 3px;
+  --radius-panel: 8px;
+  --radius-stage: 8px;
+  --motion-ease: cubic-bezier(.22, .8, .2, 1);
 }
 
 /* ============================================================================
@@ -154,6 +146,7 @@
    ========================================================================= */
 
 .scope-dark {
+  color-scheme: dark;
   --color-paper: var(--color-night);
   --color-paper-deep: var(--color-night-2);
   --color-surface: var(--color-night-2);
@@ -171,12 +164,20 @@
   --color-signal: var(--color-night-signal);
   --color-signal-deep: var(--color-night-signal);
   --color-signal-wash: var(--color-night-signal-wash);
+  --color-caution: #c9a47c;
+  --color-caution-wash: #342b22;
+  --color-stop: #d1989f;
+  --color-stop-wash: #35252b;
 
   --color-on-ink: var(--color-night);
 
   background-color: var(--color-paper);
   color: var(--color-ink);
 }
+
+.scope-marketing :is(h1, h2) { font-weight: 450; }
+html:has(.scope-marketing) { color-scheme: dark; background: var(--color-night); scrollbar-color: var(--color-night-rule-strong) transparent; }
+html:has(.scope-marketing)::-webkit-scrollbar-thumb { background: var(--color-night-rule-strong); border-color: var(--color-night); }
 
 /* The one dark surface in the light theme is a terminal. Placed inside the dark
    ground it would disappear into the page, so it is lightened just enough to
@@ -268,7 +269,7 @@
   }
 
   ::selection {
-    background-color: #cdd9fb;
+    background-color: var(--color-signal-wash);
     color: var(--color-ink);
   }
 
@@ -417,7 +418,7 @@
     text-decoration-thickness: 1px;
     text-underline-offset: 0.18em;
     text-decoration-color: color-mix(in srgb, var(--color-signal) 35%, transparent);
-    transition: text-decoration-color 120ms ease;
+    transition: text-decoration-color 300ms var(--motion-ease);
   }
 
   .prose-doc a:hover {
@@ -432,7 +433,9 @@
     border: 1px solid var(--color-rule-soft);
     border-radius: var(--radius-chip);
     color: var(--color-ink);
-    white-space: nowrap;
+    /* 长路径与协议名可以在窄屏断行；pre 保留独立的水平滚动。 */
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .prose-doc ul,
@@ -631,8 +634,28 @@
     background: #fff;
   }
 
+  html:has(.scope-marketing) { color-scheme: light; background: #fff; }
+
   .no-print {
     display: none !important;
+  }
+
+  .scope-dark {
+    --color-paper: #fff;
+    --color-paper-deep: #eceef0;
+    --color-surface: #fff;
+    --color-sunken: #f0f2f2;
+    --color-ink: #22242a;
+    --color-ink-2: #3e444e;
+    --color-ink-3: #636972;
+    --color-ink-4: #69707a;
+    --color-rule: #d7dbe1;
+    --color-rule-soft: #e4e6e9;
+    --color-rule-strong: #bac2cc;
+    --color-signal: #526892;
+    --color-signal-wash: #dde3ef;
+    --color-on-ink: #fff;
+    color-scheme: light;
   }
 }
 
@@ -655,8 +678,13 @@
 }
 
 
-/* 品牌跟随页面底色，在浅色营销页与文档页使用浅色版本。 */
+/* 图标保留品牌蓝；字标随营销与阅读面的底色切换。 */
 .brand-logo-light { display: flex; }
 .brand-logo-dark { display: none; }
 .scope-dark .brand-logo-light { display: none; }
 .scope-dark .brand-logo-dark { display: flex; }
+
+@media print {
+  .scope-dark .brand-logo-light { display: flex; }
+  .scope-dark .brand-logo-dark { display: none; }
+}

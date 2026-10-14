@@ -1,0 +1,252 @@
+/* 内页沿用深石墨画布：结构由细边与留白表达，色彩只标记运行角色。 */
+.scope-marketing .page-header-inner {
+  padding-top: clamp(4rem, 7vw, 6.5rem);
+  padding-bottom: clamp(4rem, 7vw, 6.5rem);
+}
+
+.scope-marketing .page-header-title {
+  margin-top: 1.75rem;
+  font-size: clamp(2.5rem, 5.1vw, 4.35rem);
+  font-weight: 450;
+  line-height: 1.16;
+  letter-spacing: -.035em;
+}
+
+.scope-marketing .page-header-lede {
+  max-width: 48ch;
+  margin-top: 1.75rem;
+  font-size: clamp(1rem, 1.2vw, 1.1875rem);
+  line-height: 1.85;
+  color: var(--color-ink-3);
+}
+
+/* 架构是两个明确的工作范围，无整体外框，也不借彩色底板划分职责。 */
+.scope-marketing .architecture-map {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 5.5rem minmax(0, 1.25fr);
+  align-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.scope-marketing .map-node {
+  gap: .5rem;
+  padding: 1.125rem 1.25rem;
+  border: 1px solid var(--color-rule);
+  border-radius: 3px;
+  background: var(--color-surface);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--color-ink) 3%, transparent);
+}
+
+.scope-marketing .map-node strong {
+  font-size: .9375rem;
+  font-weight: 450;
+  line-height: 1.5;
+  overflow-wrap: normal;
+}
+
+.scope-marketing .map-node span {
+  font-size: .8125rem;
+  line-height: 1.75;
+  color: var(--color-ink-3);
+}
+
+.scope-marketing .map-primary {
+  border-color: color-mix(in srgb, var(--color-signal) 36%, var(--color-rule));
+}
+
+.scope-marketing .map-arrow {
+  color: var(--color-ink-4);
+  font-size: 1.25rem;
+  line-height: 2.5rem;
+}
+
+.scope-marketing .map-handoff {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: .75rem;
+  padding: .75rem;
+  font-size: .75rem;
+  color: var(--color-ink-3);
+}
+
+.scope-marketing .map-provision-arrow {
+  width: 28px;
+  height: 20px;
+  color: var(--color-ink-4);
+}
+
+.scope-marketing .map-sandbox {
+  padding: 1.5rem;
+  border: 1px solid var(--color-rule-strong);
+  border-radius: 3px;
+  background: transparent;
+}
+
+.scope-marketing .map-boundary-label {
+  margin-bottom: 1.5rem;
+  font-size: .8125rem;
+  font-weight: 400;
+  color: var(--color-ink-3);
+}
+
+.scope-marketing .map-foundation {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  gap: 1.5rem 2.5rem;
+  border-color: var(--color-rule);
+  font-size: .8125rem;
+  line-height: 1.75;
+}
+
+.scope-marketing .map-foundation strong { font-weight: 450; }
+
+/* 领域关系保留任务、沙箱和产物三种角色，层次靠范围与边线而非嵌套厚卡。 */
+.scope-marketing .concept-map { padding: 0; }
+
+.concept-scope {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .65rem;
+  margin-bottom: 2rem;
+  font-size: .8125rem;
+  color: var(--color-ink-3);
+}
+
+.concept-scope-node {
+  font-family: var(--font-mono);
+  font-size: .75rem;
+  color: var(--color-ink-2);
+}
+
+.concept-scope > span:last-child { margin-left: .5rem; }
+
+.concept-chain {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 2rem minmax(0, 1.9fr) 2rem minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+}
+
+.concept-object,
+.concept-sandbox {
+  min-width: 0;
+  padding: 1.5rem;
+  border: 1px solid var(--color-rule);
+  border-radius: 3px;
+  background: var(--color-surface);
+}
+
+.concept-sandbox {
+  border-color: var(--color-rule-strong);
+  background: transparent;
+}
+
+.concept-arrow {
+  justify-self: center;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--color-ink-4);
+}
+
+.concept-flow {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--color-rule);
+}
+
+.concept-invocation {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .5rem;
+  margin-top: 1rem;
+  font-size: .75rem;
+  color: var(--color-ink-2);
+}
+
+.concept-invocation-node {
+  padding: .4rem .65rem;
+  border: 1px solid var(--color-rule);
+  border-radius: 3px;
+  background: var(--color-surface);
+}
+
+.concept-foundation {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.25rem 2rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-rule);
+}
+
+.interior-disclosure summary {
+  min-height: 44px;
+  align-content: center;
+  transition: color 350ms cubic-bezier(.22, .8, .2, 1);
+}
+
+.interior-disclosure summary::marker { color: var(--color-ink-4); }
+.interior-disclosure summary:hover { color: var(--color-ink); }
+
+.layer-row {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: .5rem 1rem;
+}
+
+.layer-name,
+.layer-description { grid-column: 2; }
+.layer-index { grid-column: 1; grid-row: 1 / 3; }
+.layer-name { margin-top: .75rem; }
+.spec-panel { border-radius: 3px; }
+
+.not-found-view .site-button { min-height: 44px; }
+
+@media (min-width: 900px) {
+  .layer-row {
+    grid-template-columns: 2rem minmax(0, 13rem) minmax(0, 1fr);
+    column-gap: 1.5rem;
+  }
+  .layer-index { grid-row: 1; }
+  .layer-description { grid-column: 3; padding-top: .65rem; }
+}
+
+@media (max-width: 899px) {
+  .scope-marketing .architecture-map { grid-template-columns: minmax(0, 1fr); }
+  .scope-marketing .map-handoff { gap: .5rem; padding: 1.25rem 0; }
+  .scope-marketing .map-provision-arrow { transform: rotate(90deg); }
+  .concept-chain { grid-template-columns: minmax(0, 1fr); gap: .875rem; }
+  .concept-arrow { transform: rotate(90deg); line-height: 1.5rem; }
+  .concept-object,
+  .concept-sandbox { padding: 1.25rem; }
+}
+
+@media (max-width: 639px) {
+  .scope-marketing .page-header-inner { padding-block: 3.5rem; }
+  .scope-marketing .page-header-title { font-size: 2.5rem; }
+  .scope-marketing .page-header-lede { font-size: 1rem; line-height: 1.85; }
+  .scope-marketing .map-sandbox { padding: 1rem; }
+  .scope-marketing .map-node { padding: 1rem; }
+  .scope-marketing .map-node strong { font-size: .9375rem; }
+  .scope-marketing .map-foundation,
+  .concept-foundation { grid-template-columns: minmax(0, 1fr); }
+  .concept-scope { gap: .5rem; }
+  .concept-scope > span:last-child { flex-basis: 100%; margin-left: 0; margin-top: .25rem; }
+  .concept-object p,
+  .concept-sandbox p,
+  .concept-foundation p { font-size: .8125rem; line-height: 1.75; }
+  .spec-row { grid-template-columns: minmax(0, 1fr); row-gap: .25rem; }
+  .spec-row dt { color: var(--color-ink-3); }
+  .not-found-view h1 { font-size: 1.875rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .interior-disclosure summary { transition: none; }
+}

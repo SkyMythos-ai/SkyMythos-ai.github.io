@@ -12,12 +12,17 @@ export function ArchitectureMap({ locale }: { locale: Locale }) {
         <div className="map-arrow" aria-hidden="true">↓</div>
         <div className="map-node"><strong>Sandbox Provider</strong><span>{zh ? "创建与管理运行环境" : "Provision and manage environments"}</span></div>
       </div>
-      <div className="map-handoff"><span>{zh ? "供给沙箱" : "Provision"}</span><span className="hidden md:block" aria-hidden="true">→</span><span className="md:hidden" aria-hidden="true">↓</span></div>
+      <div className="map-handoff">
+        <span>{zh ? "供给沙箱" : "Provision"}</span>
+        <svg className="map-provision-arrow" aria-hidden="true" viewBox="0 0 28 20" fill="none" stroke="currentColor" strokeWidth="1.1">
+          <path d="M2 10h23m-6-6 6 6-6 6" />
+        </svg>
+      </div>
       <div className="map-sandbox">
-        <p className="mb-6 text-sm text-signal">{zh ? "任务沙箱 · 一任务一环境" : "Task sandbox · one per task"}</p>
+        <p className="map-boundary-label">{zh ? "任务沙箱 · 一任务一环境" : "Task sandbox · one per task"}</p>
         <div className="map-node map-primary"><strong>Runner / Supervisor</strong><span>{zh ? "依赖调度 · 执行尝试" : "Dependencies · execution attempts"}</span></div>
         <div className="map-arrow" aria-hidden="true">↓</div>
-        <div className="grid grid-cols-2 gap-3"><div className="map-node"><strong>Agent A</strong></div><div className="map-node"><strong>Agent B</strong></div></div>
+        <div className="map-agents grid grid-cols-2 gap-3"><div className="map-node"><strong>Agent A</strong></div><div className="map-node"><strong>Agent B</strong></div></div>
         <div className="map-arrow" aria-hidden="true">↓</div>
         <div className="map-node"><strong>Artifact</strong><span>{zh ? "冻结产物 · 确定性交接" : "Frozen artefacts · deterministic handoff"}</span></div>
       </div>
