@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { siteUrl, basePath, productName } from "@/lib/site";
-import { localeHtmlLang, locales, type Locale } from "@/lib/i18n";
+import { localeHtmlLang, localePath, locales, type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/content/dictionary";
 
 /**
@@ -41,7 +41,8 @@ export function buildMetadata({
   publishedTime?: string;
 }): Metadata {
   const dictionary = getDictionary(locale);
-  const canonical = `${basePath}/${locale}${path === "/" ? "" : path}`;
+  const localizedPath = (target: Locale) => `${basePath}${localePath(target, path).replace(/\/$/, "")}/`;
+  const canonical = localizedPath(locale);
 
   /**
    * hreflang alternates point at the equivalent page in each locale. Because
@@ -51,11 +52,12 @@ export function buildMetadata({
   const languages = Object.fromEntries(
     locales.map((other) => [
       localeHtmlLang[other],
-      `${basePath}/${other}${path === "/" ? "" : path}`,
+      localizedPath(other),
     ]),
   );
 
   return {
+    metadataBase: new URL(siteUrl),
     title,
     description,
     keywords,
@@ -63,7 +65,7 @@ export function buildMetadata({
       canonical,
       languages: {
         ...languages,
-        "x-default": `${basePath}/zh${path === "/" ? "" : path}`,
+        "x-default": localizedPath("zh"),
       },
     },
     openGraph: {
