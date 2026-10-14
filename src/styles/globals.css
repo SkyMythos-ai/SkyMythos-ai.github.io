@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "./site-navigation.css";
+@import "./home.css";
 
 /* ============================================================================
    SkyMythos design tokens
@@ -15,7 +17,7 @@
         here, matching the SkyMythos Console so the site and product agree.
    ========================================================================= */
 
-@theme inline {
+@theme {
   /* Typography -------------------------------------------------------------
      The split is semantic, not decorative: human language is set in Plex Sans,
      machine facts (digests, versions, paths, status, counters) in Plex Mono.
@@ -26,6 +28,33 @@
     sans-serif;
   --font-mono: var(--font-plex-mono), "SFMono-Regular", "JetBrains Mono",
     Consolas, "Liberation Mono", "PingFang SC", "Microsoft YaHei", monospace;
+
+  /* Display scale ----------------------------------------------------------
+     Fluid, so a headline is one size across every viewport rather than three
+     breakpoint steps that each have to be tuned by hand. The `vw` term carries
+     the growth between roughly 480px and 1400px; the `rem` floor and ceiling
+     stop it collapsing on a phone or ballooning on a 4K display.
+
+     The marketing ground needs this range because a chapter headline is the
+     loudest thing on the page and has to sit several steps above body text to
+     read as a chapter marker at all. Documentation deliberately does not use
+     these — a manual wants a stable, predictable size — which is why they are
+     new tokens rather than a rewrite of the sizes already in use. */
+  --text-display: clamp(2.5rem, 6.4vw, 4.75rem);
+  --text-display--line-height: 1.06;
+  --text-display--letter-spacing: -0.035em;
+
+  --text-chapter: clamp(1.9rem, 4.2vw, 3.1rem);
+  --text-chapter--line-height: 1.14;
+  --text-chapter--letter-spacing: -0.028em;
+
+  --text-section: clamp(1.5rem, 2.6vw, 2.15rem);
+  --text-section--line-height: 1.2;
+  --text-section--letter-spacing: -0.022em;
+
+  /* Lead paragraph, one step above body. */
+  --text-lead: clamp(1.0625rem, 1.3vw, 1.3125rem);
+  --text-lead--line-height: 1.62;
 
   /* Surfaces --------------------------------------------------------------- */
   --color-paper: #f4f5f6;
@@ -64,10 +93,108 @@
   --color-shell-ink: #d6dbe0;
   --color-shell-dim: #7d868f;
 
+  /* Marketing ground ------------------------------------------------------
+     The site has two grounds and they are not a light/dark preference — they
+     are two audiences. Marketing is a first impression read once, so it gets a
+     near-black field that puts a headline and an illustration in the same
+     frame. Documentation is read for minutes, so it keeps paper.
+
+     The values are cool and very slightly blue-shifted (#0b0b0e rather than a
+     neutral #0f0f0f), because a pure-grey black next to the cool grey light
+     theme reads as a different product rather than the same one after dark.
+
+     `night-ink` is deliberately not pure white. At display sizes a pure #fff
+     on a near-black ground halates — the strokes bloom and the letterforms
+     lose their edges. #f0f0f2 keeps the contrast while holding the shape. */
+  --color-night: #0b0b0e;
+  --color-night-2: #121218;
+  --color-night-3: #1a1a22;
+
+  --color-night-ink: #f0f0f2;
+  --color-night-ink-2: #c6c5ce;
+  --color-night-ink-3: #a4a3ad;
+  --color-night-ink-4: #77767f;
+
+  /* Rules on the dark ground are white at low alpha rather than a fixed grey:
+     a fixed grey cannot sit correctly over both the ground and a raised panel. */
+  --color-night-rule: #ffffff1f;
+  --color-night-rule-soft: #ffffff12;
+  --color-night-rule-strong: #ffffff38;
+
+  /* The indigo has to be lifted for the dark ground: #1d4ed8 fails contrast
+     against near-black, and a link nobody can read is not a link. */
+  --color-night-signal: #93aaff;
+  --color-night-signal-wash: #1d2133;
+
+  /* Foreground for anything sitting *on* the ink colour. Because `ink` inverts
+     between grounds, a primary button cannot hard-code `text-white` — it would
+     become white-on-white the moment the ground flipped. */
+  --color-on-ink: #ffffff;
+
   /* Radii — a graded scale, so hierarchy reads without colour --------------- */
   --radius-chip: 2px;
   --radius-panel: 6px;
   --radius-stage: 10px;
+}
+
+/* ============================================================================
+   Grounds
+   ----------------------------------------------------------------------------
+   Two scopes, and every component in the site is written once against the
+   semantic names (`bg-paper`, `text-ink`, `border-rule`) rather than against a
+   colour. Placing a subtree in one scope or the other re-points those names,
+   so the marketing pages and the manual are the same components under two
+   lights instead of two parallel component sets.
+
+   This only works because the theme block above is `@theme` and not
+   `@theme inline` — with `inline`, Tailwind bakes the literal hex into each
+   utility (`.text-ink{color:#14171a}`) and the indirection is lost, leaving
+   every override below silently dead. If the ground ever stops switching,
+   check that first.
+   ========================================================================= */
+
+.scope-dark {
+  --color-paper: var(--color-night);
+  --color-paper-deep: var(--color-night-2);
+  --color-surface: var(--color-night-2);
+  --color-sunken: var(--color-night-3);
+
+  --color-ink: var(--color-night-ink);
+  --color-ink-2: var(--color-night-ink-2);
+  --color-ink-3: var(--color-night-ink-3);
+  --color-ink-4: var(--color-night-ink-4);
+
+  --color-rule: var(--color-night-rule);
+  --color-rule-soft: var(--color-night-rule-soft);
+  --color-rule-strong: var(--color-night-rule-strong);
+
+  --color-signal: var(--color-night-signal);
+  --color-signal-deep: var(--color-night-signal);
+  --color-signal-wash: var(--color-night-signal-wash);
+
+  --color-on-ink: var(--color-night);
+
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+}
+
+/* The one dark surface in the light theme is a terminal. Placed inside the dark
+   ground it would disappear into the page, so it is lightened just enough to
+   stay legible as its own object. */
+.scope-dark .shell {
+  background-color: var(--color-night-3);
+  border: 1px solid var(--color-night-rule);
+}
+
+/* Scrollbars follow the ground too, otherwise the light-theme track shows up as
+   a pale stripe down the edge of a dark page. */
+.scope-dark * {
+  scrollbar-color: var(--color-night-rule-strong) transparent;
+}
+
+.scope-dark *::-webkit-scrollbar-thumb {
+  background-color: var(--color-night-rule-strong);
+  border-color: var(--color-night);
 }
 
 /* ============================================================================
@@ -226,11 +353,25 @@
   }
 
   /* Long-form documentation prose. Scoped by an ancestor class rather than
-     element selectors so it cannot leak into marketing pages. */
+     element selectors so it cannot leak into marketing pages.
+
+     Set at the body's own size rather than a step below it. Documentation is the
+     one place on this site where a reader stays for minutes at a time, and a
+     15px reading size next to 15px chrome leaves the article with no rank of its
+     own — it reads as one more panel of the interface. The column is narrowed at
+     the layout level (`docs/[...slug]/page.tsx`) to keep the resulting measure
+     inside the 40-character band a Chinese column wants and the 80-character
+     band Latin tolerates. */
   .prose-doc {
-    font-size: 0.9375rem;
+    font-size: 1rem;
     line-height: 1.75;
     color: var(--color-ink-2);
+  }
+
+  /* Chinese needs the extra leading more than Latin does, and a slightly looser
+     one than the body default once the size is raised. */
+  :lang(zh) .prose-doc {
+    line-height: 1.85;
   }
 
   .prose-doc > * + * {
@@ -238,28 +379,29 @@
   }
 
   .prose-doc h2 {
-    margin-top: 3rem;
+    margin-top: 3.25rem;
     margin-bottom: 1rem;
-    font-size: 1.3125rem;
+    font-size: 1.375rem;
     font-weight: 600;
     color: var(--color-ink);
-    letter-spacing: -0.012em;
+    letter-spacing: -0.014em;
     scroll-margin-top: 6rem;
   }
 
   .prose-doc h3 {
     margin-top: 2.25rem;
     margin-bottom: 0.75rem;
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
     font-weight: 600;
     color: var(--color-ink);
+    letter-spacing: -0.01em;
     scroll-margin-top: 6rem;
   }
 
   .prose-doc h4 {
     margin-top: 1.75rem;
     margin-bottom: 0.5rem;
-    font-size: 0.9375rem;
+    font-size: 1rem;
     font-weight: 600;
     color: var(--color-ink);
   }
@@ -493,3 +635,28 @@
     display: none !important;
   }
 }
+
+.architecture-map { display: grid; grid-template-columns: minmax(0,1fr) 6rem minmax(0,1.2fr); align-items: center; padding: clamp(1rem,3vw,3rem); background: var(--color-surface); border: 1px solid var(--color-rule); border-radius: 10px; }
+.map-node { display: grid; gap: .4rem; min-width: 0; padding: 1rem; text-align: center; border: 1px solid var(--color-rule-strong); border-radius: 5px; background: var(--color-paper); }
+.map-node strong { font-size: .9375rem; font-weight: 500; }
+.map-node span { font-size: .75rem; color: var(--color-ink-3); }
+.map-primary { border-color: var(--color-signal); }
+.map-arrow { text-align: center; color: var(--color-signal); font-size: 1.5rem; line-height: 2rem; }
+.map-handoff { text-align: center; color: var(--color-ink-3); font-size: .75rem; }
+.map-handoff > span:last-child,.map-handoff > span:nth-child(2) { font-size: 2rem; color: var(--color-signal); }
+.map-sandbox { border: 1px dashed var(--color-signal); padding: 1.5rem; border-radius: 8px; background: var(--color-signal-wash); }
+.map-foundation { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 2rem; margin-top: 2rem; border-top: 1px solid var(--color-rule); padding-top: 1.5rem; font-size: .75rem; }
+.map-foundation p { display: grid; gap: .4rem; }
+.map-foundation span { color: var(--color-ink-3); }
+@media (max-width: 767px) {
+  .architecture-map { grid-template-columns: minmax(0,1fr); }
+  .map-handoff { padding: 1rem; }
+  .map-foundation { grid-template-columns: 1fr; gap: 1rem; }
+}
+
+
+/* 品牌跟随页面底色，在浅色营销页与文档页使用浅色版本。 */
+.brand-logo-light { display: flex; }
+.brand-logo-dark { display: none; }
+.scope-dark .brand-logo-light { display: none; }
+.scope-dark .brand-logo-dark { display: flex; }

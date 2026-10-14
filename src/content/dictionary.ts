@@ -30,9 +30,7 @@ export interface Dictionary {
   };
   hero: {
     /**
-     * The positioning line. Deliberately not a slogan: it states what the
-     * product does to what input, which is how the repository's own README
-     * opens, and it is the one sentence a reader should remember.
+     * 首页 slogan：以一句话表达核心产品价值。
      */
     headline: string;
     lede: string;
@@ -179,8 +177,8 @@ const zh: Dictionary = {
     home: "首页",
   },
   hero: {
-    headline: "把研发意图编译为可验证的变更",
-    lede: "SkyMythos 是面向企业私有化部署的 Agent 工程控制面。它把需求或技术设计与代码仓库作为输入，冻结执行规格，在隔离 Sandbox 中驱动多个 Agent 协作，最终交付可审查的代码变更、验证证据与变更请求——而不是一段无法复现的对话记录。",
+    headline: "让想法，成为可交付的软件。",
+    lede: "在你的环境中，让多个 Agent 协作，将需求转化为可审查的代码与验证证据。",
     primaryCta: "阅读使用文档",
     secondaryCta: "了解产品概念",
     specPanelLabel: "TaskSpec · 冻结中",
@@ -652,8 +650,8 @@ const en: Dictionary = {
     home: "Home",
   },
   hero: {
-    headline: "Compile intent into verifiable change",
-    lede: "SkyMythos is an agent engineering control plane for private deployment. It takes a requirement or technical design plus a repository as input, freezes the execution specification, drives multiple agents inside isolated sandboxes, and delivers reviewable code changes, verification evidence and a merge request — not a conversation transcript that cannot be replayed.",
+    headline: "From idea to software delivery.",
+    lede: "Agents collaborate in your environment to turn requirements into reviewable code and verification evidence.",
     primaryCta: "Read the documentation",
     secondaryCta: "Explore the concepts",
     specPanelLabel: "TaskSpec · freezing",

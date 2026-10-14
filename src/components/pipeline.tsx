@@ -1,23 +1,6 @@
 import type { Locale } from "@/lib/i18n";
 
-/**
- * Pipeline — the execution chain, rendered as an engineering diagram.
- *
- * This is the only place on the site where numbered markers are used, and they
- * are used because the content genuinely is a sequence: preflight runs before
- * provisioning, which runs before execution, and each step is gated on the
- * previous one succeeding. The numbers are a rail index, not a decorative motif.
- *
- * The diagram shows real structure rather than a generic arrow chain:
- *   - a gated spine, where each step fails closed and hands off a frozen artefact
- *   - the sandbox boundary drawn explicitly, because "what runs where" is the
- *     product's central architectural claim
- *   - authority annotations naming which component is authoritative at each step
- *
- * Rendered as semantic markup with a table-like grid, so the diagram survives
- * without colour and reads correctly to a screen reader as a sequence of steps.
- */
-
+/** 七步执行链：以闭合分组明确沙箱边界，详细契约按需展开。 */
 interface PipelineStep {
   /** Step name — the persisted state the control plane moves through. */
   name: string;
@@ -136,116 +119,81 @@ function buildSteps(locale: Locale): PipelineStep[] {
   ];
 }
 
+function FlowArrow({ className = "" }: { className?: string }) {
+  return (
+    <svg aria-hidden="true" viewBox="0 0 32 16" fill="none" className={`h-4 w-8 shrink-0 text-ink-4 ${className}`}>
+      <path d="M1 8h28M23 2l6 6-6 6" stroke="currentColor" strokeWidth="1.5" />
+    </svg>
+  );
+}
+
 export function Pipeline({ locale }: { locale: Locale }) {
   const steps = buildSteps(locale);
-  const sandboxCount = steps.filter((step) => step.inSandbox).length;
-
-  const labels =
-    locale === "zh"
-      ? {
-          sandbox: "任务沙箱边界之内",
-          sandboxNote: "一任务一沙箱。Supervisor 是这里的调度权威。",
-          authority: "状态权威",
-          gate: "门禁",
-        }
-      : {
-          sandbox: "Inside the task sandbox boundary",
-          sandboxNote:
-            "One sandbox per task. The supervisor is the scheduling authority here.",
-          authority: "authority",
-          gate: "gate",
-        };
+  const zh = locale === "zh";
+  const groups = [
+    { label: zh ? "控制面 · 准备" : "Control plane · Prepare", steps: steps.slice(0, 3), offset: 0, sandbox: false },
+    { label: zh ? "任务沙箱 · Supervisor" : "Task sandbox · Supervisor", steps: steps.filter((step) => step.inSandbox), offset: 3, sandbox: true },
+    { label: zh ? "控制面" : "Control plane", steps: steps.slice(6), offset: 6, sandbox: false },
+  ];
+  const outputs = zh
+    ? ["任务记录", "冻结规格", "隔离环境", "Agent 协作", "冻结产物", "变更请求", "知识增量"]
+    : ["Task record", "Frozen spec", "Environment", "Agent sessions", "Frozen artefacts", "Merge request", "Knowledge delta"];
+  const iconPaths = [
+    "M7 4h10v16H7zM10 9h4M10 13h4",
+    "M6 11h12v9H6zM9 11V7a3 3 0 0 1 6 0v4",
+    "M4 7l8-4 8 4v10l-8 4-8-4zM4 7l8 4 8-4M12 11v10",
+    "M4 5h5v5H4zM15 14h5v5h-5zM15 4h5v5h-5zM9 7h3v10h3M12 7h3",
+    "M5 5h14v14H5zM8 12l3 3 5-6",
+    "M6 4v10a4 4 0 0 0 4 4h8M14 14l4 4-4 4M10 7h8M14 3l4 4-4 4",
+    "M4 5h7l1 2 1-2h7v14h-7l-1 2-1-2H4zM12 7v14",
+  ];
 
   return (
-    <div>
-      {/*
-        Column headers. The three columns are numbered because this genuinely is
-        a stepped process, not because numbered markers look technical.
-      */}
-      <div
-        aria-hidden="true"
-        className="hidden grid-cols-[3rem_minmax(0,1fr)_9.5rem] gap-x-5 border-b border-rule-strong pb-2 lg:grid"
-      >
-        <span className="rail-label">step</span>
-        <span className="rail-label">state</span>
-        <span className="rail-label">{labels.authority}</span>
-      </div>
-
-      <ol className="mt-0">
-        {steps.map((step, index) => {
-          const previous = steps[index - 1];
-          /**
-           * Draw the sandbox boundary as a labelled band the first time a step
-           * moves inside it. This is the site's one explicit structural device:
-           * it divides "where the platform governs" from "where the agent runs",
-           * which is the claim the architecture page goes on to defend.
-           */
-          const entersSandbox = step.inSandbox && !previous?.inSandbox;
-
-          return (
-            <li key={step.name}>
-              {entersSandbox ? (
-                <div className="flex items-center gap-3 border-y border-signal/25 bg-signal-wash/60 px-3 py-2">
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 14 14"
-                    className="h-3.5 w-3.5 shrink-0 text-signal"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                  >
-                    <rect x="1.5" y="1.5" width="11" height="11" rx="1.5" />
-                    <path d="M1.5 5h11M5 5v7.5" />
-                  </svg>
-                  <span className="fact-sm font-medium text-signal">
-                    {labels.sandbox}
-                  </span>
-                  <span className="fact-sm hidden text-signal/75 md:inline">
-                    {labels.sandboxNote}
-                  </span>
-                </div>
-              ) : null}
-
-              <div className="grid gap-x-5 gap-y-1.5 border-b border-rule-soft py-4 lg:grid-cols-[3rem_minmax(0,1fr)_9.5rem]">
-                <span className="fact-sm text-ink-4 lg:pt-[3px]">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-
-                <div className="min-w-0">
-                  <h3 className="flex items-baseline gap-2.5 text-[0.9375rem] font-semibold text-ink">
-                    {step.name}
-                    {/*
-                      Each step is gated on the previous one succeeding. Marking
-                      that is information: it explains why a late failure does
-                      not leave half-built infrastructure behind.
-                    */}
-                    {index > 0 ? (
-                      <span className="fact-sm font-normal text-ink-4">
-                        ← {labels.gate}
-                      </span>
-                    ) : null}
-                  </h3>
-                  <p className="measure mt-1.5 text-[0.875rem] leading-[1.65] text-ink-3">
-                    {step.detail}
-                  </p>
-                </div>
-
-                <span className="fact-sm text-ink-4 lg:pt-[3px]">{step.authority}</span>
+    <div className="task-flow">
+      <figure aria-label={zh ? "从任务创建到知识归并的七步流程" : "Seven steps from task creation to knowledge consolidation"}>
+        <div className="task-flow-groups">
+          {groups.map((group, groupIndex) => (
+            <div key={group.label} className="contents">
+              {groupIndex > 0 ? <FlowArrow className="task-flow-group-arrow" /> : null}
+              <div className="task-flow-group" data-sandbox={group.sandbox} data-final={groupIndex === 2}>
+                <p className="task-flow-group-label">{group.label}</p>
+                <ol start={group.offset + 1} className="task-flow-steps">
+                  {group.steps.map((step, index) => (
+                    <li key={step.name}>
+                      <div className="task-flow-step">
+                        <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" className="task-flow-icon">
+                          <path d={iconPaths[group.offset + index]} />
+                        </svg>
+                        <span className="task-flow-index">{String(group.offset + index + 1).padStart(2, "0")}</span>
+                        <h3>{step.name}</h3>
+                        <p>{outputs[group.offset + index]}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ol>
               </div>
-            </li>
-          );
-        })}
-      </ol>
+            </div>
+          ))}
+        </div>
+        <figcaption className="mt-5 text-xs leading-relaxed text-ink-3">
+          {zh ? "预检通过后才创建沙箱。一个任务，一个沙箱；完成后归并知识。" : "Provision only after preflight passes. One task, one sandbox; consolidate knowledge after completion."}
+        </figcaption>
+      </figure>
 
-      {/*
-        Closing count. States how much of the chain runs inside the sandbox,
-        so the boundary band above is quantified rather than implied.
-      */}
-      <p className="fact-sm mt-4 text-ink-4">
-        {locale === "zh"
-          ? `合计 ${steps.length} 步，其中 ${sandboxCount} 步位于沙箱边界内。`
-          : `${steps.length} steps in total, ${sandboxCount} of them inside the sandbox boundary.`}
-      </p>
+      <details className="group mt-8 border-y border-rule">
+        <summary className="cursor-pointer py-4 text-sm font-medium text-ink-2">
+          {zh ? "查看完整流程与状态权威" : "Explore the full process and state authority"}
+        </summary>
+        <ol className="grid gap-x-8 pb-5 md:grid-cols-2">
+          {steps.map((step, index) => (
+            <li key={step.name} className="border-t border-rule-soft py-4">
+              <h3 className="text-sm font-semibold text-ink"><span className="fact-sm mr-3 text-ink-4">{String(index + 1).padStart(2, "0")}</span>{step.name}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-ink-3">{step.detail}</p>
+              <p className="fact-sm mt-3 text-ink-4">{step.authority}</p>
+            </li>
+          ))}
+        </ol>
+      </details>
     </div>
   );
 }

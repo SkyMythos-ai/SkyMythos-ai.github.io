@@ -48,10 +48,10 @@ export function Colophon({ locale }: { locale: Locale }) {
   ];
 
   return (
-    <footer className="no-print border-t border-rule bg-paper-deep">
-      <div className="mx-auto max-w-[90rem] px-6 py-14 md:px-10 lg:px-14">
-        <div className="grid gap-10 lg:grid-cols-[minmax(0,1.5fr)_repeat(3,minmax(0,1fr))]">
-          <div>
+    <footer className="site-colophon no-print border-t border-rule bg-paper-deep">
+      <div className="site-colophon-inner">
+        <div className="site-colophon-grid">
+          <div className="site-colophon-brand">
             <Wordmark size="large" />
             <p className="measure-tight mt-3 text-[0.8125rem] leading-[1.65] text-ink-3">
               {dictionary.footer.tagline}
@@ -69,7 +69,7 @@ export function Colophon({ locale }: { locale: Locale }) {
           ))}
         </div>
 
-        <div className="mt-12 flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 border-t border-rule pt-5">
+        <div className="site-colophon-bottom">
           <p className="fact-sm text-ink-4">
             © {currentYear} SkyMythos. {dictionary.footer.rights}
           </p>

@@ -1,22 +1,12 @@
 import Link from "next/link";
 import { localePath, type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/content/dictionary";
-import { cn } from "@/lib/cn";
 import { Wordmark } from "@/components/wordmark";
 import { LanguageSwitch } from "@/components/language-switch";
 import { NavLink } from "@/components/nav-link";
+import { MobileNavigation } from "@/components/mobile-navigation";
 
-/**
- * Masthead — the fixed top navigation.
- *
- * Server-rendered; the only client component inside is `NavLink`, which exists
- * solely to read the current pathname for the active state. Keeping the shell
- * static means every page ships as HTML with no navigation JavaScript cost.
- *
- * The bar is a hairline-ruled band rather than a floating pill: this product's
- * audience reads specification documents, and a solid ruled header reads as
- * instrumentation while a floating glass pill reads as a marketing template.
- */
+/** 共享顶栏：品牌、响应式导航、语言下拉和开始入口。 */
 export function Masthead({ locale }: { locale: Locale }) {
   const dictionary = getDictionary(locale);
 
@@ -24,28 +14,35 @@ export function Masthead({ locale }: { locale: Locale }) {
     { href: "/", label: dictionary.nav.product, exact: true },
     { href: "/concept", label: dictionary.nav.concept, exact: false },
     { href: "/architecture", label: dictionary.nav.architecture, exact: false },
-    { href: "/docs", label: dictionary.nav.docs, exact: false },
+    // The documentation tab opens the first page of the manual rather than a
+    // landing page: a reader who clicks "Documentation" wants to start reading,
+    // not to choose from a second menu that repeats the sidebar. `match` keeps
+    // the tab lit across the whole subtree regardless of which page is open.
+    {
+      href: "/docs/getting-started/overview",
+      match: "/docs",
+      label: dictionary.nav.docs,
+      exact: false,
+    },
   ];
 
   return (
-    <header className="no-print sticky top-0 z-30 border-b border-rule bg-paper/85 backdrop-blur-xl">
-      <div className="mx-auto flex h-14 max-w-[90rem] items-center gap-6 px-6 md:px-10 lg:px-14">
+    <header className="site-masthead no-print">
+      <div className="site-masthead__bar">
         <Link
           href={localePath(locale, "/")}
-          className="shrink-0 rounded-sm transition-opacity hover:opacity-70"
+          className="site-masthead__brand"
           aria-label={dictionary.nav.home}
         >
           <Wordmark />
         </Link>
 
-        <nav
-          aria-label={dictionary.nav.home}
-          className="hidden min-w-0 flex-1 items-center gap-1 md:flex"
-        >
+        <nav aria-label={dictionary.nav.home} className="site-masthead__desktop-nav">
           {links.map((link) => (
             <NavLink
               key={link.href}
               href={localePath(locale, link.href)}
+              match={link.match ? localePath(locale, link.match) : undefined}
               exact={link.exact}
             >
               {link.label}
@@ -53,56 +50,42 @@ export function Masthead({ locale }: { locale: Locale }) {
           ))}
         </nav>
 
-        <div className="ml-auto flex items-center gap-3">
-          <LanguageSwitch
-            locale={locale}
-            label={dictionary.nav.switchLanguage}
-          />
+        <div className="site-masthead__actions">
+          <LanguageSwitch locale={locale} label={dictionary.nav.switchLanguage} />
           <Link
             href={localePath(locale, "/docs/getting-started/overview")}
-            className={cn(
-              "hidden shrink-0 items-center rounded-sm bg-ink px-3.5 py-1.5",
-              "text-[0.8125rem] font-medium text-white",
-              "transition-colors hover:bg-ink-2 sm:inline-flex",
-            )}
+            className="site-masthead__start site-masthead__desktop-start"
           >
             {dictionary.nav.getStarted}
+            <span aria-hidden="true">↗</span>
           </Link>
         </div>
-      </div>
 
-      {/*
-        Compact navigation for narrow viewports. A native <details> element is
-        used rather than a stateful client menu: it works without JavaScript,
-        is keyboard-accessible for free, and this site is a document-reading
-        experience where a full-screen animated overlay would be noise.
-      */}
-      <details className="group border-t border-rule-soft md:hidden">
-        <summary
-          className={cn(
-            "flex h-11 cursor-pointer list-none items-center px-6",
-            "text-[0.8125rem] font-medium text-ink-2",
-            "[&::-webkit-details-marker]:hidden",
-          )}
-        >
-          <span className="group-open:hidden">{dictionary.nav.openMenu}</span>
-          <span className="hidden group-open:inline">{dictionary.nav.closeMenu}</span>
-        </summary>
-        <nav
-          aria-label={dictionary.nav.home}
-          className="border-t border-rule-soft px-6 pb-3 pt-1"
-        >
-          {links.map((link) => (
+        {/* 原生 disclosure 保持无 JavaScript 时可用，展开面板独立于顶栏高度。 */}
+        <MobileNavigation label={dictionary.nav.openMenu}>
+          <nav aria-label={dictionary.nav.home} className="site-masthead__mobile-panel">
+            <div className="site-masthead__mobile-links">
+              {links.map((link) => (
+                <NavLink
+                  key={link.href}
+                  href={localePath(locale, link.href)}
+                  match={link.match ? localePath(locale, link.match) : undefined}
+                  exact={link.exact}
+                >
+                  {link.label}
+                </NavLink>
+              ))}
+            </div>
             <Link
-              key={link.href}
-              href={localePath(locale, link.href)}
-              className="block border-b border-rule-soft py-2.5 text-[0.875rem] text-ink-2 last:border-0"
+              href={localePath(locale, "/docs/getting-started/overview")}
+              className="site-masthead__start"
             >
-              {link.label}
+              {dictionary.nav.getStarted}
+              <span aria-hidden="true">↗</span>
             </Link>
-          ))}
-        </nav>
-      </details>
+          </nav>
+        </MobileNavigation>
+      </div>
     </header>
   );
 }

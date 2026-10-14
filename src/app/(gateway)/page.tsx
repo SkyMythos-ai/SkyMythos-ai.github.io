@@ -57,7 +57,7 @@ export default function RootPage() {
                 lang={localeHtmlLang[locale]}
                 className={
                   locale === defaultLocale
-                    ? "inline-flex items-center rounded-sm bg-ink px-4 py-2.5 text-[0.875rem] font-medium text-white transition-colors hover:bg-ink-2"
+                    ? "inline-flex items-center rounded-sm bg-ink px-4 py-2.5 text-[0.875rem] font-medium text-on-ink transition-colors hover:bg-ink-2"
                     : "inline-flex items-center rounded-sm border border-rule-strong px-4 py-2.5 text-[0.875rem] font-medium text-ink-2 transition-colors hover:border-ink-3 hover:text-ink"
                 }
               >

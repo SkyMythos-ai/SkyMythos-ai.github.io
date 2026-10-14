@@ -71,14 +71,20 @@ export function TableOfContents({
   // A short page has no need for an index — it would be longer than the value
   // it adds.
   if (entries.length < 3) {
-    return <div className="no-print hidden w-[14rem] shrink-0 xl:block" />;
+    return <div className="no-print hidden w-[15rem] shrink-0 xl:block" />;
   }
 
+  /*
+    The vertical padding and the top offset match `DocsSidebar` and the article
+    between them, so the three column labels sit on one line across the page.
+    Any drift here shows up immediately as a label hovering above or below its
+    neighbours.
+  */
   return (
-    <aside className="no-print hidden w-[14rem] shrink-0 xl:block">
+    <aside className="no-print hidden w-[15rem] shrink-0 xl:block xl:w-[16rem]">
       <nav
         aria-label={label}
-        className="sticky top-14 max-h-[calc(100dvh-3.5rem)] overflow-y-auto py-12 md:py-14"
+        className="site-sticky-rail sticky overflow-y-auto py-10 pl-6 md:py-12"
       >
         <span className="rail-label">{label}</span>
 
@@ -95,7 +101,7 @@ export function TableOfContents({
                     entry.level === 3 ? "pl-6" : "pl-3",
                     active
                       ? "border-ink font-medium text-ink"
-                      : "border-transparent text-ink-3 hover:border-rule-strong hover:text-ink",
+                      : "border-transparent text-ink-2 hover:border-rule-strong hover:text-ink",
                   )}
                 >
                   {entry.text}

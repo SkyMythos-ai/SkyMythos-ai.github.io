@@ -14,20 +14,27 @@ import { cn } from "@/lib/cn";
  * A link with `exact` matches only its own path, so "Product" does not stay lit
  * on every route. Non-exact links match their path and any child route, which is
  * what "Documentation" should do.
+ *
+ * `match` separates where a link *goes* from what it is *lit for*. The
+ * documentation tab jumps straight to the first page of the manual rather than
+ * to a landing page, but it has to stay lit across the whole `/docs` subtree —
+ * without `match` it would go dark the moment the reader moved to a second page.
  */
 export function NavLink({
   href,
   children,
   exact = false,
+  match,
 }: {
   href: string;
   children: React.ReactNode;
   exact?: boolean;
+  match?: string;
 }) {
   const pathname = usePathname();
 
   const normalised = pathname.replace(/\/$/, "") || "/";
-  const target = href.replace(/\/$/, "") || "/";
+  const target = (match ?? href).replace(/\/$/, "") || "/";
 
   const active = exact
     ? normalised === target

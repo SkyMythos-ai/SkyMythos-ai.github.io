@@ -2,9 +2,6 @@ import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { locales, isLocale, type Locale } from "@/lib/i18n";
 import { DocumentShell } from "@/components/document-shell";
-import { Masthead } from "@/components/masthead";
-import { Colophon } from "@/components/colophon";
-import { getDictionary } from "@/content/dictionary";
 
 /**
  * Locale layout — the document root for the whole site.
@@ -18,6 +15,11 @@ import { getDictionary } from "@/content/dictionary";
  * `generateStaticParams` is what makes the export emit both trees: Next
  * pre-renders `/zh/**` and `/en/**` as separate documents, which is also what
  * gives each locale its own crawlable URL and its hreflang pair.
+ *
+ * The furniture — masthead, main, colophon — is *not* rendered here. It lives in
+ * the two route groups below, because the site has two grounds and the ground is
+ * a property of the audience, not of the locale. See `(marketing)/layout.tsx`
+ * and `docs/layout.tsx`.
  */
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -39,26 +41,6 @@ export default async function LocaleLayout({
   }
 
   const locale: Locale = rawLocale;
-  const dictionary = getDictionary(locale);
 
-  return (
-    <DocumentShell locale={locale}>
-      <div className="flex min-h-dvh flex-col">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-sm focus:bg-ink focus:px-3 focus:py-2 focus:text-[0.8125rem] focus:text-white"
-        >
-          {dictionary.nav.skipToContent}
-        </a>
-
-        <Masthead locale={locale} />
-
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-
-        <Colophon locale={locale} />
-      </div>
-    </DocumentShell>
-  );
+  return <DocumentShell locale={locale}>{children}</DocumentShell>;
 }

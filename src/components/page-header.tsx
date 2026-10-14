@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { cn } from "@/lib/cn";
 
 /**
@@ -10,6 +11,11 @@ import { cn } from "@/lib/cn";
  *
  * The right-aligned `meta` slot carries a count or a language tag — a fact about
  * the page, which is why it is set in mono.
+ *
+ * On the marketing pages this is the second-loudest type on the page, one step
+ * below the home hero and one above a chapter heading. It uses the fluid scale so
+ * an interior page's opening statement carries the same weight as the home page's
+ * without repeating its exact size.
  */
 export function PageHeader({
   rail,
@@ -26,17 +32,15 @@ export function PageHeader({
 }) {
   return (
     <section className={cn("border-b border-rule px-6 md:px-10 lg:px-14", className)}>
-      <div className="mx-auto max-w-[90rem] pb-12 pt-14 md:pb-14 md:pt-16">
+      <div className="mx-auto max-w-[90rem] pb-16 pt-16 md:pb-20 md:pt-20">
         <div className="flex items-baseline justify-between gap-4">
           <span className="rail-label">{rail}</span>
           {meta ? <span className="fact-sm text-ink-4">{meta}</span> : null}
         </div>
 
-        <h1 className="mt-6 max-w-[22ch] text-[2.1rem] leading-[1.16] tracking-[-0.026em] md:text-[2.6rem]">
-          {title}
-        </h1>
+        <h1 className="mt-7 max-w-[20ch] text-chapter font-semibold">{title}</h1>
 
-        <p className="measure mt-5 text-[1rem] leading-[1.72] text-ink-2">{lede}</p>
+        <p className="measure mt-6 text-lead text-ink-2">{lede}</p>
       </div>
     </section>
   );
@@ -45,12 +49,25 @@ export function PageHeader({
 /**
  * DocHeader — the header used by documentation pages.
  *
- * Same grid and type scale as `PageHeader`, but the rail carries the section
- * name and the meta slot carries reading time. Documentation is a different
- * reading mode from marketing copy, so it gets its own entry point rather than a
- * pile of conditional props on the shared one.
+ * Documentation is a different reading mode from marketing copy, so it gets its
+ * own entry point rather than a pile of conditional props on `PageHeader`.
+ *
+ * Two departures from the marketing header, both for the same reason — a reader
+ * deep in the manual needs to know where they are, and a header that repeats
+ * itself wastes the one row it has:
+ *
+ * 1. The trail is a single breadcrumb line rather than a bare section name. A
+ *    reader arriving from a search result has no idea that "快速开始" is a
+ *    chapter of a larger manual, so the manual names itself first and links back
+ *    to its index.
+ * 2. The summary is set to the article's own measure, not the marketing `.measure`.
+ *    The two widths are close enough to look like a mistake and different enough
+ *    that the right edge of the summary never lines up with the right edge of the
+ *    prose beneath it.
  */
 export function DocHeader({
+  indexLabel,
+  indexHref,
   sectionTitle,
   title,
   summary,
@@ -58,6 +75,8 @@ export function DocHeader({
   readTimeLabel,
   minutesLabel,
 }: {
+  indexLabel: string;
+  indexHref: string;
   sectionTitle: string;
   title: string;
   summary: string;
@@ -68,8 +87,20 @@ export function DocHeader({
   return (
     <header className="border-b border-rule pb-8">
       <div className="flex items-baseline justify-between gap-4">
-        <span className="rail-label">{sectionTitle}</span>
-        <span className="fact-sm text-ink-4">
+        <nav aria-label={indexLabel} className="fact-sm min-w-0">
+          <Link
+            href={indexHref}
+            className="text-ink-4 transition-colors hover:text-ink-2"
+          >
+            {indexLabel}
+          </Link>
+          <span aria-hidden="true" className="px-2 text-rule-strong">
+            /
+          </span>
+          <span className="text-ink-3">{sectionTitle}</span>
+        </nav>
+
+        <span className="fact-sm shrink-0 text-ink-4">
           {readTimeLabel} {readingMinutes} {minutesLabel}
         </span>
       </div>
@@ -78,7 +109,7 @@ export function DocHeader({
         {title}
       </h1>
 
-      <p className="measure mt-4 text-[1rem] leading-[1.7] text-ink-3">{summary}</p>
+      <p className="mt-4 text-[1rem] leading-[1.7] text-ink-3">{summary}</p>
     </header>
   );
 }

@@ -9,6 +9,12 @@ import { cn } from "@/lib/cn";
  * section is about, and the grid guarantees that label aligns to the same column
  * on every page. That alignment is the structural spine of the site.
  *
+ * `index` adds a chapter number above the rail label in mono — the `01`, `02`,
+ * `03` that make the marketing argument read as a sequence of chapters rather
+ * than as a list of equally-weighted sections. It is optional because the manual
+ * genuinely has no sequence to assert: a reader opens the page that answers
+ * their question, and numbering it would imply an order that does not exist.
+ *
  * The two-column grid collapses to one only below `lg`; the label moves above the
  * content rather than disappearing, because it carries meaning, not ornament.
  */
@@ -18,6 +24,8 @@ export function Section({
   id,
   /** Hanging label text. Rendered in the left gutter on wide viewports. */
   rail,
+  /** Chapter number, e.g. "01". Rendered above the rail label. */
+  index,
   /** Render a hairline above the section to separate it from the previous band. */
   divided = false,
   /** Constrain inner content width. `wide` is for the pipeline and tables. */
@@ -27,6 +35,7 @@ export function Section({
   className?: string;
   id?: string;
   rail?: string;
+  index?: string;
   divided?: boolean;
   width?: "default" | "wide";
 }) {
@@ -43,16 +52,21 @@ export function Section({
         className={cn(
           // Generous but not airy: the spec-sheet reading wants breathing room
           // between bands without letting the page lose its instrument feel.
-          "mx-auto grid gap-x-10 gap-y-6 py-12 md:py-14 lg:py-16",
+          // Widened for the marketing ground, where a chapter has to occupy a
+          // full viewport's worth of attention rather than sit in a document.
+          "mx-auto grid gap-x-10 gap-y-6 py-16 md:py-20 lg:py-24",
           rail
             ? "lg:grid-cols-[9rem_minmax(0,1fr)]"
             : "lg:grid-cols-[minmax(0,1fr)]",
           width === "wide" ? "max-w-[90rem]" : "max-w-[76rem]",
         )}
       >
-        {rail ? (
+        {rail || index ? (
           <div className="lg:pt-1">
-            <span className="rail-label block">{rail}</span>
+            {index ? (
+              <span className="fact-sm mb-2 block text-ink-4">{index}</span>
+            ) : null}
+            {rail ? <span className="rail-label block">{rail}</span> : null}
           </div>
         ) : null}
         <div className="min-w-0">{children}</div>
@@ -65,7 +79,10 @@ export function Section({
  * SectionHeading — heading plus lede, with the one consistent measure.
  *
  * Kept as a pair so the vertical gap between a heading and its explanatory text
- * never varies across the site.
+ * never varies across the site. The heading uses the fluid `text-chapter` token:
+ * on the marketing ground this is the step that makes a chapter read as a
+ * chapter, and the gap between it and body text is what gives a long scroll its
+ * sense of altitude.
  */
 export function SectionHeading({
   title,
@@ -77,12 +94,10 @@ export function SectionHeading({
   className?: string;
 }) {
   return (
-    <div className={cn("mb-10 md:mb-12", className)}>
-      <h2 className="text-[1.75rem] leading-[1.22] tracking-[-0.02em] md:text-[2.05rem]">
-        {title}
-      </h2>
+    <div className={cn("mb-12 md:mb-16", className)}>
+      <h2 className="text-chapter max-w-[24ch] font-semibold">{title}</h2>
       {lede ? (
-        <p className="measure mt-4 text-[0.9375rem] leading-[1.7] text-ink-3">
+        <p className="measure mt-5 text-[1.0625rem] leading-[1.7] text-ink-2">
           {lede}
         </p>
       ) : null}

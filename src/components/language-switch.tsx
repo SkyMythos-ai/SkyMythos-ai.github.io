@@ -1,25 +1,12 @@
 "use client";
 
+import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { alternateLocale, localeLabels, type Locale } from "@/lib/i18n";
+import { locales, localeHtmlLang, localeLabels, type Locale } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
 
-/**
- * LanguageSwitch — swaps the locale segment while preserving the current page.
- *
- * This is the second and last reason the shell needs client JavaScript. Two
- * decisions are deliberate:
- *
- * 1. The equivalent page is preserved rather than sending the reader back to the
- *    home page. Both locale trees are generated from the same route list, so a
- *    counterpart always exists.
- *
- * 2. The control is a pair of explicit links, not a dropdown. Two options do not
- *    warrant a menu, and links are keyboard-reachable, middle-clickable and
- *    visible in the page source for crawlers — which is how the alternate tree
- *    gets discovered in the first place.
- */
+/** 语言选择保留当前页面；使用原生按钮与链接支持键盘和新标签页导航。 */
 export function LanguageSwitch({
   locale,
   label,
@@ -30,48 +17,113 @@ export function LanguageSwitch({
   className?: string;
 }) {
   const pathname = usePathname();
-  const other = alternateLocale(locale);
+  const [open, setOpen] = useState(false);
+  const [urlSuffix, setUrlSuffix] = useState("");
+  const containerRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const panelId = useId();
 
-  /**
-   * Replace only the leading locale segment. The rest of the path is identical
-   * in both trees by construction.
-   */
-  const segments = pathname.split("/").filter(Boolean);
-  if (segments.length > 0) {
-    segments[0] = other;
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+    function closeOnOutsidePress(event: PointerEvent) {
+      if (event.target instanceof Node && !containerRef.current?.contains(event.target)) {
+        setOpen(false);
+      }
+    }
+    document.addEventListener("pointerdown", closeOnOutsidePress);
+    return () => document.removeEventListener("pointerdown", closeOnOutsidePress);
+  }, [open]);
+
+  function localeHref(targetLocale: Locale) {
+    // 仅替换语言前缀，保留文档路径及末尾斜杠；basePath 交给 Next Link。
+    const target = /^\/(zh|en)(?=\/|$)/.test(pathname)
+      ? pathname.replace(/^\/(zh|en)(?=\/|$)/, `/${targetLocale}`)
+      : `/${targetLocale}${pathname === "/" ? "" : pathname}`;
+    return `${target}${urlSuffix}`;
   }
-  const target = `/${segments.join("/")}`;
 
   return (
-    <Link
-      href={target || `/${other}`}
-      hrefLang={other === "zh" ? "zh-CN" : "en"}
-      aria-label={`${label}: ${localeLabels[other]}`}
-      className={cn(
-        "inline-flex items-center gap-1.5 rounded-sm border border-rule",
-        "px-2 py-1 text-[0.75rem] leading-none text-ink-2",
-        "transition-colors hover:border-rule-strong hover:text-ink",
-        className,
-      )}
+    <div
+      ref={containerRef}
+      className={cn("relative shrink-0", className)}
+      onBlur={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+      }}
+      onKeyDown={(event) => {
+        if (event.key === "Escape" && open) {
+          event.preventDefault();
+          event.stopPropagation();
+          setOpen(false);
+          triggerRef.current?.focus();
+        }
+      }}
     >
-      {/*
-        A small globe glyph rather than a flag. A language is not a country, and
-        the two locales here are Chinese and English, neither of which maps to a
-        single flag.
-      */}
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 16 16"
-        className="h-3 w-3 shrink-0"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.3"
+      <button
+        ref={triggerRef}
+        type="button"
+        aria-label={label}
+        title={label}
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={() => {
+          setUrlSuffix(`${window.location.search}${window.location.hash}`);
+          setOpen((value) => !value);
+        }}
+        className={cn(
+          "inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full",
+          "text-ink-2 transition-colors hover:bg-paper-deep hover:text-ink",
+          "focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-signal",
+          open && "bg-paper-deep text-ink",
+        )}
       >
-        <circle cx="8" cy="8" r="6.4" />
-        <ellipse cx="8" cy="8" rx="2.7" ry="6.4" />
-        <path d="M1.6 8h12.8" />
-      </svg>
-      <span>{localeLabels[other]}</span>
-    </Link>
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 16 16"
+          className="h-5 w-5"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.2"
+        >
+          <circle cx="8" cy="8" r="6.4" />
+          <ellipse cx="8" cy="8" rx="2.7" ry="6.4" />
+          <path d="M1.6 8h12.8" />
+        </svg>
+      </button>
+      <div
+        id={panelId}
+        hidden={!open}
+        className="absolute right-0 top-full z-50 mt-3 w-40 rounded-lg border border-rule bg-surface p-1.5 shadow-lg"
+      >
+        <ul aria-label={label}>
+          {locales.map((option) => (
+            <li key={option}>
+              <Link
+                href={localeHref(option)}
+                hrefLang={localeHtmlLang[option]}
+                lang={localeHtmlLang[option]}
+                aria-current={option === locale ? "true" : undefined}
+                onClick={() => setOpen(false)}
+                className={cn(
+                  "flex min-h-10 items-center justify-between rounded-md px-3 text-sm text-ink-2",
+                  "transition-colors hover:bg-paper-deep hover:text-ink focus-visible:bg-paper-deep focus-visible:outline-2 focus-visible:outline-signal",
+                  option === locale && "bg-paper-deep font-medium text-ink",
+                )}
+              >
+                <span>{localeLabels[option]}</span>
+                {option === locale && (
+                  <svg aria-hidden="true" viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.5">
+                    <path d="m3 8 3.2 3.2L13 4.5" />
+                  </svg>
+                )}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 }

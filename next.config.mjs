@@ -36,6 +36,17 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
+  experimental: {
+    // Enables `app/global-not-found.tsx`, the 404 for URLs matching no route.
+    //
+    // The site has no single root layout: every layout lives inside a route
+    // group, and a group's layout only applies within its own subtree. A plain
+    // root `not-found.tsx` therefore composes with nothing and ships without the
+    // stylesheet. This flag is the convention Next provides for exactly that
+    // shape of app — it renders outside the layout tree, which is what makes it
+    // work where a layout cannot.
+    globalNotFound: true,
+  },
   env: {
     NEXT_PUBLIC_BASE_PATH: basePath,
   },
