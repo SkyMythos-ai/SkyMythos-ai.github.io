@@ -1,13 +1,14 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { localePath, type Locale } from "@/lib/i18n";
 import { EMPLOYEE_SCENE_DURATION, getEmployeeStory } from "@/content/employee-story";
-import { EmployeeScene } from "@/components/employee-scene";
+import { createEmblemPainter } from "@/components/employee-emblem-motion";
+import { EMPLOYEE_POSTER_SECONDS } from "@/components/employee-motion-model";
 
-/** 短片与轮播共用时钟；手动选择播放一遍并保留成果，显式播放才恢复自动轮播。 */
-export function HeroStage({ locale }: { locale: Locale }) {
+/** 默认自动轮播；手动选择播放一遍并停留，当前主题可暂停、续播或重播。 */
+export function HeroStage({ locale, visuals }: { locale: Locale; visuals: ReactNode[] }) {
   const scenes = getEmployeeStory(locale);
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
@@ -33,7 +34,10 @@ export function HeroStage({ locale }: { locale: Locale }) {
     setReady(true);
     preference.addEventListener("change", syncPreference);
     document.addEventListener("visibilitychange", syncVisibility);
-    const observer = new IntersectionObserver(([entry]) => setVisible(entry.isIntersecting && entry.intersectionRatio >= .12), { threshold: .12 });
+    const observer = new IntersectionObserver((entries) => {
+      const entry = entries[entries.length - 1];
+      setVisible(entry.isIntersecting && entry.intersectionRatio >= .12);
+    }, { threshold: .12 });
     if (root.current) observer.observe(root.current);
     return () => {
       preference.removeEventListener("change", syncPreference);
@@ -43,28 +47,37 @@ export function HeroStage({ locale }: { locale: Locale }) {
   }, []);
 
   useEffect(() => {
+    const element = root.current?.querySelector<SVGSVGElement>(`[data-emblem="${scene.id}"]`);
+    if (!element || !ready) return;
+    const paint = createEmblemPainter(element, scene.id, locale);
+    paint(reducedMotion ? EMPLOYEE_POSTER_SECONDS : elapsed.current / 1000);
+    element.dataset.playback = reducedMotion ? "static" : running ? "running" : "paused";
     if (!running) return;
     let frame = 0;
     let previous = 0;
     function tick(now: number) {
+      // 分镜直接按时间求值；低帧率仍保持 12 秒，只截断系统唤醒造成的异常间隔。
       if (previous) elapsed.current += Math.min(now - previous, 100);
       previous = now;
       if (elapsed.current >= EMPLOYEE_SCENE_DURATION) {
         if (autoplay) {
           elapsed.current = 0;
           setActive((index) => (index + 1) % scenes.length);
+          root.current?.style.setProperty("--scene-progress", "0");
+          return;
         } else {
           elapsed.current = EMPLOYEE_SCENE_DURATION;
           setPaused(true);
         }
       }
       root.current?.style.setProperty("--scene-progress", `${elapsed.current / EMPLOYEE_SCENE_DURATION}`);
+      paint(elapsed.current / 1000);
       if (!autoplay && elapsed.current >= EMPLOYEE_SCENE_DURATION) return;
       frame = requestAnimationFrame(tick);
     }
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [running, scenes.length, autoplay]);
+  }, [running, scenes.length, autoplay, scene.id, locale, ready, reducedMotion]);
 
   function selectScene(index: number) {
     setActive((index + scenes.length) % scenes.length);
@@ -74,15 +87,13 @@ export function HeroStage({ locale }: { locale: Locale }) {
     root.current?.style.setProperty("--scene-progress", "0");
   }
 
-  function togglePlayback() {
-    if (paused) {
-      if (elapsed.current >= EMPLOYEE_SCENE_DURATION) {
-        elapsed.current = 0;
-        root.current?.style.setProperty("--scene-progress", "0");
-      }
-      setAutoplay(true);
+  function activateScene(index: number) {
+    if (index !== active || reducedMotion || elapsed.current >= EMPLOYEE_SCENE_DURATION) {
+      selectScene(index);
+      return;
     }
-    setPaused(!paused);
+    setAutoplay(false);
+    setPaused((value) => !value);
   }
 
   return (
@@ -95,7 +106,9 @@ export function HeroStage({ locale }: { locale: Locale }) {
       data-scene={active}
       data-running={running}
       onFocusCapture={(event) => {
-        if (!(event.target as HTMLElement).closest("[data-playback-control]")) setPaused(true);
+        // 主题获焦停止自动换幕，按下按钮才切换播放状态，避免鼠标聚焦抵消暂停。
+        if ((event.target as HTMLElement).closest(".employee-chapter")) setAutoplay(false);
+        else setPaused(true);
       }}
       onTouchStart={(event) => { swipeStart.current = event.touches.length === 1 ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null; }}
       onTouchEnd={(event) => {
@@ -108,39 +121,44 @@ export function HeroStage({ locale }: { locale: Locale }) {
       onTouchCancel={() => { swipeStart.current = null; }}
     >
       <div className="employee-body">
-        <div className="employee-copy" id={panelId} role="group" aria-roledescription={zh ? "幻灯片" : "slide"} aria-label={`${active + 1} / ${scenes.length} · ${scene.label}`} aria-live={running ? "off" : "polite"}>
-          <p className="employee-eyebrow">{zh ? "数字员工 · 为真实工作而生" : "DIGITAL EMPLOYEES · BUILT FOR REAL WORK"}</p>
-          <div key={scene.id} className="employee-copy-transition">
-            <h1 className="employee-headline"><span>{scene.headline[0]}</span><span>{scene.headline[1]}</span></h1>
-            <p className="employee-description">{scene.description}</p>
-            <span className="sr-only">{scene.alt}</span>
+        <div className="employee-content">
+          <div className="employee-copy" id={panelId} role="group" aria-roledescription={zh ? "幻灯片" : "slide"} aria-label={`${active + 1} / ${scenes.length} · ${scene.label}`} aria-live={running ? "off" : "polite"}>
+            <p className="employee-eyebrow">{zh ? "数字员工 · 为真实工作而生" : "DIGITAL EMPLOYEES · BUILT FOR REAL WORK"}</p>
+            <div className="employee-copy-panels">
+              {scenes.map((item, index) => (
+                <div key={item.id} className="employee-copy-transition" data-active={active === index} aria-hidden={active !== index}>
+                  <h1 className="employee-headline"><span>{item.headline[0]}</span><span>{item.headline[1]}</span></h1>
+                  <p className="employee-description">{item.description}</p>
+                  <span className="sr-only">{item.alt}</span>
+                </div>
+              ))}
+            </div>
+            <div className="employee-actions">
+              <Link href="#digital-employees" className="employee-primary">{zh ? "认识数字员工" : "Meet the team"}<span aria-hidden="true">↗</span></Link>
+              <Link href={localePath(locale, "/docs/getting-started/overview")} className="employee-secondary">{zh ? "开始探索" : "Get started"}<span aria-hidden="true">→</span></Link>
+            </div>
           </div>
-          <div className="employee-actions">
-            <Link href="#digital-employees" className="employee-primary">{zh ? "认识数字员工" : "Meet the team"}<span aria-hidden="true">↗</span></Link>
-            <Link href={localePath(locale, "/docs/getting-started/overview")} className="employee-secondary">{zh ? "开始探索" : "Get started"}<span aria-hidden="true">→</span></Link>
+          <div className="employee-scene-picker" role="group" aria-label={reducedMotion ? (zh ? "选择主题" : "Choose a topic") : (zh ? "选择主题；再次点击当前主题可暂停或继续" : "Choose a topic; click the current topic to pause or resume")}>
+            {scenes.map((item, index) => {
+              const selected = active === index;
+              const action = reducedMotion ? "" : !selected ? (zh ? "播放这一幕" : "Play this scene")
+                : elapsed.current >= EMPLOYEE_SCENE_DURATION ? (zh ? "重播这一幕" : "Replay this scene")
+                : paused ? (zh ? "继续播放" : "Resume animation") : (zh ? "暂停动画" : "Pause animation");
+              const label = action ? `${item.label}${zh ? "：" : ": "}${action}` : item.label;
+              return (
+                <button key={item.id} type="button" className="employee-chapter" title={label} aria-label={label} aria-pressed={selected} aria-controls={panelId} onClick={() => activateScene(index)}>
+                  <span>{item.label}</span><span className="employee-chapter-track" aria-hidden="true"><span /></span>
+                </button>
+              );
+            })}
           </div>
         </div>
         <div className="employee-backdrops" aria-hidden="true">
           {scenes.map((item, index) => (
             <div key={item.id} className="employee-backdrop" data-active={active === index}>
-              <EmployeeScene scene={item.id} locale={locale} playback={reducedMotion ? "static" : running && active === index ? "running" : "paused"} elapsed={elapsed} />
+              {visuals[index]}
             </div>
           ))}
-        </div>
-      </div>
-      <div className="employee-footer">
-        <div className="employee-scene-picker" role="group" aria-label={zh ? "选择故事章节" : "Choose a chapter"}>
-          {scenes.map((item, index) => (
-            <button key={item.id} type="button" className="employee-chapter" title={reducedMotion ? item.label : (zh ? `${item.label}：播放这一幕` : `${item.label}: play this scene`)} aria-pressed={active === index} aria-controls={panelId} onClick={() => selectScene(index)}>
-              <span className="employee-chapter-index">0{index + 1}</span><span>{item.label}</span><span className="employee-chapter-track" aria-hidden="true"><span /></span>
-            </button>
-          ))}
-        </div>
-        <div className="employee-playback">
-          <span className="employee-counter" aria-hidden="true">0{active + 1}<span> / 03</span></span>
-          <button type="button" aria-label={zh ? "上一幕" : "Previous slide"} onClick={() => selectScene(active - 1)}>←</button>
-          <button type="button" aria-label={zh ? "下一幕" : "Next slide"} onClick={() => selectScene(active + 1)}>→</button>
-          {!reducedMotion && <button type="button" data-playback-control aria-label={paused ? (zh ? "播放轮播" : "Play slideshow") : (zh ? "暂停轮播" : "Pause slideshow")} aria-pressed={paused} onClick={togglePlayback}><span aria-hidden="true">{paused ? "▷" : "Ⅱ"}</span></button>}
         </div>
       </div>
     </section>

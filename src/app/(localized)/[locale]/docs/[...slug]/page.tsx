@@ -129,7 +129,13 @@ export default async function DocPage({ params }: PageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <div className="mx-auto flex max-w-[90rem] px-6 md:px-10 lg:px-14">
+      <details className="docs-mobile-contents">
+        <summary>{locale === "zh" ? "文档目录" : "Browse documentation"}</summary>
+        <nav aria-label={dictionary.docs.sidebarLabel}>
+          {nav.map(group => <section key={group.id}><h2>{group.title}</h2><ul>{group.pages.map(item => <li key={item.slug}><Link href={localePath(locale, `/docs/${item.slug}`)} aria-current={item.slug === slug ? "page" : undefined}>{item.title}</Link></li>)}</ul></section>)}
+        </nav>
+      </details>
+      <div className="docs-reading-layout mx-auto flex max-w-[90rem] px-6 md:px-10 lg:px-14">
         <DocsSidebar
           locale={locale}
           nav={nav}
@@ -145,7 +151,7 @@ export default async function DocPage({ params }: PageProps) {
         */}
         <article
           className={cn(
-            "min-w-0 flex-1 py-10 md:py-12",
+            "docs-reading-article min-w-0 flex-1 py-10 md:py-12",
             "border-x border-rule bg-surface",
             "px-6 md:px-10 lg:px-12",
           )}
@@ -167,12 +173,12 @@ export default async function DocPage({ params }: PageProps) {
               minutesLabel={dictionary.docs.minutes}
             />
 
-            <MarkdownRenderer content={page.body} className="mt-10" />
+            <MarkdownRenderer content={page.body} locale={locale} className="mt-10" />
 
             {/* Previous / next walk the whole manual in reading order. */}
             <nav
               aria-label={dictionary.docs.backToIndex}
-              className="mt-16 grid gap-4 border-t border-rule pt-8 sm:grid-cols-2"
+              className="docs-article-footer mt-16 grid gap-4 border-t border-rule pt-8 sm:grid-cols-2"
             >
               {previous ? (
                 <Link

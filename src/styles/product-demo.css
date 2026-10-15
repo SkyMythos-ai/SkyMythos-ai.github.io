@@ -1,0 +1,44 @@
+/* 实际截图承担产品内容，镜头与指针仅解释正在发生的操作。 */
+.product-demo { min-width: 0; --demo-progress: 0; }
+.product-demo-stage { position: relative; overflow: hidden; aspect-ratio: 8 / 5; background: #f8f9fb; isolation: isolate; --demo-cursor-x: 50%; --demo-cursor-y: 50%; --demo-tap-opacity: 0; --demo-tap-scale: .6; }
+.product-demo-camera { position: absolute; inset: 0 auto auto 0; width: 100%; height: 100%; transform-origin: 0 0; }
+.product-demo-stage[data-ready="true"] .product-demo-camera { transition: transform 1000ms cubic-bezier(.22, 1, .36, 1); }
+.product-demo-camera img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; max-width: none; object-fit: contain; opacity: 0; transition: opacity 260ms ease; }
+.product-demo-camera img[data-active="true"] { opacity: 1; }
+.product-demo-pointer { position: absolute; width: 23px; height: 27px; left: var(--demo-cursor-x); top: var(--demo-cursor-y); pointer-events: none; opacity: 0; transition: left 1000ms cubic-bezier(.22, 1, .36, 1), top 1000ms cubic-bezier(.22, 1, .36, 1), opacity 180ms ease; }
+.product-demo[data-mode="auto"] [data-action="true"] .product-demo-pointer { opacity: 1; }
+.product-demo-stage[data-has-cursor="false"] :is(.product-demo-pointer, .product-demo-tap) { display: none; }
+.product-demo-tap { position: absolute; left: var(--demo-cursor-x); top: var(--demo-cursor-y); width: 34px; height: 34px; border-radius: 50%; background: rgb(49 86 255 / 20%); border: 2px solid rgb(49 86 255 / 65%); opacity: var(--demo-tap-opacity); transform: translate(-50%, -50%) scale(var(--demo-tap-scale)); pointer-events: none; transition: left 1000ms cubic-bezier(.22, 1, .36, 1), top 1000ms cubic-bezier(.22, 1, .36, 1); }
+.product-demo-controls { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+.product-demo-controls button { position: relative; display: flex; align-items: flex-start; min-width: 0; min-height: 48px; padding: 12px 0 16px; text-align: left; color: var(--color-ink-3); font: 400 14px/1.6 var(--font-sans); cursor: pointer; }
+.product-demo-controls button[aria-pressed="true"], .product-demo-controls button:hover { color: var(--color-ink); }
+.product-demo-progress { position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--color-sunken); overflow: hidden; }
+.product-demo-progress::after { content: ""; position: absolute; inset: 0; background: var(--color-ink-3); transform-origin: 0 50%; transform: scaleX(0); }
+.product-demo-controls [aria-pressed="true"] .product-demo-progress::after { transform: scaleX(1); }
+.product-demo[data-mode="auto"] [aria-pressed="true"] .product-demo-progress::after { transform: scaleX(var(--demo-progress)); }
+.product-demo-detail-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 28px; align-items: baseline; margin-top: 16px; }
+.product-demo-detail { flex: 1 1 28ch; min-height: 3.4em; max-width: 70ch; color: var(--color-ink-2); font: 400 14px/1.7 var(--font-sans); }
+.product-demo-playback { flex: 0 0 auto; min-height: 44px; padding-block: 8px; color: var(--color-ink-3); cursor: pointer; font: 400 13px/1.6 var(--font-sans); }
+.product-demo-playback:hover { color: var(--color-ink); }
+.product-demo-controls button:focus-visible, .product-demo-playback:focus-visible { outline: 2px solid var(--color-ink-2); outline-offset: 4px; }
+.product-demo-static { display: grid; gap: 16px; margin-top: 24px; padding-left: 18px; font-size: 14px; line-height: 1.75; }
+.product-demo-static li > p { color: var(--color-ink-3); margin-top: 4px; }
+.product-demo-static li > a { display: inline-block; margin-top: 4px; color: var(--color-ink-2); }
+.product-demo-error { margin-top: 12px; font-size: 14px; color: var(--color-ink-3); }
+@media (min-width: 640px) {
+  .product-demo[data-product-demo="agent-setup"] .product-demo-stage { aspect-ratio: 12 / 5; }
+}
+@media (max-width: 767px) {
+  .product-knowledge > .product-demo { order: 2; }
+}
+@media (max-width: 639px) {
+  .product-demo-stage { aspect-ratio: 5 / 4; }
+  .product-demo-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 20px; margin-top: 16px; }
+  .product-demo-controls button { min-height: 48px; padding-block: 10px 13px; }
+  .product-demo-detail { flex-basis: 100%; min-height: 5.1em; }
+  .product-demo-pointer { width: 19px; height: 23px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .product-demo-camera, .product-demo-camera img { transition: none !important; }
+  .product-demo-pointer, .product-demo-tap, .product-demo-playback, .anatomy-playback { display: none; }
+}

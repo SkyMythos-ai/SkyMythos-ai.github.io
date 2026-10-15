@@ -1,255 +1,133 @@
 import type { DocPage } from "@/content/types";
 
-/**
- * Platform operations.
- *
- * Aimed at the person who deploys and runs this inside an enterprise, not at the
- * developer writing a task. The role page leads the section because in this
- * product the governance model is the operative fact: what a role may do is
- * enforced server-side, and getting that wrong is the most common deployment
- * misunderstanding.
- */
-
 export const operationsEn: DocPage[] = [
   {
     slug: "operations/roles",
     section: "operations",
     title: "Roles and permissions",
-    summary:
-      "What each of the four perspectives can do, where those rights come from, why switching perspective never widens them, and the distinction between management target and current workspace.",
+    summary: "Understand member, team and platform scopes, and separate navigation perspectives from actual data permissions.",
     readingOrder: 1,
     body: `
-## One deployment, one Organization
+## Organization and workspaces
 
-A deployment has exactly one Organization. There is no multi-organisation creation, switching or archiving semantic.
+A deployment has one organization. Workspaces hold membership authorization and shared capabilities. A workspace may contain multiple projects and repositories; it is not a repository.
 
-A member is a human account with a stable identity inside that single Organization. A member cannot join or switch to another one.
+Organization identity and workspace membership participate separately in authorization. Platform administration does not automatically grant access to every workspace's business data.
 
-There are three Organization-level roles: administrator, operations and member. Administrator and operations hold exactly the same platform operations capabilities; the administrator governs organisation team members, platform roles and workspace assignments on top of them, and nothing else.
+## Understand the navigation scopes
 
-## Workspace
+| Scope | Main work | Common entries |
+| --- | --- | --- |
+| Member | Daily collaboration, tasks, knowledge and personal authorization | Chat, Staff, Tasks, Knowledge, Connections & access |
+| Team management | Workspace members, usage and model quotas | Team |
+| Platform operations | Global services, runtime resources and organization integrations | Platform |
 
-A Workspace is the logical collaboration scope inside the Organization that carries membership authorisation and shared capabilities. It is not bound to a code repository, and may contain several.
+The interface exposes entries available to the current identity. Changing perspective reorganizes navigation without widening rights. Direct URLs still require server authorization.
 
-There are three Workspace roles: administrator, member and viewer.
+## Administrators and operations
 
-**Platform administration does not confer workspace data rights by itself.** An operations role that has not joined a given Workspace cannot see the tasks, knowledge or artefacts inside it.
+Organization administrators and operations roles configure the platform. Administrators additionally govern organization members, platform roles and workspace assignments. A workspace administrator's authority is limited to the relevant workspace.
 
-## The four perspectives
+Check the management target before acting. It can differ from the workspace where you are currently working; opening another workspace's settings does not imply your session scope changed.
 
-The four perspectives in the interface must come from real persisted authorisation, not from demo parameters.
+## Credentials belong to members
 
-**Member** is the day-to-day perspective of anyone who is a member of an authorised Workspace. It reaches conversations, development environments, tasks, automation, knowledge, memory, the marketplace and personal connectors.
+Personal Git tokens, model credentials and external tool authorization are managed in **Connections & access**. Shared roles, Skills and workspace membership do not copy another member's private credentials.
 
-**Workspace administrator** derives from membership of the current Workspace and governs that Workspace alone. On top of member capabilities it adds team overview, member management, member usage, cost analysis and model quota.
+Administrators configure service catalogs and policy. Members authorize the services they can access. Revoking authorization and deleting business results are different operations.
 
-**Operations** is a formal platform role within the single Organization, holding every platform operations capability. On top of member capabilities it adds the resource dashboard, provider clusters and sandboxes, workspace lifecycle, sandbox policy, enterprise instant messaging, the model gateway, Git services, knowledge and marketplace management, and connector exposure policy.
+## Accounts and membership
 
-**Administrator** holds exactly the same platform operations capabilities as operations, and governs team members, platform roles and workspace assignments on top of them.
+Disabling an account, deleting it and removing workspace membership have different effects. Confirm whether the goal is to stop sign-in, revoke one scope or irreversibly delete an account.
 
-**Switching perspective regroups navigation; it does not widen permission.** Every read and write is still authorised by the control plane against the signed-in principal, the Organization and Workspace membership. A non-administrator who constructs a deep link must receive an authorisation denial — hiding the navigation entry is not the control.
-
-## Account boundaries for a member
-
-Disabling an account preserves memberships and is reversible.
-
-Deleting an account revokes every membership and all sign-in access, and retains a permanent tombstone carrying the deletion time and the operator, together with historical business references. It cannot be restored by re-enabling. The old email address is kept on record so that automatic provisioning cannot resurrect the account.
-
-Removing someone from a Workspace revokes only that Workspace membership and leaves the platform account untouched.
-
-To create a member account, an administrator supplies the sign-in email, the display name and the target Workspace role; the server creates a sign-in-capable human account and joins it to the target Workspace immediately. The server generates the initial password at random, and the user, the organisation membership and the Workspace membership are written in one transaction.
-
-An email address that already exists is always refused rather than re-provisioned. An existing password is never overwritten, and existing account authorisation is never modified implicitly.
-
-The initial password is held in the memory of the current drawer only. It does not enter a cache, browser persistent storage or a log, and it is cleared when the drawer closes or the management target changes.
-
-## Authentication modes
-
-A local account signs in with a unique email address. An enterprise identity is linked to a member inside the Organization through an identity binding.
-
-An active binding is unique on both sides — on the member and on the external identity. Switching provider retains the inactive history and requires an explicit rebind. **External identities are not merged automatically by email address**, because automatic merging would let a change in who owns an email address silently change permissions.
-
-## Management target and current workspace
-
-Configuration pages inside the workspace catalogue must distinguish explicitly between the **current session Workspace** and the **management target Workspace**.
-
-Entering member, model key, sandbox or provider management from the workspace list changes the management target only; it does not switch the current Workspace of the product shell.
-
-The distinction is easy to overlook, and the consequence is concrete: if the two are conflated, an administrator configuring Workspace B can switch their own context to B without noticing.
+Enterprise and local identities are linked through explicit identity bindings. Matching email addresses alone do not establish equal permissions.
 `,
   },
   {
     slug: "operations/configuration",
     section: "operations",
-    title: "Platform configuration",
-    summary:
-      "Deployment-level settings for the model gateway, Git services, sandbox policy, enterprise integrations and observability — and which of them belong to the platform rather than to a Workspace.",
+    title: "Platform configuration and personal access",
+    summary: "Use Platform and Connectors to configure models, Git, runtimes and integrations, then check when changes take effect.",
     readingOrder: 2,
     body: `
-## Which layer a setting belongs to
+## Establish ownership first
 
-Start by deciding which layer a setting belongs to. That determines who may change it and whose work the change affects.
+Administrators or operations manage platform services. Workspace administrators manage their policies. Members maintain private authorization in **Connections & access**.
 
-**Deployment-level** settings are maintained by operations or an administrator: the model gateway, the Git service catalogue, sandbox providers and run policy, enterprise instant messaging, knowledge retrieval models, marketplace management and connector exposure policy.
+| Configuration | Console entry | Validate afterward |
+| --- | --- | --- |
+| Model catalog and gateway | Platform administration → LLM gateway | Actual model calls and protocol compatibility |
+| Embedding services | Platform administration → Embedding gateway | Document indexing and retrieval tests |
+| Git service catalog | Platform administration → Git services | Repository and branch listing after member authorization |
+| Images, resources and environments | Platform administration → Runtime environment | Actual environment creation and execution |
+| Enterprise messaging and integrations | Relevant integration page in Platform administration | Sign-in, authorization or messaging separately |
+| Private credentials and tool access | Connections & access | Current member authorization and an actual call |
 
-**Workspace-level** settings are maintained by a Workspace administrator: the Workspace model policy and quota, private capabilities inside the Workspace, and content authorisation.
+## Check models and Harnesses separately
 
-**Personal-level** settings are maintained by each member: personal access tokens, personal model credentials, personal memory and preferences.
+The LLM and embedding gateways have separate model catalogs and invocation purposes. Even when they use the same underlying service, check their capabilities and configuration independently.
 
-## Model gateways
+The Agent Harness determines session and tool execution; the model supplies reasoning. Adding a model does not add a working Harness, and installing an endpoint does not establish compatibility with every model.
 
-The platform manages model invocation entry points by capability class.
+## Git services and member authorization
 
-The **conversation gateway** carries model calls other than embedding — currently dialogue and reasoning, reranking, vision and speech recognition — using each model's own protocol according to its capabilities. It must not disguise a reranking, vision or speech request as an ordinary dialogue call.
+The platform configures providers and instance addresses. Members then authorize their Git accounts. Task creation lists repositories under the current member's permissions.
 
-The **embedding gateway** carries text embedding and batch embedding calls, and has its own address, model catalogue, dimension probing and runtime health contract.
+If the service exists but the repository cannot be selected, check personal authorization and repository access. Do not create a duplicate global Git service for each member.
 
-Even when the two point at the same underlying gateway, their domain identities are not merged.
+## Knowledge and enterprise sources
 
-Credentials come in two tiers. A platform credential is the managed credential a platform agent uses to reach a global gateway, and is managed by an administrator. A user credential is a member's private credential for a particular gateway, unique per member and gateway, usable in any Workspace that member has access to.
+Knowledge needs document storage, parsing, indexing and retrieval to work together. Validate an actual publication and retrieval test rather than relying on a saved configuration.
 
-**An agent running in a Workspace does not fall back to a user credential.** An ordinary member can neither read nor write platform credentials.
+Enterprise sign-in, document access and messaging have separate authorization conditions. One working path does not establish the others.
 
-An administrator cannot read a user credential in plaintext.
+## When changes apply
 
-## Git services
+A task retains its initially resolved inputs, capability versions and runtime policy. Updating configuration does not rewrite its historical spec.
 
-A Git connector is a deployment-level catalogue entry. An administrator configures the provider, instance address, API address, certificates and network policy globally.
+Runtime recovery checks current authorization, credentials and runtime while validating frozen toolchains. Supported later session model choices must remain compatible with the existing environment, gateway and protocol; they cannot replace the original Harness.
 
-**It contains no user token**, and it is not duplicated per Workspace.
-
-A user token is a member's private credential for a particular Git connector, unique per member and connector, usable in any Workspace that member has access to. Tokens are stored encrypted and do not enter the execution specification.
-
-An ordinary user cannot create a duplicate global service. They can only save, rotate or revoke their own credential under the corresponding connector.
-
-## Sandboxes and providers
-
-A sandbox's base image, pod compute specification and maximum retention time are **deployment-level run policy**. They do not belong to a Workspace, a project, a repository or a personal setting.
-
-The control plane holds a single-instance run policy configuration, updates it under revision concurrency control, and resolves the current revision when a task is created. The public task API does not accept a client-submitted image or resource specification.
-
-A runner image must carry an explicit version tag or digest. Untagged images and movable tags are refused.
-
-The provider owns creating, observing, binding and cleaning up the runtime environment. A task freezes the provider identifier, plugin version, template reference, image digest and capability digest, and does not hot-swap them while it runs.
-
-## Knowledge and retrieval models
-
-The knowledge data plane carries parsing, chunking, embedding, indexing and in-namespace retrieval of published documents.
-
-An Organization binds exactly one retrieval instance, and each knowledge base uses its own namespace.
-
-The dialogue, embedding, reranking and vision models needed for text and image ingestion are configured separately. Embedding uses the dedicated embedding gateway; the rest use the conversation gateway. A Workspace may be given its own credential per gateway, and inherits the corresponding platform default when none is assigned.
-
-Knowledge governance metadata is held by the control plane, while raw document content is written to object storage.
-
-**The two systems may share a database cluster, but they must use separate databases, roles, schemas and migrations, and cross-database joins are forbidden.** The two are backed up, restored and upgraded independently.
-
-## Enterprise integrations
-
-Enterprise instant messaging configuration is Organization-level. The single Organization may hold several provider configurations but may activate only one. Authorisation and synchronisation must freeze the Organization, the external tenant and the configuration revision.
-
-Content authorisation and sign-in authorisation are **two independent authorisations**, using different callback addresses.
-
-## Connector exposure policy
-
-Connector management configures Workspace exposure policy and custom authenticated connectors. Client secrets are stored encrypted, and after a member authorises one, the proxy injects it into the managed environment under a short-lived lease.
-
-## Observability
-
-Platform telemetry presents in-cluster resources, observability runs and task associations.
-
-Logs, traces and metrics go to the enterprise's existing observability back end. By default only session and tool **metadata** is recorded — not full prompts, replies or command output bodies.
-
-When a session body exceeds the event payload limit, the supervisor stores the complete text content-addressed by content digest inside the sandbox the task belongs to, and carries only a preview and an immutable content reference in the event. The control plane reads it through a task-scoped interface in bounded chunks each time, and does not copy the body into the business database.
-
-The payload limit on connection messages is a protocol guard against abnormal events. It no longer decides what agent output is visible.
-
-## When a configuration change takes effect
-
-**A settings update affects only subsequent tasks.** Run policy, model gateway and capability versions are frozen at task creation and cannot drift underneath an existing task.
-
-An ordinary secret rotation affects new tasks only; an emergency revocation takes effect by terminating the affected sandboxes.
-
-So if you change run policy and the behaviour of an existing task does not change, that is the expected behaviour and not a caching problem.
+After a change, check new tasks and tasks needing recovery separately. Their resolution rules differ.
 `,
   },
   {
     slug: "operations/verification",
     section: "operations",
-    title: "Verification and acceptance boundaries",
-    summary:
-      "The four verification levels, and why none of them substitutes for another. This is the language any external capability claim has to use.",
+    title: "Verification boundaries",
+    summary: "Record implementation, automated checks, deployment health and actual business acceptance separately.",
     readingOrder: 3,
     body: `
-## Why levels are needed
+## Four kinds of evidence
 
-"The page exists" is not the same as "the capability is complete". In a privately deployed product the cost of confusing them is specific: the buyer will run acceptance against your description, and the acceptance failure happens at the customer site.
+| Level | Establishes | Does not establish alone |
+| --- | --- | --- |
+| Implemented | Routes, APIs and execution paths exist | Availability in the target deployment |
+| Automated checks passed | Relevant tests, types and builds passed | Actual external services are connected |
+| Deployed | A specific version is healthy and passes routing and smoke checks | Acceptance of all business capabilities |
+| Real business acceptance | A real subject completed the relevant reads and writes through actual services | Untested capabilities also work |
 
-The platform therefore states the completeness of each capability against four distinct levels. **No level substitutes for another.**
+## Console screenshots on this site
 
-| Level | Established by | What it proves | What it does not prove |
-| --- | --- | --- | --- |
-| 1. Implemented | Code and targeted tests | The route, API, domain service and authoritative store or runtime path exist | That it deploys, or that real external systems can be integrated |
-| 2. Passing repository gates | Tests, type checks, builds, protocol and module boundary validation | The code is self-consistent in an isolated environment | Runtime behaviour — gates usually run against controlled fixtures |
-| 3. Deployed | An immutable image from a named snapshot, plus health, routing and smoke checks in a named environment | That it can be deployed and the basic path is reachable | Any business capability — smoke checks only show the process is alive and routes respond |
-| 4. Authenticated business end to end | A real signed-in principal using a real model gateway, Git service, connector or data plane for the corresponding read/write path | Business capability | — |
+Screenshots show the actual product Console with example data. They explain interface organization and action locations. The depicted tasks, employees and metrics are not evidence of production activity.
 
-## 1. Implemented
+Browser checks with example data can expose layout and interaction problems. They do not validate model gateways, Git, knowledge retrieval or external tools.
 
-The route, API, domain service and authoritative store or runtime path exist, with targeted tests.
+## Minimum business checks
 
-This level proves the code was written and the path is connected. It does not prove a deployment runs, nor that a real external system can be integrated.
+1. Sign in as a real member and confirm workspace and data access.
+2. Make a real model call under the correct authorization.
+3. List an accessible repository and branch.
+4. Complete a small task and review changes, checks and delivery links.
+5. Publish a knowledge document and check indexing and sourced retrieval.
+6. After training or hiring an employee, confirm dependencies and readiness, then delegate actual follow-up work.
 
-## 2. Passing repository gates
+Test execution resume and runtime snapshot recovery separately when required. They have distinct prerequisites; one successful task cannot validate both.
 
-The relevant tests, type checks, builds, protocol and module boundary validation pass.
+## Record acceptance results
 
-This level proves the code is self-consistent in an isolated environment. It does not prove runtime behaviour, because gates usually run against controlled fixtures.
+Record the product version, environment, operator role, inputs, expected and actual results, and evidence. For failures, state the boundary and reproduction conditions.
 
-## 3. Deployed
-
-A named code snapshot is built into an immutable image and passes health, routing and the relevant smoke checks in a specified environment.
-
-This level proves it can be deployed and that the basic path is reachable. It does not prove any business capability, because smoke checks normally verify only that the process is alive and routes respond.
-
-## 4. Authenticated business end to end
-
-A real signed-in principal completes the corresponding read and write path against a real model gateway, Git service, connector or data plane.
-
-This is the only level that proves a business capability.
-
-## Why they do not substitute for each other
-
-**A full-route browser check against controlled fixtures** proves the production bundle, routing and layout. It uses static data, so it proves nothing about the correctness of any data path.
-
-**A clean build or a basic health check** cannot stand in for runtime acceptance. A deployment that never reached a model gateway can be perfectly healthy.
-
-**A cluster smoke test or a single real task** cannot stand in for per-capability business acceptance. One successful task does not prove that knowledge recall, marketplace publishing or enterprise sign-in work as well.
-
-## Current state
-
-The repository already contains a working vertical slice, runnable locally and on OrbStack, used to verify that the product's domain model, control plane, real agent sessions, isolated sandbox, dependency graph scheduling, artefact handoff, knowledge recall, runtime snapshot and resume, observability and console experience connect end to end.
-
-That is not the same as a complete production release. The following are still under construction and acceptance:
-
-- full coverage of the persistent services;
-- enterprise single sign-on and audit;
-- a highly available control plane;
-- additional coding drivers;
-- production installation and upgrade;
-- full end-to-end acceptance against real enterprise gateways and code hosting systems.
-
-The authoritative statement of what is implemented and what is missing is the system architecture document in the repository.
-
-## The rule for external claims
-
-In external material, pre-sales briefings and acceptance reports:
-
-- do not claim a capability is available without level-four evidence;
-- do not use "deployed" in place of "accepted";
-- state the difference between the target shape and the current implementation explicitly.
-
-This rule governs this manual itself, not only the product.
+For compatibility, record the exact model, Harness, gateway protocol and tool-authorization combination. One successful combination does not establish support for every possible combination.
 `,
   },
 ];

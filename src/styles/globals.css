@@ -2,6 +2,11 @@
 @import "./site-navigation.css";
 @import "./home.css";
 @import "./interior.css";
+@import "./product-screens.css";
+@import "./product-pages.css";
+@import "./docs-pages.css";
+@import "./anatomy-pages.css";
+@import "./product-demo.css";
 
 /* 确认后的官网视觉：石墨营销画布与中性浅色阅读面共用语义 token。
    结构使用中性色，少量低饱和色只标记工作、交接和证据；品牌蓝保持身份。
@@ -56,7 +61,7 @@
   --color-ink: #22242a;
   --color-ink-2: #3e444e;
   --color-ink-3: #636972;
-  --color-ink-4: #69707a;
+  --color-ink-4: #626973;
 
   /* Rules — every divider in the layout comes from this scale ---------------- */
   --color-rule: #d7dbe1;
@@ -648,7 +653,7 @@ html:has(.scope-marketing)::-webkit-scrollbar-thumb { background: var(--color-ni
     --color-ink: #22242a;
     --color-ink-2: #3e444e;
     --color-ink-3: #636972;
-    --color-ink-4: #69707a;
+    --color-ink-4: #626973;
     --color-rule: #d7dbe1;
     --color-rule-soft: #e4e6e9;
     --color-rule-strong: #bac2cc;

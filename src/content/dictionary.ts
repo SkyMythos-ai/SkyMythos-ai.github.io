@@ -259,7 +259,7 @@ const zh: Dictionary = {
     pipelineLede:
       "每个 Task 是一次冻结输入后的研发执行，每个 WorkNode 是一个独立的 Agent Session，Artifact 是它们之间的正式数据面。控制面负责身份、版本、策略与 Sandbox 生命周期；Sandbox 内的 Supervisor 负责 DAG、执行尝试、会话与产物。",
     pipelineNote:
-      "控制面不持久化节点级状态。Sandbox 消失即任务失败，不做跨 Sandbox 恢复——这是显式的设计取舍，换来 DAG、会话、Artifact 与 Git worktree 位于同一故障域的简单模型。",
+      "Supervisor 负责运行时内的调度与执行证据。环境丢失后，可从校验为 Ready 的运行快照恢复同一任务；恢复会重新校验授权与冻结配置，并保留执行和环境代际。",
     capabilityRail: "核心能力",
     capabilityHeading: "平台提供什么",
     capabilityLede: "以下能力共同构成产品差异，单独任何一项都不足够。",
@@ -395,9 +395,9 @@ const zh: Dictionary = {
         name: "Sandbox",
         role: "一次任务的隔离运行边界",
         constraints: [
-          "一个 Task 对应一个 Sandbox。Sandbox 内只有一个 Supervisor 作为 DAG 状态与调度权威。",
-          "控制面不持久化节点级状态，只保存任务级生命周期与最终交付引用。",
-          "Sandbox 消失即任务失败。这项限制是有意接受的代价，用来换取状态的单一故障域。",
+          "任务在绑定的隔离环境中执行，Supervisor 负责运行时内的 DAG 状态与调度。",
+          "控制面管理任务生命周期、授权、环境绑定和交付引用，执行节点由运行器推进。",
+          "环境丢失后，可从校验为 Ready 的运行快照恢复同一任务；恢复重新校验授权与配置，并记录新的环境代际。",
         ],
       },
       {
@@ -529,7 +529,7 @@ const zh: Dictionary = {
         decision:
           "DAG 状态、会话、产物与 Git worktree 都位于任务自己的沙箱内，沙箱内的 Supervisor 是唯一调度权威，控制面不保存节点级状态。",
         consequence:
-          "换来状态模型的简单与一致。接受的代价是沙箱永久丢失会让整个任务失败，无法从节点检查点恢复。",
+          "从可用快照恢复时需要重新校验授权、运行工具与产物配置，并保留新的环境代际；这不等同于任意时刻的透明热迁移。",
       },
       {
         title: "完成由契约证明，而不是由自然语言声明",
@@ -734,7 +734,7 @@ const en: Dictionary = {
     pipelineLede:
       "Every task is one R&D execution over frozen inputs. Every work node is a separate agent session. Artefacts are the formal data plane between them. The control plane owns identity, versions, policy and sandbox lifecycle; the supervisor inside the sandbox owns the DAG, attempts, sessions and artefacts.",
     pipelineNote:
-      "The control plane does not persist node-level state. Losing a sandbox fails the task — there is no cross-sandbox recovery. That is an explicit trade, buying a state model where the DAG, sessions, artefacts and Git worktrees share a single failure domain.",
+      "The supervisor owns runtime scheduling and execution evidence. A lost environment can be restored for the same task from a validated Ready runtime snapshot. Restore rechecks authorization and frozen configuration, preserving execution and runtime generations.",
     capabilityRail: "Capabilities",
     capabilityHeading: "What the platform provides",
     capabilityLede:
@@ -877,9 +877,9 @@ const en: Dictionary = {
         name: "Sandbox",
         role: "The isolated runtime boundary of one task",
         constraints: [
-          "One task maps to one sandbox, and a sandbox has exactly one supervisor as the authority for DAG state and scheduling.",
-          "The control plane does not persist node-level state. It keeps task-level lifecycle and final delivery references only.",
-          "Losing the sandbox fails the task. This restriction is a deliberate cost, accepted in exchange for a single failure domain.",
+          "A task executes in its bound isolated environment. The supervisor owns DAG state and scheduling within that runtime.",
+          "The control plane manages task lifecycle, authorisation, runtime bindings and delivery references. The runner advances execution nodes.",
+          "A lost environment can be restored for the same task from a validated Ready runtime snapshot. Restore rechecks authorisation and configuration and records a new runtime generation.",
         ],
       },
       {
@@ -1015,7 +1015,7 @@ const en: Dictionary = {
         decision:
           "DAG state, sessions, artefacts and Git worktrees all live inside the task's own sandbox. The supervisor in that sandbox is the only scheduling authority, and the control plane keeps no node-level state.",
         consequence:
-          "Buys a simple, consistent state model. The accepted cost is that permanently losing a sandbox fails the whole task, with no recovery from a node checkpoint.",
+          "Restoring an available snapshot rechecks authorization, toolchain and artefact configuration, and records a new runtime generation. This is not transparent live migration at an arbitrary moment.",
       },
       {
         title: "Completion is proven by contract, not asserted in prose",

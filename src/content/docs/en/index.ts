@@ -21,25 +21,25 @@ export const enDocs: DocCorpus = {
       id: "getting-started",
       title: "Getting started",
       description:
-        "Environment requirements, deployment steps, and a full walkthrough of a first task.",
+        "Start in the real workbench, check connections and complete your first task.",
     },
     {
       id: "concepts",
       title: "Core concepts",
       description:
-        "The domain model behind tasks, flows, sandboxes, artefacts, knowledge and memory — and the reason for each constraint.",
+        "Boundaries between employees, tasks, open execution, delivery evidence, knowledge and memory.",
     },
     {
       id: "guides",
       title: "Guides",
       description:
-        "How to create a task, observe execution, handle failure, and reuse capability.",
+        "Create and review tasks, resume work, train employees and publish knowledge.",
     },
     {
       id: "operations",
       title: "Platform operations",
       description:
-        "Roles and permissions, deployment-level configuration, and how verification is graded.",
+        "Team access, model and tool connections, and actual business acceptance.",
     },
     {
       id: "reference",

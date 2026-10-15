@@ -2,6 +2,10 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import { cn } from "@/lib/cn";
 import { slugifyHeading } from "@/lib/headings";
+import type { Locale } from "@/lib/i18n";
+import { basePath } from "@/lib/site";
+import { consoleScreenFromPath } from "@/content/console-screens";
+import { ConsoleFigure } from "@/components/console-figure";
 
 /**
  * MarkdownRenderer — documentation body rendering.
@@ -27,15 +31,26 @@ import { slugifyHeading } from "@/lib/headings";
 export function MarkdownRenderer({
   content,
   className,
+  locale = "zh",
 }: {
   content: string;
   className?: string;
+  locale?: Locale;
 }) {
   return (
     <div className={cn("prose-doc", className)}>
       <Markdown
         remarkPlugins={[remarkGfm]}
         components={{
+          p({ children, node }) {
+            const hasImage = node?.children.some(child => child.type === "element" && child.tagName === "img");
+            return hasImage ? <div>{children}</div> : <p>{children}</p>;
+          },
+          img({ src, alt }) {
+            const path = typeof src === "string" ? src : "";
+            const screen = consoleScreenFromPath(path);
+            return screen ? <ConsoleFigure screen={screen} locale={locale}/> : <img src={path.startsWith("/") ? `${basePath}${path}` : path} alt={alt ?? ""} loading="lazy"/>;
+          },
           /**
            * Headings get an id derived from their text, plus an anchor affordance
            * that appears on hover. The anchor is a real link, so it is

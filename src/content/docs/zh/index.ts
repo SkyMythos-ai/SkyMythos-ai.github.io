@@ -18,23 +18,23 @@ export const zhDocs: DocCorpus = {
     {
       id: "getting-started",
       title: "快速开始",
-      description: "环境要求、部署步骤与第一个任务的完整走查。",
+      description: "从真实工作台出发，完成接入检查与第一个任务。",
     },
     {
       id: "concepts",
       title: "核心概念",
       description:
-        "任务、流程、沙箱、产物、知识与记忆的领域模型，以及每条约束背后的原因。",
+        "员工、任务、开放执行、交付证据与知识记忆的边界。",
     },
     {
       id: "guides",
       title: "操作指南",
-      description: "创建任务、观察执行、处理失败与复用能力的实际做法。",
+      description: "创建与审阅任务、恢复执行、培养员工及发布知识。",
     },
     {
       id: "operations",
       title: "平台运维",
-      description: "角色权限、部署级配置与验证分级口径。",
+      description: "团队权限、模型与工具接入，以及真实业务验收。",
     },
     {
       id: "reference",
