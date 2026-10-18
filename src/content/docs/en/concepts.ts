@@ -211,7 +211,7 @@ Memory does not replace task instructions, project evidence or tool authorizatio
 
 ## Employees form from work
 
-**Train from experience** organizes currently accessible sources around a goal into reusable outputs. Employee detail retains work records, source evidence and validation gaps. Partial and unvalidated outputs need further work.
+**Create employee from work experience** starts with authorised, reusable saved experience and an analysed responsibility and Skill plan. Human confirmation precedes Skill, role and employee creation. Analysis is not creation. Employee detail retains work records, source evidence and validation gaps; partial and unvalidated outputs need further work.
 
 Hiring from Agent Hub creates a personal employee identity from a fixed role version. Later work continues under that identity; personal experience and the shared role definition are maintained separately.
 

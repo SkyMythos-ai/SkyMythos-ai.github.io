@@ -113,34 +113,25 @@ export function softwareApplicationJsonLd(locale: Locale) {
     operatingSystem: "Linux, Kubernetes",
     description: dictionary.meta.description,
     url: siteUrl,
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-      description:
-        locale === "zh"
-          ? "私有化部署，企业授权"
-          : "Private deployment, enterprise licence",
-    },
     featureList:
       locale === "zh"
         ? [
-            "版本化 Flow 与 WorkNode 编排",
-            "一任务一 Sandbox 隔离执行",
-            "Artifact 与 Unit Gate 确定性交付",
-            "执行恢复与定向返工",
-            "项目知识与个人记忆",
-            "Skill 与 MCP 能力市场",
-            "OpenTelemetry 全链路可观测",
+            "对话协作、研发任务与独立自动化运行",
+            "长期数字员工与可复用角色",
+            "版本化流程与工作方法",
+            "研发任务 Sandbox 与个人云环境分别治理",
+            "产物、检查与交付证据",
+            "有来源的知识与员工经验",
+            "按授权接入模型与业务系统",
           ]
         : [
-            "Versioned flow and work node orchestration",
-            "One sandbox per task, isolated execution",
-            "Deterministic delivery via artefacts and unit gates",
-            "Execution resume and targeted rework",
-            "Project knowledge and personal memory",
-            "Skill and MCP capability marketplace",
-            "End-to-end OpenTelemetry observability",
+            "Conversations, engineering tasks and independent automation runs",
+            "Long-lived digital employees and reusable roles",
+            "Versioned flows and working methods",
+            "Separate governance for task Sandboxes and personal environments",
+            "Outputs, checks and delivery evidence",
+            "Sourced knowledge and employee experience",
+            "Authorised model and business-system integrations",
           ],
   };
 }

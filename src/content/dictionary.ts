@@ -148,10 +148,10 @@ export interface Dictionary {
 
 const zh: Dictionary = {
   meta: {
-    title: "SkyMythos — 企业私有化部署的自主软件研发平台",
+    title: "SkyMythos | 企业自己的 AI 工作体系",
     titleTemplate: "%s · SkyMythos",
     description:
-      "SkyMythos 把需求或技术设计编译为可审查、可验证、可追溯的软件变更。基于版本化 Flow、隔离 Sandbox、Artifact 确定性交接与项目知识闭环的 Agent 工程控制面。",
+      "接入已有模型与 Agent，组织协作、核对交付，让经过验证的经验成为下一次工作的能力。SkyMythos 将对话协作、研发任务与自动化组织在清楚的授权和执行边界内。",
     keywords: [
       "AI Infra",
       "Coding Agent",
@@ -166,8 +166,8 @@ const zh: Dictionary = {
   },
   nav: {
     product: "产品",
-    concept: "产品概念",
-    architecture: "架构",
+    concept: "工作方式",
+    architecture: "企业架构",
     docs: "使用文档",
     getStarted: "快速开始",
     openMenu: "打开菜单",
@@ -177,8 +177,8 @@ const zh: Dictionary = {
     home: "首页",
   },
   hero: {
-    headline: "让想法，成为可交付的软件。",
-    lede: "在你的环境中，让多个 Agent 协作，将需求转化为可审查的代码与验证证据。",
+    headline: "让人专注创造，让 AI 推进工作。",
+    lede: "让 AI 协助重复执行，让人专注判断与创造，让团队积累可复用的工作方法。",
     primaryCta: "阅读使用文档",
     secondaryCta: "了解产品概念",
     specPanelLabel: "TaskSpec · 冻结中",
@@ -265,6 +265,16 @@ const zh: Dictionary = {
     capabilityLede: "以下能力共同构成产品差异，单独任何一项都不足够。",
     capabilities: [
       {
+        name: "Agent 与数字员工",
+        object: "Employee",
+        detail: "给 Agent 配置指令、模型、Skill 与 MCP；从验证过的经验分析员工方案，确认后创建。员工保留独立身份、工作记录和经验。",
+      },
+      {
+        name: "连接器与 MCP Gateway",
+        object: "Connector",
+        detail: "统一管理 Git、模型与 MCP 的个人授权、环境和工具范围。支持远程 HTTP / SSE 与本地 stdio；官方业务工具同样检查用户和工作区权限。",
+      },
+      {
         name: "Task 工作台",
         object: "Task",
         detail:
@@ -346,9 +356,9 @@ const zh: Dictionary = {
       "这仍不等于生产版本已经完整交付。持久化服务的完整覆盖、企业单点登录与审计、高可用控制面、更多 Coding Driver、生产环境安装升级，以及基于真实企业网关和代码托管系统的完整端到端验收，仍在持续建设中。",
     ],
     maturityCaveat: "这一节按实际情况陈述，不按目标形态陈述。",
-    ctaHeading: "从第一个任务开始",
+    ctaHeading: "从一项真实工作开始",
     ctaBody:
-      "部署本地切片，配置模型网关，然后提交一个真实任务。文档按操作顺序组织，不需要先理解全部领域模型。",
+      "选一项重复但有明确验收标准的工作，让 AI 协助推进。核对实际产出，再决定哪些方法值得保留和复用。",
     ctaPrimary: "打开快速开始",
     ctaSecondary: "查看领域术语",
   },
@@ -588,14 +598,14 @@ const zh: Dictionary = {
     searchHint: "使用左侧目录浏览全部章节。",
   },
   footer: {
-    tagline: "面向企业私有化部署的自主软件研发平台。",
+    tagline: "让人与 AI 高效协作，在企业环境中积累工作能力。",
     productHeading: "产品",
     resourceHeading: "资源",
     companyHeading: "关于",
     productLinks: [
       { label: "产品概览", href: "/" },
-      { label: "产品概念", href: "/concept" },
-      { label: "架构", href: "/architecture" },
+      { label: "工作方式", href: "/concept" },
+      { label: "企业架构", href: "/architecture" },
       { label: "使用文档", href: "/docs" },
     ],
     resourceLinks: [
@@ -621,10 +631,10 @@ const zh: Dictionary = {
 
 const en: Dictionary = {
   meta: {
-    title: "SkyMythos — Autonomous software R&D, deployed in your own environment",
+    title: "SkyMythos | Your enterprise’s AI work system",
     titleTemplate: "%s · SkyMythos",
     description:
-      "SkyMythos compiles a requirement or technical design into reviewable, verifiable, traceable software change. An agent engineering control plane built on versioned flows, isolated sandboxes, artefact-based handoff and a project knowledge loop.",
+      "Bring existing models and Agents together. Coordinate work, verify results and reuse proven experience. SkyMythos organises conversations, engineering tasks and automations within clear access and execution boundaries.",
     keywords: [
       "AI infrastructure",
       "coding agent",
@@ -639,8 +649,8 @@ const en: Dictionary = {
   },
   nav: {
     product: "Product",
-    concept: "Concepts",
-    architecture: "Architecture",
+    concept: "How it works",
+    architecture: "Enterprise architecture",
     docs: "Documentation",
     getStarted: "Get started",
     openMenu: "Open menu",
@@ -650,8 +660,8 @@ const en: Dictionary = {
     home: "Home",
   },
   hero: {
-    headline: "From idea to software delivery.",
-    lede: "Agents collaborate in your environment to turn requirements into reviewable code and verification evidence.",
+    headline: "More room to create. AI helps you deliver.",
+    lede: "Let AI support execution while people focus on judgement and creativity. Build methods your team can reuse.",
     primaryCta: "Read the documentation",
     secondaryCta: "Explore the concepts",
     specPanelLabel: "TaskSpec · freezing",
@@ -741,6 +751,16 @@ const en: Dictionary = {
       "The product's difference comes from these capabilities together. Any one of them alone is not enough.",
     capabilities: [
       {
+        name: "Agents and digital employees",
+        object: "Employee",
+        detail: "Configure instructions, model, Skills and MCP for an Agent. Analyse validated experience, review the plan and confirm employee creation. Employees retain independent identities, work records and experience.",
+      },
+      {
+        name: "Connectors and MCP Gateway",
+        object: "Connector",
+        detail: "Manage personal Git, model and MCP access, environments and tool scope. Remote HTTP / SSE and local stdio are supported. Official business tools also enforce user and workspace permissions.",
+      },
+      {
         name: "Task workbench",
         object: "Task",
         detail:
@@ -828,9 +848,9 @@ const en: Dictionary = {
     ],
     maturityCaveat:
       "This section describes the actual state, not the target state.",
-    ctaHeading: "Start with your first task",
+    ctaHeading: "Start with a real piece of work",
     ctaBody:
-      "Deploy the local slice, configure a model gateway, then submit a real task. The documentation follows the order you would actually work in — you do not need the whole domain model first.",
+      "Choose repeatable work with clear acceptance criteria. Let AI help, review the output, then decide which methods are worth keeping and reusing.",
     ctaPrimary: "Open getting started",
     ctaSecondary: "Read the glossary",
   },
@@ -1074,14 +1094,14 @@ const en: Dictionary = {
     searchHint: "Browse every section from the contents list.",
   },
   footer: {
-    tagline: "Autonomous software R&D, deployed inside your own environment.",
+    tagline: "People and AI working together, building capability inside your own environment.",
     productHeading: "Product",
     resourceHeading: "Resources",
     companyHeading: "About",
     productLinks: [
       { label: "Product overview", href: "/" },
-      { label: "Concepts", href: "/concept" },
-      { label: "Architecture", href: "/architecture" },
+      { label: "How it works", href: "/concept" },
+      { label: "Enterprise architecture", href: "/architecture" },
       { label: "Documentation", href: "/docs" },
     ],
     resourceLinks: [

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useId, useRef, useState } from "react";
-import Link from "next/link";
+import { basePath } from "@/lib/site";
 import { usePathname } from "next/navigation";
 import { locales, localeHtmlLang, localeLabels, type Locale } from "@/lib/i18n";
 import { cn } from "@/lib/cn";
@@ -39,11 +39,12 @@ export function LanguageSwitch({
   }, [open]);
 
   function localeHref(targetLocale: Locale) {
-    // 仅替换语言前缀，保留文档路径及末尾斜杠；basePath 交给 Next Link。
+    // Cross-locale navigation loads exported HTML, avoiding missing shared-layout RSC segments.
+    // usePathname excludes basePath; native anchors need it explicitly.
     const target = /^\/(zh|en)(?=\/|$)/.test(pathname)
       ? pathname.replace(/^\/(zh|en)(?=\/|$)/, `/${targetLocale}`)
       : `/${targetLocale}${pathname === "/" ? "" : pathname}`;
-    return `${target}${urlSuffix}`;
+    return `${basePath}${target.endsWith("/") ? target : `${target}/`}${urlSuffix}`;
   }
 
   return (
@@ -101,7 +102,7 @@ export function LanguageSwitch({
         <ul aria-label={label}>
           {locales.map((option) => (
             <li key={option}>
-              <Link
+              <a
                 href={localeHref(option)}
                 hrefLang={localeHtmlLang[option]}
                 lang={localeHtmlLang[option]}
@@ -119,7 +120,7 @@ export function LanguageSwitch({
                     <path d="m3 8 3.2 3.2L13 4.5" />
                   </svg>
                 )}
-              </Link>
+              </a>
             </li>
           ))}
         </ul>

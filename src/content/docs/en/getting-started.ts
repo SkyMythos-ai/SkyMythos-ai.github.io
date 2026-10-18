@@ -8,29 +8,32 @@ export const gettingStartedEn: DocPage[] = [
     summary: "Find Chat, Staff, Tasks and Knowledge in the console, then choose your first workflow.",
     readingOrder: 1,
     body: `
-Sign in to your organization's Console and open **Chat** in your workspace. The **Fusion Bot** area has **Chat, Tasks and Staff** in its sidebar. **Knowledge** and **Marketplace** have separate top-navigation entries. Personal authorization is under **Connections & access** at the bottom of the sidebar.
+Sign in and select a workspace. **SkyBot** hosts conversations and tasks. **Agent Employee** manages SkyBot and specialists; **Automations** organises repeatable work. **Knowledge** and **Marketplace** hold shared knowledge and reusable capabilities. Personal authorisation is under **Connections & access** at the bottom of the sidebar.
 
-![Chat workbench](/images/product/chat-workbench.png)
+![Optional personal setup at first sign-in](/images/product/onboarding.png)
 
 ## Find the right entry
 
 | Your goal | Console entry | What to review |
 | --- | --- | --- |
 | Discuss a goal or begin everyday work | Chat | Responses, tool activity and work results |
-| Develop an employee from experience or hire a role | Staff | Readiness, work records, memory and experience |
+| Develop an employee from experience or hire a role | Agent Employee → Other employees | Readiness, work records, memory and experience |
 | Complete a defined engineering goal in a repository | Tasks → Create task | Creation progress, execution, changes and delivery links |
+| Organise scheduled or event-driven work | Automations | Definitions, published versions, trigger configuration and independent run results |
 | Maintain evidence the team can reuse | Knowledge | Published documents, indexing and retrieval results |
 | Find reusable roles, skills or tools | Marketplace | Asset versions, configuration and available actions |
 | Authorize Git, models or external tools | Connections & access | Your account's authorization status |
 
-An employee is a continuing collaboration identity. A task records one execution with defined inputs and results. A knowledge base contains documents with publication, access and retrieval controls.
+These entry points share access rules and assets but retain distinct run identities. A conversation does not implicitly create an engineering Task. An Automation Run uses a published automation definition and is not an engineering Task. Configure and validate schedules, events and integrations against the deployed version’s supported capabilities.
+
+An employee is a continuing collaboration identity. A task records one engineering execution with defined inputs and results. A knowledge base contains documents with publication, access and retrieval controls.
 
 ## Your first session
 
-1. Open **Chat** and describe a small goal, such as “Turn these release notes into a review checklist.”
-2. Follow any prompts to prepare an execution environment or complete authorization.
-3. Review what was actually produced and what still needs your confirmation.
-4. Open **Staff** when experience becomes reusable, or **Tasks** when you need a repository change.
+1. At first sign-in, optionally enter personal Git and model credentials, or leave everything blank and continue. Empty inputs preserve existing credentials.
+2. Open **SkyBot → Chat** and describe a small goal, such as “Turn these release notes into a review checklist.”
+3. Prepare a personal environment or authorisation when a feature needs it. Entering the app does not create a Sandbox or allocate runtime resources.
+4. Review the actual output and unresolved questions. Open **Agent Employee** to reuse experience, or **Tasks** for a repository change.
 
 To test engineering delivery directly, follow [Your first task](../first-task/). For a continuing assistant, read [Train and hire digital employees](../../guides/digital-employees/).
 
@@ -74,10 +77,10 @@ The developer entry \`make run-local\` currently also uses the Kubernetes coding
 
 ## Check models and runtime environments
 
-1. As an administrator, review **LLM gateway** and **Runtime environment** under **Platform administration** in the account menu.
-2. Confirm that required models are listed and compatible with the execution endpoint's protocol.
-3. As a member, open **Connections & access** and complete the model or tool authorization your account needs.
-4. Return to Chat, prepare the environment when prompted, and perform a real model call.
+1. During platform setup, configure the model gateway, then select the platform chat Agent model in its separate step. Check Embedding and Git services as well. Maintain them later in Settings.
+2. Discover and add models, or enter them manually. Check protocol and default CLI compatibility; discovering a model does not save it to the catalog.
+3. Members can optionally enter personal credentials during onboarding, or configure **Connections & access** later. Optional personal setup does not replace platform configuration.
+4. Prepare a personal Sandbox and perform a real model call. Verify interface availability, runtime readiness and model success separately.
 
 A model and an Agent Harness are separate choices. The gateway supplies model calls; the Harness manages sessions, tools and execution. Open integration does not mean every combination has been verified. Check the endpoints, models and adapter requirements available in your deployment.
 
@@ -111,7 +114,7 @@ Choose a small change that is easy to verify, such as adding input validation to
 
 ## 1. Open task creation
 
-Choose **Fusion Bot** in the top navigation, then **Tasks** in its sidebar and click **Create task**. The form opens in a drawer. You do not need to draw a workflow first.
+Choose **SkyBot** in the top navigation, then **Tasks** in its sidebar and click **Create task**. The form opens in a drawer. You do not need to draw a workflow first.
 
 Model and Git authorization should already be available. When authorization is missing, follow the form's explanation and connector link, then check again.
 

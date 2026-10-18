@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, type RefObject } from "react";
 import type { ProductDemoStory } from "./types";
+import { observeAnimationHold } from "@/lib/animation-hold";
 
 type Mode = "auto" | "paused" | "still" | "error";
 
@@ -10,7 +11,7 @@ export function useProductDemoPlayback(story: ProductDemoStory, stage: RefObject
   const [index, setIndex] = useState(story.poster);
   const [mode, setMode] = useState<Mode>("still");
   const [action, setAction] = useState(false);
-  const commands = useRef({ select: (_index: number) => {}, toggle: () => {}, inspect: (_open: boolean) => {} });
+  const commands = useRef({ inspect: (_open: boolean) => {} });
 
   useEffect(() => {
     const el = stage.current!;
@@ -76,14 +77,9 @@ export function useProductDemoPlayback(story: ProductDemoStory, stage: RefObject
       return loading;
     }
     commands.current = {
-      select(next) {
-        paused = true; stop();
-        el.getAnimations({ subtree: true }).forEach(animation => animation.finish());
-        current = next; elapsed = 0; setIndex(current); progress(); publish();
-      },
-      toggle() { paused = !paused; publish(); if (paused) stop(); else wake(); },
       inspect(open) { inspecting = open; if (open) stop(); else wake(); },
     };
+    const releaseHold = observeAnimationHold(host, held => { paused = held; publish(); if (held) stop(); else wake(); });
     const visibility = () => document.hidden ? stop() : wake();
     const preference = () => {
       stop();
@@ -98,8 +94,8 @@ export function useProductDemoPlayback(story: ProductDemoStory, stage: RefObject
     progress(); observer.observe(el);
     document.addEventListener("visibilitychange", visibility); still.addEventListener("change", preference);
     return () => {
-      disposed = true; stop(); observer.disconnect();
-      commands.current = { select: () => {}, toggle: () => {}, inspect: () => {} };
+      disposed = true; stop(); observer.disconnect(); releaseHold();
+      commands.current = { inspect: () => {} };
       document.removeEventListener("visibilitychange", visibility); still.removeEventListener("change", preference);
     };
   }, [stage, story]);

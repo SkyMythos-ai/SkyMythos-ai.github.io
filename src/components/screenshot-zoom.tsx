@@ -12,7 +12,7 @@ export function ScreenshotZoom({ src, alt, caption, locale, width = 1440, height
   const trigger = useRef<HTMLAnchorElement>(null);
   const zh = locale === "zh";
   return <figure className="console-figure" data-ui="console-screenshot">
-    <a ref={trigger} href={src} className="console-image-link" aria-label={`${zh ? "放大查看：" : "Enlarge: "}${alt}`} onClick={event => {
+    <a ref={trigger} href={src} className="console-image-link" aria-label={`${zh ? "查看界面：" : "View screen: "}${alt}`} onClick={event => {
       if (!modal.current?.showModal) return;
       event.preventDefault();
       modal.current.showModal();

@@ -33,18 +33,3 @@ export function anatomyTour(seconds: number, stageCount = 4) {
   if (t < resetAt) return { position: stageCount - 1, resetting: false };
   return { position: (stageCount - 1) * (1 - p(t, resetAt, period)), resetting: true };
 }
-
-/** 从手动停留的位置继续正向演示，避免恢复自动时跳回开头。 */
-export function anatomyTourTimeAt(position: number, stageCount = 4) {
-  const { segments } = planFor(stageCount);
-  if (position <= 0) return 0;
-  if (position >= stageCount - 1) return segments[segments.length - 1][1];
-  const [from, to] = segments[Math.floor(position)];
-  let low = from, high = to;
-  for (let i = 0; i < 24; i++) {
-    const mid = (low + high) / 2;
-    if (anatomyTour(mid, stageCount).position < position) low = mid;
-    else high = mid;
-  }
-  return (low + high) / 2;
-}

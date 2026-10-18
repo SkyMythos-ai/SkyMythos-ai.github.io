@@ -2,6 +2,7 @@ import type { DocCorpus } from "@/content/types";
 import { gettingStartedZh } from "./getting-started";
 import { conceptsZh } from "./concepts";
 import { guidesZh } from "./guides";
+import { connectionsZh } from "./connections";
 import { operationsZh } from "./operations";
 import { referenceZh } from "./reference";
 
@@ -46,6 +47,7 @@ export const zhDocs: DocCorpus = {
     ...gettingStartedZh,
     ...conceptsZh,
     ...guidesZh,
+    ...connectionsZh,
     ...operationsZh,
     ...referenceZh,
   ],

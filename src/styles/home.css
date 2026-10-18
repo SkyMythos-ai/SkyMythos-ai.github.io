@@ -36,12 +36,12 @@
 .employee-backdrop { position: absolute; inset: 0; opacity: 0; transition: opacity 650ms var(--motion-ease); }
 .employee-backdrop[data-active="true"] { opacity: 1; }
 .employee-scene-picker { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; margin-top: 36px; }
-.employee-chapter { position: relative; display: flex; align-items: center; min-width: 0; min-height: 52px; padding: 10px 0 14px; color: var(--color-ink-3); font-size: 12px; line-height: 1.45; text-align: left; text-wrap: balance; cursor: pointer; transition: color 350ms var(--motion-ease); }
-.employee-chapter:hover,.employee-chapter[aria-pressed="true"] { color: var(--color-ink); }
+.employee-chapter { position: relative; display: flex; align-items: center; min-width: 0; min-height: 52px; padding: 10px 0 14px; color: var(--color-ink-3); font-size: 12px; line-height: 1.45; text-align: left; text-wrap: balance; }
+.employee-chapter[data-active="true"] { color: var(--color-ink); }
 .employee-chapter-track { position: absolute; bottom: 0; inset-inline: 0; height: 1px; background: var(--color-rule); }
 .employee-chapter-track > span { display: block; height: 100%; background: var(--color-ink-2); transform: scaleX(0); transform-origin: left; }
-.employee-chapter[aria-pressed="true"] .employee-chapter-track { background: var(--color-rule-strong); }
-.employee-chapter[aria-pressed="true"] .employee-chapter-track > span { transform: scaleX(var(--scene-progress)); }
+.employee-chapter[data-active="true"] .employee-chapter-track { background: var(--color-rule-strong); }
+.employee-chapter[data-active="true"] .employee-chapter-track > span { transform: scaleX(var(--scene-progress)); }
 .home-page :is(a,button,summary):focus-visible { outline: 2px solid var(--color-signal); outline-offset: 5px; }
 .home-page .home-section { padding-inline: var(--home-gutter); }
 .home-page .home-section > div { max-width: var(--home-width); grid-template-columns: minmax(0,1fr); gap: 20px; padding-block: clamp(56px,6vw,88px); }
@@ -200,6 +200,78 @@
   .employee-backdrop { transition: none; }
   .employee-primary:hover,.employee-primary:hover > span { transform: none; }
   .employee-primary,.employee-primary > span,.employee-secondary,.employee-chapter { transition: none; }
+}
+
+/* 日常工作先留下记录与经验，经人确认后形成员工，再委派下一项任务。 */
+.anatomy-plate.home-workflow-figure { border: 1px solid var(--color-rule); padding: 20px 24px; }
+.home-workflow-figure .anatomy-stage { height: clamp(280px,33vw,420px); }
+.home-workflow-figure .anatomy-stage > svg { position: absolute; inset: 0; }
+.workflow-methods { transform: translate(460px,55px); }
+.workflow-mobile { display: none; }
+.workflow-object-label { fill: #c4cbd5; font: 400 15px var(--font-sans); }
+.workflow-object-note { fill: #929dab; font: 400 11px var(--font-sans); }
+.home-workflow-figure .anatomy-instrument-status { display: grid; grid-template-columns: auto minmax(0,1fr); margin-top: 8px; }
+.home-workflow-figure .anatomy-instrument-status > p:last-child { min-height: 1.7em; text-align: right; }
+.home-workflow-figure .anatomy-stages { margin-top: 8px; grid-template-columns: repeat(var(--anatomy-step-count),minmax(0,1fr)); }
+.home-workflow-figure .anatomy-stages li { min-height: 0; padding-block: 8px; font-size: 13px; }
+.home-workflow-figure .anatomy-stage-detail { display: none; }
+.anatomy-plate.home-workflow-figure > figcaption { margin-top: 10px; }
+.home-evidence-note { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px 32px; margin-top: 24px; }
+.home-evidence-note > p { color: var(--color-ink-2); font-size: 16px; line-height: 1.8; }
+.home-evidence-note .home-text-link { margin-top: 0; gap: 12px; }
+@media (min-width:768px) and (max-width:1023px) {
+  .home-workflow-figure .anatomy-instrument-status > p:last-child { min-height: 3.4em; }
+}
+@media (max-width: 767px) {
+  .anatomy-plate.home-workflow-figure { padding: 16px; }
+  .home-workflow-figure .anatomy-stage { height: auto; aspect-ratio: 430 / 600; margin-inline: 0; }
+  .workflow-methods { transform: translate(95px,335px); }
+  .workflow-mobile { display: block; }
+  .workflow-desktop { display: none; }
+  .workflow-object-label { font-size: 18px; }
+  .workflow-object-note { font-size: 14px; }
+  .home-workflow-figure .anatomy-stages { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 4px 12px; }
+  .home-workflow-figure .anatomy-stages li { min-height: 0; font-size: 11px; }
+  .home-workflow-figure .anatomy-instrument-status { grid-template-columns: minmax(0,1fr); }
+  .home-workflow-figure .anatomy-instrument-status > p:last-child { min-height: 3.4em; text-align: left; }
+  .home-workflow-figure .anatomy-instrument-status > p:first-child { display: none; }
+  .home-evidence-note > p { font-size: 14px; }
+}
+
+
+/* 产品界面保持原生浅色；营销容器继续使用统一石墨主题。 */
+.home-product-heading { max-width: 860px; margin-bottom: 28px; }
+.home-product-heading .home-lede { max-width: 64ch; }
+.home-employee-showcase { display: grid; grid-template-columns: minmax(0,1.65fr) minmax(0,1fr); gap: clamp(28px,4vw,64px); align-items: center; }
+.home-employee-showcase .product-demo { min-width: 0; }
+.home-employee-steps { display: grid; gap: 26px; }
+.home-employee-steps h3,.home-access-copy h3 { font-size: 22px; font-weight: 450; letter-spacing: -.025em; }
+.home-employee-steps p,.home-access-copy p { margin-top: 10px; color: var(--color-ink-3); font-size: 14px; line-height: 1.85; }
+.home-access-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 48px; }
+.home-access-grid article { min-width: 0; }
+.home-access-copy { min-height: 160px; max-width: 54ch; }
+.home-access-grid .console-figure { margin-top: 24px; }
+.home-access-grid .console-image-link { aspect-ratio: 3 / 2; overflow: hidden; }
+.home-access-grid .console-image-link > img { width: 100%; height: 100%; object-fit: cover; }
+.home-access-note { margin-top: 24px; font-size: 13px; line-height: 1.85; color: var(--color-ink-3); max-width: 62ch; }
+.home-access-grid .home-text-link { margin-top: 12px; gap: 12px; }
+.home-first-use .home-lede { max-width: 68ch; }
+.home-first-use .home-text-link { margin-top: 0; gap: 12px; }
+.home-onboarding-reference { margin-top: 12px; max-width: 960px; }
+.home-onboarding-reference .console-figure { margin-top: 24px; }
+@media (max-width: 1023px) {
+  .home-employee-showcase { grid-template-columns: minmax(0,1fr); }
+  .home-employee-steps { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 24px; }
+  .home-access-grid { gap: 28px; }
+  .home-access-copy { min-height: 200px; }
+}
+@media (max-width: 767px) {
+  .home-employee-steps,.home-access-grid { grid-template-columns: minmax(0,1fr); }
+  .home-access-grid { gap: 44px; }
+  .home-access-grid article + article { padding-top: 32px; border-top: 1px solid var(--color-rule); }
+  .home-access-copy { min-height: 0; }
+  .home-product-heading { margin-bottom: 12px; }
+  .home-employee-steps h3,.home-access-copy h3 { font-size: 20px; }
 }
 
 /* Anatomy：四阶实体、刻线与安装件；颜色只标记工作对象。 */

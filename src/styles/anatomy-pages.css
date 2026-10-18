@@ -3,46 +3,23 @@
 .anatomy-instrument-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; align-items: baseline; font-size: 14px; line-height: 1.6; }
 .anatomy-instrument-heading > span:first-child { color: #868e9b; }
 .anatomy-instrument-heading > span:last-child { font-size: 16px; }
-.anatomy-stage { height: clamp(270px, 43vw, 510px); touch-action: pan-y; }
+.anatomy-stage { position: relative; height: clamp(270px, 43vw, 510px); touch-action: pan-y; }
+.concept-person-scene { font-family: var(--font-sans); }
+.concept-label { fill: #c4cbd5; font-size: 14px; }
+.concept-note { fill: #a6b4c0; font-size: 11px; }
 .anatomy-stage > svg { display: block; width: 100%; height: 100%; overflow: visible; }
 .anatomy-plate .employee-machine { --machine-fill: #1c2028; --machine-top: #303641; --machine-edge: #788291; --machine-ink: #bdc4ce; }
-.anatomy-plate :is(.architecture-workpiece, .concept-workpiece) { --machine-ink: #5c6674; --machine-accent-cyan: #5c6674; --machine-accent-mint: #5c6674; --machine-accent-amber: #5c6674; --machine-accent-violet: #5c6674; }
-.anatomy-plate :is(.architecture-workpiece, .concept-workpiece) .machine-top { fill: #d5dbe1; }
-.anatomy-plate :is(.architecture-workpiece, .concept-workpiece) .machine-engraving { fill: #485463; }
-/* 浅灰员工是主角；深色关节、桌面和资料架只提供承托。 */
-.anatomy-plate .concept-employee .iso-solid:not([data-tone="lo"]) { --machine-fill: #a7b1be; --machine-top: #dde3eb; --machine-edge: #9eaab9; --machine-ink: #465263; }
-.anatomy-plate .concept-employee .iso-solid:not([data-tone="lo"]) .machine-shade { fill: #8491a2; }
-.anatomy-plate .concept-employee .iso-solid:not([data-tone="lo"]) .machine-shade[data-shade="1"] { fill: #a7b1be; }
-.anatomy-plate .concept-employee .iso-solid:not([data-tone="lo"]) .machine-shade[data-shade="2"] { fill: #bbc4d0; }
-.anatomy-plate .concept-employee .iso-solid:not([data-tone="lo"]) .machine-shade[data-shade="3"] { fill: #ccd4de; }
-.anatomy-plate .concept-employee-face { fill: #202833; stroke: #8493a5; }
-.anatomy-plate .concept-employee-eye { fill: #dce5f0; stroke: none; }
-.anatomy-plate .concept-employee-name { fill: #465263; font-family: var(--font-sans); font-weight: 500; }
-.anatomy-plate .concept-source-records .iso-solid { --machine-fill: #586473; --machine-top: #818d9c; --machine-edge: #a3afbe; }
-.anatomy-plate .concept-source-records .machine-groove { stroke: #d8e0eb; opacity: .8; }
-.anatomy-plate .concept-person-scene .machine-engraving { fill: var(--machine-ink); }
-.anatomy-plate .concept-source-records .machine-engraving { fill: #263443; }
-.anatomy-plate .concept-human .iso-solid[data-tone="lo"] { --machine-fill: #3a424e; --machine-top: #545f6e; --machine-edge: #85909f; }
-.anatomy-plate .concept-human .iso-solid[data-tone="hi"] { --machine-fill: #b5b0a8; --machine-top: #d4cfc7; --machine-edge: #aaa69e; --machine-ink: #56524e; }
-.anatomy-plate .concept-human .iso-solid[data-tone="hi"] .machine-shade { fill: #918c85; }
-.anatomy-plate .concept-human .iso-solid[data-tone="hi"] .machine-shade[data-shade="1"] { fill: #aaa59e; }
-.anatomy-plate .concept-human .iso-solid[data-tone="hi"] .machine-shade[data-shade="2"] { fill: #bdb8b0; }
-.anatomy-plate .concept-human .iso-solid[data-tone="hi"] .machine-shade[data-shade="3"] { fill: #cbc6be; }
+.anatomy-plate .architecture-workpiece { --machine-ink: #5c6674; --machine-accent-cyan: #5c6674; --machine-accent-mint: #5c6674; --machine-accent-amber: #5c6674; --machine-accent-violet: #5c6674; }
+.anatomy-plate .architecture-workpiece .machine-top { fill: #d5dbe1; }
+.anatomy-plate .architecture-workpiece .machine-engraving { fill: #485463; }
 .anatomy-instrument-status { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; align-items: baseline; font-size: 13px; line-height: 1.7; }
 .anatomy-instrument-status > p:first-child { color: #868e9b; }
 .anatomy-instrument-status > p:last-child { color: #c4cbd5; }
-.anatomy-controls { display: grid; grid-template-columns: repeat(var(--anatomy-step-count, 4), minmax(0, 1fr)); gap: 6px; margin-top: 24px; }
-.anatomy-controls button { min-width: 0; min-height: 48px; padding: 12px 16px; border: 0; background: #1b1e25; color: #a8b1bf; text-align: left; font: 400 15px/1.5 var(--font-sans); cursor: pointer; transition: color 160ms ease, background-color 160ms ease; }
-.anatomy-controls button[aria-pressed="true"] { background: #d5dbe1; color: #20252d; }
-.anatomy-controls button:hover { background: #343b47; color: #f2f3f6; }
-.anatomy-controls button[aria-pressed="true"]:hover { background: #e4e8ed; color: #20252d; }
-.anatomy-controls button:focus-visible { outline: 2px solid #d5dbe1; outline-offset: 3px; }
+.anatomy-stages { display: grid; grid-template-columns: repeat(var(--anatomy-step-count, 4), minmax(0, 1fr)); gap: 16px; margin-top: 24px; list-style: none; }
+.anatomy-stages li { min-width: 0; padding: 12px 0; border-top: 1px solid #414956; color: #a8b1bf; font: 400 14px/1.5 var(--font-sans); }
+.anatomy-stages li[data-active="true"] { border-color: #d5dbe1; color: #e4e8ed; }
+.anatomy-live:focus-visible,.employee-hero:focus-visible { outline: 2px solid #d5dbe1; outline-offset: 4px; }
 .anatomy-stage-detail { min-height: 3.5em; max-width: 78ch; margin-top: 16px; color: #b7bfcb; font-size: 15px; line-height: 1.75; }
-.anatomy-playback-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px 32px; margin-top: 16px; }
-.anatomy-playback-row .anatomy-stage-detail { flex: 1; margin-top: 0; }
-.anatomy-playback { flex: 0 0 auto; min-height: 44px; padding: 8px 0; color: #b7bfcb; font: 400 13px/1.6 var(--font-sans); cursor: pointer; }
-.anatomy-playback:hover { color: #f2f3f6; }
-.anatomy-playback:focus-visible { outline: 2px solid #d5dbe1; outline-offset: 4px; }
 .anatomy-plate > figcaption { margin-top: 22px; color: #878f9b; font-size: 13px; line-height: 1.8; }
 .anatomy-legend { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 0 0 12px; padding: 0; list-style: none; color: #adb6c3; }
 .anatomy-legend li { display: flex; align-items: baseline; gap: 8px; }
@@ -65,12 +42,9 @@
   .anatomy-live[data-anatomy-kind="concept"]:lang(en) .anatomy-instrument-status { display: grid; grid-template-columns: minmax(0, 1fr); }
   .anatomy-live[data-anatomy-kind="concept"]:lang(en) .anatomy-instrument-status > p { min-height: 3.4em; }
   .anatomy-live[data-anatomy-kind="concept"]:lang(en) .anatomy-stage-detail { min-height: 7em; }
-  .anatomy-controls { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 18px; }
-  .anatomy-controls button { min-height: 48px; padding: 11px 12px; font-size: 14px; }
+  .anatomy-stages { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 18px; }
+  .anatomy-stages li { font-size: 13px; }
   .anatomy-stage-detail { min-height: 5.25em; font-size: 14px; }
-  .anatomy-playback-row { flex-wrap: wrap; gap: 4px; }
-  .anatomy-playback-row .anatomy-stage-detail { flex-basis: 100%; }
   .anatomy-plate > figcaption { font-size: 12px; }
   .anatomy-legend { gap: 6px 16px; }
 }
-@media (prefers-reduced-motion: reduce) { .anatomy-controls button { transition: none; } }

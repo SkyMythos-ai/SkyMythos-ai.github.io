@@ -11,7 +11,7 @@ const copy = {
   concept: {
     zh: {
       title: "从人机协作，到数字员工",
-      description: "左侧的人先在 Chat 工作台与大模型共同做事，留下 Skill 方法册和 MCP 工具接入件，随后形成右侧的 Agent。Agent 配上 Skill 与 MCP 后组成数字员工。人指派新任务，员工执行并将成果送回，最终由人审批验收。",
+      description: "左侧的人先通过 Chat 与大模型共同做事，留下 Skill 方法和 MCP 工具接入，随后形成右侧的 Agent。Agent 配上 Skill 与 MCP 后组成数字员工。任务卡从人流向员工，成果返回后由人审批验收。",
       stages: [
         { title: "人 + 模型 Chat", detail: "人设定目标，与大模型通过 Chat 逐轮推进，先一起完成真实工作。" },
         { title: "沉淀 Skill / MCP", detail: "把做事的方法沉淀为 Skill，把所需工具接入保留为 MCP 能力。可复用能力先留下。" },
@@ -69,9 +69,9 @@ const copy = {
 export function ProductAnatomyFigure({ kind, locale }: { kind: AnatomyKind; locale: Locale }) {
   const t = copy[kind][locale];
   const frame = (kind === "concept" ? conceptFrame : architectureFrame)(t.stages.length - 1);
-  return <figure className="anatomy-plate" aria-label={t.title}>
+  return <figure className="anatomy-plate" aria-label={t.title} data-animation-scope="">
     <div className="anatomy-instrument-heading"><span>{kind === "concept" ? "Fig. 01" : "Fig. 02"}</span><span>{t.title}</span></div>
-    <AnatomyLive kind={kind} locale={locale} title={t.title} description={t.description} stages={[...t.stages]} viewBox={kind === "concept" ? conceptViewBox : architectureViewBox} art={<AnatomyArt key={`${kind}-art`} frame={frame} art={kind === "concept" ? <ConceptArt key="concept"/> : <ArchitectureArt key="architecture"/>}/>}/>
+    <AnatomyLive kind={kind} locale={locale} title={t.title} description={t.description} stages={[...t.stages]} viewBox={kind === "concept" ? conceptViewBox : architectureViewBox} art={kind === "concept" ? <ConceptArt locale={locale} frame={frame} /> : <AnatomyArt frame={frame} art={<ArchitectureArt />} />}/>
     <figcaption><ul className="anatomy-legend">{t.legend.map(text => <li key={text}>{text}</li>)}</ul><p>{t.caption}</p></figcaption>
   </figure>;
 }

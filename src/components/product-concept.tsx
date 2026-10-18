@@ -1,187 +1,59 @@
-import Link from "next/link";
 import type { Locale } from "@/lib/i18n";
-import { localePath } from "@/lib/i18n";
-import { ConsoleFigure } from "@/components/console-figure";
-import { ProductAnatomyFigure } from "@/components/anatomy/figure";
+import { ProductChapter, ProductLink } from "@/components/product-page-parts";
 import { ProductDemo } from "@/components/product-demo/figure";
-
-const copy = {
-  zh: {
-    title: ["从日常工作，", "沉淀数字员工。"],
-    intro: "先和大模型在 Chat 中反复把事情做成，沉淀 Skill 与 MCP，再形成 Agent 并组成数字员工。后续由你指派任务，它执行、交付，你审批验收。",
-    action: "对照界面开始使用",
-    chapters: ["数字员工", "开放协作", "知识沉淀"],
-    workTitle: "从反复协作，到数字员工",
-    workBody: "先留下 Skill 方法与 MCP 工具接入，再围绕明确职责形成 Agent。将这些能力组合为数字员工后，你从逐轮推进工作，转为指派任务、审批与验收。",
-    employeeTitle: ["你来指派与验收，", "Agent 负责执行。"],
-    employeeBody: "Agent 是执行主体，数字员工让它具备持续身份与职责。配上 Skill 方法、MCP 工具和工作经验，它接手后续任务；你在员工目录查看角色、工作记录与来源。",
-    employeeSteps: [
-      ["沉淀方法与工具", "从人和大模型的协作中提炼 Skill，整理可复用的 MCP 工具接入能力，保留工作的依据。"],
-      ["形成数字员工", "Agent 围绕职责组合方法与工具。当前界面支持从经验培养，也支持从 Agent Hub 雇用已发布角色。"],
-      ["指派任务，审批交付", "你说明目标，由 Agent 推进执行并提交成果，再由你审批与验收。"],
-    ],
-    employeeLink: "了解数字员工的使用方式",
-    openTitle: "模型与工具，各自选择",
-    openBody: "模型提供推理，Agent 负责执行，Harness 承载执行循环。Skill 提供工作方法，MCP 接入外部工具；按职责组合这些能力，让不同 Agent 参与同一项工作。",
-    openFacts: [
-      ["模型接入", "开始会话时，从已配置的网关与可用模型中选择。"],
-      ["Agent Harness", "为 Agent 会话选择运行工具，按工具的协议使用模型。"],
-      ["能力与交接", "Skill 复用方法，MCP 接入工具；角色与流程约定职责、输入和输出。"],
-    ],
-    openNote: "可用组合由当前部署的运行时、模型协议、能力配置与个人授权共同决定。",
-    openLink: "查看模型与能力配置",
-    knowledgeTitle: ["经验可以个人化，", "知识需要有出处。"],
-    knowledgeBody: "个人记忆帮助员工延续协作；知识库承载团队可共享的正式资料。在知识库中管理文档、测试检索，并查看知识图谱与质量信息。",
-    knowledgeFacts: [
-      ["文档", "维护内容、来源和发布状态。"],
-      ["检索测试", "检查哪些资料会被检索出来。"],
-      ["知识图谱与质量", "从关联和使用情况检查知识。"],
-    ],
-    knowledgeLink: "了解知识与记忆",
-    objectsTitle: "需要深入时，再看对象",
-    objectsBody: "界面里的每次操作，都能回到具体的领域对象。先完成一次工作，再按需要查看它们的职责与边界。",
-    objects: [
-      ["Agent / Employee", "执行主体与持续身份", "Agent 理解目标、调用能力并执行；数字员工以 Agent 为执行主体，组合职责、Skill、MCP 等能力与持续经验。", "/docs/reference/glossary"],
-      ["Workspace / Project", "工作范围", "Workspace 组织成员与共享能力；Project 将围绕持续目标的仓库、任务和知识放在一起。", "/docs/reference/glossary"],
-      ["Task / TaskSpec", "一次任务与执行规格", "任务承载一次执行。执行规格记录本次使用的工作范围、输入、流程、模型与能力版本。", "/docs/concepts/tasks-and-specs"],
-      ["Flow / WorkNode", "协作过程与工作单元", "Flow 描述依赖关系，WorkNode 声明一个可复用的执行单元，包括需要的输入、能力和输出。", "/docs/concepts/flows-and-worknodes"],
-      ["Sandbox / Attempt", "环境与执行尝试", "Sandbox 承载运行环境；Attempt 记录一次具体执行。重试、返工与恢复分别保留自己的运行事实。", "/docs/concepts/sandbox"],
-      ["Artifact / Gate", "产物与完成依据", "产物、清单、结果摘要和质量门禁，共同定义工作是否完成，以及如何向下游交接。", "/docs/concepts/artifacts-and-gates"],
-      ["Knowledge / Memory", "共享知识与个人经验", "知识以文档、来源和治理范围组织；记忆围绕个人及员工的持续协作管理。", "/docs/reference/glossary"],
-    ],
-    readDefinition: "查看完整定义",
-    next: "从真实界面开始，完成第一项工作。",
-    nextAction: "打开使用文档",
-    architecture: "继续了解架构",
-  },
-  en: {
-    title: ["Work becomes", "experience."],
-    intro: "Work with a model in Chat. Retain methods as Skills and tool access through MCP, then form an Agent and combine its capabilities into a digital employee. You assign the work; it executes and delivers for your review and approval.",
-    action: "Start with the interface",
-    chapters: ["Digital employees", "Open collaboration", "Knowledge"],
-    workTitle: "From collaboration to a digital employee",
-    workBody: "Retain Skill methods and MCP tool access, then form an Agent around a responsibility. Together they become a digital employee. Your role shifts from advancing each Chat turn to assigning work, reviewing and approving results.",
-    employeeTitle: ["You assign and review.", "Your Agent executes."],
-    employeeBody: "An Agent executes. A digital employee gives it a lasting identity and responsibility, combining Skills, authorised MCP tools and work experience. Its directory entry retains the role, work records and source evidence.",
-    employeeSteps: [
-      ["Capture methods and tool use", "Retain Skills and reusable MCP tool access from work with a model, keeping the source evidence."],
-      ["Form a digital employee", "Combine methods and tools around the Agent’s responsibility. The Console supports development from experience and hiring published roles from Agent Hub."],
-      ["Assign work and approve delivery", "You describe the goal. The Agent executes and submits its results for your review and approval."],
-    ],
-    employeeLink: "Learn how digital employees work",
-    openTitle: "Choose models and tools",
-    openBody: "Models provide reasoning. Agents execute. Harnesses host the execution loop. Skills provide methods, while MCP connects external tools. Combine these capabilities around a responsibility so different Agents can contribute to the same work.",
-    openFacts: [
-      ["Model access", "Start a session with a model available through your configured gateways."],
-      ["Agent harness", "Choose a session’s execution tool and use models through the tool’s supported protocols."],
-      ["Capabilities and handoffs", "Skills reuse methods; MCP connects tools. Roles and flows define responsibilities, inputs and outputs."],
-    ],
-    openNote: "Available combinations depend on deployed runtimes, model protocols, capability configuration and personal authorisation.",
-    openLink: "Configure models and capabilities",
-    knowledgeTitle: ["Personal memory.", "Shared knowledge."],
-    knowledgeBody: "Personal memory helps an employee continue a collaboration. Knowledge bases hold formal material a team can share. Manage documents, test retrieval, and inspect the knowledge graph and quality information.",
-    knowledgeFacts: [
-      ["Documents", "Maintain content, sources and publication state."],
-      ["Retrieval tests", "Check which materials are retrieved."],
-      ["Graph and quality", "Review knowledge through its connections and usage."],
-    ],
-    knowledgeLink: "Understand knowledge and memory",
-    objectsTitle: "Explore the objects",
-    objectsBody: "Every action in the interface maps to a concrete domain object. Complete some work first, then explore responsibilities and boundaries as you need them.",
-    objects: [
-      ["Agent / Employee", "Executor and lasting identity", "An Agent understands a goal, uses capabilities and executes. A digital employee combines that executor with a responsibility, Skills, MCP tool access and continuing experience.", "/docs/reference/glossary"],
-      ["Workspace / Project", "Scope of work", "A workspace organises members and shared capabilities. A project brings repositories, tasks and knowledge together around a continuing goal.", "/docs/reference/glossary"],
-      ["Task / TaskSpec", "A task and its specification", "A task represents an execution. Its specification records the scope, inputs, flow, model and capability versions used for that run.", "/docs/concepts/tasks-and-specs"],
-      ["Flow / WorkNode", "A process and its work units", "A flow defines dependencies. A work node defines a reusable execution unit with its inputs, capabilities and outputs.", "/docs/concepts/flows-and-worknodes"],
-      ["Sandbox / Attempt", "An environment and an attempt", "A sandbox hosts execution. An attempt records one execution. Retries, rework and recovery retain their respective runtime facts.", "/docs/concepts/sandbox"],
-      ["Artifact / Gate", "Outputs and completion evidence", "Artefacts, manifests, result summaries and quality gates define completion and the handoff to downstream work.", "/docs/concepts/artifacts-and-gates"],
-      ["Knowledge / Memory", "Shared knowledge and experience", "Knowledge is organised through documents, sources and governed scopes. Memory supports a person’s and employee’s continuing collaboration.", "/docs/reference/glossary"],
-    ],
-    readDefinition: "Read the full definition",
-    next: "Start with the interface. Complete your first job.",
-    nextAction: "Open the user guide",
-    architecture: "Explore the architecture",
-  },
-} as const;
-
-function TextLink({ href, children }: { href: string; children: React.ReactNode }) {
-  return <Link className="product-text-link" href={href}>{children}<span aria-hidden="true">↗</span></Link>;
-}
+import { HomeWorkflowFigure } from "@/components/home-workflow-figure";
 
 export function ProductConcept({ locale }: { locale: Locale }) {
-  const t = copy[locale];
-  return (
-    <div className="product-page product-concept">
-      <header className="product-opening product-width">
-        <div>
-          <h1>{t.title.map((line) => <span key={line}>{line}</span>)}</h1>
-        </div>
-        <div className="product-opening-copy">
-          <p>{t.intro}</p>
-          <TextLink href={localePath(locale, "/docs")}>{t.action}</TextLink>
-        </div>
-      </header>
+  const zh = locale === "zh";
+  const modes = zh ? [
+    ["对话协作", "讨论、探索与临时工作", "在 SkyBot 中围绕目标协作，不必先画流程。", "/docs/getting-started/overview"],
+    ["研发任务", "需要检查与交接的工程工作", "用 Workflow 组织环节，保留变更与检查证据。", "/docs/guides/create-a-task"],
+    ["周期自动化", "定时或事件触发的重复工作", "发布自动化定义，按配置触发并查看独立运行记录。", "/docs/getting-started/overview"],
+  ] : [
+    ["Conversation", "Exploration and everyday work", "Collaborate around a goal in SkyBot. No flow design required.", "/docs/getting-started/overview"],
+    ["Engineering task", "Work that needs checks and handoffs", "Use a Workflow to organise steps, changes and verification evidence.", "/docs/guides/create-a-task"],
+    ["Automation", "Recurring or event-driven work", "Publish a definition, configure its trigger and inspect independent runs.", "/docs/getting-started/overview"],
+  ];
+  const assets = zh ? [
+    ["企业知识", "事实与背景", "保留资料来源，检索时按授权访问。", "/docs/concepts/knowledge-and-memory"],
+    ["员工经验", "指导与职责方法", "保留独立经验、适用范围与纠正来源。", "/docs/guides/digital-employees"],
+    ["Skill", "可执行的方法", "把成熟做法整理为有输入、输出与检查的能力。", "/docs/guides/flows-and-marketplace"],
+    ["Flow", "组织交付的过程", "按版本复用环节依赖与产物交接。", "/docs/concepts/flows-and-worknodes"],
+  ] : [
+    ["Knowledge", "Facts and context", "Keep source material and check access when retrieving it.", "/docs/concepts/knowledge-and-memory"],
+    ["Employee experience", "Guidance and working methods", "Keep independent experience, scope and correction sources.", "/docs/guides/digital-employees"],
+    ["Skill", "An executable method", "Package proven methods with inputs, outputs and checks.", "/docs/guides/flows-and-marketplace"],
+    ["Flow", "A delivery process", "Reuse versioned dependencies and output handoffs.", "/docs/concepts/flows-and-worknodes"],
+  ];
+  return <div className="product-page product-concept">
+    <header className="product-opening product-width">
+      <div><p className="story-eyebrow">{zh ? "工作方式" : "How it works"}</p><h1>{zh ? <>把一次工作做成，<br />把有效方法留下。</> : <>Deliver the work.<br />Keep what works.</>}</h1></div>
+      <div className="product-opening-copy"><p>{zh ? "从目标出发，选择合适的工作方式。人保留关键判断，SkyBot 统筹，专业员工按职责参与。" : "Start with the goal, then choose how to work. People retain key decisions, SkyBot coordinates and specialists contribute."}</p><ProductLink locale={locale} href="/concept#delivery">{zh ? "看订单导出案例" : "See the order-export example"}</ProductLink></div>
+    </header>
 
-      <section className="product-workspace product-width" aria-labelledby="product-workspace-heading">
-        <div className="product-media-intro">
-          <h2 id="product-workspace-heading">{t.workTitle}</h2>
-          <p>{t.workBody}</p>
-        </div>
-        <ProductAnatomyFigure kind="concept" locale={locale}/>
-        <details className="product-interface-reference"><summary>{locale === "zh" ? "对照实际的对话工作台" : "Compare with the conversation workspace"}</summary><ConsoleFigure locale={locale} screen="workspace"/></details>
-        <nav className="product-chapters" aria-label={locale === "zh" ? "概念章节" : "Concept chapters"}>
-          {t.chapters.map((chapter, index) => <a key={chapter} href={`#${["employees", "collaboration", "knowledge"][index]}`}>{chapter}<span aria-hidden="true">↓</span></a>)}
-        </nav>
-      </section>
+    <section id="collaboration" className="product-width work-modes" aria-labelledby="work-modes-heading">
+      <h2 id="work-modes-heading">{zh ? "同一个目标，不必只有一种工作方式。" : "One goal. The right way to work."}</h2>
+      <div className="work-mode-origin"><span>{zh ? "目标与约束" : "Goal & constraints"}</span><span aria-hidden="true">↓</span><span>{zh ? "按工作性质选择" : "Choose by the work"}</span></div>
+      <div className="work-mode-branches">{modes.map(([title, purpose, detail, href]) => <article key={title}><p className="story-eyebrow">{purpose}</p><h3>{title}</h3><p>{detail}</p><ProductLink locale={locale} href={href}>{zh ? "使用指南" : "Read the guide"}</ProductLink></article>)}</div>
+      <p className="story-note">{zh ? "三种入口共用权限与资产，但不是同一种运行对象。普通对话不隐式创建研发 Task；Automation Run 也不等于研发 Task。触发器与外部接入按实际配置验收。" : "These modes share access rules and assets, not one run identity. Conversations do not implicitly create engineering Tasks, and Automation Runs are not engineering Tasks. Triggers and integrations require configuration and validation."}</p>
+    </section>
 
-      <section id="employees" className="product-chapter product-width product-employee" aria-labelledby="product-employee-heading">
-        <div className="product-chapter-heading">
-          <h2 id="product-employee-heading">{t.employeeTitle.map((line) => <span key={line}>{line}</span>)}</h2>
-          <p>{t.employeeBody}</p>
-        </div>
-        <div className="product-feature-layout">
-          <ProductDemo locale={locale} kind="employees" />
-          <div className="product-sequence">
-            <ol>{t.employeeSteps.map(([title, detail]) => <li key={title}><h3>{title}</h3><p>{detail}</p></li>)}</ol>
-            <TextLink href={localePath(locale, "/docs/guides/digital-employees")}>{t.employeeLink}</TextLink>
-          </div>
-        </div>
-      </section>
+    <ProductChapter id="delivery" label={zh ? "01 / 一项研发工作的完整过程" : "01 / One engineering job, end to end"} title={zh ? "订单导出，从一句需求到可审查的变更。" : "Order export: from a request to reviewable changes."} intro={zh ? "同一个客户门户需求贯穿目标、方案确认、执行与交付：支持 CSV / Excel，沿用权限规则，并补充接口与交互测试。" : "Follow one customer-portal request through the goal, design approval, execution and delivery: CSV / Excel export, existing access rules, and API and interaction tests."}>
+      <div className="case-example-label"><span>{zh ? "产品界面演示" : "Product interface demonstration"}</span><p>{zh ? "来自产品 Keynote 的固定示例，不是客户实测结果。" : "Chinese Console UI; fixed sample data from the product keynote, not measured customer results."}</p></div>
+      <ProductDemo locale={locale} kind="order-delivery" />
+      <div className="delivery-evidence"><h3>{zh ? "验收看什么？" : "What counts as evidence?"}</h3><ul>{(zh ? ["可审查的代码变更", "实际执行的检查", "完成项与未完成事项", "本次执行的依据与记录"] : ["Reviewable code changes", "Checks that actually ran", "Completed and unresolved work", "Execution inputs and records"]).map(item => <li key={item}>{item}</li>)}</ul></div>
+      <div className="story-footnote"><p>{zh ? "信息不足先澄清，高影响动作按策略确认。失败后先定位，再按现场保留与运行状态选择恢复。" : "Clarify missing information and confirm high-impact actions when policy requires it. Inspect failures before recovery; availability depends on retained state and runtime status."}</p><ProductLink locale={locale} href="/docs/guides/handle-failures">{zh ? "查看介入与恢复指南" : "Read the intervention and recovery guide"}</ProductLink></div>
+    </ProductChapter>
 
-      <section id="collaboration" className="product-chapter product-width product-open" aria-labelledby="product-open-heading">
-        <div className="product-chapter-heading">
-          <h2 id="product-open-heading">{t.openTitle}</h2>
-          <p>{t.openBody}</p>
-        </div>
-        <ProductDemo locale={locale} kind="agent-setup" />
-        <dl className="product-three-facts">{t.openFacts.map(([term, detail]) => <div key={term}><dt>{term}</dt><dd>{detail}</dd></div>)}</dl>
-        <div className="product-footnote-row"><p>{t.openNote}</p><TextLink href={localePath(locale, "/docs/guides/flows-and-marketplace")}>{t.openLink}</TextLink></div>
-      </section>
+    <ProductChapter id="employees" label={zh ? "02 / 从这次工作，到下一次协作" : "02 / From this job to the next collaboration"} title={zh ? "先留下经验，再培养数字员工。" : "Experience first. Then a digital employee."} intro={zh ? "工作记录与经验经人整理，确认职责、方法和工具后，才形成并配备员工。它就绪后，再承接后续工作；不是自动训练模型。" : "People curate records and experience, then confirm the responsibility, methods and tools before creating and equipping an employee. Only then does it take on future work. This is not model training."}>
+      <HomeWorkflowFigure locale={locale} />
+      <div className="employee-distinction"><div><h3>{zh ? "角色，定义怎样工作" : "A role defines how to work"}</h3><p>{zh ? "职责、方法与交付标准可以按版本发布和复用。" : "Publish and reuse versioned responsibilities, methods and delivery standards."}</p></div><div><h3>{zh ? "员工，保留独立经验" : "An employee keeps its own experience"}</h3><p>{zh ? "同一角色可以被复用，员工的长期身份和个人经验仍各自保留。" : "A role can be reused while each employee retains its own identity and experience."}</p></div></div>
+      <div className="story-footnote"><p>{zh ? "培养不是每次工作的前置条件，也可雇用已发布角色。共享角色不会自动复制私人会话、个人记忆或凭据。" : "Formation is not a prerequisite for every job; you can also hire a published role. Sharing a role does not copy private conversations, personal memory or credentials."}</p><ProductLink locale={locale} href="/docs/guides/digital-employees">{zh ? "对照界面培养员工" : "Develop an employee in the Console"}</ProductLink></div>
+    </ProductChapter>
 
-      <section id="knowledge" className="product-chapter product-width product-knowledge" aria-labelledby="product-knowledge-heading">
-        <div className="product-knowledge-copy">
-          <h2 id="product-knowledge-heading">{t.knowledgeTitle.map((line) => <span key={line}>{line}</span>)}</h2>
-          <p>{t.knowledgeBody}</p>
-          <dl className="product-knowledge-facts">{t.knowledgeFacts.map(([term, detail]) => <div key={term}><dt>{term}</dt><dd>{detail}</dd></div>)}</dl>
-          <TextLink href={localePath(locale, "/docs/concepts/knowledge-and-memory")}>{t.knowledgeLink}</TextLink>
-        </div>
-        <ProductDemo locale={locale} kind="knowledge" />
-      </section>
-
-      <section className="product-chapter product-width product-definitions" aria-labelledby="product-definitions-heading">
-        <div className="product-chapter-heading"><h2 id="product-definitions-heading">{t.objectsTitle}</h2><p>{t.objectsBody}</p></div>
-        <div className="product-definition-list">{t.objects.map(([name, role, detail, path]) => (
-          <details key={name}>
-            <summary><span>{name}</span><span>{role}</span></summary>
-            <div className="product-definition-content"><p>{detail}</p><TextLink href={localePath(locale, path)}>{t.readDefinition}</TextLink></div>
-          </details>
-        ))}</div>
-      </section>
-
-      <section className="product-next product-width">
-        <p>{t.next}</p>
-        <div><TextLink href={localePath(locale, "/docs")}>{t.nextAction}</TextLink><TextLink href={localePath(locale, "/architecture")}>{t.architecture}</TextLink></div>
-      </section>
-    </div>
-  );
+    <ProductChapter id="knowledge" label={zh ? "03 / 按用途复用，不混成一个记忆库" : "03 / Reuse with clear purposes"} title={zh ? "留下事实、经验、方法与过程。" : "Keep facts, experience, methods and processes distinct."} intro={zh ? "不同资产有不同的来源、权限和生命周期。先分清它们解决什么问题，再决定如何采用和共享。" : "Different assets have different sources, permissions and lifecycles. Understand their purpose before adopting or sharing them."}>
+      <dl className="asset-ledger">{assets.map(([name, purpose, detail, href]) => <div key={name}><dt>{name}</dt><dd><strong>{purpose}</strong><p>{detail}</p></dd><dd><ProductLink locale={locale} href={href}>{zh ? "了解更多" : "Learn more"}</ProductLink></dd></div>)}</dl>
+    </ProductChapter>
+    <section className="product-next product-width"><p>{zh ? "工作方式清楚之后，再看它运行在哪里。" : "Now see where this work runs and who controls it."}</p><div><ProductLink locale={locale} href="/architecture">{zh ? "查看企业架构" : "Explore the architecture"}</ProductLink><ProductLink locale={locale} href="/docs/getting-started/first-task">{zh ? "开始第一项工作" : "Start your first job"}</ProductLink></div></section>
+  </div>;
 }

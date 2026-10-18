@@ -1,4 +1,4 @@
-export type ProductDemoKind = "employees" | "agent-setup" | "knowledge";
+export type ProductDemoKind = "employees" | "agent-setup" | "knowledge" | "order-delivery";
 export type BilingualCopy = { zh: string; en: string };
 
 /** 坐标相对真实截图，以 0–1 表示；焦点不改变截图中的产品内容。 */

@@ -59,7 +59,7 @@ function buildSteps(locale: Locale): PipelineStep[] {
       {
         name: "归并",
         detail:
-          "从输入、产物、代码变更与验证结果产生知识增量，综合为可审阅的正式认知，供后续任务按冻结版本召回。",
+          "从输入、产物、代码变更与验证结果产生知识增量，综合为带来源、可审阅的正式认知。后续检索实时检查授权，不把知识访问等同于冻结执行规格。",
         authority: "control plane",
         inSandbox: false,
       },
@@ -112,7 +112,7 @@ function buildSteps(locale: Locale): PipelineStep[] {
     {
       name: "Consolidate",
       detail:
-        "Produce a knowledge delta from inputs, artefacts, code changes and verification results, and synthesise it into reviewable formal cognition for later tasks to recall by frozen version.",
+        "Produce a knowledge delta from inputs, artefacts, code changes and checks, then synthesise sourced, reviewable knowledge. Later retrieval checks current access; it is not the frozen execution specification.",
       authority: "control plane",
       inSandbox: false,
     },

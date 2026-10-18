@@ -56,11 +56,12 @@ Administrators or operations manage platform services. Workspace administrators 
 
 | Configuration | Console entry | Validate afterward |
 | --- | --- | --- |
-| Model catalog and gateway | Platform administration → LLM gateway | Actual model calls and protocol compatibility |
-| Embedding services | Platform administration → Embedding gateway | Document indexing and retrieval tests |
-| Git service catalog | Platform administration → Git services | Repository and branch listing after member authorization |
-| Images, resources and environments | Platform administration → Runtime environment | Actual environment creation and execution |
-| Enterprise messaging and integrations | Relevant integration page in Platform administration | Sign-in, authorization or messaging separately |
+| Model catalog and gateway | Model gateways in Settings | Actual calls, protocol and default CLI compatibility |
+| Platform chat Agent | Platform chat Agent in Settings | Default model configuration and a real conversation |
+| Embedding services | Embedding gateway in Settings | Document indexing and retrieval tests |
+| Git service catalog | Git connectors in Settings | Repository and branch listing after member authorisation |
+| Images, resources and environments | Runtime environments in Settings | Actual environment creation and execution |
+| Enterprise messaging and integrations | The relevant integration in Settings | Sign-in, authorisation or messaging separately |
 | Private credentials and tool access | Connections & access | Current member authorization and an actual call |
 
 ## Check models and Harnesses separately

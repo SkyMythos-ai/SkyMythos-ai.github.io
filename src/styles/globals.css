@@ -7,6 +7,7 @@
 @import "./docs-pages.css";
 @import "./anatomy-pages.css";
 @import "./product-demo.css";
+@import "./product-story.css";
 
 /* 确认后的官网视觉：石墨营销画布与中性浅色阅读面共用语义 token。
    结构使用中性色，少量低饱和色只标记工作、交接和证据；品牌蓝保持身份。

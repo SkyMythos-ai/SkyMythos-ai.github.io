@@ -2,112 +2,152 @@ import type { ProductDemoKind, ProductDemoStory } from "@/components/product-dem
 
 /** 当前 Console 的真实组件截图；全部工作、身份和返回状态为本地示例。 */
 export const productDemoStories: Record<ProductDemoKind, ProductDemoStory> = {
+  "order-delivery": {
+    title: { zh: "订单导出：从目标到交付", en: "Order export: from goal to delivery" },
+    frames: [
+      {
+        id: "order-goal", src: "/images/product/keynote-order-goal.png", width: 3200, height: 1800,
+        title: { zh: "约定目标", en: "Agree on the goal" },
+        detail: { zh: "明确 CSV / Excel 导出、权限规则与测试要求，选定仓库、基线和研发流程。", en: "Agree on CSV / Excel export, access rules and tests. Select the repository, baseline and flow. Chinese UI; sample data." },
+        focus: [.58, .08, .38, .65], mobileFocus: [.585, .1, .25, .34], durationMs: 5600,
+      },
+      {
+        id: "order-approval", src: "/images/product/keynote-order-approval.png", width: 3200, height: 1800,
+        title: { zh: "按策略确认", en: "Confirm when required" },
+        detail: { zh: "示例在技术方案处设置审批，核对权限与实现约定；不是所有工作、每个步骤都需要人工确认。", en: "This example pauses for design approval. Check access and implementation choices; not every job or step requires approval." },
+        focus: [.24, .37, .44, .36], mobileFocus: [.235, .49, .25, .25], durationMs: 5600,
+      },
+      {
+        id: "order-execution", src: "/images/product/keynote-order-execution.png", width: 3200, height: 1800,
+        title: { zh: "跟进执行", en: "Follow execution" },
+        detail: { zh: "查看当前节点、执行记录与交接关系，在原工作上下文补充指导；计划不等于完成。", en: "Follow nodes, execution records and handoffs. Add guidance in context. A plan is not proof of completion." },
+        focus: [.235, .21, .74, .54], mobileFocus: [.235, .24, .25, .4], durationMs: 5600,
+      },
+      {
+        id: "order-delivery", src: "/images/product/keynote-order-delivery.png", width: 3200, height: 1800,
+        title: { zh: "核对交付", en: "Review delivery" },
+        detail: { zh: "核对代码变更、实际检查和未完成事项。图中测试数与 PR 编号均为演示数据，不是客户业绩。", en: "Review changes, actual checks and unresolved work. Test counts and PR numbers are sample data, not customer results." },
+        focus: [.235, .34, .44, .39], mobileFocus: [.235, .35, .25, .36], durationMs: 6200,
+      },
+    ],
+    poster: 3,
+  },
   "employees": {
     "title": {
-      "zh": "界面对照：从经验培养员工",
-      "en": "In the Console: develop an employee"
+      "zh": "界面对照：从工作经验创建员工",
+      "en": "In the Console: create an employee from experience"
     },
     "frames": [
       {
-        "id": "work-records",
-        "src": "/images/product/demos/employees-work-records.png",
-        "width": 1803,
-        "height": 1110,
+        "id": "employees-current",
+        "src": "/images/product/employees-current.png",
+        "width": 1440,
+        "height": 960,
         "title": {
-          "zh": "回看已有工作的依据",
-          "en": "Review existing work"
+          "zh": "从员工目录开始",
+          "en": "Start in Agent Employee"
         },
         "detail": {
-          "zh": "从工作记录查看执行与来源，为培养目标整理可用经验。",
-          "en": "Use work records and sources to identify experience for a development goal. Chinese UI; sample data."
+          "zh": "在 Agent Employee 中管理 SkyBot 与专业员工，选择从工作经验创建。",
+          "en": "Manage SkyBot and specialists, then choose creation from work experience."
         },
         "focus": [
-          0.00832,
-          0,
-          0.16593,
-          0.42891
+          0.19,
+          0.08,
+          0.77,
+          0.45
         ],
-        "durationMs": 3800
-      },
-      {
-        "id": "formation-goal",
-        "src": "/images/product/demos/employees-formation-goal.png",
-        "width": 1803,
-        "height": 1110,
-        "title": {
-          "zh": "说明培养目标",
-          "en": "Set a development goal"
-        },
-        "detail": {
-          "zh": "在「从经验培养」中说明希望形成的职责，提交后查看来源覆盖与培养结果。",
-          "en": "Describe a responsibility in Develop from experience, then inspect source coverage and results. Chinese UI; sample data."
-        },
-        "focus": [
-          0.16805,
-          0.3473,
-          0.46589,
-          0.35946
-        ],
-        "cursor": [
-          0.57005,
-          0.64256
-        ],
-        "durationMs": 3800,
         "mobileFocus": [
-          0.18,
-          0.35,
+          0.17,
+          0.08,
           0.28,
+          0.4
+        ],
+        "durationMs": 4800
+      },
+      {
+        "id": "formation-sources",
+        "src": "/images/product/formation-sources.png",
+        "width": 1440,
+        "height": 960,
+        "title": {
+          "zh": "说明职责，选择经验",
+          "en": "Define a role and select experience"
+        },
+        "detail": {
+          "zh": "选择有权限且可复用的已保存经验。分析不会创建员工或发布技能。",
+          "en": "Select authorised, reusable experience. Analysis creates no employee or published Skill."
+        },
+        "focus": [
+          0.27,
+          0.27,
+          0.63,
+          0.6
+        ],
+        "mobileFocus": [
+          0.25,
+          0.48,
+          0.3,
+          0.4
+        ],
+        "durationMs": 4800
+      },
+      {
+        "id": "formation-plan",
+        "src": "/images/product/formation-plan.png",
+        "width": 1440,
+        "height": 960,
+        "title": {
+          "zh": "你确认后，才开始创建",
+          "en": "Review before creation"
+        },
+        "detail": {
+          "zh": "检查员工方案、拟形成的 Skill 和来源，再明确确认创建。",
+          "en": "Review the responsibility, proposed Skills and sources before confirming creation."
+        },
+        "focus": [
+          0.27,
+          0.49,
+          0.63,
           0.36
-        ]
+        ],
+        "mobileFocus": [
+          0.25,
+          0.49,
+          0.3,
+          0.36
+        ],
+        "durationMs": 4800
       },
       {
-        "id": "formed-employee",
-        "src": "/images/product/demos/employees-formed-employee.png",
-        "width": 1803,
-        "height": 1110,
+        "id": "formation-result",
+        "src": "/images/product/formation-result.png",
+        "width": 1440,
+        "height": 960,
         "title": {
-          "zh": "查看角色与 Skill 成果",
-          "en": "Review role and Skill outputs"
+          "zh": "保留结果与来源",
+          "en": "Keep results and sources"
         },
         "detail": {
-          "zh": "查看来源覆盖、角色与 Skill 成果，再打开已培养员工。",
-          "en": "Review source coverage, role and skill outputs, then open the employee."
+          "zh": "查看已生成的 Skill、角色与员工。界面为示例回执，不代表真实业务已完成。",
+          "en": "Review Skills, role and employee. This sample receipt does not prove real execution."
         },
         "focus": [
-          0.01997,
-          0.25182,
-          0.19982,
-          0.26459
+          0.27,
+          0.5,
+          0.63,
+          0.35
         ],
-        "cursor": [
-          0.08959,
-          0.47802
+        "mobileFocus": [
+          0.25,
+          0.5,
+          0.3,
+          0.35
         ],
-        "durationMs": 3800
-      },
-      {
-        "id": "ready-to-work",
-        "src": "/images/product/demos/employees-ready-to-work.png",
-        "width": 1803,
-        "height": 1110,
-        "title": {
-          "zh": "准备接手后续工作",
-          "en": "Ready for the next task"
-        },
-        "detail": {
-          "zh": "员工就绪后，可点「开始协作」进入该员工的会话，说明下一项任务。",
-          "en": "When ready, choose Start collaboration to open the employee’s session and describe the next task. Chinese UI; sample data."
-        },
-        "focus": [
-          0.80206,
-          0.05106,
-          0.14671,
-          0.08161
-        ],
-        "durationMs": 4300
+        "durationMs": 4800
       }
     ],
-    "poster": 3
+    "poster": 2
   },
   "agent-setup": {
     "title": {

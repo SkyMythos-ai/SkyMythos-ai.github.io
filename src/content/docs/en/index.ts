@@ -2,6 +2,7 @@ import type { DocCorpus } from "@/content/types";
 import { gettingStartedEn } from "./getting-started";
 import { conceptsEn } from "./concepts";
 import { guidesEn } from "./guides";
+import { connectionsEn } from "./connections";
 import { operationsEn } from "./operations";
 import { referenceEn } from "./reference";
 
@@ -51,6 +52,7 @@ export const enDocs: DocCorpus = {
     ...gettingStartedEn,
     ...conceptsEn,
     ...guidesEn,
+    ...connectionsEn,
     ...operationsEn,
     ...referenceEn,
   ],

@@ -8,7 +8,7 @@ export const guidesEn: DocPage[] = [
     summary: "Complete the actual creation drawer: requirement, sources, repository and flow, with authorization checks.",
     readingOrder: 1,
     body: `
-In **Fusion Bot**, choose **Tasks** in the sidebar and click **Create task**. The drawer is organized around the requirement, task and repository, and Flow.
+In **SkyBot**, choose **Tasks** in the sidebar and click **Create task**. The drawer is organized around the requirement, task and repository, and Flow.
 
 ## Describe the work
 
@@ -167,11 +167,19 @@ Open **Marketplace** and choose the type of asset you need. Roles, Skills, MCP, 
 | Flow template | Nodes, dependencies, inputs, outputs and checks | Version, input contract and required capabilities |
 | Environment | Runtime image and tool composition | Requirements and deployment availability |
 
+## Create an Agent
+
+Open **New Agent** from **Marketplace → Agent Hub**. Enter a name and instructions, choose a model, and optionally add accessible Skills and MCP tools. The execution CLI follows the model’s default configuration; ordinary creation does not require selecting a CLI first.
+
+![Agent instructions, model and capabilities](/images/product/agent-create.png)
+
+Creating a draft does not publish, hire or execute it. Check sharing scope, dependency permissions and personal credentials separately.
+
 ## Read a role's execution configuration
 
 Open the Agent role detail and review responsibilities, role configuration, source and validation, and version history. Execution configuration identifies the endpoint and model. A brand name cannot stand in for both.
 
-For a new Agent session in **Fusion Bot → Chat**, the input area offers separate execution-tool and compatible-model choices. The execution tool is fixed after session creation; later model selection remains subject to compatibility and authorization. This is a separate entry from a role's configuration.
+For a new Agent session in **SkyBot → Chat**, the input area offers separate execution-tool and compatible-model choices. The execution tool is fixed after session creation; later model selection remains subject to compatibility and authorization. This is a separate entry from a role's configuration.
 
 ![Execution tool and model selection in an Agent session](/images/product/agent-setup.png)
 
@@ -184,6 +192,16 @@ A published role can join a session. Choose **Hire employee** for an independent
 Review the asset content, source and fixed release. An accessible capability may still require your personal authorization to its external service. Shared role or workspace configuration does not supply your private credentials.
 
 Skills may come from Git, uploaded packages or platform-owned content. Their source determines how they are maintained. A draft or floating Git path is not the same as a fixed release.
+
+## Reuse Agents in a Workflow
+
+The visual editor supports three node sources: define an Agent directly, reference an employee, or copy an employee definition.
+
+- **Direct definition:** the node owns instructions, model and capabilities.
+- **Employee reference:** the employee owns execution configuration; the node cannot override instructions, model, CLI or capabilities locally.
+- **Independent copy:** copy instructions, model, CLI and capability references, but not identity, long-term memory or credentials. The original employee remains unchanged.
+
+See [Connect services and MCP tools](../connections-and-mcp/) for connections and personal tool scope.
 
 ## Reuse a flow
 
@@ -199,23 +217,27 @@ When maintainers publish a new version, existing tasks retain the version and ev
     summary: "Train from everyday work or hire a published role, then inspect work records, memory and experience.",
     readingOrder: 5,
     body: `
-Choose **Fusion Bot** in the top navigation, then **Staff** in its sidebar. The directory brings identity, responsibilities, role version and current status together so you can see who is ready for more work.
+Open **Agent Employee** in the top navigation. **SkyBot employee** manages your default collaborator; **Other employees** manages specialists. The directory shows identity, responsibility, role revision and readiness together.
 
-![Employee directory and training entry](/images/product/employees.png)
+![Current employee directory and creation entry](/images/product/employees-current.png)
 
 ## Train from your work
 
-1. Accumulate accessible sources through everyday conversations, tasks and collaboration.
-2. In **My employees**, click **Train from experience**.
-3. Enter a **Training goal**, such as developing a release-review employee from release-check experience.
-4. Click **Start training** and review progress, source coverage, outputs and gaps.
-5. Add sources or validation as requested, then use the outputs that have actually completed.
+1. Work with SkyBot or a specialist, then save and validate reusable experience.
+2. In **Other employees**, choose **Create employee from work experience** and define one clear responsibility.
+3. Select authorised, saved experience in the current workspace. Candidates, excluded entries, counterexamples and non-transferable experience cannot be used directly.
+4. Choose **Analyze selected experience**. Review the proposed name, responsibility, Skills and their sources. Analysis creates no employee or published Skill.
+5. Choose **Confirm plan and create employee**, then inspect progress and the actual Skill, role and employee outputs.
+
+![Review the employee plan and Skill sources](/images/product/formation-plan.png)
+
+Reopen the plan and results from **Experience creation records** in the directory. Analysis and creation use personal model credentials. Changed source revisions require selection and analysis again, not silent reuse of an old plan.
 
 Training runs asynchronously; returning to Chat does not stop it. Waiting for sources, awaiting validation, partial completion and completion have different meanings. An accepted request is not a ready employee.
 
 ## Hire from Agent Hub
 
-Click **Hire from Agent Hub** in Staff, or open a published role from **Marketplace → Agent Hub**.
+Choose **Hire from Marketplace** in Other employees, or open a published role from **Marketplace → Agent Hub**.
 
 1. Read responsibilities, methods, execution configuration and version.
 2. Click **Hire employee**.

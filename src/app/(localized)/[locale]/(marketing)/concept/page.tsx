@@ -13,14 +13,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const locale = toLocale(raw);
   return buildMetadata({
     locale,
-    title: locale === "zh" ? "产品概念" : "Product concepts",
+    title: locale === "zh" ? "工作方式" : "How it works",
     description: locale === "zh"
-      ? "结合真实工作台，了解数字员工如何从日常工作中沉淀、被雇佣并继续协作，以及模型、Agent Harness、知识与记忆各自的职责。"
-      : "Explore the real workbench: develop digital employees from daily work, hire them for future collaboration, and understand models, agent harnesses, knowledge and memory.",
+      ? "按工作性质选择对话协作、研发任务或自动化。跟随订单导出示例核对目标、执行与交付，再了解工作记录和经验如何经人确认形成数字员工。"
+      : "Choose conversation, engineering tasks or automation. Follow an order-export example from goal to delivery, then see how curated work records and experience form a digital employee.",
     path: "/concept",
     keywords: locale === "zh"
-      ? ["数字员工", "Agent Harness", "开放协作", "知识库", "个人记忆", "产品概念"]
-      : ["digital employees", "agent harness", "open collaboration", "knowledge base", "personal memory", "product concepts"],
+      ? ["工作方式", "SkyBot", "数字员工", "研发任务", "自动化", "经验复用"]
+      : ["how it works", "SkyBot", "digital employees", "engineering tasks", "automation", "experience reuse"],
   });
 }
 

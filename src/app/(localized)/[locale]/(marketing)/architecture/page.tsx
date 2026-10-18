@@ -13,10 +13,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const locale = toLocale(raw);
   return buildMetadata({
     locale,
-    title: locale === "zh" ? "系统架构" : "System architecture",
+    title: locale === "zh" ? "企业架构" : "Enterprise architecture",
     description: locale === "zh"
-      ? "沿一次真实任务理解 Console、控制面、运行器、Agent Harness 与隔离环境的职责边界，并从任务页面追踪执行、产物和交付。"
-      : "Follow a task through the console, control plane, runner, agent harness and isolated environment. Trace execution, outputs and delivery from the task interface.",
+      ? "了解 SkyMythos 的工作组织、个人云环境、任务 Sandbox 与模型和业务系统接入，核对身份、授权、凭据和交付证据，并查看客户环境的参考部署。"
+      : "Explore work coordination, personal environments, task Sandboxes and model and system integrations. Inspect identity, access, credentials and delivery evidence, with a reference deployment.",
     path: "/architecture",
     keywords: locale === "zh"
       ? ["系统架构", "控制面", "Agent Runner", "Agent Harness", "Sandbox Provider", "状态权威"]
