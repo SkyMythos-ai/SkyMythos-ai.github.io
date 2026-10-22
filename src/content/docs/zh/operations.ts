@@ -3,7 +3,7 @@ import type { DocPage } from "@/content/types";
 export const operationsZh: DocPage[] = [
   {
     slug: "operations/roles",
-    section: "operations",
+    section: "management",
     title: "角色与权限",
     summary: "从成员、团队和平台三个管理范围理解授权，区分导航视角与实际数据权限。",
     readingOrder: 1,
@@ -41,6 +41,14 @@ export const operationsZh: DocPage[] = [
 禁用账号、删除账号与移出工作区有不同影响。处理前确认目标是停止登录、撤销某个范围的访问，还是执行不可恢复的账号删除。
 
 企业身份与本地账号的关联由明确的身份绑定管理，不能仅凭邮箱相同就推断两个身份拥有相同权限。
+
+## 使用管理不是无限内容访问
+
+当前 Console 的团队入口面向平台管理员，工作区管理员身份本身不保证能进入；模型策略的行内编辑还检查目标工作区的管理员成员关系。导航权限、数据读取和策略保存需分别核对。
+
+成员使用分析只汇总当前账号可读且已记录的 Run，不把 Run 数当任务数或绩效。他人的私人开发机 Run 不因管理员身份而开放；Prompt/Response 正文读取必须显式 reveal、通过权限检查并成功记录审计，审计失败拒绝读取。
+
+继续阅读[成员使用与可见范围](../../management/usage/)、[Token 与估算费用](../../management/costs/)及[模型启停与月额度](../../management/model-policies/)。
 `,
   },
   {
@@ -63,6 +71,8 @@ export const operationsZh: DocPage[] = [
 | 镜像、资源和执行环境 | 设置中的运行环境 | 实际创建环境并执行工作 |
 | 企业消息与组织集成 | 设置中的对应集成页 | 登录、授权或消息链路分别验收 |
 | 私有凭据与工具授权 | 连接与授权 | 当前成员授权状态及实际调用 |
+
+平台配置负责接通服务；[企业管理](../../management/usage/)负责在授权范围内解释使用、归属与投入。工作区的[模型启停与月额度](../../management/model-policies/)是单独的 Task 创建准入策略，不代替网关配置、个人凭据或全部入口的硬预算。连接操作见[连接服务与 MCP 工具](../../guides/connections-and-mcp/)。
 
 ## 模型与 Harness 分开核对
 
@@ -96,7 +106,7 @@ Agent Harness 决定会话与工具执行方式，模型决定推理来源。新
     section: "operations",
     title: "验证与验收边界",
     summary: "把界面、自动化检查、部署健康与真实业务验收分别记录，明确每份证据能证明什么。",
-    readingOrder: 3,
+    readingOrder: 4,
     body: `
 ## 四种证据分别记录
 

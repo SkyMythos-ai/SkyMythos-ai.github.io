@@ -2,10 +2,10 @@ import type { DocPage } from "@/content/types";
 
 export const connectionsZh: DocPage[] = [{
   slug: "guides/connections-and-mcp",
-  section: "guides",
+  section: "operations",
   title: "连接服务与 MCP 工具",
   summary: "在统一连接器入口管理个人授权，接入 MCP 服务，并核对环境和工具访问范围。",
-  readingOrder: 7,
+  readingOrder: 3,
   body: `
 **Marketplace** 管理可复用能力，**连接与授权**管理你如何访问服务。看到一个 MCP 资产，不代表你已经获准使用它的所有工具。
 

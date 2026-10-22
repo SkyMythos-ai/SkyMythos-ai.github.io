@@ -123,6 +123,8 @@ export function softwareApplicationJsonLd(locale: Locale) {
             "产物、检查与交付证据",
             "有来源的知识与员工经验",
             "按授权接入模型与业务系统",
+            "成员使用记录与 Token、估算费用分析",
+            "模型启停与任务月额度准入",
           ]
         : [
             "Conversations, engineering tasks and independent automation runs",
@@ -132,6 +134,8 @@ export function softwareApplicationJsonLd(locale: Locale) {
             "Outputs, checks and delivery evidence",
             "Sourced knowledge and employee experience",
             "Authorised model and business-system integrations",
+            "Member usage records, tokens and estimated costs",
+            "Model availability and monthly task-admission allowances",
           ],
   };
 }

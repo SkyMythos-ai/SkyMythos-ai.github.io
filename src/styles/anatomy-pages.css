@@ -1,50 +1,28 @@
-/* 插图沿用石墨品牌；材质只作用于新图，不改变首页的既有机构。 */
-.anatomy-plate { margin: 0; padding: 24px 28px; background: #111318; color: #dce0e6; }
-.anatomy-instrument-heading { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; align-items: baseline; font-size: 14px; line-height: 1.6; }
-.anatomy-instrument-heading > span:first-child { color: #868e9b; }
-.anatomy-instrument-heading > span:last-child { font-size: 16px; }
-.anatomy-stage { position: relative; height: clamp(270px, 43vw, 510px); touch-action: pan-y; }
-.concept-person-scene { font-family: var(--font-sans); }
-.concept-label { fill: #c4cbd5; font-size: 14px; }
-.concept-note { fill: #a6b4c0; font-size: 11px; }
+.anatomy-plate { min-width: 0; margin: 0; padding: 32px; border: 1px solid var(--color-rule); border-radius: var(--radius-panel); background: var(--color-surface); color: var(--color-ink); box-shadow: var(--shadow-panel); }
+.anatomy-stage { position: relative; aspect-ratio: 760 / 440; touch-action: pan-y; }
 .anatomy-stage > svg { display: block; width: 100%; height: 100%; overflow: visible; }
-.anatomy-plate .employee-machine { --machine-fill: #1c2028; --machine-top: #303641; --machine-edge: #788291; --machine-ink: #bdc4ce; }
-.anatomy-plate .architecture-workpiece { --machine-ink: #5c6674; --machine-accent-cyan: #5c6674; --machine-accent-mint: #5c6674; --machine-accent-amber: #5c6674; --machine-accent-violet: #5c6674; }
-.anatomy-plate .architecture-workpiece .machine-top { fill: #d5dbe1; }
-.anatomy-plate .architecture-workpiece .machine-engraving { fill: #485463; }
-.anatomy-instrument-status { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; align-items: baseline; font-size: 13px; line-height: 1.7; }
-.anatomy-instrument-status > p:first-child { color: #868e9b; }
-.anatomy-instrument-status > p:last-child { color: #c4cbd5; }
-.anatomy-stages { display: grid; grid-template-columns: repeat(var(--anatomy-step-count, 4), minmax(0, 1fr)); gap: 16px; margin-top: 24px; list-style: none; }
-.anatomy-stages li { min-width: 0; padding: 12px 0; border-top: 1px solid #414956; color: #a8b1bf; font: 400 14px/1.5 var(--font-sans); }
-.anatomy-stages li[data-active="true"] { border-color: #d5dbe1; color: #e4e8ed; }
-.anatomy-live:focus-visible,.employee-hero:focus-visible { outline: 2px solid #d5dbe1; outline-offset: 4px; }
-.anatomy-stage-detail { min-height: 3.5em; max-width: 78ch; margin-top: 16px; color: #b7bfcb; font-size: 15px; line-height: 1.75; }
-.anatomy-plate > figcaption { margin-top: 22px; color: #878f9b; font-size: 13px; line-height: 1.8; }
-.anatomy-legend { display: flex; flex-wrap: wrap; gap: 8px 28px; margin: 0 0 12px; padding: 0; list-style: none; color: #adb6c3; }
-.anatomy-legend li { display: flex; align-items: baseline; gap: 8px; }
-.anatomy-legend li::before { content: ""; width: 5px; height: 5px; flex: 0 0 auto; background: #7d8796; }
-.anatomy-static-stages { padding-left: 20px; font-size: 14px; line-height: 1.7; }
+.anatomy-instrument-status { display: grid; grid-template-columns: auto minmax(0,1fr); gap: 12px 24px; align-items: baseline; margin-top: 16px; font-size: 13px; line-height: 1.8; }
+.anatomy-instrument-status > p:first-child { color: var(--color-ink-3); }
+.anatomy-instrument-status > p:last-child { min-height: 3.6em; text-align: right; color: var(--color-ink-2); }
+.anatomy-stages { display: grid; grid-template-columns: repeat(var(--anatomy-step-count,4),minmax(0,1fr)); gap: 16px; margin-top: 8px; list-style: none; }
+.anatomy-stages li { min-width: 0; padding-block: 12px; border-top: 1px solid var(--color-rule); color: var(--color-ink-3); font-size: 13px; line-height: 1.6; }
+.anatomy-stages li[data-active=true] { color: var(--color-ink); border-color: var(--color-ink); }
+.anatomy-live:focus-visible { outline: 2px solid var(--color-brand); outline-offset: 6px; border-radius: 12px; }
+.anatomy-stage-detail { max-width: 70ch; margin-top: 16px; font-size: 14px; line-height: 1.8; color: var(--color-ink-3); }
+.anatomy-plate > figcaption { margin-top: 16px; color: var(--color-ink-3); font-size: 12px; line-height: 1.8; }
+.anatomy-static-stages { padding-left: 20px; font-size: 14px; line-height: 1.8; }
 .anatomy-static-stages li { margin-top: 16px; }
-.anatomy-static-stages p { margin-top: 4px; color: #b7bfcb; }
-.product-interface-reference { margin-top: 24px; }
-.product-interface-reference > summary { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 48px; padding: 14px 0; color: var(--color-ink-2); cursor: pointer; font-size: 15px; list-style: none; }
-.product-interface-reference > summary::after { content: "+"; font-size: 22px; color: var(--color-ink-3); }
-.product-interface-reference[open] > summary::after { content: "−"; }
-.product-interface-reference > summary:focus-visible { outline: 2px solid var(--color-ink); outline-offset: 5px; }
-.product-interface-reference .console-figure { margin-top: 12px; }
-@media (max-width: 639px) {
-  .anatomy-plate { padding: 18px 16px; margin-inline: -8px; }
-  .anatomy-instrument-heading { font-size: 12px; gap: 4px 12px; }
-  .anatomy-instrument-heading > span:last-child { font-size: 14px; }
-  .anatomy-stage { height: 258px; margin-inline: -8px; }
-  .anatomy-instrument-status { font-size: 12px; gap: 4px; }
-  .anatomy-live[data-anatomy-kind="concept"]:lang(en) .anatomy-instrument-status { display: grid; grid-template-columns: minmax(0, 1fr); }
-  .anatomy-live[data-anatomy-kind="concept"]:lang(en) .anatomy-instrument-status > p { min-height: 3.4em; }
-  .anatomy-live[data-anatomy-kind="concept"]:lang(en) .anatomy-stage-detail { min-height: 7em; }
-  .anatomy-stages { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 18px; }
-  .anatomy-stages li { font-size: 13px; }
-  .anatomy-stage-detail { min-height: 5.25em; font-size: 14px; }
-  .anatomy-plate > figcaption { font-size: 12px; }
-  .anatomy-legend { gap: 6px 16px; }
+.anatomy-static-stages p { margin-top: 4px; color: var(--color-ink-3); }
+.home-workflow-figure .anatomy-stage-detail { display: none; }
+.formation-mobile { display: none; }
+@media (max-width:767px) {
+  .anatomy-plate { padding: 20px 16px; }
+  .home-workflow-figure .anatomy-stage { aspect-ratio: 350 / 630; }
+  .anatomy-instrument-status { display: block; font-size: 12px; }
+  .anatomy-instrument-status > p:first-child { display: none; }
+  .anatomy-instrument-status > p:last-child { min-height: 5.4em; text-align: left; }
+  .anatomy-stages { grid-template-columns: repeat(3,minmax(0,1fr)); gap: 0 12px; }
+  .anatomy-stages li { font-size: 12px; }
+  .formation-desktop { display: none; }
+  .formation-mobile { display: block; }
 }

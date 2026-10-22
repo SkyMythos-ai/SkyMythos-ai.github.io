@@ -3,15 +3,16 @@ import { gettingStartedZh } from "./getting-started";
 import { conceptsZh } from "./concepts";
 import { guidesZh } from "./guides";
 import { connectionsZh } from "./connections";
+import { managementZh } from "./management";
 import { operationsZh } from "./operations";
 import { referenceZh } from "./reference";
 
 /**
  * Chinese documentation corpus — the primary tree.
  *
- * Section order is an adoption path, not an information architecture imposed from
- * above: get it running, understand why it behaves this way, then operate it,
- * then look things up.
+ * Follow the reader's task: start, complete and reuse work, manage enterprise AI,
+ * deploy and operate, then look up concepts and reference. Section membership is
+ * independent of the stable URL slug.
  */
 export const zhDocs: DocCorpus = {
   locale: "zh",
@@ -19,23 +20,27 @@ export const zhDocs: DocCorpus = {
     {
       id: "getting-started",
       title: "快速开始",
-      description: "从真实工作台出发，完成接入检查与第一个任务。",
+      description: "进入工作台，选择入口，完成并确认第一项工作。",
+    },
+    {
+      id: "guides",
+      title: "完成与复用工作",
+      description: "创建、审阅与恢复工作，整理知识、员工与可复用能力。",
+    },
+    {
+      id: "management",
+      title: "管理企业 AI",
+      description: "管理成员与权限，核对使用记录、估算费用与模型月额度。",
+    },
+    {
+      id: "operations",
+      title: "部署运维",
+      description: "准备部署，接入模型与工具，维护环境并完成业务验收。",
     },
     {
       id: "concepts",
       title: "核心概念",
-      description:
-        "员工、任务、开放执行、交付证据与知识记忆的边界。",
-    },
-    {
-      id: "guides",
-      title: "操作指南",
-      description: "创建与审阅任务、恢复执行、培养员工及发布知识。",
-    },
-    {
-      id: "operations",
-      title: "平台运维",
-      description: "团队权限、模型与工具接入，以及真实业务验收。",
+      description: "理解员工、任务、执行环境、交付证据与知识记忆的边界。",
     },
     {
       id: "reference",
@@ -45,10 +50,11 @@ export const zhDocs: DocCorpus = {
   ],
   pages: [
     ...gettingStartedZh,
-    ...conceptsZh,
     ...guidesZh,
-    ...connectionsZh,
+    ...managementZh,
     ...operationsZh,
+    ...connectionsZh,
+    ...conceptsZh,
     ...referenceZh,
   ],
 };

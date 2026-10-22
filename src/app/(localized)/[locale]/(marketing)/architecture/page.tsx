@@ -15,8 +15,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     locale,
     title: locale === "zh" ? "企业架构" : "Enterprise architecture",
     description: locale === "zh"
-      ? "了解 SkyMythos 的工作组织、个人云环境、任务 Sandbox 与模型和业务系统接入，核对身份、授权、凭据和交付证据，并查看客户环境的参考部署。"
-      : "Explore work coordination, personal environments, task Sandboxes and model and system integrations. Inspect identity, access, credentials and delivery evidence, with a reference deployment.",
+      ? "了解工作组织、企业资产与执行环境如何连接，核对授权、内容审计、用量计量和模型月额度的 Task 准入边界，以及客户环境的参考部署。"
+      : "Explore work coordination, company assets and execution environments. Inspect access, content audits, usage metering and monthly task-admission policies, with a reference deployment.",
     path: "/architecture",
     keywords: locale === "zh"
       ? ["系统架构", "控制面", "Agent Runner", "Agent Harness", "Sandbox Provider", "状态权威"]

@@ -41,7 +41,7 @@ export default function RootPage() {
       <meta httpEquiv="refresh" content={`0;url=/${defaultLocale}/`} />
       <link rel="canonical" href={`/${defaultLocale}`} />
 
-      <div className="scope-dark scope-marketing flex min-h-dvh items-center justify-center px-6">
+      <div className="scope-marketing flex min-h-dvh items-center justify-center px-6">
         <div className="w-full max-w-[30rem] border-t border-rule pt-8">
           <Wordmark size="large" />
 
@@ -57,8 +57,8 @@ export default function RootPage() {
                 lang={localeHtmlLang[locale]}
                 className={
                   locale === defaultLocale
-                    ? "inline-flex items-center rounded-sm bg-ink px-4 py-2.5 text-[0.875rem] font-medium text-on-ink transition-colors hover:bg-ink-2"
-                    : "inline-flex items-center rounded-sm border border-rule-strong px-4 py-2.5 text-[0.875rem] font-medium text-ink-2 transition-colors hover:border-ink-3 hover:text-ink"
+                    ? "site-button inline-flex items-center rounded-sm bg-ink px-4 py-2.5 text-[0.875rem] font-medium text-on-ink transition-colors hover:bg-ink-2"
+                    : "site-button inline-flex items-center rounded-sm border border-rule-strong px-4 py-2.5 text-[0.875rem] font-medium text-ink-2 transition-colors hover:border-ink-3 hover:text-ink"
                 }
               >
                 {localeLabels[locale]}

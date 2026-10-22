@@ -37,7 +37,7 @@ export function AnatomyLive({ kind, locale, title, description, stages, art, var
       mobile: svg.querySelector<SVGPathElement>(`.workflow-mobile[data-flow-path="${name}"]`),
     }));
     let position = lastIndex, clock = 0, raf = 0, last = 0, lastStage = -1;
-    let visible = false, held = false, started = false;
+    let visible = false, held = false, started = false, disposed = false;
     function render(reset = false) {
       const frame = paint(position);
       if (variant === "workflow") {
@@ -60,7 +60,7 @@ export function AnatomyLive({ kind, locale, title, description, stages, art, var
     }
     function stop() { cancelAnimationFrame(raf); raf = 0; last = 0; el.dataset.running = "false"; }
     function wake() {
-      if (raf || !visible || document.hidden || still.matches || held) return;
+      if (disposed || raf || !visible || document.hidden || still.matches || held) return;
       if (!started) { position = 0; started = true; render(); }
       last = 0;
       el.dataset.running = "true";
@@ -68,6 +68,8 @@ export function AnatomyLive({ kind, locale, title, description, stages, art, var
     }
     function tick(now: number) {
       raf = 0;
+      if (disposed || !visible || document.hidden || held) { stop(); return; }
+      if (still.matches) { position = lastIndex; render(); stop(); return; }
       clock += last ? Math.min((now - last) / 1000, .1) : 0;
       last = now;
       const tour = anatomyTour(clock, stages.length);
@@ -91,11 +93,11 @@ export function AnatomyLive({ kind, locale, title, description, stages, art, var
     render(); observer.observe(el);
     document.addEventListener("visibilitychange", visibility); still.addEventListener("change", preference);
     return () => {
-      stop(); observer.disconnect(); releaseHold(); mobile.removeEventListener("change", layout);
+      disposed = true; stop(); observer.disconnect(); releaseHold(); mobile.removeEventListener("change", layout);
       document.removeEventListener("visibilitychange", visibility); still.removeEventListener("change", preference);
     };
   }, [locale, model, stages, zh, lastIndex, variant, viewBox, mobileViewBox]);
-  return <div ref={root} lang={locale} tabIndex={0} aria-label={title} className="anatomy-live" data-anatomy-kind={kind} data-variant={variant} data-stage-count={stages.length} data-mode="still" data-running="false">
+  return <div ref={root} lang={locale} tabIndex={0} aria-label={title} className="anatomy-live" role="group" data-anatomy-kind={kind} data-variant={variant} data-stage-count={stages.length} data-mode="still" data-running="false">
     <div className="anatomy-stage">
       <svg viewBox={viewBox} fill="none" data-anatomy={kind} data-position={lastIndex.toFixed(4)} role="img" aria-label={description}>{underlay}{art}{overlay}</svg>
     </div>

@@ -3,7 +3,7 @@ type: Design Research
 title: 基于产品 Keynote 的官网页面职责与叙事
 description: 产品首页、工作方式、企业架构分别承担价值、工作过程与系统边界，避免重复员工培养和研发执行叙事。
 tags: [官网, 信息架构, 产品定位, Keynote]
-status: stable
+status: deprecated
 sources:
   - id: product-keynote
     resource: ../../../fusion-harness/artifacts/presentations/2026-10-11-skymythos-product-keynote/output/SkyMythos-从MaaS到企业AI-Native-产品逻辑优化版.pptx
@@ -12,7 +12,9 @@ sources:
 
 # 官网页面职责与叙事
 
-2026-10-18：用户指出产品、概念、架构混乱，指定产品 PPT 为参考，并在阅读方案后授权实施。当前三页已按下述职责重组；保留深石墨主题、已确认角色与现有路由。实施验证记录见[任务 Review](../tasks/todo.md)。本文取代原待确认提案。
+2026-10-18：用户指出产品、概念、架构混乱，指定产品 PPT 为参考，并在阅读方案后授权实施。当时三页按下述职责重组；保留深石墨主题、已确认角色与现有路由。实施验证记录见[任务 Review](../tasks/todo.md)。本文取代原待确认提案。
+
+历史适用范围：2026-10-18 Keynote 改版。2026-10-19 本地官网已按[工作、资产与治理](work-assets-governance-outline.md)扩展；当前内容合同以新页为准。本文仅保留 PPT 来源、历史取舍与改版证据，不代表最新本地页面状态。
 
 PPT 提供叙事与表述边界，不单独证明产品已交付。三种工作入口、个人环境与任务隔离、知识实时授权的边界另与 `fusion-harness` 已提交版本 `ea6c4b51e` 的 `context-kg/business/product-strategy-and-domain-model.md` 对照；该文档仍包含历史与目标段落，不能将全文当作当前生产能力验收。
 

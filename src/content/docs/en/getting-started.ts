@@ -42,14 +42,16 @@ To test engineering delivery directly, follow [Your first task](../first-task/).
 Members need an account, workspace access and the connector permissions required by their work. Administrators normally prepare model services, runtime environments and organization policies.
 
 If you are installing the platform, read [Deployment and connection checks](../deployment/). A reachable page confirms the interface is available; model calls, repository access and delivery need separate checks.
+
+For enterprise administration, start with [Roles and permissions](../../operations/roles/), then review [member usage and visibility](../../management/usage/), [Tokens and estimated costs](../../management/costs/) and [monthly model quotas](../../management/model-policies/). Management records do not replace delivery review.
 `,
   },
   {
     slug: "getting-started/deployment",
-    section: "getting-started",
+    section: "operations",
     title: "Deployment and connection checks",
     summary: "Check infrastructure, runtime environments, model access and Git before validating a complete business workflow.",
-    readingOrder: 2,
+    readingOrder: 1,
     body: `
 This page is for deployment and platform administrators. If you already have a Console address, continue to [Your first task](../first-task/).
 
@@ -108,7 +110,7 @@ Record deployment health, page checks, automated tests and business results sepa
     section: "getting-started",
     title: "Your first task",
     summary: "Open the creation drawer from Tasks, submit a small goal, and review progress, changes and actual delivery.",
-    readingOrder: 3,
+    readingOrder: 2,
     body: `
 Choose a small change that is easy to verify, such as adding input validation to an existing endpoint and running the relevant tests. Use a test repository and define the acceptance criteria.
 

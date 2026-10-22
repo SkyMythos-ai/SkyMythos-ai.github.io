@@ -44,7 +44,7 @@ export function useProductDemoPlayback(story: ProductDemoStory, stage: RefObject
       el.dataset.running = "false";
     }
     function wake() {
-      if (raf || !ready || !visible || paused || inspecting || still.matches || document.hidden) return;
+      if (disposed || raf || failed || !ready || !visible || paused || inspecting || still.matches || document.hidden) return;
       el.getAnimations({ subtree: true }).forEach(animation => { if (animation.playState === "paused") animation.play(); });
       last = 0;
       el.dataset.running = "true";
@@ -52,6 +52,7 @@ export function useProductDemoPlayback(story: ProductDemoStory, stage: RefObject
     }
     function tick(now: number) {
       raf = 0;
+      if (disposed || failed || !ready || !visible || paused || inspecting || still.matches || document.hidden) { stop(); return; }
       elapsed += last ? Math.min(now - last, 100) : 0;
       last = now;
       if (elapsed >= story.frames[current].durationMs) {

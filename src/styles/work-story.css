@@ -1,0 +1,20 @@
+.scope-marketing .work-story { min-width: 0; margin: 0; }
+.scope-marketing .story-playback { border-radius: 16px; }
+.scope-marketing .story-playback:focus-visible { outline: 2px solid var(--color-signal); outline-offset: 6px; }
+.scope-marketing .work-story-stage svg { display: block; width: 100%; height: auto; font-family: var(--font-sans); }
+.scope-marketing .work-story-stage [data-layout=mobile] { display: none; }
+.scope-marketing .work-story [data-flow] { opacity: 0; pointer-events: none; }
+.scope-marketing .work-story [data-mode=live] :is(.static-route,.static-condition) { display: none; }
+.scope-marketing .work-story [data-mode=static] [data-part] { opacity: 1 !important; transform: none !important; }
+.scope-marketing .work-story [data-mode=static] :is([data-part=condition],[data-flow]) { display: none; }
+.scope-marketing .work-story-readout { min-height: 3.6em; max-width: 70ch; margin-top: 16px; color: var(--color-ink-2); font-size: 14px; line-height: 1.8; }
+.scope-marketing .work-story > figcaption { max-width: 90ch; margin-top: 8px; color: var(--color-ink-3); font-size: 12px; line-height: 1.85; }
+.scope-marketing .work-story-assets .work-story-readout { font-size: 13px; min-height: 5.4em; }
+@media (max-width:1023px) {
+  .scope-marketing .work-story-stage { max-width: 400px; margin-inline: auto; }
+  .scope-marketing .work-story-stage [data-layout=desktop] { display: none; }
+  .scope-marketing .work-story-stage [data-layout=mobile] { display: block; }
+  .scope-marketing .work-story-readout,.scope-marketing .work-story > figcaption { max-width: 440px; margin-inline: auto; }
+}
+@media (max-width:767px) { .scope-marketing .work-story-readout { min-height: 5.4em; } }
+@media (prefers-reduced-motion:reduce) { .scope-marketing .work-story [data-flow] { display: none !important; } }

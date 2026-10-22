@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { localePath, toLocale, type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/content/dictionary";
-import { ConsoleFigure } from "@/components/console-figure";
 import { DocsCatalog } from "@/components/docs-catalog";
 import { buildMetadata } from "@/lib/metadata";
 import { getDocCorpus } from "@/content/registry";
@@ -43,20 +42,22 @@ export default async function DocsIndexPage({ params }: PageProps) {
   const groups = buildDocNav(corpus).map(group => ({ ...group, pages: group.pages.map(({ slug, title, summary }) => ({ slug, title, summary })) }));
   const zh = locale === "zh";
   const paths = zh ? [
-    { href: "getting-started/first-task", title: "开始第一个任务", detail: "从任务要求到审阅结果。" },
-    { href: "guides/digital-employees", title: "培养与雇佣员工", detail: "让工作经验成为可复用的能力。" },
-    { href: "guides/knowledge-base", title: "使用项目知识", detail: "发布资料，检索并核对来源。" },
+    { href: "getting-started/overview", title: "开始使用", detail: "选择工作入口，完成第一次交付。" },
+    { href: "guides/digital-employees", title: "完成与复用", detail: "培养员工，留下方法与知识。" },
+    { href: "management/usage", title: "企业管理", detail: "核对使用记录、估算费用与模型策略。" },
+    { href: "getting-started/deployment", title: "部署运维", detail: "部署、接入、授权与验收。" },
   ] : [
-    { href: "getting-started/first-task", title: "Start your first task", detail: "From a work request to a reviewable result." },
-    { href: "guides/digital-employees", title: "Develop and hire employees", detail: "Turn work experience into reusable capability." },
-    { href: "guides/knowledge-base", title: "Use project knowledge", detail: "Publish, retrieve and check the sources." },
+    { href: "getting-started/overview", title: "Get started", detail: "Choose an entry point and make your first delivery." },
+    { href: "guides/digital-employees", title: "Deliver and reuse", detail: "Develop employees, methods and knowledge." },
+    { href: "management/usage", title: "Manage your organisation", detail: "Review usage, estimated costs and model policies." },
+    { href: "getting-started/deployment", title: "Deploy and operate", detail: "Deployment, connections, access and acceptance." },
   ];
   return <div className="docs-home">
     <section className="docs-home-intro">
-      <div><h1>{zh ? "让第一份工作，顺利交付。" : "Make your first delivery."}</h1><p>{zh ? "从对话发起工作，培养或雇佣员工，再查看任务进展。跟着实际界面，完成下一步。" : "Start a conversation, develop or hire an employee, and follow the work through. The guides follow the actual Console."}</p><Link className="docs-primary-link" href={localePath(locale, "/docs/getting-started/overview")}>{zh ? "开始使用" : "Get started"}<span aria-hidden="true">↗</span></Link></div>
-      <ConsoleFigure locale={locale} screen="workspace"/>
+      <div><h1>{zh ? "把工作做成的使用指南。" : "Guides for getting work done."}</h1><p>{zh ? "从第一项工作到企业部署，找到当前需要的操作与边界。" : "From your first job to enterprise deployment, find the steps and boundaries you need."}</p></div>
     </section>
-    <nav className="docs-starting-points" aria-label={zh ? "常用操作" : "Common actions"}>{paths.map(path => <Link key={path.href} href={localePath(locale, `/docs/${path.href}`)}><span><strong>{path.title}</strong><span>{path.detail}</span></span><span aria-hidden="true">↗</span></Link>)}</nav>
-    <DocsCatalog groups={groups} locale={locale}/>
+    <DocsCatalog groups={groups} locale={locale}>
+      <nav className="docs-starting-points" aria-label={zh ? "常用操作" : "Common actions"}>{paths.map(path => <Link key={path.href} href={localePath(locale, `/docs/${path.href}`)}><span><strong>{path.title}</strong><span>{path.detail}</span></span><span aria-hidden="true">↗</span></Link>)}</nav>
+    </DocsCatalog>
   </div>;
 }

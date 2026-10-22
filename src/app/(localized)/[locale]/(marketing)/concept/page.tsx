@@ -15,8 +15,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     locale,
     title: locale === "zh" ? "工作方式" : "How it works",
     description: locale === "zh"
-      ? "按工作性质选择对话协作、研发任务或自动化。跟随订单导出示例核对目标、执行与交付，再了解工作记录和经验如何经人确认形成数字员工。"
-      : "Choose conversation, engineering tasks or automation. Follow an order-export example from goal to delivery, then see how curated work records and experience form a digital employee.",
+      ? "跟随订单导出示例核对目标、执行与交付，区分工作产物、运行记录与经人确认的可复用资产，了解数字员工培养与使用记录的可见边界。"
+      : "Follow an order-export example from goal to delivery. Distinguish outputs, run records and curated assets; understand employee formation and usage visibility.",
     path: "/concept",
     keywords: locale === "zh"
       ? ["工作方式", "SkyBot", "数字员工", "研发任务", "自动化", "经验复用"]

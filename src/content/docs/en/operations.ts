@@ -3,7 +3,7 @@ import type { DocPage } from "@/content/types";
 export const operationsEn: DocPage[] = [
   {
     slug: "operations/roles",
-    section: "operations",
+    section: "management",
     title: "Roles and permissions",
     summary: "Understand member, team and platform scopes, and separate navigation perspectives from actual data permissions.",
     readingOrder: 1,
@@ -41,6 +41,14 @@ Administrators configure service catalogs and policy. Members authorize the serv
 Disabling an account, deleting it and removing workspace membership have different effects. Confirm whether the goal is to stop sign-in, revoke one scope or irreversibly delete an account.
 
 Enterprise and local identities are linked through explicit identity bindings. Matching email addresses alone do not establish equal permissions.
+
+## Usage management is not unrestricted content access
+
+Current Console Team navigation is for platform administrators; workspace administrator status alone does not guarantee access. Inline model-policy editing additionally checks administrator membership in the target workspace. Navigation, data reads and policy saves need separate permission checks.
+
+Member analytics summarize only readable, recorded Runs. Run counts are not task counts or performance measures. Administrator status does not open another person's private development-machine Runs. Prompt/Response content reads require explicit reveal, authorization and successful audit recording; a failed audit denies the read.
+
+Continue to [Member usage and visibility](../../management/usage/), [Tokens and estimated costs](../../management/costs/) and [Model enablement and monthly quotas](../../management/model-policies/).
 `,
   },
   {
@@ -63,6 +71,8 @@ Administrators or operations manage platform services. Workspace administrators 
 | Images, resources and environments | Runtime environments in Settings | Actual environment creation and execution |
 | Enterprise messaging and integrations | The relevant integration in Settings | Sign-in, authorisation or messaging separately |
 | Private credentials and tool access | Connections & access | Current member authorization and an actual call |
+
+Platform configuration connects services. [Enterprise management](../../management/usage/) interprets usage, attribution and spending within access boundaries. Workspace [model enablement and monthly quotas](../../management/model-policies/) are separate Task-creation admission policies, not gateway configuration, personal credentials or an all-entry-point hard budget. For connection steps, see [Connect services and MCP tools](../../guides/connections-and-mcp/).
 
 ## Check models and Harnesses separately
 
@@ -96,7 +106,7 @@ After a change, check new tasks and tasks needing recovery separately. Their res
     section: "operations",
     title: "Verification boundaries",
     summary: "Record implementation, automated checks, deployment health and actual business acceptance separately.",
-    readingOrder: 3,
+    readingOrder: 4,
     body: `
 ## Four kinds of evidence
 

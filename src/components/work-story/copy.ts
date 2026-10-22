@@ -1,0 +1,46 @@
+import type { Locale } from "@/lib/i18n";
+
+const english: Record<string, string> = {
+  "人明确目标：导出订单，并核对结果。": "People set the goal: export orders and verify the result.",
+  "已确认的交付留下，新一项工作开始。": "Accepted delivery stays on record as the next job begins.",
+  "目标交给 SkyBot，由它组织协作。": "SkyBot takes the goal and coordinates the work.",
+  "按授权取用已有方法，不从头摸索。": "Reuse authorised methods instead of starting from scratch.",
+  "研发员工完成实现，产物先进入交付。": "The developer contributes the first deliverable.",
+  "保留产物，再叠加核验得到的检查依据。": "Keep the output and add the verification evidence.",
+  "产物与检查依据汇在一起，交付逐步完整。": "Outputs and checks come together in one delivery.",
+  "结果回到人，由人核对并确认交付。": "Return the result to a person for review and acceptance.",
+  "在产物与检查依据之上，留下人的确认。": "Human acceptance completes the outputs and checks.",
+  "已确认的交付保留，只切换当前任务。": "Retain accepted delivery; change only the current job.",
+  "一次工作，留下需求、检查与纠正记录。": "Work leaves requirements, checks and corrections.",
+  "AI 从记录提出总结与方法候选：导出并核对结果。": "AI proposes a summary and method: export and check the result.",
+  "人审核候选，判断哪些方法值得复用。": "A person reviews the candidate and considers what is worth reusing.",
+  "人修改方法：沿用权限，并补充导出行数核对。": "A person edits the method: preserve access rules and add a row-count check.",
+  "人确认修改并决定采用，不自动共享全部记录。": "A person confirms the edits and chooses adoption, without sharing every record.",
+  "形成订单导出 Skill，来源与确认一起留下。": "Create an export Skill with its sources and confirmation.",
+  "下一项任务出现，按授权取得方法的引用。": "The next task receives an authorised reference to the method.",
+  "任务拿到引用，原 Skill 仍留在企业资产中。": "The task receives a reference. The original Skill stays.",
+  "来源、方法与新的交付同时保留。": "Sources, methods and the new delivery remain together.",
+  "保留来源与 Skill，只切换下一项任务。": "Keep the sources and Skill as the next task begins.",
+  "记录、确认和 Skill 已留下，不必重新形成。": "Records, confirmation and the Skill already exist.",
+  "另一项任务按授权引用已有 Skill。": "Another task references the existing Skill with permission.",
+  "取得的是引用，原资产仍然保留。": "Reuse the reference without moving the original asset.",
+  "数字员工沿用方法，继续完成新的工作。": "An employee uses the method to complete new work.",
+  "新的交付出现，资产与来源仍在原处。": "A new delivery appears. Assets and sources stay in place.",
+  "示例：模型可用，月额度未达": "Example: model enabled, allowance available",
+  "另一情境：模型已禁用": "Another case: model disabled",
+  "在授权范围内，将运行关联到成员、工作区与模型。": "Associate an accessible run with its member, workspace and model.",
+  "保留已有运行与消耗记录，再检查一个新请求。": "Keep recorded usage and check another new request.",
+  "记录 Token；费用按价格目录估算，可能不完整。": "Record tokens. Catalogue-based cost estimates may be incomplete.",
+  "仍依据已记录用量，不虚构新的消耗。": "Use recorded usage without inventing new consumption.",
+  "检查依据是已记录用量，不是实时扣款。": "Check recorded usage. This is not real-time charging.",
+  "新的 Task 请求进入模型策略检查。": "Check a new Task request against the model policy.",
+  "本轮示例：模型可用，已记录用量未达月额度。": "This example: the model is enabled and recorded usage is below its allowance.",
+  "切换情境：模型已禁用，不能创建该 Task。": "Another case: the model is disabled, so the Task cannot be created.",
+  "允许创建新 Task，不代表额度已预占。": "Allow the new Task. This does not reserve budget.",
+  "拒绝创建新 Task，已有运行与记录不会消失。": "Reject the new Task without removing existing runs or records.",
+  "保留运行与消耗记录，只切换本轮请求。": "Keep run and usage records; change only the request.",
+};
+
+export function storyCaption(text: string, locale: Locale) {
+  return locale === "zh" || !text ? text : english[text] ?? text;
+}

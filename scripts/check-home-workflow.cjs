@@ -65,7 +65,22 @@ try {
   }
   assert.deepEqual(workflowFrame(-1), workflowFrame(0));
   assert.deepEqual(workflowFrame(6), workflowFrame(5));
-  console.log("PASS: 1001 positions — work → records and experience → human confirmation → employee → next task → human acceptance.");
+  const candidate = at(1.55), edited = at(1.7), adopted = at(2);
+  present(candidate, 'source-method');
+  absent(candidate, 'source-confirmed', 'agent-visible');
+  present(edited, 'source-role');
+  absent(edited, 'source-confirmed', 'agent-visible');
+  present(adopted, 'source-confirmed');
+  absent(adopted, 'agent-visible', 'delegated-work');
+  const art = fs.readFileSync(path.resolve(__dirname, '../src/components/home-workflow-figure.tsx'), 'utf8');
+  for (const text of ['AI 方法候选', 'AI method draft', '候选：核对导出', 'Check export', '人审核修改', 'Human edit', '按权限核对行数', 'Access + rows', '人确认并采用', 'Adopted by person']) assert.ok(art.includes(text), `${text} must be drawn in the formation figure`);
+  assert.match(workflowFrame(1.35).readout[0], /AI.*候选/, 'AI proposes the candidate in the live readout');
+  assert.match(workflowFrame(1.35).readout[1], /AI proposes/, 'English live candidate readout');
+  assert.match(workflowFrame(1.75).readout[0], /人.*修改.*行数/, 'The live readout explains the actual human edit');
+  assert.match(workflowFrame(1.75).readout[1], /person.*edits.*rows/, 'English live human edit readout');
+  assert.match(workflowFrame(2).readout[0], /人.*确认.*采用/, 'A person chooses adoption before formation');
+  assert.match(workflowFrame(2).readout[1], /person.*confirms.*adopts/, 'English live adoption readout');
+  console.log("PASS: 1001 positions — work → records → AI candidate → human edit and adoption → equipped employee → next task → human acceptance.");
 } finally {
   fs.rmSync(directory, { recursive: true, force: true });
 }

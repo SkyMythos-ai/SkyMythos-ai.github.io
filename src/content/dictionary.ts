@@ -151,7 +151,7 @@ const zh: Dictionary = {
     title: "SkyMythos | 企业自己的 AI 工作体系",
     titleTemplate: "%s · SkyMythos",
     description:
-      "接入已有模型与 Agent，组织协作、核对交付，让经过验证的经验成为下一次工作的能力。SkyMythos 将对话协作、研发任务与自动化组织在清楚的授权和执行边界内。",
+      "让 AI 参与日常工作，让有效方法成为企业资产，让使用与成本有据可管。SkyMythos 连接协作交付、授权复用、使用记录与模型策略。",
     keywords: [
       "AI Infra",
       "Coding Agent",
@@ -634,7 +634,7 @@ const en: Dictionary = {
     title: "SkyMythos | Your enterprise’s AI work system",
     titleTemplate: "%s · SkyMythos",
     description:
-      "Bring existing models and Agents together. Coordinate work, verify results and reuse proven experience. SkyMythos organises conversations, engineering tasks and automations within clear access and execution boundaries.",
+      "Bring AI into everyday work, turn proven methods into company assets, and make usage and costs accountable. SkyMythos connects delivery, authorised reuse, usage records and model policies.",
     keywords: [
       "AI infrastructure",
       "coding agent",

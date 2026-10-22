@@ -42,7 +42,7 @@ export function DocsSidebar({
   const pathname = usePathname();
 
   return (
-    <aside className="no-print hidden w-[15rem] shrink-0 lg:block xl:w-[16rem]">
+    <aside className="docs-sidebar no-print hidden w-[15rem] shrink-0 lg:block xl:w-[16rem]">
       <nav
         aria-label={label}
         className="site-sticky-rail sticky overflow-y-auto py-10 pr-6 md:py-12"

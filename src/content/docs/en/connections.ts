@@ -2,10 +2,10 @@ import type { DocPage } from "@/content/types";
 
 export const connectionsEn: DocPage[] = [{
   slug: "guides/connections-and-mcp",
-  section: "guides",
+  section: "operations",
   title: "Connect services and MCP tools",
   summary: "Manage personal authorisation, connect MCP services, and inspect execution environments and tool scope.",
-  readingOrder: 7,
+  readingOrder: 3,
   body: `
 **Marketplace** holds reusable capabilities. **Connections & access** manages your access to services. Being able to see an MCP asset does not grant access to every tool it exposes.
 

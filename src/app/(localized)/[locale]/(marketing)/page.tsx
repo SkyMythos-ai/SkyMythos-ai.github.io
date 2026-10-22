@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
-import { toLocale } from "@/lib/i18n";
+import Link from "next/link";
+import { toLocale, localePath } from "@/lib/i18n";
 import { getDictionary } from "@/content/dictionary";
 import { buildMetadata, softwareApplicationJsonLd } from "@/lib/metadata";
 import { Hero } from "@/components/hero";
+import { ExecutionPreview } from "@/components/execution-preview/figure";
+import { WorkStoryFigure } from "@/components/work-story/figure";
+import { ProductMedia } from "@/components/product-media";
 import { ProductChapter, ProductLink } from "@/components/product-page-parts";
 
 interface PageProps { params: Promise<{ locale: string }> }
@@ -14,51 +18,54 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function HomePage({ params }: PageProps) {
   const locale = toLocale((await params).locale), zh = locale === "zh";
-  const journey = zh ? [
-    ["明确目标", "说明需求、约束与完成标准"],
-    ["选择工作方式", "日常协作、研发任务或自动化"],
-    ["带着证据交付", "看产物、检查与未完成事项"],
-    ["把有效方法留下", "整理经验，用于下一次工作"],
-  ] : [
-    ["Define the goal", "Agree on needs, constraints and completion"],
-    ["Choose how to work", "Conversation, engineering task or automation"],
-    ["Deliver with evidence", "Inspect outputs, checks and unresolved work"],
-    ["Keep what works", "Curate experience for the next job"],
-  ];
   return <div className="product-page product-home">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationJsonLd(locale)) }} />
     <Hero locale={locale} />
 
-    <section className="product-width product-context" aria-labelledby="context-heading">
-      <p className="story-eyebrow">{zh ? "已有 Agent，接下来呢？" : "You have Agents. What comes next?"}</p>
-      <h2 id="context-heading">{zh ? "执行能力已经很强，工作还需要被组织。" : "Strong execution still needs coordinated work."}</h2>
-      <p>{zh ? <>从一个人做到一群人交付，仍要说清：<strong>谁来承接、如何判断完成、有效方法怎样延续。</strong>SkyMythos 将这些工作组织在一起，而不是让你换掉已有工具。</> : <>From individual tasks to shared delivery, teams still need to agree <strong>who takes the work, what counts as done and how good methods carry forward.</strong> SkyMythos connects these responsibilities without replacing your tools.</>}</p>
+    <section id="workflow" className="home-work product-width" aria-labelledby="workflow-heading">
+      <div className="home-work-copy"><h2 id="workflow-heading">{zh ? "把工作做成。" : "Get the work done."}</h2><p>{zh ? "以一次研发工作为例：人确认方案，AI 按计划执行，产物与检查一起交回人审阅。" : "One example: a development task. People approve the plan, AI executes, and outputs return with checks for human review."}</p></div>
+      <div className="case-spread">
+        <ExecutionPreview locale={locale}/>
+        <div className="case-spread-copy"><ol className="case-points">{(zh ? ["确认方案", "执行与检查", "人工审阅"] : ["Approve the plan", "Execute and check", "Human review"]).map(item => <li key={item}>{item}</li>)}</ol><div><p className="story-note">{zh ? "订单导出固定示例，非客户实测结果。" : "A fixed order-export example, not measured customer results."}</p><ProductLink locale={locale} href="/concept#delivery">{zh ? "查看完整案例" : "Explore the full example"}</ProductLink></div></div>
+      </div>
     </section>
 
-    <ProductChapter id="workflow" label={zh ? "01 / 把工作做成" : "01 / Get the work done"} title={zh ? "从一个目标，到一份可核对的结果。" : "From a goal to a result you can verify."} intro={zh ? "人明确目标，SkyBot 统筹工作，专业员工按职责参与。你把注意力留给关键判断，不必手工串联每一步。" : "People set the goal. SkyBot coordinates, and specialists contribute. Keep your attention on key decisions, not on stitching every step together."}>
-      <ol className="work-journey">{journey.map(([name, detail], index) => <li key={name}><span className="story-index">0{index + 1}</span><h3>{name}</h3><p>{detail}</p></li>)}</ol>
-      <div className="story-footnote"><p>{zh ? "工作方式按需要选择，不是每次对话都创建研发任务。" : "Choose the right work mode. A conversation does not automatically create an engineering task."}</p><ProductLink locale={locale} href="/concept#delivery">{zh ? "跟随订单导出案例" : "Follow the order-export example"}</ProductLink></div>
-    </ProductChapter>
-
-    <ProductChapter id="people-and-teams" label={zh ? "02 / 让方法留下" : "02 / Keep what works"} title={zh ? "先有工作记录与经验，再沉淀数字员工。" : "Work and experience come before the employee."} intro={zh ? "一次工作的价值不止于结果。记录与经验经人整理确认，成为可复用的方法，或用于培养持续协作的数字员工。" : "A job leaves more than a result. People curate and confirm its records and experience, turning them into reusable methods or a lasting digital collaborator."}>
+    <ProductChapter id="people-and-teams" title={zh ? "让有效方法留下。" : "Keep what works."} intro={zh ? "AI 总结工作中的经验，人审核、修改并决定采用。有效方法成为有来源、按授权复用的企业资产。" : "AI proposes methods from work. People review, edit and choose what to adopt, keeping sources and access boundaries intact."}>
       <span id="digital-employees" />
-      <div className="reuse-summary" role="group" aria-label={zh ? "从工作来源到后续复用" : "From work evidence to future reuse"}>
-        <div className="reuse-source"><span>{zh ? "工作记录" : "Work records"}</span><span>{zh ? "检查与反馈" : "Checks & feedback"}</span><span>{zh ? "有效经验" : "Useful experience"}</span></div>
-        <div className="reuse-confirm"><span aria-hidden="true">→</span><strong>{zh ? "人整理与确认" : "People curate & confirm"}</strong><span aria-hidden="true">→</span></div>
-        <div className="reuse-result"><strong>{zh ? "方法 / 数字员工" : "Methods / Digital employees"}</strong><p>{zh ? "带着来源，参与下一次工作" : "Carry their sources into the next job"}</p></div>
+      <div className="asset-canvas">
+        <div className="asset-product"><ProductMedia image="formation-plan" locale={locale} alt={zh ? "确认员工方案与技能来源的实际界面" : "Review the employee plan and Skill sources"} caption={zh ? "人的确认，是经验变成能力的关键。" : "People confirm how experience becomes capability."}/></div>
+        <WorkStoryFigure kind="assets" locale={locale}/>
       </div>
-      <div className="story-footnote"><p>{zh ? "共享方法，不自动复制私人会话或凭据；整理经验不等于训练模型。" : "Share methods, not private conversations or credentials. Curating experience is not model training."}</p><ProductLink locale={locale} href="/concept#employees">{zh ? "看经验如何形成员工" : "See how experience forms an employee"}</ProductLink></div>
+      <div className="story-footnote"><p>{zh ? "共享方法，不自动共享私人会话或凭据。数字员工是复用方式之一，不是每次工作的前置条件。" : "Sharing methods does not share private conversations or credentials. An employee is one way to reuse capability, not a prerequisite."}</p><ProductLink locale={locale} href="/concept#knowledge">{zh ? "了解资产复用" : "Explore asset reuse"}</ProductLink></div>
     </ProductChapter>
 
-    <ProductChapter id="product-access" label={zh ? "03 / 在已有体系上工作" : "03 / Build on your existing tools"} title={zh ? "模型可以选择，组织能力持续积累。" : "Choose your models. Keep your organisation’s methods."} intro={zh ? "保留已有模型、Coding Agent、Git 与 CI/CD 投入。工作入口、角色、流程与经验在同一套授权边界内组织。" : "Keep your investment in models, coding Agents, Git and CI/CD. Organise work, roles, flows and experience within clear access boundaries."}>
-      <div className="integration-summary"><div><span>{zh ? "组织工作" : "Organise"}</span><strong>SkyMythos</strong><p>{zh ? "目标 · 角色 · 流程 · 经验" : "Goals · Roles · Flows · Experience"}</p></div><div><span>{zh ? "接入执行能力" : "Connect execution"}</span><strong>{zh ? "Agent 运行时 + 模型" : "Agent runtimes + Models"}</strong><p>{zh ? "按部署适配、模型协议与授权选择" : "Subject to deployed adapters, protocols and access"}</p></div><div><span>{zh ? "沿用业务系统" : "Keep your systems"}</span><strong>Git · CI/CD · MCP</strong><p>{zh ? "明确资源权限与外部数据流" : "Explicit resource access and external data flows"}</p></div></div>
-      <ProductLink locale={locale} href="/architecture">{zh ? "查看系统全貌与部署边界" : "See the system and deployment boundaries"}</ProductLink>
+    <ProductChapter id="governance" title={zh ? "让使用与投入可管理。" : "Make usage and costs accountable."} intro={zh ? "在授权范围内看清 AI 用在哪里、消耗多少，再按实际支持的策略管理新任务。" : "See where AI is used and what it consumes within your access scope. Apply supported policies to new tasks."}>
+      <div className="governance-canvas">
+        <WorkStoryFigure kind="governance" locale={locale}/>
+        <nav className="governance-guides" aria-label={zh ? "企业 AI 管理指南" : "AI management guides"}>
+          <ProductLink locale={locale} href="/docs/management/usage">{zh ? "成员使用与权限" : "Usage and access"}</ProductLink>
+          <ProductLink locale={locale} href="/docs/management/costs">{zh ? "理解费用估算" : "Cost estimates"}</ProductLink>
+          <ProductLink locale={locale} href="/docs/management/model-policies">{zh ? "模型与任务额度" : "Model allowances"}</ProductLink>
+        </nav>
+      </div>
+      <div className="story-footnote"><p>{zh ? "管理 AI 应用，不用消耗量评判员工。内容读取遵循权限与审计，管理员不拥有所有私人内容的读取权。" : "Govern AI adoption, not employee performance through token counts. Reading content requires permission and an audit record, including for administrators."}</p><ProductLink locale={locale} href="/architecture#cost-governance">{zh ? "查看计量与策略边界" : "Metering and policy boundaries"}</ProductLink></div>
     </ProductChapter>
 
-    <ProductChapter id="pilot" label={zh ? "04 / 从真实工作开始" : "04 / Start with real work"} title={zh ? "一个仓库，一类任务，先验证价值。" : "One repository. One kind of job. Prove the value."} intro={zh ? "先约定成功标准与当前投入，再覆盖执行、失败、纠正和再次使用。比较交付质量、人工协调与总成本，再决定是否扩展。" : "Agree on success criteria and a baseline. Include execution, failure, correction and reuse. Compare quality, coordination effort and total cost before expanding."}>
-      <span id="first-use" />
-      <div className="pilot-measures">{(zh ? ["交付周期", "人工投入", "验收质量", "单次交付成本"] : ["Delivery time", "Human effort", "Acceptance quality", "Cost per delivery"]).map(item => <span key={item}>{item}</span>)}</div>
-      <div className="story-footnote"><p>{zh ? "收益以实际工作验证为准。核心链路可演示，生产部署、外部接入与业务验收仍需逐项确认。" : "Measure benefits on real work. Core workflows can be demonstrated; production deployment, external integrations and business acceptance still require validation."}</p><ProductLink locale={locale} href="/docs/getting-started/overview">{zh ? "从使用指南开始" : "Start with the user guide"}</ProductLink></div>
+    <ProductChapter id="product-access" title={zh ? "接入已有能力，不从头再建。" : "Connect what you already use."} intro={zh ? "模型、运行时与业务系统各司其职，组织能力留在企业自己的体系中。" : "Models, runtimes and business systems keep their roles. Your organisation keeps its methods."}>
+      <div className="connection-band" role="group" aria-label={zh ? "组织与执行能力的接入关系" : "Coordination and connected execution"}>
+        <div className="connection-owner"><strong>SkyMythos</strong><span>{zh ? "目标、资产与治理" : "Goals, assets and governance"}</span></div>
+        <span className="connection-relation">{zh ? "按配置与授权接入" : "Configured, authorised access"}</span>
+        <dl><div><dt>{zh ? "执行能力" : "Execution"}</dt><dd>{zh ? "Agent 运行时 / 模型" : "Agent runtimes / Models"}</dd></div><div><dt>{zh ? "业务系统" : "Business systems"}</dt><dd>Git / CI/CD / MCP</dd></div></dl>
+      </div>
+      <ProductLink locale={locale} href="/architecture">{zh ? "了解企业架构" : "Explore architecture"}</ProductLink>
     </ProductChapter>
+
+    <section id="pilot" className="home-pilot product-width" aria-labelledby="pilot-heading">
+      <span id="first-use"/>
+      <h2 id="pilot-heading">{zh ? "先验证一次交付。" : "Start with one real delivery."}</h2>
+      <p>{zh ? "约定成功标准，再看方法能否复用、消耗能否追溯。价值由真实工作验证。" : "Agree on success criteria. Test the result, method reuse and usage traceability before expanding."}</p>
+      <ul className="pilot-measures">{(zh ? ["交付质量", "人工投入", "方法复用", "可追溯消耗"] : ["Delivery quality", "Human effort", "Method reuse", "Traceable usage"]).map(item => <li key={item}>{item}</li>)}</ul>
+      <Link className="employee-primary" href={localePath(locale, "/docs/getting-started/overview")}>{zh ? "快速开始" : "Get started"}<span aria-hidden="true">↗</span></Link>
+    </section>
   </div>;
 }

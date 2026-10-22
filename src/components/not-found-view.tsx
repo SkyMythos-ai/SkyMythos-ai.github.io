@@ -27,7 +27,7 @@ export function NotFoundView() {
   const en = getDictionary("en");
 
   return (
-    <div className="scope-dark scope-marketing not-found-view flex min-h-dvh items-center justify-center px-6 py-16">
+    <div className="scope-marketing not-found-view flex min-h-dvh items-center justify-center px-6 py-16">
       <div className="w-full max-w-[38rem] border-t border-rule pt-8">
         <div className="flex items-baseline justify-between gap-4">
           <Wordmark />

@@ -14,6 +14,7 @@ export type DocSectionId =
   | "getting-started"
   | "concepts"
   | "guides"
+  | "management"
   | "operations"
   | "reference";
 

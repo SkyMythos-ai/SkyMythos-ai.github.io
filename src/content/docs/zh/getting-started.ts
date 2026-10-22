@@ -42,14 +42,16 @@ export const gettingStartedZh: DocPage[] = [
 普通成员需要可登录的账号、工作区权限，以及完成当前工作所需的连接器授权。模型服务、运行环境和组织策略通常由管理员准备。
 
 如果你负责首次安装，先读[部署与接入检查](../deployment/)。页面能打开只证明界面可达；实际模型调用、仓库访问和交付要各自验证。
+
+负责日常企业管理时，从[角色与权限](../../operations/roles/)进入，再核对[成员使用与可见范围](../../management/usage/)、[Token 与估算费用](../../management/costs/)和[模型月额度](../../management/model-policies/)。这些管理记录不替代对实际交付的检查。
 `,
   },
   {
     slug: "getting-started/deployment",
-    section: "getting-started",
+    section: "operations",
     title: "部署与接入检查",
     summary: "管理员从部署、运行环境到模型与 Git 接入逐项确认，避免把安装成功当作业务链路已完成。",
-    readingOrder: 2,
+    readingOrder: 1,
     body: `
 本页面向部署和平台管理员。已有 Console 地址的成员，可以直接阅读[第一个任务](../first-task/)。
 
@@ -108,7 +110,7 @@ FUSION_HELM_VALUES=/absolute/path/helm-private.yaml make deploy-local
     section: "getting-started",
     title: "第一个任务",
     summary: "从任务列表的创建抽屉开始，提交一个小目标，检查进度、变更和真实交付结果。",
-    readingOrder: 3,
+    readingOrder: 2,
     body: `
 选择一个容易验证的小改动，例如“为现有接口补充一个参数校验，并运行相关测试”。先使用测试仓库，明确验收条件。
 

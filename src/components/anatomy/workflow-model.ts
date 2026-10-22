@@ -33,7 +33,9 @@ export function workflowFrame(position: number): AnatomyFrame {
     },
     readout: x < .32 ? ["先在人与模型的协作中，完成真实工作。", "Start with real work between a person and a model."]
       : x < 1.1 ? ["留下工作记录、结果与经验，此时还没有数字员工。", "Keep work records and experience. No employee yet."]
-        : x < 2.02 ? ["人整理职责、方法与工具配置，确认培养方案。", "People curate the role, methods and tools, then confirm."]
+        : x < 1.4 ? ["AI 从记录提出总结与方法候选。", "AI proposes summaries and methods from records."]
+          : x < 1.8 ? ["人审核并修改方法：按权限核对行数。", "A person reviews and edits: check access and rows."]
+            : x < 2.02 ? ["人确认修改并决定采用职责、方法与工具配置。", "A person confirms the edits and adopts the role, method and tools."]
           : x < 3.04 ? ["基于已确认的经验，形成并配备数字员工。", "Build the employee from confirmed experience."]
             : x < 4.12 ? ["员工就绪后，再承接下一项任务。", "Only the ready employee takes on the next task."]
               : x < 4.84 ? ["成果交还给人，检查本次工作的结果。", "The result returns to the person for review."]

@@ -5,9 +5,9 @@
 - 该公开仓库注明数据提取自 x.ai 公开脚本；获取时 x.ai 官网返回 HTTP 403，未能与当前官网实时比对。未执行下载的 JavaScript，仅解析数据字面量。来源说明不等于单独的授权声明。
 - Grok Bot 在这里仅代表 Agent 角色，不表示产品仅支持 Grok、使用 Grok 服务或获得 xAI 背书。
 
-`character-parts.tsx` 原样复用两张同源 SVG。首页 `WorkOverview` 用人、SkyBot 和已有专业员工展示一次工作的交接与证据返回，固定产品定位，不演示员工培养。完整培养图只出现在工作方式页（保留 `/concept` 路由）：`workflowFrame` 从日常工作开始，先留下记录与经验，经人整理确认后才形成员工，随后委派新任务并由人审阅交付。来源记录在形成员工后仍保留，不声称自动训练模型。人物不再有机械肢体或身体组装动作。
+`character-parts.tsx` 原样复用两张同源 SVG。首页 `WorkSystemOverview` 使用人、通用 Agent、工作产物和方法档案表达平台价值；人在整理确认位，方法按授权支持下一项工作，不把培养数字员工当作任何工作的前置条件。完整培养图只出现在工作方式页（保留 `/concept` 路由）：`workflowFrame` 从日常工作开始，先留下记录与经验，经人整理确认后才形成员工，随后委派新任务并由人审阅交付。来源记录在形成员工后仍保留，不声称自动训练模型。人物不再有机械肢体或身体组装动作。
 
-运行 `node scripts/check-product-story.cjs` 可验证首页协作的 601 个位置，确认委派先于证据、成果返回先于人工验收。
+运行 `node scripts/check-work-system.cjs` 验证当前首页的工作、记录、人工确认、方法保留及授权复用；`node scripts/check-product-story.cjs` 保留旧协作模型的 601 个位置回归，不代表当前首页挂载。
 
 运行 `node scripts/check-home-workflow.cjs` 可验证 1001 个位置的来源、确认、员工形成与后续任务顺序，防止回退为「先有员工、后补经验」。
 

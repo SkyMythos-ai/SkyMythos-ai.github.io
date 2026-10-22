@@ -1,0 +1,36 @@
+.scope-marketing,
+.scope-docs {
+  color-scheme: light;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  min-height: 100dvh;
+}
+
+.scope-marketing {
+  --color-paper: #f4f6f8;
+  --color-paper-deep: #eaf0f5;
+  --color-surface: #fcfdff;
+  --color-sunken: #e8eef4;
+  --color-ink: #2d4260;
+  --color-ink-2: #465d79;
+  --color-ink-3: #546b86;
+  --color-ink-4: #5b708a;
+  --color-rule: #d7e1eb;
+  --color-rule-soft: #e1e8ef;
+  --color-rule-strong: #b7c8db;
+  --color-signal: #4b72bc;
+  --color-signal-deep: #355a9d;
+  --color-signal-wash: #e8eef9;
+  --color-on-ink: #f4f6f8;
+  --diagram-fill: #fcfdff;
+  --diagram-soft: #eaf0f5;
+  --diagram-line: #b7c8db;
+  --diagram-accent: #4b72bc;
+  --diagram-ink: #2d4260;
+  --diagram-muted: #546b86;
+  --shadow-panel: 0 2px 3px rgb(45 66 96 / 2%), 0 18px 40px -28px rgb(45 66 96 / 22%);
+}
+
+.scope-marketing :is(.employee-primary,.site-masthead__start,.product-action):hover {
+  background: #3b5374;
+}

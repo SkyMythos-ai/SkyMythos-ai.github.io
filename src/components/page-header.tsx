@@ -85,7 +85,7 @@ export function DocHeader({
   minutesLabel: string;
 }) {
   return (
-    <header className="border-b border-rule pb-8">
+    <header className="docs-page-header">
       <div className="flex items-baseline justify-between gap-4">
         <nav aria-label={indexLabel} className="fact-sm min-w-0">
           <Link
