@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 // 独立浏览器回归：调用方负责构建和启动服务，脚本只访问 BASE_URL。
-// node scripts/check-marketing-browser.cjs [all|baseline|geometry|timeline|lifecycle|navigation|learning]
+// node scripts/check-marketing-browser.cjs [all|baseline|geometry|nojs|timeline|lifecycle|navigation|learning]
+// NO_JS_CSS_DELAY_MS 可在无脚本场景延迟 CSS，复现资源就绪时序；不改变页面布局断言。
 // 可组合模式（如 geometry,navigation）。PLAYWRIGHT_MODULE 指向已安装模块；
 // CHROME_EXECUTABLE 可选；ARTIFACT_DIR 默认新建系统临时目录，不向源码目录写证据。
 const assert = require('node:assert/strict');
@@ -170,6 +171,31 @@ async function contrastSamples(page) {
   });
 }
 
+async function noJSGeometry(newPage, locale, route) {
+  const cssDelay = Number(process.env.NO_JS_CSS_DELAY_MS || 0);
+  assert(Number.isFinite(cssDelay) && cssDelay >= 0, 'NO_JS_CSS_DELAY_MS must be nonnegative and finite');
+  for (const width of [1440, 390]) for (const scheme of ['light', 'dark']) {
+    await scenario(`noJS/${locale}/${route || 'home'}/${scheme}/${width}`, async () => {
+      const noJS = await newPage({ viewport: { width, height: width === 390 ? 844 : 900 }, javaScriptEnabled: false, colorScheme: scheme });
+      try {
+        if (cssDelay) await noJS.route('**/*.css', async request => {
+          await new Promise(resolve => setTimeout(resolve, cssDelay));
+          await request.continue().catch(error => { if (!noJS.isClosed()) throw error; });
+        });
+        // 无脚本时 DOMContentLoaded 不等待 CSS，不能在未应用样式时验收布局。
+        await noJS.goto(url(`/${locale}/${route}`), { waitUntil: 'load' });
+        const images = await decodeImages(noJS), row = await layout(noJS);
+        assert.equal(row.scrollWidth, width);
+        assert.equal(row.h1.length, 1);
+        if (!route) assertFinal(await scene(noJS));
+        const links = await noJS.locator('a[data-screenshot-trigger]').evaluateAll(nodes => nodes.map(n => n.getAttribute('href')));
+        assert(links.every(href => /\.(png|webp|jpe?g)(?:\?|$)/.test(href)), 'no-JS screenshot controls retain image links');
+        return { ...row, images, imageLinks: links, cssDelay, screenshot: scheme === 'light' ? await screenshot(noJS, `${locale}-${route.replace('/', '') || 'home'}-nojs-${width}`) : undefined };
+      } finally { await noJS.close(); }
+    });
+  }
+}
+
 async function geometry(newPage) {
   for (const locale of locales) for (const route of ['', 'concept/', 'architecture/']) {
     const page = await newPage({ reducedMotion: 'reduce' });
@@ -231,21 +257,7 @@ async function geometry(newPage) {
         });
       }
     } finally { await page.close(); }
-    for (const width of [1440, 390]) for (const scheme of ['light', 'dark']) {
-      await scenario(`noJS/${locale}/${route || 'home'}/${scheme}/${width}`, async () => {
-        const noJS = await newPage({ viewport: { width, height: width === 390 ? 844 : 900 }, javaScriptEnabled: false, colorScheme: scheme });
-        try {
-          await noJS.goto(url(`/${locale}/${route}`), { waitUntil: 'domcontentloaded' });
-          const images = await decodeImages(noJS), row = await layout(noJS);
-          assert.equal(row.scrollWidth, width);
-          assert.equal(row.h1.length, 1);
-          if (!route) assertFinal(await scene(noJS));
-          const links = await noJS.locator('a[data-screenshot-trigger]').evaluateAll(nodes => nodes.map(n => n.getAttribute('href')));
-          assert(links.every(href => /\.(png|webp|jpe?g)(?:\?|$)/.test(href)), 'no-JS screenshot controls retain image links');
-          return { ...row, images, imageLinks: links, screenshot: scheme === 'light' ? await screenshot(noJS, `${locale}-${route.replace('/', '') || 'home'}-nojs-${width}`) : undefined };
-        } finally { await noJS.close(); }
-      });
-    }
+    await noJSGeometry(newPage, locale, route);
   }
 }
 
@@ -707,9 +719,12 @@ async function main() {
       report.lighthouse = { measuredByThisScript: false, reason: 'This script captures browser geometry/screenshots only. Run an existing Lighthouse tool separately for a comparable performance baseline; navigation timing here is diagnostic, not Lighthouse.' };
     } else {
       const selected = new Set(mode === 'all' ? ['geometry', 'timeline', 'lifecycle', 'navigation', 'learning'] : mode.split(','));
-      for (const name of selected) assert(['geometry', 'timeline', 'lifecycle', 'navigation', 'learning'].includes(name), `Unknown mode ${name}`);
+      for (const name of selected) assert(['geometry', 'nojs', 'timeline', 'lifecycle', 'navigation', 'learning'].includes(name), `Unknown mode ${name}`);
       report.scope = 'Served formal-site regression. Build and server lifecycle are owned by the caller.';
       if (selected.has('geometry')) await geometry(newPage);
+      if (selected.has('nojs') && !selected.has('geometry')) {
+        for (const locale of locales) for (const route of ['', 'concept/', 'architecture/']) await noJSGeometry(newPage, locale, route);
+      }
       if (selected.has('timeline')) await timeline(newPage);
       if (selected.has('lifecycle')) await lifecycle(newPage);
       if (selected.has('navigation')) await navigation(newPage);

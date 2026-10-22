@@ -42,6 +42,7 @@ status: stable
 
 - [`node scripts/check-hero-lifecycle.cjs`](../../../scripts/check-hero-lifecycle.cjs)：正式生命周期 12001 样本、精确人工门禁、v1 历史／方法不变、v2 待验收、本地化和服务端场景／原 Logo 工位结构；实际挂载与布局另测。
 - [`node scripts/check-marketing-browser.cjs`](../../../scripts/check-marketing-browser.cjs)：通过 `BASE_URL`、`PLAYWRIGHT_MODULE`、`CHROME_EXECUTABLE`、`ARTIFACT_DIR` 指定环境；覆盖正式双语路由的布局、无 JS、实际 elapsed 时间线、生命周期和导航。测试时钟在浏览器初始化脚本中控制，不依赖生产 seek 接口或本地草稿。
+- `node scripts/check-marketing-browser.cjs nojs`：与 `geometry` 共用同一组 24 个无 JS 场景，等待 load 后解码图像／字体再验收。设置 `NO_JS_CSS_DELAY_MS=1500` 可控制 CSS 延迟，回归 DOMContentLoaded 早于 CSS 应用的采样缺陷；不能以任意 sleep 或放松横溢断言代替就绪条件。
 - [`node scripts/check-work-system.cjs`](../../../scripts/check-work-system.cjs)：旧平台关系模型的因果、传输窗口和结果保留，仅历史回归，不再证明首页挂载。
 - [`node scripts/check-execution-preview.cjs`](../../../scripts/check-execution-preview.cjs)：原生执行模型的首轮与四次查看循环，完成及记录单调不减、检查先于交付、等待人工审阅；不把检查／查看循环称为再次执行。
 - `node scripts/check-work-story.cjs`：7000 个正式三图模型采样，三轮累积、条件互斥、后续不重复形成或计量、英文读数完整性与负时间边界。
@@ -52,7 +53,9 @@ status: stable
 
 ## 覆盖状态与证据
 
-2026-10-22 正式 B 生命周期迁移：最终原生组件的 12001 个纯模型采样、中英服务端 SVG／工位结构和本地化 painter 回归通过；类型检查与 63 项静态生成通过。最终导出浏览器共 202 个场景全部通过，页面 errors／failures 为空：132 组减少动态终态布局（两语言 × 三营销页 × 11 尺寸 × 两系统偏好）、24 个无 JS、4 次完整时间线（192 个实际 elapsed 状态至 92.5 秒，覆盖首轮及两个关注循环）、8 组播放生命周期／真实 Next 路由卸载、26 个导航／搜索／弹窗交互、8 组资产与培养图实际学习动作／实时说明。新增 SVG 图像有效角色与页脚对比度保护，未把只检查 CTA 的成绩当作整页可访问性证明。
+2026-10-22 线上发布：应用 `89e4aa6` 的四次实际时间线（192 状态）、八组播放生命周期／路由卸载、26 个导航交互、八组学习动作均通过。首批整体不是全绿：一个无 JS 布局检查发生在 CSS 应用前；控制慢 CSS 精确复现后，只修复测试就绪条件，线上 24 个无 JS 场景重新通过，应用未改。202 个场景的分批对账、HTTP／资源及工作流证据见[内容发布用例](work-assets-governance.md)和[任务 Review](../../tasks/todo.md)，不将其写成修复后重跑完整单批的成绩。
+
+2026-10-22 本地正式 B 生命周期迁移：最终原生组件的 12001 个纯模型采样、中英服务端 SVG／工位结构和本地化 painter 回归通过；类型检查与 63 项静态生成通过。最终导出浏览器共 202 个场景全部通过，页面 errors／failures 为空：132 组减少动态终态布局（两语言 × 三营销页 × 11 尺寸 × 两系统偏好）、24 个无 JS、4 次完整时间线（192 个实际 elapsed 状态至 92.5 秒，覆盖首轮及两个关注循环）、8 组播放生命周期／真实 Next 路由卸载、26 个导航／搜索／弹窗交互、8 组资产与培养图实际学习动作／实时说明。新增 SVG 图像有效角色与页脚对比度保护，未把只检查 CTA 的成绩当作整页可访问性证明。
 
 已目检中英桌面／手机、三幕实际关键帧、关联营销页和 12 张卷宗／工位／方法／历史的 4×细节。共享培养 readout 的旧“人整理”先由回归检出，再修复为 AI 候选、人审核修改与确认采用；SVG Logo ARIA 的新增断言同样先红后绿。早期动态图片定位器、初始化时钟及减少动态可见性采样的测试问题已在原固定导出上诊断并修正，没有放松产品门禁或把测试问题归为应用修复。hidden／BFCache 为浏览器模拟，不等于真实 OS 后台；完整执行与性能、其他限制见[任务 Review](../../tasks/todo.md)。
 
