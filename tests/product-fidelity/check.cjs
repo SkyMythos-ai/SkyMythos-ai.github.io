@@ -44,6 +44,13 @@ async function measure(frame, source, selectors) {
     if (!element) throw new Error('Missing real product root');
     const origin = element.getBoundingClientRect();
     const hostBox = host?.getBoundingClientRect();
+    let willChangeTransform = false;
+    for (let ancestor = host; ancestor; ancestor = ancestor.parentElement) {
+      if (getComputedStyle(ancestor).willChange.split(',').some(value => value.trim() === 'transform')) {
+        willChangeTransform = true;
+        break;
+      }
+    }
     let occlusion = Math.max(hostBox ? hostBox.top + 2 : 0, origin.top, 0);
     const overlays = [...document.querySelectorAll('header,nav')].filter(node => !node.contains(host)).map(node => node.getBoundingClientRect()).filter(box => box.width > 0 && box.height > 0 && (!hostBox || box.left < hostBox.right && box.right > hostBox.left));
     for (let index = 0; index <= overlays.length; index++) {
@@ -72,6 +79,7 @@ async function measure(frame, source, selectors) {
       host: box ? { x: box.x, y: box.y, right: box.right, bottom: box.bottom } : null,
       viewport: { width: innerWidth, height: innerHeight, dpr: devicePixelRatio },
       scroll: { x: scrollX, y: scrollY },
+      paint: { willChangeTransform },
       headerBottom: Math.max(header?.bottom || 0, occlusion),
       active: active?.dataset.productFrame,
       inert: element.inert,
@@ -147,15 +155,17 @@ async function compare(page, name, id, label, pixelmatch) {
     // Reproduce the complete outer document coordinate AND scroll, rather
     // than guessing a fractional phase. The inner product viewport/body stays
     // untouched. Both full-viewport screenshots now use identical clip pixels.
-    await expected.page.evaluate(({ world, scroll, height }) => {
+    await expected.page.evaluate(({ world, scroll, height, paint }) => {
       const iframe = document.querySelector('iframe');
       document.body.style.cssText = `margin:0;overflow-x:hidden;min-height:${Math.max(world.y + iframe.offsetHeight, scroll.y + height + 100)}px`;
       iframe.style.position = 'absolute';
       iframe.style.left = `${world.x}px`;
       iframe.style.top = `${world.y}px`;
       iframe.style.transform = 'translate3d(0,0,0)';
+      // Chromium 会因祖先的 transform 预告禁用 LCD 字体抗锯齿；只同步外层合成条件，保持原产品内部不变。
+      iframe.style.willChange = paint.willChangeTransform ? 'transform' : 'auto';
       scrollTo({ left: scroll.x, top: scroll.y, behavior: 'instant' });
-    }, { world, scroll: actual.scroll, height: actual.viewport.height });
+    }, { world, scroll: actual.scroll, height: actual.viewport.height, paint: actual.paint });
     const referenceBox = await expected.page.locator('iframe').boundingBox();
     assert(Math.abs(referenceBox.x - actual.root.x) < .002 && Math.abs(referenceBox.y - actual.root.y) < .002, 'Independent outer camera matches the actual product root exactly');
     const referenceBytes = await expected.page.screenshot({ animations: 'disabled' });
@@ -177,7 +187,7 @@ async function compare(page, name, id, label, pixelmatch) {
     fs.writeFileSync(path.join(evidence, `${label}-reference.png`), PNG.sync.write(original));
     fs.writeFileSync(path.join(evidence, `${label}-diff.png`), PNG.sync.write(diff));
     if (ratio > .005) errors.push(`Pixel difference ${ratio} exceeds unchanged 0.5% threshold`);
-    const row = { label, scene: name, frame: id, pass: errors.length === 0, errors, ratio, maximumRatio: .005, camera: { world, scroll: actual.scroll, referenceBox }, actualCrop, sourceCrop, comparedLandmarks: actual.landmarks.length, sourceCameraPreserved: true };
+    const row = { label, scene: name, frame: id, pass: errors.length === 0, errors, ratio, maximumRatio: .005, camera: { world, scroll: actual.scroll, paint: actual.paint, referenceBox }, actualCrop, sourceCrop, comparedLandmarks: actual.landmarks.length, sourceCameraPreserved: true };
     rows.push(row);
     console.log(`${row.pass ? 'PASS' : 'FAIL'} ${label}: ${pixels} pixels (${(ratio * 100).toFixed(4)}%) / ${actual.landmarks.length} landmarks`);
     return { actual, expected: expected.measured, selectors: expected.selectors };

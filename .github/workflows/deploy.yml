@@ -104,6 +104,7 @@ jobs:
         run: npm run typecheck
 
       - name: Install pinned browser with completed-stream fix
+        timeout-minutes: 5
         run: |
           npx playwright install-deps chromium
           npm run install:browser

@@ -70,9 +70,18 @@ def install():
                 raise RuntimeError("Browser archive exceeds download budget")
             hashes = dict(item.strip().split("=", 1) for item in response.headers.get("x-goog-hash", "").split(",") if "=" in item)
             size = 0
-            while chunk := response.read(1024 * 1024):
+            while True:
+                if time.monotonic() - started > 240:
+                    raise RuntimeError("Browser download exceeded byte or time budget")
+                # Avoid a filling read that can keep accepting trickled bytes before returning.
+                # CI also caps the whole install step, including connection and header handling.
+                chunk = response.read1(1024 * 1024)
+                if time.monotonic() - started > 240:
+                    raise RuntimeError("Browser download exceeded byte or time budget")
+                if not chunk:
+                    break
                 size += len(chunk)
-                if size > MAX_ARCHIVE or time.monotonic() - started > 240:
+                if size > MAX_ARCHIVE:
                     raise RuntimeError("Browser download exceeded byte or time budget")
                 output.write(chunk)
                 digest.update(chunk)
