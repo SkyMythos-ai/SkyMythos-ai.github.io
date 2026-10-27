@@ -13,7 +13,7 @@ tags: [任务, 官网, 验证]
 - [x] 从CI归档确定hash用例实际超时步骤，建立可独立执行的原始导航复现。
 - [x] 依据上游修复固定测试引擎，并修复导航准备竞态；原始两项失败已在Linux消失。
 - [x] 冻结源与产物，在干净Linux候选执行完整商业／runtime／fidelity联合检查。
-- [ ] 精准提交并推送修复，核验同SHA的Actions、Pages及正式站。
+- [x] 精准提交并推送修复，核验同SHA的Actions、Pages及正式站。
 
 Review（首次修复预检前的记录，2026-10-27）：生产读取器已恢复为`b531970`原样；请求cache、变换流、BYOB、EOF任务及keepalive均未证明安全稳定修复，没有采用。新正式回归直接调用生产readAsset，验证真实七资源42次读取的网络终态／SHA，并有12项受控流预算／断流／取消与准确15秒期限测试；受控测试本地已通过。查得Chromium上游提交`62473ad0f747e245e514c93e741bb8e168a2a207`修复相同的no-store完整流消费误报取消；已核对157.0.8103.15源码确含终态通知顺序修复，固定CfT Beta引擎、保留稳定Playwright SDK，未改资产／1MB上限／网络断言。安装器5项恶意归档防护测试通过，lint0错误／16既有warning、75页生产build及typecheck通过。本机新浏览器下载240秒超时，因此新引擎真实读取与完整联合回归仍待Linux CI，不能记为本地已过。
 
@@ -30,6 +30,8 @@ hash根因与修复独立成立：初始hydration尚未完成即由测试创建�
 site导航候选已冻结：CPU6与100ms网络延迟下两次捕获原URL断言失败，时间线显示Back调用已返回、报告仍为旧页，随后自然恢复原产品Navigation API entry key；没有额外历史项或覆盖目标。仅在既有goBack后按原10秒预算等待严格产品URL，再执行不变的等值断言；受压同条件3／3与普通1／1均完成exit0，各24断言、起止身份相同。原本地红诊断在断言后清理挂起而手动停止，不称为完成的exit1轮；正式红灯仍为实际CI失败。默认42场景与所有路由／历史／几何断言保留，SITE_CASE非法值拒绝，源码／资产不改。下次完整Linux验证同时覆盖本修复和待验的保真相机。
 
 完整Linux验收通过（[40476142550](https://github.com/SkyMythos-ai/SkyMythos-ai.github.io/actions/runs/40476142550)，`8fe4cc3a86ab58cd47921e670504edf1b674d5fc`，2026-10-27 08:56:02Z）：安装器6项、实际入口10项、源码／资产／75页构建／类型均通过；真实42读取、商业7／7、site42／42及2978断言、pinned12／12及12639断言、native1088断言、runtime和独立保真38／38全部实际执行并通过。36个静态／真实播放图像比较均零差异像素，两个真实突变仍被拒绝，原0.5%阈值未改。证明此前灰度／LCD差异已由仅外层合成环境匹配消除，冻结DOM／CSS／PNG不改。本次deploy=false、Pages部署明确skipped；仅证明CI修复完成，不当成正式站已上线。随后只补此验收记录，准备正常快进main并核验最终提交的完整Actions／Pages及线上字节。性能和第三方许可未决仍未处理。
+
+正式发布完成（2026-10-27）：main已正常快进至`2ebcfef9bcee1c274d3c89a108f26dcab1c9f904`，同SHA的[Actions／Pages 40477257161](https://github.com/SkyMythos-ai/SkyMythos-ai.github.io/actions/runs/40477257161)完整检查再次通过，09:06:45Z部署job结束success。商业7／7、site42／42及2978断言、native1088断言、runtime与fidelity38／38实际通过；所有36图像比较零差异。随后将该run的真实github-pages artifact下载到新空目录，不执行归档内容，使用隔离Python逐字节／SHA核对https://skymythos.ai：19个页面（含全部13个中文商业页、英文、双语docs和旧入口）、15个产品资源和50个Next JS／CSS／字体文件均与产物一致，6个私有／不存在／虚假英文入口为404，共90／90通过；16个非重定向页面canonical域名／路径及语言另全部通过。远端main与上述SHA一致，生产src／public／锁文件没有因修复改变。此次回执只同步修复分支，不为事后文档再次触发main部署；既有其他dirty／untracked和本地协作资产未混入。CI修复及正式上线完成，性能／许可等未决范围保持原状。
 
 # 商业官网 V3：正式迁移与 GitHub Pages 发布（2026-10-26）
 
