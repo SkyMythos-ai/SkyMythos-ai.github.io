@@ -12,6 +12,7 @@
     "typecheck": "tsc --noEmit",
     "test:commercial": "node scripts/commercial/run.cjs",
     "test:export": "node scripts/check-export.cjs",
+    "test:export-runner": "node tests/commercial-runtime/export-runner.cjs",
     "test:product-reference": "node scripts/product-reference/check.cjs",
     "test:locale-routes": "node scripts/check-locale-routes.cjs",
     "test:fidelity": "node tests/product-fidelity/check.cjs",

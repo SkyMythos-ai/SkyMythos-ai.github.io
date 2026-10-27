@@ -40,11 +40,12 @@ npm run test:product-reference
 npm run build
 npm run typecheck
 npm run test:browser-installer
+npm run test:export-runner
 npm run install:browser
 npm run test:export
 ```
 
-`test:export` 启动只绑定本机的静态服务器，对真实 `out/` 串行执行资源读取／取消边界、商业页／演示回归、运行时重复换页与独立产品保真检查，失败返回非零。`test:runtime` 与 `test:fidelity` 也可对已运行的 `PREVIEW_URL` 单独执行。`EVIDENCE_DIR` 可指定报告目录，默认位于系统临时目录，不进入 Pages 产物。
+`test:export` 启动只绑定本机的静态服务器，对真实 `out/` 串行执行资源读取／取消边界、商业页／演示回归、运行时重复换页与独立产品保真检查，各独立组即使有失败也继续串行收集结果，任一失败最终返回非零并阻止部署；收到中断信号则立即停止后续组。`test:export-runner` 直接执行实际入口的隔离编排回归，验证失败汇总、中断和服务器释放。`test:runtime` 与 `test:fidelity` 也可对已运行的 `PREVIEW_URL` 单独执行。`EVIDENCE_DIR` 可指定报告目录，默认位于系统临时目录，不进入 Pages 产物。
 
 浏览器默认固定为 `scripts/commercial/browser-version.json` 中的 Chrome for Testing **157.0.8103.15（Beta）**，Playwright SDK 仍为固定稳定版。156 存在将已完整消费的流误报为取消的[上游缺陷及修复](https://chromium.googlesource.com/chromium/src/+/62473ad0f747e245e514c93e741bb8e168a2a207)，故暂用已核对源码包含修复的157，不以忽略网络错误绕过。`npm run install:browser` 需要 Python3，把下载／解压分别隔离到仓外新空目录，校验归档并缓存；Linux还需先运行 `npx playwright install-deps chromium`。安装器不执行归档中的脚本，测试启动时核对实际引擎版本。后续稳定版包含该修复时再显式更新固定版本。`BROWSER_CHANNEL` 或 `BROWSER_EXECUTABLE_PATH` 仍可显式选择诊断浏览器，报告会记录实际版本和覆盖设置，不能把旧引擎上的诊断等同默认CI验收。
 

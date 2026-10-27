@@ -7,6 +7,8 @@ status: draft
 sources:
   - resource: /../scripts/check-export.cjs
     title: 正式静态产物的联合检查入口
+  - resource: /../tests/commercial-runtime/export-runner.cjs
+    title: 实际入口的失败汇总、中断与释放回归
   - resource: /../scripts/commercial/run.cjs
     title: 七套商业浏览器回归
   - resource: /../tests/product-fidelity/check.cjs
@@ -43,7 +45,10 @@ SDK与`browser-version.json`指定的Chrome for Testing引擎；先运行`npm ru
 1. `npm run lint`、`npm run test:locale-routes`、`npm run test:product-reference`、
    `npm run build`、`npm run typecheck` 必须返回0；故意损坏资源／改hash／注入可执行
    内容的反例必须非零，不能通过重新生成基线消除失败。
-2. `npm run test:export` 对真实产物运行七套商业回归与独立保真。13个中文商业页面
+2. `npm run test:export-runner`执行实际联合入口的隔离编排验证：四组独立检查即使有失败
+   也必须串行执行完毕，任一失败最终非零并阻止部署；中断立即停止后续组，服务器始终
+   关闭。启动失败不能运行浏览器组。该受控回归不替代完整浏览器执行。
+   `npm run test:export` 对真实产物运行七套商业回归、runtime与独立保真。13个中文商业页面
    直接访问、刷新和导航有效；英文、双语docs和旧深链保留，无虚假英文商业镜像。
    中文独有页切换英文回首页，真实对应页保留适用query/hash，空与非空basePath均检查。
 3. 首屏保持蓝色居中主张与完整产品图，能力区保持同窗双向上推、末项释放和自然阅读
@@ -79,6 +84,10 @@ SDK与`browser-version.json`指定的Chrome for Testing引擎；先运行`npm ru
 hash历史缺陷已独立红→绿：以6倍CPU节流重复三次，确认测试在初始hydration前创建片段导航，随后Next首次canonical replace擦除该历史项；Back恢复的是本来已丢锚点的项。测试准备仅增加初始stage真实挂载就绪等待，同一复现三次通过、普通CPU三次通过；原等待期限、hash／当前项／几何与资源断言不变，生产控制器未改。手动／键盘／wheel仍保持URL不变，不将hash改成持续状态源。
 
 六项Linux保真失败的归档均仅为像素差，语义、样式、几何通过。中性文字区域显示消费者0个彩色边缘像素、独立参照1542个，分别为灰度与LCD抗锯齿；静态均零差异。候选仅匹配动画祖先的合成提示，不改参照内部样式或几何。Mac156原相机与候选各17／17且截图均零差异，两项真实突变仍被拒绝；这是兼容性证据，不是Linux红→绿，固定157完整复验尚待执行。
+
+随后`a8d2cd0`的[Linux预检40473509296](https://github.com/SkyMythos-ai/SkyMythos-ai.github.io/actions/runs/40473509296)再次验证原始读取／hash修复，但site仅41／42，失败在保留页面返回商业路由后的URL断言，runtime／fidelity未执行；没有获得候选相机的Linux红→绿，也没有上线。入口后续补齐失败汇总及中断回归（十个受控场景红→绿，含子进程收到中断后成功退出仍须停止），不放宽任何浏览器组；导航原因仍待独立定位。
+
+保留页返回候选的后续证据：CPU6／100ms网络下捕获原断言两次失败，Back返回后旧地址尚未更新，但随后无纠正动作就恢复原产品历史entry key；不是丢失／新增历史项。候选在原Back之后按既有10秒预算等待严格目标URL，原等值与其他断言保留；受压3／3、正常1／1完成exit0，各24断言且起止身份相同，尚待全量Linux。原本地失败诊断的清理曾挂起并手动停止，不写成正常完成的红轮；完整CI失败仍是正式红证据。
 
 以下为修复前的迁移验收记录，失败及未决事项保留历史身份；不作为修复后的通过证据。
 

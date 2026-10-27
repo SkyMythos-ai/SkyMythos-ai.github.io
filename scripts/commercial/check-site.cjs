@@ -37,6 +37,16 @@ const groups = [
 ];
 const families = ['product/', 'solutions/engineering/', 'security/', 'resources/how-it-works/'];
 const noJsFamilies = ['product/work-delivery/', 'solutions/engineering/', 'security/', 'resources/', 'resources/how-it-works/'];
+const caseLabels = [
+  ...routes.map(item => `direct-desktop-${item.name}`),
+  'independent-content-and-complete-resource-graph', 'real-header-footer-hero-and-history-navigation',
+  ...[1280, 390, 320].flatMap(width => families.map(route => `responsive-${width}-${routes.find(item => item.route === route).name}`)),
+  ...[1440, 320].flatMap(width => noJsFamilies.map(route => `nojs-${width}-${routes.find(item => item.route === route).name}`)),
+  'client-home-entry-return-reentry-and-legacy-boundaries', 'keyboard-desktop-navigation-and-escape',
+  'keyboard-compact-navigation-and-escape', 'inner-contact-preview-no-send-edit-reset', 'inner-image-zoom-escape-focus',
+];
+const selectedCase = process.env.SITE_CASE;
+assert(selectedCase === undefined || (!redOnly && caseLabels.includes(selectedCase)), `Unknown or incompatible SITE_CASE: ${selectedCase}; expected one of ${caseLabels.join(', ')}`);
 const expectedPaths = new Set(routes.map(item => new URL(item.route, base).pathname));
 const productManifest = JSON.parse(fs.readFileSync(path.join(portable.referenceRoot, 'manifest.json')));
 const productImages = new Set(Object.values(productManifest.images).map(image => image.path).map(file => new URL(portable.referencePath + file, base).pathname));
@@ -85,6 +95,7 @@ async function goto(page, route = '') {
 }
 
 async function runCase(label, options, body) {
+  if (selectedCase !== undefined && selectedCase !== label) return;
   let context;
   let page;
   const issues = [];
@@ -621,6 +632,8 @@ async function main() {
         equal(response.status(), 200, `${outside}: real preserved external-family page`);
         equal(await page.locator('#commercial-site').count(), 0, `${outside}: commercial shell does not leak`);
         await page.goBack({ waitUntil: 'load' });
+        // 跨文档 Back 可能先返回旧页面的 load 状态；必须等真实目标 URL 到达，不能立即把旧地址判作导航失败。
+        await page.waitForURL(siteUrl('product/'), { waitUntil: 'load', timeout: 10000 });
         equal(page.url(), siteUrl('product/'), 'Leaving a preserved page returns to the real commercial route');
         await settle(page);
       }
@@ -640,7 +653,7 @@ async function main() {
       process.exitCode = 1;
     });
     const report = {
-      url: base.href, mode: redOnly ? 'red-only' : 'full', generatedAt: new Date().toISOString(),
+      url: base.href, mode: redOnly ? 'red-only' : selectedCase ? 'selected' : 'full', selection: selectedCase || 'all', generatedAt: new Date().toISOString(),
       status: failures.length || rows.some(row => row.status !== 'passed') ? 'failed' : 'passed',
       assertions, expectedRoutes: routes.map(item => sitePath(item.route)),
       completedCases: rows.length, passedCases: rows.filter(row => row.status === 'passed').length, failedCases: rows.filter(row => row.status === 'failed').length,
