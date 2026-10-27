@@ -8,16 +8,21 @@ import { ExecutionPreview } from "@/components/execution-preview/figure";
 import { WorkStoryFigure } from "@/components/work-story/figure";
 import { ProductMedia } from "@/components/product-media";
 import { ProductChapter, ProductLink } from "@/components/product-page-parts";
+import { CommercialHome } from "@/components/commercial/content";
 
 interface PageProps { params: Promise<{ locale: string }> }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const locale = toLocale((await params).locale), dictionary = getDictionary(locale);
-  return buildMetadata({ locale, title: dictionary.meta.title, description: dictionary.meta.description, path: "/", keywords: dictionary.meta.keywords });
+  return buildMetadata({ locale, title: locale === "zh" ? "让 AI 完成工作，让能力留在企业" : dictionary.meta.title, description: locale === "zh" ? "企业自己的 AI 工作平台。将 Agent、知识与工具组织进工作，完成交付、复用方法、掌握使用与投入。" : dictionary.meta.description, path: "/", keywords: dictionary.meta.keywords });
 }
 
 export default async function HomePage({ params }: PageProps) {
   const locale = toLocale((await params).locale), zh = locale === "zh";
+  if (zh) return <div className="page-home" data-commercial-page="home">
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationJsonLd(locale)) }} />
+    <CommercialHome />
+  </div>;
   return <div className="product-page product-home">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareApplicationJsonLd(locale)) }} />
     <Hero locale={locale} />

@@ -1,47 +1,35 @@
 import type { MetadataRoute } from "next";
-import { locales, localeHtmlLang } from "@/lib/i18n";
+import { localeHtmlLang } from "@/lib/i18n";
 import { absoluteUrl } from "@/lib/site";
 import { docRoutes } from "@/content/registry";
+import { availableLocalesForPath, commercialSlugs, localizedRoutePath } from "@/lib/commercial-routes";
 
 /** See `robots.ts` — metadata routes must opt into static generation. */
 export const dynamic = "force-static";
 
-/**
- * Sitemap.
- *
- * Generated from the same route registry the pages are built from, so a page
- * cannot exist without appearing here — the usual cause of an orphaned page in a
- * static export is a hand-maintained sitemap that drifts.
- *
- * Every entry carries `alternates.languages`, which is how a search engine learns
- * that the Chinese and English versions are the same page in two languages
- * rather than duplicate content competing with itself.
- */
+/** 从真实路由与语言能力生成 sitemap；中文商业页不产生不存在的英文镜像。 */
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
-
-  /** Marketing routes, shared by both locales. */
   const marketingPaths = ["/", "/concept", "/architecture", "/docs"];
-
-  /** Documentation routes, derived from the content registry. */
   const docsPaths = docRoutes().map((route) => `/docs/${route}`);
+  const commercialPaths = commercialSlugs.map((slug) => `/${slug}`);
+  const allPaths = [...new Set([...marketingPaths, ...docsPaths, ...commercialPaths])];
 
-  const allPaths = [...marketingPaths, ...docsPaths];
-
-  return allPaths.flatMap((path) =>
-    locales.map((locale) => ({
-      url: absoluteUrl(`/${locale}${path === "/" ? "" : path}`),
+  return allPaths.flatMap((path) => {
+    const availableLocales = availableLocalesForPath(path);
+    return availableLocales.map((locale) => ({
+      url: absoluteUrl(localizedRoutePath(locale, path)),
       lastModified: now,
       changeFrequency: path === "/" ? ("weekly" as const) : ("monthly" as const),
       priority: path === "/" ? 1 : path === "/docs" ? 0.8 : 0.7,
       alternates: {
         languages: Object.fromEntries(
-          locales.map((other) => [
+          availableLocales.map((other) => [
             localeHtmlLang[other],
-            absoluteUrl(`/${other}${path === "/" ? "" : path}`),
+            absoluteUrl(localizedRoutePath(other, path)),
           ]),
         ),
       },
-    })),
-  );
+    }));
+  });
 }

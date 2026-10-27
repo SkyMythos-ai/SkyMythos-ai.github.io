@@ -11,10 +11,10 @@ SkyMythos 产品官网的源码。采用 Next.js 静态导出（`output: 'export
 | 静态导出 | `output: 'export'`，产物在 `out/` |
 | 样式 | Tailwind CSS v4（CSS-first `@theme`） |
 | 字体 | IBM Plex Sans / IBM Plex Mono，构建期自托管；中文使用系统字体栈 |
-| 视觉 | 深石墨营销画布、中性浅色文档阅读面；薄面、细线与局部语义色 |
-| 主视觉 | 双语原生 SVG；三幕共用 12 秒播放时钟，支持暂停和静态成果 |
+| 视觉 | 中文商业站蓝色居中首屏与固定能力舞台；英文保留既有版式，文档保持独立阅读面 |
+| 主视觉 | 真实产品组件的只读 DOM／CSS 投影与完整产品图；B 生命周期继续使用正式组件 |
 | 文档正文 | Markdown 字符串 + `react-markdown`，构建期渲染 |
-| 语言 | 中文（默认，`/zh`）与英文（`/en`）两套完整路由树 |
+| 语言 | 中文商业站 13 页；英文首页、概念与架构，以及双语文档保留。只为真实对应页生成语言镜像 |
 | SEO | 每页预渲染 HTML、canonical、hreflang、sitemap、robots、JSON-LD |
 
 ## 本地体验
@@ -26,7 +26,7 @@ SkyMythos 产品官网的源码。采用 Next.js 静态导出（`output: 'export
 
 打开 http://localhost:3000/zh/ （中文）或 http://localhost:3000/en/ （英文）。端口可用 `PORT=4000 ./scripts/preview.sh` 修改。
 
-脚本会先检查 Node 版本（需 20.9+），并检测 `node_modules` 是否为当前平台安装。Next.js 的编译器是平台相关的原生二进制，在别的系统（例如 Linux 容器）装的依赖拿到 macOS 上会报 `Failed to load SWC binary`；脚本发现不匹配时会自动清掉重装。
+脚本会先检查 Node 版本（需 22.19+，与 CI 及固定版本 Lighthouse 工具链兼容），并检测 `node_modules` 是否为当前平台安装。Next.js 的编译器是平台相关的原生二进制，在别的系统（例如 Linux 容器）装的依赖拿到 macOS 上会报 `Failed to load SWC binary`；脚本发现不匹配时会自动清掉重装。
 
 等价的 npm 命令是 `npm run local` 与 `npm run preview`。不经脚本时，`npm install && npm run dev` 也可以，前提是依赖是在本机装的。
 
@@ -35,9 +35,20 @@ SkyMythos 产品官网的源码。采用 Next.js 静态导出（`output: 'export
 类型检查与 lint：
 
 ```bash
-npm run typecheck
 npm run lint
+npm run test:product-reference
+npm run build
+npm run typecheck
+npx playwright install chromium
+npm run test:export
 ```
+
+`test:export` 启动只绑定本机的静态服务器，对真实 `out/` 串行执行商业页／演示回归、运行时边界与重复换页检查、独立产品保真检查，失败返回非零。`test:runtime` 与 `test:fidelity` 也可对已运行的 `PREVIEW_URL` 单独执行。`EVIDENCE_DIR` 可指定报告目录，默认位于系统临时目录，不进入 Pages 产物。`BROWSER_CHANNEL` 或 `BROWSER_EXECUTABLE_PATH` 可显式选择本机浏览器，默认使用固定版本 Playwright 的 Chromium。
+
+产品演示是固定版本的示例数据、只读状态，不调用模型或产品业务 API；预约表单也只提供本地需求预览，不发送或保存资料。生产构建校验仓内冻结资源，不依赖相邻产品仓库、`.handoff` 或个人缓存。独立保真夹具来自真实组件捕获的 DOM 与原始 CSS，不导入官网 renderer 定义预期；其通过不等于实时产品或业务 E2E 通过。
+
+新启用的 ESLint 保留两个既有演示组件的限定 compiler-rule warning 基线；新商业代码仍使用 error 级规则。ESLint 9 固定版本是当前 Next lint 插件共同支持的版本，待插件支持 ESLint 10 时再同步迁移，不用无效 peer 依赖维持 CI。
+
 
 ## 部署到 GitHub Pages
 
@@ -66,32 +77,31 @@ npm run lint
 ```
 src/
   app/
-    layout.tsx                    根布局：字体与全局样式
-    page.tsx                      根路径重定向到默认语言
-    not-found.tsx                 404（双语文案）
-    icon.tsx / apple-icon.tsx     构建期生成的站点图标
+    (gateway)/                    根地址的静态语言入口
+    (localized)/[locale]/
+      layout.tsx                  正确语言的 document root
+      (marketing)/                中文商业页与既有英文营销页
+      docs/                       双语文档目录与正文
+    global-not-found.tsx          独立双语 404
     robots.ts / sitemap.ts        SEO 元数据路由
-    [locale]/
-      layout.tsx                  语言与站点外壳
-      page.tsx                    首页
-      concept/page.tsx            产品概念
-      architecture/page.tsx       架构
-      docs/
-        page.tsx                  手册目录
-        [...slug]/page.tsx        文档正文
-  components/                     页面区块与可复用组件
+  components/
+    commercial/                   商业外壳、只读产品展示与局部控制器
+    hero-lifecycle/               复用的 B 生命周期模型、SVG 与播放
   content/
-    dictionary.ts                 界面文案（中英）
-    types.ts                      内容模型
-    registry.ts                   文档注册表
-    docs/{zh,en}/                 文档正文，按章节分文件
-  lib/                            工具：i18n、SEO、字体、标题锚点
-  styles/globals.css              设计令牌与全局样式
+    commercial/                   中文商业页作者源与注册表
+    dictionary.ts                 既有双语界面文案
+    docs/{zh,en}/                 双语文档正文
+  lib/                            路由能力、i18n、SEO 与资源合同
+  styles/                         独立商业样式与原有文档／营销样式
+public/product-reference/         版本化只读产品展示资源
+scripts/product-reference/        资源校验及显式刷新工具
+scripts/commercial/               可移植浏览器回归
+tests/fixtures/product-reference/  独立冻结的真实组件参照（非 public）
 ```
 
 ## 内容维护
 
-**改界面文案**：编辑 `src/content/dictionary.ts`。它是带类型约束的完整记录，漏译会导致编译失败，而不是在页面上留下一块空白。
+**改界面文案**：中文商业页编辑 `src/content/commercial/`；既有英文营销页与双语共享界面编辑 `src/content/dictionary.ts`。后者是带类型约束的完整记录，漏译会导致编译失败，而不是在页面上留下一块空白。
 
 **改文档**：编辑 `src/content/docs/<语言>/<章节>.ts`。正文是 Markdown 字符串。
 
@@ -99,12 +109,14 @@ src/
 
 `##` 与 `###` 标题会自动生成锚点 id，并出现在右侧的「本页内容」里。标题文本重复会导致锚点冲突，请在同一个文件内保持标题唯一。
 
-**改设计令牌**：编辑 `src/styles/globals.css` 的 `@theme` 区块。营销页采用 `.scope-dark`，文档使用中性浅色阅读面；两者共用文字、边线、按钮和状态语义。中性色承载结构，品牌蓝维持身份，少量低饱和辅助色标记工作与证据。
+**改设计令牌**：共享令牌位于 `src/styles/globals.css` 的 `@theme` 区块。中文商业页在 `src/styles/commercial.css` 中以 `.commercial-site` 限定浅色版式；既有英文营销面保留其原有样式，文档使用独立中性阅读面。不要将商业页的全局元素规则泄漏到英文或 docs。
 
-**改三幕动画**：`src/components/employee-visual-material.ts` 管理确认后的石墨材质，`employee-work-visual.tsx` 与 `employee-knowledge-visual.tsx` 管理原生 SVG 构图，`employee-emblem-motion.ts` 管理确定性分镜。`HeroStage` 持有唯一播放时间，`EmployeeScene` 只跟随该时间绘制；静态导出和减少动态显示完整成果，手动选择播放一次后保留结果。修改须同时检查中文、英文和手机标签，保持验证后沉淀、审查验证后交付、引用保留来源的机制顺序。
+**改生命周期动画**：中文首页直接复用 `src/components/hero-lifecycle/figure.tsx` 的 B 生命周期。产品能力投影由 `src/components/commercial/` 的控制器管理，冻结资源与刷新边界见 `scripts/product-reference/README.md`；不能手工重绘产品 UI 后宣称与真实组件一致。
 
-首页、共享导航和内页的布局分别由 `src/styles/home.css`、`site-navigation.css` 和 `interior.css` 维护。产品页面不包含设计预览的材质比较控件。
+**维护既有三幕动画**：`src/components/employee-visual-material.ts` 管理石墨材质，`employee-work-visual.tsx` 与 `employee-knowledge-visual.tsx` 管理原生 SVG 构图，`employee-emblem-motion.ts` 管理确定性分镜。`HeroStage` 持有唯一播放时间，`EmployeeScene` 只跟随该时间绘制。此套实现保留给既有页面，不是新版中文能力舞台的入口。
+
+既有营销首页、共享导航和内页样式仍由 `src/styles/home.css`、`site-navigation.css` 和 `interior.css` 维护。
 
 ## 许可
 
-许可条款以主仓库中的实际声明为准。本仓库当前未包含独立的 LICENSE 文件。
+许可条款以主仓库中的实际声明为准。本仓库当前未包含独立的 LICENSE 文件。产品投影的第三方材料及许可文本见版本目录内的 `NOTICE.txt`；其中包含由标注为 AGPL-3.0-only 的 `@bible-strong/avatar-core`／`@bible-strong/avatar-react` 0.1.0 生成的 SVG 和相关 CSS。上游源码固定于 [`79fe9ba`](https://github.com/smontlouis/bible-strong-avatar-lab/tree/79fe9ba06e4874b11394b8e8a3f2c493c9d197ba)。来源与保真校验不等于已核定输出及组合范围的分发许可／适用源码义务，公开发布前须单独完成此项审查；不能仅因使用生成器就断言整个官网自动采用 AGPL。

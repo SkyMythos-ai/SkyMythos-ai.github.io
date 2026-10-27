@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "revision": "033a372f66d5f53bbc8e6b519868238976701c47",
+  "publishedManifestSha256": "cfcd087482f9ad71b6986fabc12fea2b18154652461ab64993425720cad7f756",
+  "publication": {
+    "operation": "byte-for-byte-copy-from-captured-component-export",
+    "copiedAssets": {
+      "delivery-middle.html": "1b723bdd7b394cafa9ace472065c97544644bb71dee0afa635a084a9f5f1571a",
+      "delivery-result.html": "27d796a5a4fc3db46681305dcaf3a6346958785f5aa9e4004fb8c00fa78d9ab1",
+      "delivery-start.html": "5e363984551b462588e44c10a33c2ef1261b2815d9fca357de8330a38420dc43",
+      "full-delivery.png": "eaf9151464d0d2a4cd9117da022ad179ff59e25f93cc9db4adb79910da120c47",
+      "full-management.png": "50a1a190c18d055cd4fec4477d437156f09d2834c79d7d22e2199035082783c4",
+      "full-methods.png": "d5873367b4105f2d52cd2e09fea8f76cd7d0c14b2491bd4419c4c567989b4dac",
+      "management-middle.html": "be0cc0cfec39ec6347112a029c6232bcfac4f7fea498e1f58fdefec2765893cb",
+      "management-result.html": "320d41b6eab4aaed4268627540ca5fbaae514d472a833341cbf9497f73822948",
+      "management-start.html": "bcc92d6ec22cce269b818cb4991499281bd66f8daacc771608749c2c0b266569",
+      "methods-middle.html": "ccdc39ec13427c99852eea5c5e45112116992f0042eb905b9af44232ed7638d1",
+      "methods-result.html": "425eee59e2cb7e49838d35486106d4b97123e9c59d305ecd1ffd8d37448679aa",
+      "methods-start.html": "9156eb6edbbe5077a277c23871d282b5d1a7d4e8f2769ae8ea188032c3364283",
+      "product.css": "48fdae32dbcd8d538f647c0e26e20cb42018e1763b01f8ccee853336831d0c7f"
+    },
+    "embeddedImages": "unchanged-data-uris",
+    "domTransformations": []
+  },
+  "cssDerivation": {
+    "input": {
+      "filename": "product-original.css",
+      "sha256": "bf8c9195a2be9996c13176c12f431cc252d34631047c286e177ab661e801087f"
+    },
+    "output": {
+      "filename": "product.css",
+      "sha256": "48fdae32dbcd8d538f647c0e26e20cb42018e1763b01f8ccee853336831d0c7f"
+    },
+    "implementation": "capture.cjs#isolatedCss",
+    "operations": [
+      "root-and-html-selectors-to-shadow-host",
+      "anonymous-component-containers-to-named-product-component",
+      "viewport-media-queries-to-fixed-product-reference-container",
+      "viewport-declaration-units-to-original-canvas-css-variables",
+      "shadow-local-property-initial-values-and-fixed-canvas-root"
+    ],
+    "fidelityStatus": "mechanical-identity-checked-not-a-visual-fidelity-verdict"
+  }
+}

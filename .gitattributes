@@ -1,0 +1,7 @@
+# Frozen captures retain exported bytes, including line endings, across checkouts.
+public/product-reference/** -text
+tests/fixtures/product-reference/** -text
+
+# SHA-256 gates, rather than whitespace cleanup, validate captured CSS integrity.
+public/product-reference/*/product.css -whitespace
+tests/fixtures/product-reference/original.css -whitespace

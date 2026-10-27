@@ -34,6 +34,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Check out
         uses: actions/checkout@v4
@@ -46,6 +47,14 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Validate source and frozen product assets
+        run: |
+          npm run lint
+          npm run test:locale-routes
+          npm run test:product-reference
+          node scripts/check-site-content.cjs
+          node scripts/check-hero-lifecycle.cjs
 
       - name: Determine base path
         id: base
@@ -84,6 +93,27 @@ jobs:
           # Override with a repository variable if you deploy to a custom domain.
           NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || steps.base.outputs.site_url }}
         run: npm run build
+
+      - name: Check generated framework types
+        run: npm run typecheck
+
+      - name: Install pinned browser
+        run: npx playwright install --with-deps chromium
+
+      - name: Verify exported pages and readonly demonstrations
+        env:
+          BASE_PATH: ${{ steps.base.outputs.path }}
+          EVIDENCE_DIR: ${{ runner.temp }}/website-checks
+        run: npm run test:export
+
+      - name: Preserve failed browser evidence
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-checks
+          path: ${{ runner.temp }}/website-checks
+          if-no-files-found: ignore
+          retention-days: 7
 
       # Jekyll would silently drop the `_next` directory, because it ignores
       # paths starting with an underscore. This file disables that.

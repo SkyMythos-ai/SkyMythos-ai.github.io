@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { siteUrl, basePath, productName } from "@/lib/site";
-import { localeHtmlLang, localePath, locales, type Locale } from "@/lib/i18n";
+import { localeHtmlLang, localeOgLocale, type Locale } from "@/lib/i18n";
+import { availableLocalesForPath, localizedRoutePath } from "@/lib/commercial-routes";
 import { getDictionary } from "@/content/dictionary";
 
 /**
@@ -40,17 +41,13 @@ export function buildMetadata({
   type?: "website" | "article";
   publishedTime?: string;
 }): Metadata {
-  const dictionary = getDictionary(locale);
-  const localizedPath = (target: Locale) => `${basePath}${localePath(target, path).replace(/\/$/, "")}/`;
+  const localizedPath = (target: Locale) => localizedRoutePath(target, path, basePath);
   const canonical = localizedPath(locale);
+  const availableLocales = availableLocalesForPath(path);
 
-  /**
-   * hreflang alternates point at the equivalent page in each locale. Because
-   * both trees are generated from the same route list, every page has a true
-   * counterpart — a 1:1 mapping, not an approximate one.
-   */
+  // 中文独有商业页没有英文镜像；x-default 指向同一内容的中文页，而不是英文首页。
   const languages = Object.fromEntries(
-    locales.map((other) => [
+    availableLocales.map((other) => [
       localeHtmlLang[other],
       localizedPath(other),
     ]),
@@ -65,7 +62,7 @@ export function buildMetadata({
       canonical,
       languages: {
         ...languages,
-        "x-default": localizedPath("zh"),
+        "x-default": availableLocales.includes("zh") ? localizedPath("zh") : canonical,
       },
     },
     openGraph: {
@@ -74,8 +71,10 @@ export function buildMetadata({
       title,
       description,
       url: canonical,
-      locale: locale === "zh" ? "zh_CN" : "en_US",
-      alternateLocale: locale === "zh" ? "en_US" : "zh_CN",
+      locale: localeOgLocale[locale],
+      alternateLocale: availableLocales
+        .filter((other) => other !== locale)
+        .map((other) => localeOgLocale[other]),
       ...(publishedTime ? { publishedTime } : {}),
     },
     twitter: {

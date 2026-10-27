@@ -19,13 +19,12 @@ PORT="${PORT:-3000}"
 
 # ── 1. 检查 Node 版本 ─────────────────────────────────────────────────────────
 if ! command -v node >/dev/null 2>&1; then
-  echo "✗ 未找到 Node.js。请先安装 Node 20.9 或更高版本：https://nodejs.org" >&2
+  echo "✗ 未找到 Node.js。请先安装 Node 22.19 或更高版本：https://nodejs.org" >&2
   exit 1
 fi
 
-NODE_MAJOR="$(node -p 'process.versions.node.split(".")[0]')"
-if [ "$NODE_MAJOR" -lt 20 ]; then
-  echo "✗ Node 版本过低（当前 $(node -v)），需要 20.9 或更高。" >&2
+if ! node -e 'const [major, minor] = process.versions.node.split(".").map(Number); process.exit(major > 22 || (major === 22 && minor >= 19) ? 0 : 1)'; then
+  echo "✗ Node 版本过低（当前 $(node -v)），需要 22.19 或更高。" >&2
   exit 1
 fi
 
@@ -59,13 +58,12 @@ case "$MODE" in
 
   static)
     echo "→ 构建静态站点…"
-    npx next build
+    npm run build
     echo
     echo "→ 生产预览：http://localhost:${PORT}"
     echo "  这就是部署到 GitHub Pages 后的样子。按 Ctrl+C 停止"
     echo
-    # serve 会正确处理 trailing slash 与 404.html，行为接近 GitHub Pages。
-    exec npx --yes serve@14 out -l "$PORT"
+    exec node scripts/serve-export.cjs out "$PORT"
     ;;
 
   *)

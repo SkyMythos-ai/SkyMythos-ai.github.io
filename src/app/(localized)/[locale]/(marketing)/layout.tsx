@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { toLocale } from "@/lib/i18n";
 import { SiteChrome } from "@/components/site-chrome";
+import { CommercialChrome } from "@/components/commercial/chrome";
+import { MarketingChromeBoundary } from "@/components/commercial/chrome-boundary";
 
 export default async function MarketingLayout({
   children,
@@ -14,7 +16,10 @@ export default async function MarketingLayout({
 
   return (
     <div className="scope-marketing">
-      <SiteChrome locale={locale}>{children}</SiteChrome>
+      {locale === "zh" ? <MarketingChromeBoundary
+        commercial={<CommercialChrome>{children}</CommercialChrome>}
+        legacy={<SiteChrome locale={locale}>{children}</SiteChrome>}
+      /> : <SiteChrome locale={locale}>{children}</SiteChrome>}
     </div>
   );
 }

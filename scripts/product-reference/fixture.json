@@ -1,0 +1,7 @@
+{
+  "schemaVersion": 1,
+  "scope": { "ownerId": "reference-user", "workspaceId": "reference" },
+  "identity": { "userId": "reference-user", "displayName": "示例成员", "platformRole": "member", "workspaceMemberships": [{ "workspaceId": "reference", "workspaceName": "示例工作区", "organizationId": "reference-org", "role": "workspace_member" }] },
+  "source": { "employeeId": "release", "entryId": "rollback", "revision": 3, "employeeName": "发布检查员工", "title": "核对回滚路径", "content": "发布前核对回滚路径、权限与验证步骤，保留检查结果。", "kind": "method", "state": "active", "evidenceIds": ["example-work"], "available": true },
+  "operation": { "id": "example-operation", "employeeId": "root", "goal": "负责发布前检查：核对配置和回滚条件，输出检查结果与待处理问题。", "revision": 2, "stage": "等待确认方案", "phase": "analysis", "status": "awaiting_confirmation", "coverage": "已选择 1 条经验来源", "errors": [], "outputs": [], "retryable": false, "plan": { "name": "发布准备员工", "responsibility": "核对发布配置、回滚路径与权限，输出可复核的检查结果。", "skills": [{ "name": "回滚路径检查", "description": "逐项核对发布的回滚条件、所需权限与验证步骤，并记录待处理问题。", "sourceKeys": ["release/rollback"] }] } }
+}

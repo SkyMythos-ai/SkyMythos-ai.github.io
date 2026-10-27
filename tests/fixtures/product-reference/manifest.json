@@ -1,0 +1,1465 @@
+{
+  "schemaVersion": 1,
+  "revision": "033a372f66d5f53bbc8e6b519868238976701c47",
+  "originalCaptureManifestSha256": "453c29d3756a10f5c46518dbe06b71e61eea7d53b533a930088e458c316f87c9",
+  "scope": "Frozen DOM and original, unadapted CSS captured from real product components; no website renderer, business JavaScript, credentials or live service execution.",
+  "css": "original.css",
+  "files": {
+    "original.css": "bf8c9195a2be9996c13176c12f431cc252d34631047c286e177ab661e801087f",
+    "delivery-start.html": "5e363984551b462588e44c10a33c2ef1261b2815d9fca357de8330a38420dc43",
+    "delivery-middle.html": "1b723bdd7b394cafa9ace472065c97544644bb71dee0afa635a084a9f5f1571a",
+    "delivery-result.html": "27d796a5a4fc3db46681305dcaf3a6346958785f5aa9e4004fb8c00fa78d9ab1",
+    "methods-start.html": "9156eb6edbbe5077a277c23871d282b5d1a7d4e8f2769ae8ea188032c3364283",
+    "methods-middle.html": "ccdc39ec13427c99852eea5c5e45112116992f0042eb905b9af44232ed7638d1",
+    "methods-result.html": "425eee59e2cb7e49838d35486106d4b97123e9c59d305ecd1ffd8d37448679aa",
+    "management-start.html": "bcc92d6ec22cce269b818cb4991499281bd66f8daacc771608749c2c0b266569",
+    "management-middle.html": "be0cc0cfec39ec6347112a029c6232bcfac4f7fea498e1f58fdefec2765893cb",
+    "management-result.html": "320d41b6eab4aaed4268627540ca5fbaae514d472a833341cbf9497f73822948"
+  },
+  "scenes": {
+    "delivery": {
+      "width": 1280,
+      "height": 700,
+      "frames": [
+        {
+          "id": "start",
+          "html": "delivery-start.html",
+          "landmarks": [
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1)",
+              "text": "示例工作区"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(2)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "SkyBot"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "交代目标，协作完成工作"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": "对话"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(2)",
+              "text": "任务"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "Projects"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "Projects"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "Repositories"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > h3:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "Repositories"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > p:nth-of-type(1)",
+              "text": "按日常研发范围归拢仓库与会话。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "其他会话"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > h3:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "其他会话"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "无需项目或仓库，直接开始。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": "示示例成员"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1)",
+              "text": "Agent 会话 · 发布前检查 / 发布准备协作Threads协作会话协作1 位协调成员 · 0 位协作成员工作区内助手 · Codex CLI协调成员继承你的工作习惯，负责推荐、协调与监督；不会替你确认加入 Agent。协作成员0还没有协作成员添加独立 CLI 成员，或从 Agent Hub 选择身份；助手也可以根据任务推荐。原生子 Agent由所属 CLI 调度，保留在父成员的执行记录中。当前尚未接入子 Agent 的独立控制，不能单独加入、续聊或移除。代码预览资料产物VS Code项目文件正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。编辑项目代码连接编辑器预览端口当前环境不可登记预览。登记资料添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。产物添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。当前会话 Tasks仅显示当前会话关联的任务当前会话尚未规划 TasksAgent 生成任务计划后，会在这里显示待启动计划和关联 Task。本轮暂无上下文遥测；执行开始后可查看。协作文件发布准备协作请核对本次发布准备情况，整理检查结果与待处理问题；执行完成后等待人工验收。关联代码仓库开启语音会话﻿描述你想完成的目标，输入 / 引用 Skill 或 MCP…智能审批示例模型CodexEnter 发送 · Shift + Enter 换行返回 Threads配置与回滚检查Thread 信息本轮指令协作会话协作1 位协调成员 · 0 位协作成员工作区内助手 · Codex CLI协调成员继承你的工作习惯，负责推荐、协调与监督；不会替你确认加入 Agent。协作成员0还没有协作成员添加独立 CLI 成员，或从 Agent Hub 选择身份；助手也可以根据任务推荐。原生子 Agent由所属 CLI 调度，保留在父成员的执行记录中。当前尚未接入子 Agent 的独立控制，不能单独加入、续聊或移除。代码预览资料产物VS Code文件变更浏览和编辑会话代码文件正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。编辑项目代码连接编辑器预览端口当前环境不可登记预览。登记资料添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。产物添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。当前会话 Tasks仅显示当前会话关联的任务当前会话尚未规划 TasksAgent 生成任务计划后，会在这里显示待启动计划和关联 Task。当前范围内没有模型调用。协作文件任务上下文运行实况0 助手主会话 正在核对示例配置与回滚路径。发现的问题将单独列出，不修改生产系统。 助手 ﻿描述你想完成的目标，输入 / 引用 Skill 或 MCP…智能审批示例模型CodexEnter 排队 · Shift + Enter 换行"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "Threads"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "协作"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)",
+              "text": "文件"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+              "text": "发布准备协作"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "请核对本次发布准备情况，整理检查结果与待处理问题；执行完成后等待人工验收。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "关联代码仓库"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": "开启语音会话"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > input:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > input:nth-of-type(2)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "智能审批"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "示例模型"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1)",
+              "text": "返回 Threads配置与回滚检查Thread 信息本轮指令协作会话协作1 位协调成员 · 0 位协作成员工作区内助手 · Codex CLI协调成员继承你的工作习惯，负责推荐、协调与监督；不会替你确认加入 Agent。协作成员0还没有协作成员添加独立 CLI 成员，或从 Agent Hub 选择身份；助手也可以根据任务推荐。原生子 Agent由所属 CLI 调度，保留在父成员的执行记录中。当前尚未接入子 Agent 的独立控制，不能单独加入、续聊或移除。代码预览资料产物VS Code文件变更浏览和编辑会话代码文件正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。编辑项目代码连接编辑器预览端口当前环境不可登记预览。登记资料添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。产物添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。当前会话 Tasks仅显示当前会话关联的任务当前会话尚未规划 TasksAgent 生成任务计划后，会在这里显示待启动计划和关联 Task。当前范围内没有模型调用。协作文件任务上下文运行实况0 助手主会话 正在核对示例配置与回滚路径。发现的问题将单独列出，不修改生产系统。 助手 ﻿描述你想完成的目标，输入 / 引用 Skill 或 MCP…智能审批示例模型CodexEnter 排队 · Shift + Enter 换行"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "返回 Threads"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "配置与回滚检查"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "Thread 信息"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "本轮指令"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "协作"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)",
+              "text": "文件"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(4)",
+              "text": "任务"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(5)",
+              "text": "上下文"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(6)",
+              "text": "运行实况0"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1)",
+              "text": " 助手主会话 正在核对示例配置与回滚路径。发现的问题将单独列出，不修改生产系统。 助手 ﻿描述你想完成的目标，输入 / 引用 Skill 或 MCP…智能审批示例模型CodexEnter 排队 · Shift + Enter 换行"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "正在核对示例配置与回滚路径。发现的问题将单独列出，不修改生产系统。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > input:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > input:nth-of-type(2)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "智能审批"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "示例模型"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            }
+          ]
+        },
+        {
+          "id": "middle",
+          "html": "delivery-middle.html",
+          "landmarks": [
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1)",
+              "text": "示例工作区"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(2)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "SkyBot"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "交代目标，协作完成工作"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": "对话"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(2)",
+              "text": "任务"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "Projects"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "Projects"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "Repositories"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > h3:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "Repositories"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > p:nth-of-type(1)",
+              "text": "按日常研发范围归拢仓库与会话。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "其他会话"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > h3:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "其他会话"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "无需项目或仓库，直接开始。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": "示示例成员"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1)",
+              "text": "Agent 会话 · 发布前检查 / 发布准备协作Threads协作会话协作1 位协调成员 · 0 位协作成员工作区内助手 · Codex CLI协调成员继承你的工作习惯，负责推荐、协调与监督；不会替你确认加入 Agent。协作成员0还没有协作成员添加独立 CLI 成员，或从 Agent Hub 选择身份；助手也可以根据任务推荐。原生子 Agent由所属 CLI 调度，保留在父成员的执行记录中。当前尚未接入子 Agent 的独立控制，不能单独加入、续聊或移除。代码预览资料产物VS Code项目文件正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。编辑项目代码连接编辑器预览端口当前环境不可登记预览。登记资料添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。产物添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。当前会话 Tasks仅显示当前会话关联的任务当前会话尚未规划 TasksAgent 生成任务计划后，会在这里显示待启动计划和关联 Task。本轮暂无上下文遥测；执行开始后可查看。协作文件发布准备协作请核对本次发布准备情况，整理检查结果与待处理问题；执行完成后等待人工验收。关联代码仓库开启语音会话﻿描述你想完成的目标，输入 / 引用 Skill 或 MCP…智能审批示例模型CodexEnter 发送 · Shift + Enter 换行返回 Threads配置与回滚检查Thread 信息本轮指令协作会话协作1 位协调成员 · 0 位协作成员工作区内助手 · Codex CLI协调成员继承你的工作习惯，负责推荐、协调与监督；不会替你确认加入 Agent。协作成员0还没有协作成员添加独立 CLI 成员，或从 Agent Hub 选择身份；助手也可以根据任务推荐。原生子 Agent由所属 CLI 调度，保留在父成员的执行记录中。当前尚未接入子 Agent 的独立控制，不能单独加入、续聊或移除。代码预览资料产物VS Code文件变更浏览和编辑会话代码文件正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。编辑项目代码连接编辑器预览端口当前环境不可登记预览。登记资料添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。产物添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。当前会话 Tasks仅显示当前会话关联的任务当前会话尚未规划 TasksAgent 生成任务计划后，会在这里显示待启动计划和关联 Task。当前范围内没有模型调用。协作文件任务上下文运行实况0 助手主会话 已完成示例配置与回滚路径核对。检查结果已整理，等待人工验收。﻿描述你想完成的目标，输入 / 引用 Skill 或 MCP…智能审批示例模型CodexEnter 发送 · Shift + Enter 换行"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "Threads"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "协作"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)",
+              "text": "文件"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+              "text": "发布准备协作"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "请核对本次发布准备情况，整理检查结果与待处理问题；执行完成后等待人工验收。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "关联代码仓库"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": "开启语音会话"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > input:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > input:nth-of-type(2)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "智能审批"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "示例模型"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1)",
+              "text": "返回 Threads配置与回滚检查Thread 信息本轮指令协作会话协作1 位协调成员 · 0 位协作成员工作区内助手 · Codex CLI协调成员继承你的工作习惯，负责推荐、协调与监督；不会替你确认加入 Agent。协作成员0还没有协作成员添加独立 CLI 成员，或从 Agent Hub 选择身份；助手也可以根据任务推荐。原生子 Agent由所属 CLI 调度，保留在父成员的执行记录中。当前尚未接入子 Agent 的独立控制，不能单独加入、续聊或移除。代码预览资料产物VS Code文件变更浏览和编辑会话代码文件正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。编辑项目代码连接编辑器预览端口当前环境不可登记预览。登记资料添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。产物添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。当前会话 Tasks仅显示当前会话关联的任务当前会话尚未规划 TasksAgent 生成任务计划后，会在这里显示待启动计划和关联 Task。当前范围内没有模型调用。协作文件任务上下文运行实况0 助手主会话 已完成示例配置与回滚路径核对。检查结果已整理，等待人工验收。﻿描述你想完成的目标，输入 / 引用 Skill 或 MCP…智能审批示例模型CodexEnter 发送 · Shift + Enter 换行"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "返回 Threads"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "配置与回滚检查"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "Thread 信息"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "本轮指令"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "协作"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)",
+              "text": "文件"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(4)",
+              "text": "任务"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(5)",
+              "text": "上下文"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(6)",
+              "text": "运行实况0"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1)",
+              "text": " 助手主会话 已完成示例配置与回滚路径核对。检查结果已整理，等待人工验收。﻿描述你想完成的目标，输入 / 引用 Skill 或 MCP…智能审批示例模型CodexEnter 发送 · Shift + Enter 换行"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "已完成示例配置与回滚路径核对。检查结果已整理，等待人工验收。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > input:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > input:nth-of-type(2)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "智能审批"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "示例模型"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            }
+          ]
+        },
+        {
+          "id": "result",
+          "html": "delivery-result.html",
+          "landmarks": [
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1)",
+              "text": "示例工作区"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(2)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "SkyBot"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "交代目标，协作完成工作"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": "对话"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(2)",
+              "text": "任务"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "Projects"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "Projects"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "Repositories"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > h3:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "Repositories"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > p:nth-of-type(1)",
+              "text": "按日常研发范围归拢仓库与会话。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "其他会话"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > h3:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "其他会话"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "无需项目或仓库，直接开始。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": "示示例成员"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1)",
+              "text": "Agent 会话 · 发布前检查 / 发布准备协作Threads协作会话协作1 位协调成员 · 0 位协作成员工作区内助手 · Codex CLI协调成员继承你的工作习惯，负责推荐、协调与监督；不会替你确认加入 Agent。协作成员0还没有协作成员添加独立 CLI 成员，或从 Agent Hub 选择身份；助手也可以根据任务推荐。原生子 Agent由所属 CLI 调度，保留在父成员的执行记录中。当前尚未接入子 Agent 的独立控制，不能单独加入、续聊或移除。代码预览资料产物VS Code项目文件正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。编辑项目代码连接编辑器预览端口当前环境不可登记预览。登记资料添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。产物添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。当前会话 Tasks仅显示当前会话关联的任务当前会话尚未规划 TasksAgent 生成任务计划后，会在这里显示待启动计划和关联 Task。本轮暂无上下文遥测；执行开始后可查看。协作文件发布准备协作请核对本次发布准备情况，整理检查结果与待处理问题；执行完成后等待人工验收。关联代码仓库开启语音会话﻿描述你想完成的目标，输入 / 引用 Skill 或 MCP…智能审批示例模型CodexEnter 发送 · Shift + Enter 换行返回 Threads配置与回滚检查Thread 信息本轮指令协作会话协作1 位协调成员 · 0 位协作成员工作区内助手 · Codex CLI协调成员继承你的工作习惯，负责推荐、协调与监督；不会替你确认加入 Agent。协作成员0还没有协作成员添加独立 CLI 成员，或从 Agent Hub 选择身份；助手也可以根据任务推荐。原生子 Agent由所属 CLI 调度，保留在父成员的执行记录中。当前尚未接入子 Agent 的独立控制，不能单独加入、续聊或移除。代码预览资料产物VS Code文件变更浏览和编辑会话代码文件正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。编辑项目代码连接编辑器预览端口当前环境不可登记预览。登记资料添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。产物添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。当前会话 Tasks仅显示当前会话关联的任务当前会话尚未规划 TasksAgent 生成任务计划后，会在这里显示待启动计划和关联 Task。当前范围内没有模型调用。协作文件任务上下文运行实况0 助手主会话 已完成示例配置与回滚路径核对。检查结果已整理，等待人工验收。﻿描述你想完成的目标，输入 / 引用 Skill 或 MCP…智能审批示例模型CodexEnter 发送 · Shift + Enter 换行"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "Threads"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "协作"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)",
+              "text": "文件"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+              "text": "发布准备协作"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "请核对本次发布准备情况，整理检查结果与待处理问题；执行完成后等待人工验收。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "关联代码仓库"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": "开启语音会话"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > input:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > input:nth-of-type(2)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "智能审批"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "示例模型"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1)",
+              "text": "返回 Threads配置与回滚检查Thread 信息本轮指令协作会话协作1 位协调成员 · 0 位协作成员工作区内助手 · Codex CLI协调成员继承你的工作习惯，负责推荐、协调与监督；不会替你确认加入 Agent。协作成员0还没有协作成员添加独立 CLI 成员，或从 Agent Hub 选择身份；助手也可以根据任务推荐。原生子 Agent由所属 CLI 调度，保留在父成员的执行记录中。当前尚未接入子 Agent 的独立控制，不能单独加入、续聊或移除。代码预览资料产物VS Code文件变更浏览和编辑会话代码文件正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。编辑项目代码连接编辑器预览端口当前环境不可登记预览。登记资料添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。产物添加正在同步目录打开文件开始编辑从文件树选择文件；选中代码后可加入助手提问。当前会话 Tasks仅显示当前会话关联的任务当前会话尚未规划 TasksAgent 生成任务计划后，会在这里显示待启动计划和关联 Task。当前范围内没有模型调用。协作文件任务上下文运行实况0 助手主会话 已完成示例配置与回滚路径核对。检查结果已整理，等待人工验收。﻿描述你想完成的目标，输入 / 引用 Skill 或 MCP…智能审批示例模型CodexEnter 发送 · Shift + Enter 换行"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "返回 Threads"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "配置与回滚检查"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "Thread 信息"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "本轮指令"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "协作"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)",
+              "text": "文件"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(4)",
+              "text": "任务"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(5)",
+              "text": "上下文"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > header:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(6)",
+              "text": "运行实况0"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1)",
+              "text": " 助手主会话 已完成示例配置与回滚路径核对。检查结果已整理，等待人工验收。﻿描述你想完成的目标，输入 / 引用 Skill 或 MCP…智能审批示例模型CodexEnter 发送 · Shift + Enter 换行"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "已完成示例配置与回滚路径核对。检查结果已整理，等待人工验收。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > article:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > input:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > input:nth-of-type(2)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "智能审批"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "示例模型"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(5) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(2) > div:nth-of-type(1)",
+              "text": "我的运行实况实时刷新执行状态执行成功 · 待验收验收状态待验收执行代次1任务要求版本1交付版本example-delivery内容摘要example-evidence-digestexample/check-results.md验收绑定此交付 ID、内容摘要和当前任务版本；验收通过不代表已经集成或发布。验收备注接受或要求返工前，请填写验收依据。采集工作区证据接受此交付要求返工验证证据配置与回滚路径核对 · 已验证通过example/check-results.md"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "example/check-results.md"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "验收绑定此交付 ID、内容摘要和当前任务版本；验收通过不代表已经集成或发布。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > label:nth-of-type(1) > textarea:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)",
+              "text": "接受或要求返工前，请填写验收依据。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "采集工作区证据"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "接受此交付"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)",
+              "text": "要求返工"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h4:nth-of-type(1)",
+              "text": "验证证据"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "配置与回滚路径核对 · 已验证通过"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > p:nth-of-type(2)",
+              "text": "example/check-results.md"
+            }
+          ]
+        }
+      ]
+    },
+    "methods": {
+      "width": 1280,
+      "height": 1100,
+      "frames": [
+        {
+          "id": "start",
+          "html": "methods-start.html",
+          "landmarks": [
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1)",
+              "text": "示例工作区"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(2)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "Employees"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "SkyBot 统筹工作，协作员工各展所长"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "暂无协作员工"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": "示示例成员"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+              "text": "从工作经验创建员工"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "定义职责，选择已保存的经验，确认分析方案后创建员工。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > textarea:nth-of-type(1)",
+              "text": "负责发布前检查，输出检查结果与待处理问题。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "AI 润色"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "选择工作经验"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "只展示当前 Workspace 内有权读取的已保存经验。最多选择 64 条，分析不会创建员工或发布技能。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > section:nth-of-type(2) > p:nth-of-type(1)",
+              "text": "已选择 1 条"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > section:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "核对回滚路径 ×"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > table:nth-of-type(1) > tbody:nth-of-type(1) > tr:nth-of-type(1) > td:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > table:nth-of-type(1) > tbody:nth-of-type(1) > tr:nth-of-type(1) > td:nth-of-type(1) > input:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > table:nth-of-type(1) > tbody:nth-of-type(1) > tr:nth-of-type(1) > td:nth-of-type(2) > p:nth-of-type(1)",
+              "text": "版本 3 · 个人可复用经验"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(2) > table:nth-of-type(1) > tbody:nth-of-type(1) > tr:nth-of-type(1) > td:nth-of-type(2) > p:nth-of-type(2)",
+              "text": "发布前核对回滚路径、权限与验证步骤，保留检查结果。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > section:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "10 条 / 页"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > section:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > section:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "1"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > section:nth-of-type(2) > nav:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(3)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "分析与创建使用你的个人模型凭据。缺少凭据时，请到个人凭据设置补齐，再重试。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > form:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "分析所选经验"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            }
+          ]
+        },
+        {
+          "id": "middle",
+          "html": "methods-middle.html",
+          "landmarks": [
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1)",
+              "text": "示例工作区"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(2)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "Employees"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "SkyBot 统筹工作，协作员工各展所长"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "暂无协作员工"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": "示示例成员"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+              "text": "从工作经验创建员工"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "定义职责，选择已保存的经验，确认分析方案后创建员工。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "员工负责什么"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": "重新选择经验"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "负责发布前检查：核对配置和回滚条件，输出检查结果与待处理问题。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "所选经验来源"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "发布检查员工 · 核对回滚路径版本 3 · 已生效 · 范围: 个人可复用经验"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "创建进度"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(1)",
+              "text": "状态进行中"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(2) > div:nth-of-type(2)",
+              "text": "当前阶段分析经验来源"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(2) > p:nth-of-type(1)",
+              "text": "已选择 1 条经验来源"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > h3:nth-of-type(1)",
+              "text": "已生成的产物"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > p:nth-of-type(1)",
+              "text": "尚未生成产物"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "分析与创建使用你的个人模型凭据。缺少凭据时，请到个人凭据设置补齐，再重试。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            }
+          ]
+        },
+        {
+          "id": "result",
+          "html": "methods-result.html",
+          "landmarks": [
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1)",
+              "text": "示例工作区"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(2)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "Employees"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "SkyBot 统筹工作，协作员工各展所长"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > nav:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "暂无协作员工"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": "示示例成员"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+              "text": "从工作经验创建员工"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "定义职责，选择已保存的经验，确认分析方案后创建员工。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "员工负责什么"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": "重新选择经验"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "负责发布前检查：核对配置和回滚条件，输出检查结果与待处理问题。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "所选经验来源"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "发布检查员工 · 核对回滚路径版本 3 · 已生效 · 范围: 个人可复用经验"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "确认员工方案"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "以下内容来自本次经验分析。确认后才会生成技能、创建角色和员工。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(2)",
+              "text": "员工名称发布准备员工"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(3)",
+              "text": "职责核对发布配置、回滚路径与权限，输出可复核的检查结果。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(3) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "核对发布配置、回滚路径与权限，输出可复核的检查结果。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > h3:nth-of-type(1)",
+              "text": "拟形成的技能与来源"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > ol:nth-of-type(1) > li:nth-of-type(1) > h4:nth-of-type(1)",
+              "text": "回滚路径检查"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > ol:nth-of-type(1) > li:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "逐项核对发布的回滚条件、所需权限与验证步骤，并记录待处理问题。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > ol:nth-of-type(1) > li:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "发布检查员工 · 核对回滚路径 · 版本 3"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(3) > div:nth-of-type(4) > button:nth-of-type(1)",
+              "text": "确认方案并创建员工"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "创建进度"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(1)",
+              "text": "状态等待确认方案"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(2) > div:nth-of-type(2)",
+              "text": "当前阶段等待确认方案"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(4) > div:nth-of-type(2) > p:nth-of-type(1)",
+              "text": "已选择 1 条经验来源"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(4) > h3:nth-of-type(1)",
+              "text": "已生成的产物"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(4) > p:nth-of-type(1)",
+              "text": "尚未生成产物"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > section:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "分析与创建使用你的个人模型凭据。缺少凭据时，请到个人凭据设置补齐，再重试。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            }
+          ]
+        }
+      ]
+    },
+    "management": {
+      "width": 1280,
+      "height": 700,
+      "frames": [
+        {
+          "id": "start",
+          "html": "management-start.html",
+          "landmarks": [
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1)",
+              "text": "示例工作区"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(2)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > nav:nth-of-type(1) > section:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "连接"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "示示例成员"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+              "text": "连接与授权"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "连接常用工具与服务，管理个人授权、MCP 环境和工具范围。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > label:nth-of-type(1) > input:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "全部类型"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "全部 2"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "可使用 1"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(3)",
+              "text": "待配置 1"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(4)",
+              "text": "状态待确认 0"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "模型服务"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "示例模型服务"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "example-model"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)",
+              "text": "API Key"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "配置"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(2) > h2:nth-of-type(1)",
+              "text": "代码托管"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "GitHub"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "https://github.com"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)",
+              "text": "Personal Access Token"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "管理"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            }
+          ]
+        },
+        {
+          "id": "middle",
+          "html": "management-middle.html",
+          "landmarks": [
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1)",
+              "text": "示例工作区"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(2)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > nav:nth-of-type(1) > section:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "连接"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "示示例成员"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+              "text": "连接与授权"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "连接常用工具与服务，管理个人授权、MCP 环境和工具范围。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > label:nth-of-type(1) > input:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "全部类型"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "全部 2"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "可使用 1"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(3)",
+              "text": "待配置 1"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(4)",
+              "text": "状态待确认 0"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "模型服务"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "示例模型服务"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "example-model"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)",
+              "text": "API Key"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "配置"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(2) > h2:nth-of-type(1)",
+              "text": "代码托管"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "GitHub"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "https://github.com"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)",
+              "text": "Personal Access Token"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "管理"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1)",
+              "text": "GitHub状态已配置URLhttps://github.com访问令牌凭据只在提交时发送；读取接口不会返回明文。生成 GitHub Token打开 GitHub Settings → Developer settings → Personal access tokens，选择 Fine-grained tokens，新建 Token 并填写名称和有效期。选择仓库所属账号或组织，仅授权需要的仓库。读取代码需要 Contents: Read-only；提交代码需要 Contents: Read and write；创建 PR 还需要 Pull requests: Read and write，读取 Issue 需要 Issues: Read-only。生成后立即复制 Token，粘贴到上方输入框。若组织要求审批，先等待管理员批准。撤销连接取消更新凭据"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "GitHub"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1) > header:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+              "text": "状态已配置"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)",
+              "text": "URLhttps://github.com"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > input:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1) > footer:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "撤销连接"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1) > footer:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "取消"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1) > footer:nth-of-type(1) > button:nth-of-type(3)",
+              "text": "更新凭据"
+            }
+          ]
+        },
+        {
+          "id": "result",
+          "html": "management-result.html",
+          "landmarks": [
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(1)",
+              "text": "示例工作区"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(3) > button:nth-of-type(2)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > nav:nth-of-type(1) > section:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "连接"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > aside:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "示示例成员"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > h1:nth-of-type(1)",
+              "text": "连接与授权"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "连接常用工具与服务，管理个人授权、MCP 环境和工具范围。"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(2) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > label:nth-of-type(1) > input:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "全部类型"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "全部 2"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "可使用 1"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(3)",
+              "text": "待配置 1"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(1) > button:nth-of-type(4)",
+              "text": "状态待确认 0"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "模型服务"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "示例模型服务"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "example-model"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)",
+              "text": "API Key"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(1) > ul:nth-of-type(1) > li:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "配置"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(2) > h2:nth-of-type(1)",
+              "text": "代码托管"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > h3:nth-of-type(1)",
+              "text": "GitHub"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(1)",
+              "text": "https://github.com"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > p:nth-of-type(2)",
+              "text": "Personal Access Token"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > main:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2) > div:nth-of-type(2) > section:nth-of-type(2) > ul:nth-of-type(1) > li:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "管理"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(1) > div:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1)",
+              "text": "示例模型服务状态未配置模型example-modelAPI Key凭据只在提交时发送；读取接口不会返回明文。如何获取 API Key「示例模型服务」为自定义模型服务，请联系该服务对应的研发人员，获取可用的 API Key 和模型权限。将研发人员提供的该服务 API Key 粘贴到上方输入框。撤销连接取消保存凭据"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1) > header:nth-of-type(1) > div:nth-of-type(1) > h2:nth-of-type(1)",
+              "text": "示例模型服务"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1) > header:nth-of-type(1) > button:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(1)",
+              "text": "状态未配置"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(2)",
+              "text": "模型example-model"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div:nth-of-type(3) > div:nth-of-type(1) > input:nth-of-type(1)",
+              "text": ""
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1) > footer:nth-of-type(1) > button:nth-of-type(1)",
+              "text": "撤销连接"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1) > footer:nth-of-type(1) > button:nth-of-type(2)",
+              "text": "取消"
+            },
+            {
+              "selector": ":scope > div:nth-of-type(3) > div:nth-of-type(1) > footer:nth-of-type(1) > button:nth-of-type(3)",
+              "text": "保存凭据"
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
