@@ -2,6 +2,14 @@ const fs = require('node:fs');
 const path = require('node:path');
 const assert = require('node:assert/strict');
 const portable = require('./browser.cjs');
+const caseLabels = [
+  'stage-wheel/1440x1000', 'stage-wheel/1280x720', 'stage-wheel/390x844', 'stage-wheel/320x568',
+  'manual-dialog-keyboard-resize', 'hash-reload-back',
+  'flow/1440x1000/reduce', 'flow/390x844/reduce', 'flow/844x390/no-preference',
+  'nojs/1440x1000', 'nojs/390x844', 'nojs/320x568',
+];
+const selectedCase = process.env.PINNED_CASE;
+assert(selectedCase === undefined || caseLabels.includes(selectedCase), `Unknown PINNED_CASE: ${selectedCase}; expected one of ${caseLabels.join(', ')}`);
 portable.trackIdentity('pinned');
 
 const url = portable.url;
@@ -43,8 +51,22 @@ const settleMetadata = page => page.waitForFunction(() => [...document.querySele
 const captionPrefix = '真实工作区节选，示例数据，非实时运行。';
 
 async function runCase(label, options, body) {
+  if (selectedCase !== undefined && selectedCase !== label) return;
   const context = await browser.newContext({ colorScheme: 'light', reducedMotion: 'no-preference', ...options });
   const page = await context.newPage();
+  if (label === 'hash-reload-back') {
+    await page.addInitScript(() => {
+      window.__pinnedDocument = `${Date.now()}-${Math.random()}`;
+      window.__pinnedHistoryEvents = [];
+      const record = (type, extra = {}) => window.__pinnedHistoryEvents.push({ type, at: performance.now(), href: location.href, length: history.length, ...extra });
+      for (const type of ['pagehide', 'pageshow', 'popstate', 'hashchange']) addEventListener(type, event => record(type, { persisted: event.persisted }));
+      for (const method of ['pushState', 'replaceState']) {
+        const original = history[method].bind(history);
+        history[method] = (...args) => { const result = original(...args); record(method); return result; };
+      }
+      record('document');
+    });
+  }
   page.setDefaultTimeout(8000);
   page.setDefaultNavigationTimeout(25000);
   const pending = new Set();
@@ -407,23 +429,42 @@ async function assertFlow(page) {
   }
 }
 
+async function historyCheckpoint(page, name, action) {
+  const observe = async status => diagnostics.push({
+    label: 'hash-reload-back', checkpoint: name, status,
+    history: await page.evaluate(() => ({ documentId: window.__pinnedDocument, href: location.href, length: history.length, readyState: document.readyState, events: window.__pinnedHistoryEvents })),
+    geometry: await snapshot(page),
+  });
+  diagnostics.push({ label: 'hash-reload-back', checkpoint: name, status: 'started' });
+  try {
+    await action();
+    await observe('passed');
+  } catch (error) {
+    await observe('failed').catch(() => {});
+    error.message = `${name}: ${error.message}`;
+    throw error;
+  }
+}
+
 async function hashHistory(page) {
-  await page.goto(`${url}#panel-methods`, { waitUntil: 'load' });
-  await mode(page, 'stage');
-  await page.waitForFunction(() => document.querySelector('[data-tab="methods"]').getAttribute('aria-current') === 'location');
+  // 先等首页挂载；否则同文档 hash 导航会早于 Next 首次 canonical URL 提交，被初始化 replaceState 覆盖。
+  await historyCheckpoint(page, 'hash/initial-document-ready', () => mode(page, 'stage'));
+  await historyCheckpoint(page, 'hash/initial-navigation', () => page.goto(`${url}#panel-methods`, { waitUntil: 'load' }));
+  await historyCheckpoint(page, 'hash/initial-stage', () => mode(page, 'stage'));
+  await historyCheckpoint(page, 'hash/initial-methods-current', () => page.waitForFunction(() => document.querySelector('[data-tab="methods"]').getAttribute('aria-current') === 'location'));
   await settleMetadata(page);
   currentMetadata(await snapshot(page), 1);
-  await page.reload({ waitUntil: 'load' });
-  await mode(page, 'stage');
-  await page.waitForFunction(() => document.querySelector('[data-tab="methods"]').getAttribute('aria-current') === 'location');
+  await historyCheckpoint(page, 'hash/reload', () => page.reload({ waitUntil: 'load' }));
+  await historyCheckpoint(page, 'hash/reload-stage', () => mode(page, 'stage'));
+  await historyCheckpoint(page, 'hash/reload-methods-current', () => page.waitForFunction(() => document.querySelector('[data-tab="methods"]').getAttribute('aria-current') === 'location'));
   await settleMetadata(page);
   currentMetadata(await snapshot(page), 1);
-  await page.goto(`${url}#panel-management`, { waitUntil: 'load' });
-  await page.waitForFunction(() => document.querySelector('[data-tab="management"]').getAttribute('aria-current') === 'location');
+  await historyCheckpoint(page, 'hash/management-navigation', () => page.goto(`${url}#panel-management`, { waitUntil: 'load' }));
+  await historyCheckpoint(page, 'hash/management-current', () => page.waitForFunction(() => document.querySelector('[data-tab="management"]').getAttribute('aria-current') === 'location'));
   await settleMetadata(page);
   currentMetadata(await snapshot(page), 2);
-  await page.goBack({ waitUntil: 'load' });
-  await page.waitForFunction(() => location.hash === '#panel-methods' && document.querySelector('[data-tab="methods"]').getAttribute('aria-current') === 'location');
+  await historyCheckpoint(page, 'hash/back-navigation', () => page.goBack({ waitUntil: 'load' }));
+  await historyCheckpoint(page, 'hash/back-methods-current-and-fragment', () => page.waitForFunction(() => location.hash === '#panel-methods' && document.querySelector('[data-tab="methods"]').getAttribute('aria-current') === 'location'));
   await settleMetadata(page);
   currentMetadata(await snapshot(page), 1);
   const history = await page.evaluate(() => ({ hash: location.hash, navigationType: performance.getEntriesByType('navigation')[0]?.type }));
@@ -469,7 +510,7 @@ async function hashHistory(page) {
     errors.push({ label: 'runner', stack: error.stack });
     process.exitCode = 1;
   } finally {
-    const report = { at: new Date().toISOString(), url, assertions, casesPassed: rows.filter(row => row.status === 'passed').length, casesFailed: rows.filter(row => row.status === 'failed').length, rows, errors, diagnostics, screenshots, limitations: ['Chromium only; no Safari/Firefox or physical touch-device validation.', 'Back navigation is checked, without asserting BFCache use.', 'Visual masking is measured by CSS clipping, translation matrices and native-viewport/clip intersection; original PNG ratios are checked only in their modal; screenshots remain available for human review.'] };
+    const report = { at: new Date().toISOString(), url, selection: selectedCase || 'all', assertions, casesPassed: rows.filter(row => row.status === 'passed').length, casesFailed: rows.filter(row => row.status === 'failed').length, rows, errors, diagnostics, screenshots, limitations: ['Chromium only; no Safari/Firefox or physical touch-device validation.', 'Back navigation is checked, without asserting BFCache use.', 'Visual masking is measured by CSS clipping, translation matrices and native-viewport/clip intersection; original PNG ratios are checked only in their modal; screenshots remain available for human review.'] };
     const reportName = process.env.PINNED_REPORT || 'pinned.json';
     if (path.basename(reportName) !== reportName || !reportName.startsWith('pinned')) throw new Error('PINNED_REPORT must be a pinned*.json basename');
     fs.writeFileSync(path.join(directory, reportName), JSON.stringify(report, null, 2));

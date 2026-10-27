@@ -16,6 +16,8 @@
     "test:locale-routes": "node scripts/check-locale-routes.cjs",
     "test:fidelity": "node tests/product-fidelity/check.cjs",
     "test:runtime": "node tests/commercial-runtime/check.cjs",
+    "install:browser": "python3 -I scripts/commercial/install-browser.py",
+    "test:browser-installer": "python3 -I tests/commercial-runtime/browser-install.py",
     "preview": "bash scripts/preview.sh static",
     "local": "bash scripts/preview.sh dev"
   },

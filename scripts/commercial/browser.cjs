@@ -4,6 +4,7 @@ const path = require('node:path');
 const crypto = require('node:crypto');
 const assert = require('node:assert/strict');
 const { chromium } = require('playwright');
+const browserPin = require('./browser-version.json');
 
 const project = path.resolve(__dirname, '../..');
 const base = new URL(process.env.PREVIEW_URL || 'http://127.0.0.1:4173/zh/');
@@ -59,9 +60,25 @@ function wrapContext(context, options = {}) {
   context.close = (...args) => { context.pages().forEach(page => { const state = pageState(page); if (state) state.closing = true; }); return close(...args); };
   return context;
 }
+function installedBrowser() {
+  const target = { 'darwin-arm64': 'mac-arm64', 'darwin-x64': 'mac-x64', 'linux-x64': 'linux64', 'win32-x64': 'win64' }[`${process.platform}-${process.arch}`];
+  assert(target, 'No pinned Chrome for Testing build for this platform; provide an explicit supported browser');
+  const cache = process.platform === 'darwin' ? path.join(os.homedir(), 'Library', 'Caches') : (process.env.XDG_CACHE_HOME || path.join(os.homedir(), '.cache'));
+  const executable = path.join(cache, 'skymythos-browser', browserPin.version, target, `chrome-headless-shell-${target}`, process.platform === 'win32' ? 'chrome-headless-shell.exe' : 'chrome-headless-shell');
+  assert(fs.existsSync(executable), `Pinned Chrome ${browserPin.version} is missing; run npm run install:browser`);
+  return executable;
+}
 async function launch() {
   assert(!(process.env.BROWSER_EXECUTABLE_PATH && process.env.BROWSER_CHANNEL), 'Choose BROWSER_EXECUTABLE_PATH or BROWSER_CHANNEL, not both');
-  const browser = await chromium.launch({ headless: true, ...(process.env.BROWSER_EXECUTABLE_PATH ? { executablePath: process.env.BROWSER_EXECUTABLE_PATH } : {}), ...(process.env.BROWSER_CHANNEL ? { channel: process.env.BROWSER_CHANNEL } : {}) });
+  // 156 的流终态通知顺序会把完整读取误报为取消；固定包含上游修复的引擎，不放宽网络断言。
+  const override = Boolean(process.env.BROWSER_EXECUTABLE_PATH || process.env.BROWSER_CHANNEL);
+  const browser = await chromium.launch({ headless: true, ...(process.env.BROWSER_CHANNEL ? { channel: process.env.BROWSER_CHANNEL } : { executablePath: process.env.BROWSER_EXECUTABLE_PATH || installedBrowser() }) });
+  const actualVersion = browser.version();
+  if (!override && actualVersion !== browserPin.version) {
+    await browser.close();
+    throw new Error(`Expected Chrome ${browserPin.version}, received ${actualVersion}`);
+  }
+  fs.writeFileSync(path.join(evidence, 'browser-info.json'), JSON.stringify({ expectedVersion: browserPin.version, actualVersion, override, platform: process.platform, arch: process.arch }, null, 2));
   const newContext = browser.newContext.bind(browser);
   browser.newContext = async (options = {}) => wrapContext(await newContext(options), options);
   const newPage = browser.newPage.bind(browser);

@@ -1,6 +1,6 @@
 # 测试用例
 
-- [商业官网正式迁移与发布门禁](commercial-production-release.md) - 正式 Next 导出、13中文页与双语保留、只读状态及独立保真；联合回归4／7、性能与许可未决，用户要求先推送触发CI，部署结果待核验。
+- [商业官网正式迁移与发布门禁](commercial-production-release.md) - 正式Next导出与双语保留、只读状态及独立保真；修复测试引擎流终态误报与hash准备竞态，联合验证待完成，性能及许可仍未决。
 - [工作资产治理的信息归属与文档导航](work-assets-governance.md) - 保留的双语文档、费用和旧URL合同；历史中文营销布局不作为商业V3的门禁。
 - [B 需求全生命周期历史候选](hero-b-lifecycle.md) - 已确认并迁入正式 Hero 的中文草稿审计：Agent 接力、人工关口、修改采用、v1 留存与 v2 待验收；不替代正式回归。
 - [B／C 首屏三幕候选](hero-open-story.md) - 仅本地候选：Agent 各自模型 Logo、编码 CLI 底座边界、AI 总结与人修改采用及身份／历史留存，不替代正式页面合同。

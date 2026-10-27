@@ -3,7 +3,7 @@ const path = require('node:path');
 const os = require('node:os');
 const crypto = require('node:crypto');
 const assert = require('node:assert/strict');
-const { chromium } = require('playwright');
+const portable = require('../../scripts/commercial/browser.cjs');
 const { PNG } = require('pngjs');
 
 const root = path.resolve(__dirname, '../..');
@@ -22,6 +22,8 @@ const styles = ['fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'color', '
 const rows = [];
 const sourceHashes = () => Object.fromEntries([
   'tests/product-fidelity/check.cjs',
+  'scripts/commercial/browser.cjs',
+  'scripts/commercial/browser-version.json',
   'tests/fixtures/product-reference/manifest.json',
   'src/components/commercial/product-demo.tsx',
   'src/lib/product-reference.ts',
@@ -286,7 +288,7 @@ async function animatedCase(browser, viewport, pixelmatch) {
 
 (async () => {
   const { default: pixelmatch } = await import('pixelmatch');
-  const browser = await chromium.launch({ headless: true, ...(process.env.BROWSER_EXECUTABLE_PATH ? { executablePath: process.env.BROWSER_EXECUTABLE_PATH } : process.env.BROWSER_CHANNEL ? { channel: process.env.BROWSER_CHANNEL } : {}) });
+  const browser = await portable.launch();
   try {
     const viewports = [{ width: 1024, height: 900 }, { width: 1440, height: 1000 }, { width: 1920, height: 1080 }, { width: 390, height: 844 }, { width: 320, height: 568 }];
     const selected = process.env.FIDELITY_WIDTHS ? process.env.FIDELITY_WIDTHS.split(',').map(Number) : viewports.map(viewport => viewport.width);

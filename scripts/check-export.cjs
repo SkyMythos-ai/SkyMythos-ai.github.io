@@ -22,6 +22,7 @@ for (const signal of ['SIGINT', 'SIGTERM']) process.once(signal, () => { active?
 (async () => {
   if (!server.listening) await new Promise((resolve, reject) => { server.once('listening', resolve); server.once('error', reject); });
   console.log(`Release check evidence: ${evidence}`);
+  await run('tests/commercial-runtime/read-asset.cjs');
   await run('scripts/commercial/run.cjs');
   await run('tests/commercial-runtime/check.cjs');
   await run('tests/product-fidelity/check.cjs');

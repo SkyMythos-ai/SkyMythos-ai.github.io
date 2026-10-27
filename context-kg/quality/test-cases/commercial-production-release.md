@@ -11,6 +11,12 @@ sources:
     title: 七套商业浏览器回归
   - resource: /../tests/product-fidelity/check.cjs
     title: 独立真实组件参照检查
+  - resource: /../tests/commercial-runtime/read-asset.cjs
+    title: 真实生产读取器的网络完成及流式预算回归
+  - resource: /../scripts/commercial/browser-version.json
+    title: 固定测试引擎及上游修复来源
+  - resource: https://chromium.googlesource.com/chromium/src/+/62473ad0f747e245e514c93e741bb8e168a2a207
+    title: Chromium完整流消费后误报取消的修复
   - resource: /../.github/workflows/deploy.yml
     title: 同提交构建与 Pages 发布链
   - resource: https://github.com/smontlouis/bible-strong-avatar-lab/blob/79fe9ba06e4874b11394b8e8a3f2c493c9d197ba/LICENSE
@@ -24,8 +30,9 @@ sources:
 ## 适用范围与前置条件
 
 Case ID：`COMMERCIAL-RELEASE-01`。本用例针对迁入正式 Next 工程的中文商业 V3，
-不以历史本地预览的通过报告替代。使用仓内锁文件、Node22.19+、固定版本 Playwright
-及其浏览器，先运行资源门禁和真实 `npm run build`，再检查生成的 `out/`。
+不以历史本地预览的通过报告替代。使用仓内锁文件、Node22.19+、固定版本Playwright
+SDK与`browser-version.json`指定的Chrome for Testing引擎；先运行`npm run install:browser`
+及资源门禁和真实`npm run build`，再检查生成的`out/`。Linux先安装浏览器系统依赖。
 允许显式选择本机 Chrome，但报告应注明平台，不泛化为实体设备或全浏览器验收。
 
 产品投影固定来源版本为 `033a372f66d5f53bbc8e6b519868238976701c47`。
@@ -63,6 +70,14 @@ Case ID：`COMMERCIAL-RELEASE-01`。本用例针对迁入正式 Next 工程的�
 ## 覆盖状态与边界
 
 当前整体发布门禁尚未通过。2026-10-27，用户获知下列检查失败、性能及分发许可未决后明确要求“直接提交，先不考虑，继续”，因此先提交、推送并触发现有Actions；这不是检查通过或许可核定，不修改CI和既有断言。下述未提交／暂缓表述属于该指令之前的检查状态，实际部署仍需对应提交的Actions证据。
+
+该次实际提交为`b531970137f0e8c2ee915879e4231dc058839223`，对应[Actions 40440195105](https://github.com/SkyMythos-ai/SkyMythos-ai.github.io/actions/runs/40440195105)生产构建及类型通过、浏览器验收失败、Pages部署跳过。2026-10-27用户要求修复，范围为真实静态读取完成事件与hash历史导航。CI归档stack确认超时在Back后的hash／当前项联合等待；失败时methods已是当前项，但URL丢失fragment。这只确定失败位置和表现，不证明控制器或测试准备的根因。修复必须保留真实字节上限、独立网络完成断言及原有导航预期，不以增加等待时限替代定位。
+
+2026-10-27修复定位：Chromium上游提交`62473ad0…`说明了完全相同的no-store响应／手动读到EOF后错误发出`Network.loadingFailed`的情况，原因是通知消费方前未记录流的终态。已核对157.0.8103.15标签源码包含修复顺序，测试引擎改为这一精确版本；不修改生产读取器、1MB／64KB上限、15秒期限、hash或网络失败断言。新回归直接执行生产读取器，真实七资源在六个独立context中需字节／SHA相同、全部requestfinished且零异常失败；另覆盖12个受控字节／取消边界及准确15秒后的迟到安装拒绝。本地受控边界已通过，新引擎下载超时，实际新引擎及完整联合结果待Linux CI验证，不凭上游源码就宣称本项目通过。
+
+hash历史缺陷已独立红→绿：以6倍CPU节流重复三次，确认测试在初始hydration前创建片段导航，随后Next首次canonical replace擦除该历史项；Back恢复的是本来已丢锚点的项。测试准备仅增加初始stage真实挂载就绪等待，同一复现三次通过、普通CPU三次通过；原等待期限、hash／当前项／几何与资源断言不变，生产控制器未改。手动／键盘／wheel仍保持URL不变，不将hash改成持续状态源。
+
+以下为修复前的迁移验收记录，失败及未决事项保留历史身份；不作为修复后的通过证据。
 
 2026-10-27正式冻结候选的已执行覆盖：生产构建75页、类型、有效lint（0错误／16warning）、
 资源8组及语言／68条sitemap的双basePath检查通过；运行时10项检查（含汇总）及完整

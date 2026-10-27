@@ -1,0 +1,6 @@
+{
+  "version": "157.0.8103.15",
+  "channel": "beta",
+  "upstreamFix": "62473ad0f747e245e514c93e741bb8e168a2a207",
+  "upstreamSource": "https://chromium.googlesource.com/chromium/src/+/refs/tags/157.0.8103.15/third_party/blink/renderer/platform/loader/fetch/response_body_loader.cc"
+}

@@ -18,6 +18,11 @@ on:
     branches: [main]
   # Allows a manual run from the Actions tab.
   workflow_dispatch:
+    inputs:
+      deploy:
+        description: Deploy after all checks pass
+        type: boolean
+        default: true
 
 # Least privilege: only what Pages deployment needs.
 permissions:
@@ -53,6 +58,7 @@ jobs:
           npm run lint
           npm run test:locale-routes
           npm run test:product-reference
+          npm run test:browser-installer
           node scripts/check-site-content.cjs
           node scripts/check-hero-lifecycle.cjs
 
@@ -97,8 +103,10 @@ jobs:
       - name: Check generated framework types
         run: npm run typecheck
 
-      - name: Install pinned browser
-        run: npx playwright install --with-deps chromium
+      - name: Install pinned browser with completed-stream fix
+        run: |
+          npx playwright install-deps chromium
+          npm run install:browser
 
       - name: Verify exported pages and readonly demonstrations
         env:
@@ -126,6 +134,7 @@ jobs:
           path: out
 
   deploy:
+    if: github.event_name != 'workflow_dispatch' || inputs.deploy
     needs: build
     runs-on: ubuntu-latest
     environment:
