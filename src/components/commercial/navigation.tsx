@@ -20,7 +20,7 @@ export function CommercialWordmark() {
 export function CommercialHeaderAction() {
   const home = useCommercialHome();
   return home
-    ? <Link className="button button-small nav-cta" href="/zh/product/">了解产品<span aria-hidden="true">↗</span></Link>
+    ? <Link prefetch={false} className="button button-small nav-cta" href="/zh/product/">了解产品<span aria-hidden="true">↗</span></Link>
     : <a className="button button-small nav-cta" href="#contact" data-contact>预约演示<span aria-hidden="true">↗</span></a>;
 }
 

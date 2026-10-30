@@ -3,7 +3,7 @@ const path = require('node:path');
 const assert = require('node:assert/strict');
 const { spawnSync } = require('node:child_process');
 
-const suites = ['harness', 'site', 'native-demos', 'lifecycle'];
+const suites = ['home-hero', 'animation-loading', 'animation-recovery', 'harness', 'site', 'native-demos', 'lifecycle'];
 
 /** CLI 优先于 SUITES；任何未知套件立即失败，避免拼错名字悄悄漏跑。 */
 function selectSuites(args, environment = process.env) {

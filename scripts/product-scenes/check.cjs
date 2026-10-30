@@ -3,7 +3,7 @@ const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
 const { chromium } = require('playwright');
-const base = path.resolve(__dirname, '../../public/product-scenes/7295629889d881f3485168832359d16d141021f9-composed-v1');
+const base = path.resolve(process.env.PRODUCT_SCENES_DIR || path.resolve(__dirname, '../../public/product-scenes/7295629889d881f3485168832359d16d141021f9-composed-v1'));
 const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.woff2': 'font/woff2' };
 const server = http.createServer((req, res) => {
   const name = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);

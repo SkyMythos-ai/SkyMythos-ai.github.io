@@ -6,7 +6,7 @@ const portable = require('./browser.cjs');
 portable.trackIdentity('composed-scenes');
 const revision = '7295629889d881f3485168832359d16d141021f9';
 const presentation = 'composed-v1';
-const bundle = `${revision}-${presentation}`;
+const bundle = `${revision}-composed-v2`;
 const names = ['delivery', 'training', 'knowledge'];
 const matrix = [390, 1440].flatMap(width => ['light', 'dark'].map(theme => `${width}-${theme}-normal`)).concat('1440-light-reduced', '1440-light-nojs');
 const cases = [...matrix, 'lifecycle', 'recovery', ...names.map(name => `${name}-cycle`), 'mobile-light-terminal', 'mobile-dark-terminal'];

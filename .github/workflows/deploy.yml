@@ -60,6 +60,7 @@ jobs:
           npm run test:product-reference
           npm run test:browser-installer
           npm run test:export-runner
+          node --test tests/commercial-runtime/fixed-markdown.cjs tests/commercial-runtime/hero-catalog.cjs
           node scripts/check-site-content.cjs
           node scripts/check-hero-lifecycle.cjs
 

@@ -37,7 +37,7 @@ function trackRequest(request) {
     const frameUrl = new URL(frame.url());
     if (frameUrl.origin !== base.origin || frameUrl.username || frameUrl.password) return;
     const suffix = frameUrl.pathname.slice(siteBasePath.length);
-    if (!frameUrl.pathname.startsWith(siteBasePath + '/') || !/^\/product-demo\/[a-f0-9]{40}\/index\.html$/.test(suffix) && !/^\/product-scenes\/[a-f0-9]{40}-composed-v1\/index\.html$/.test(suffix)) return;
+    if (!frameUrl.pathname.startsWith(siteBasePath + '/') || !/^\/product-demo\/[a-f0-9]{40}(?:-lean-v1)?\/index\.html$/.test(suffix) && !/^\/product-scenes\/[a-f0-9]{40}-composed-v[12]\/index\.html$/.test(suffix)) return;
     demoRequests.set(request, { frame, frameUrl: frameUrl.href, directory: frameUrl.pathname.slice(0, -'index.html'.length) });
   } catch {
     // 无 frame 的请求不具备证明条件，保持普通失败处理。

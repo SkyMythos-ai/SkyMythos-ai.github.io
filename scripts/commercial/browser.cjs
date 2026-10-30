@@ -112,7 +112,7 @@ function buildIdentity() {
       else if (entry.isFile()) files.push([path.relative(project, file), crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex')]);
     }
   }
-  for (const directory of ['src', 'public', 'out', 'scripts/commercial', 'scripts/product-reference']) visit(path.join(project, directory));
+  for (const directory of ['src', 'public', 'out', 'scripts/commercial', 'scripts/product-reference', 'scripts/product-demo', 'scripts/product-scenes', 'scripts/product-runtime']) visit(path.join(project, directory));
   for (const name of ['package.json', 'package-lock.json', 'next.config.mjs']) {
     files.push([name, crypto.createHash('sha256').update(fs.readFileSync(path.join(project, name))).digest('hex')]);
   }

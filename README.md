@@ -117,10 +117,14 @@ tests/fixtures/product-reference/  独立冻结的真实组件参照（非 publi
 
 **改首页与产品演示**：中文首页使用 harness-home.tsx 与 source-product-demo.tsx。首屏保持原左对齐文案与14f40完整控制台（public/product-demo/），手机保留原桌面界面的左右浏览。首屏之后的持续执行、训练、知识三章统一标题、说明、媒体舞台与功能索引；这些章节的iframe仅隔离产品依赖和原CSS，内部直接组合真实产品的消息、工具、报告、经验来源、员工方案、知识检索与原文组件，不挂完整ProductShell或裁桌面工作台。`scripts/product-scenes/`以共享时钟和对象关系组织24秒原生连续过程，终态3秒后循环；首屏先完整交代已接收目标，再推进工具和报告，超出局部面板的调用与结果随同一时钟滚动。手机主面板使用可用宽度自然换行，不要求横向浏览960px桌面页。
 
-运行 `node scripts/product-scenes/build.cjs` 构建锁定的真实控制台来源，当前输出为 `public/product-scenes/7295629889d881f3485168832359d16d141021f9-composed-v1/`。来源记录包含dirty工作区、源树before/after、实际导入和适配摘要；知识私有组件仅通过构建时追加export暴露，不改产品源。Storage独立内存，数据与API为白名单本地示例，无真实模型、外网或业务写；不构成7×24业务验收。`public/product-demo/14f40.../`仍用于首屏完整控制台；三个正文场景使用新合成产物。正式内页冻结参照独立保留。
+运行 `node scripts/product-scenes/build.cjs` 构建锁定的真实控制台来源，当前输出为 `public/product-scenes/7295629889d881f3485168832359d16d141021f9-composed-v2/`。来源记录包含dirty工作区、源树before/after、实际导入和适配摘要；知识私有组件仅通过构建时追加export暴露，不改产品源。Storage独立内存，数据与API为白名单本地示例，无真实模型、外网或业务写；不构成7×24业务验收。`node scripts/product-demo/build-hero-lean.cjs`构建首屏完整控制台，输出为`public/product-demo/14f40b0fc37f7a20eeab00293e3527725552a255-lean-v1/`；三个正文场景使用上述合成产物。两个构建器通过`scripts/product-runtime/source-snapshot.cjs`恢复原记录的源码快照并逐个校验实际输入，不直接编译相邻仓库的新改动。正式内页冻结参照独立保留。
 
 `node scripts/commercial/check-home-hero.cjs`验证首屏完整控制台、来源、亮暗/手机及自然周期；`node scripts/commercial/check-composed-scenes.cjs`验证首屏之后的原生场景、自然周期、主题/手机、减少动态、无脚本、焦点/Storage和恢复；`npm run test:commercial -- --suites harness`也映射到该套件。`scripts/product-scenes/check.cjs`用于源组件受控时钟和实际可见矩形检查，不能替代完整自然播放与设计复核。
 
+
+**维护加载性能**：首屏 iframe 随 HTML 安装；正文场景在前一个场景资源就绪后依次预热，实际进入视口时立即安装。首屏只先装配可见操作所需的原生组件与文案，完整原始词典在后台加载；自动发送前等待其就绪并保留同一控制台状态。代码高亮、执行详情、文档渲染和编辑器按实际操作加载，字体使用独立缓存资源。共享 TDesign 样式保持原始加载顺序。不要通过延长12秒期限、提前发送 ready、替换产品组件或隐藏真实错误来通过检查。
+
+`scripts/commercial/check-animation-loading.cjs`在1Mbps、80ms延迟和全新浏览器上下文中串行检查桌面/手机、亮/暗四种整页冷加载，以及三个正文场景独立冷加载；真实核心 DOM 和 mount/viewport 到 ready 均须在12秒内。`check-animation-recovery.cjs`检查晚到词典等待、后台恢复及首屏/知识资源503后的重试。`node --test tests/commercial-runtime/fixed-markdown.cjs tests/commercial-runtime/hero-catalog.cjs`验证固定示例 Markdown 的裁剪边界及词典完整语义。版本目录发布后保持不可变，再次改变产物必须使用新目录。
 
 
 **改亮暗模式**：`site-theme.tsx`、`site-theme.css` 与 `document-shell.tsx` 共同管理 `html[data-site-theme]`。默认跟随系统，显式切换仅保存 `skymythos-theme`。真实产品演示映射到其原生 `data-theme` 与 `theme-mode`，使用原 TDesign 色板，不用官网色板重画产品。存储不可用时仍可切换，无脚本时通过 CSS 跟随系统。
@@ -135,6 +139,6 @@ tests/fixtures/product-reference/  独立冻结的真实组件参照（非 publi
 
 ## 当前首页回归范围
 
-首页首屏由 `scripts/commercial/check-home-hero.cjs` 检查完整控制台与自然周期；首屏之后的连续场景由 `scripts/commercial/check-composed-scenes.cjs` 检查真实来源、原组件 DOM 与样式、操作过程、亮暗同步、只读边界及播放时钟。默认商业套件为 `harness,site,native-demos,lifecycle`，其中 `harness` 对应 composed-scenes。生命周期在正式工作方式页检查；旧冻结产品参照的独立保真及解析／资源边界仍在对应产品内页检查，不与新版源组件演示混淆。
+首页首屏由 `scripts/commercial/check-home-hero.cjs` 检查完整控制台与自然周期；首屏之后的连续场景由 `scripts/commercial/check-composed-scenes.cjs` 检查真实来源、原组件 DOM 与样式、操作过程、亮暗同步、只读边界及播放时钟。默认商业套件为 `home-hero,animation-loading,animation-recovery,harness,site,native-demos,lifecycle`，其中 `harness` 对应 composed-scenes。生命周期在正式工作方式页检查；旧冻结产品参照的独立保真及解析／资源边界仍在对应产品内页检查，不与新版源组件演示混淆。
 
 首页产品演示不提供播放、暂停、重播或进度控件。可见时自动运行24秒操作链，终态停留3秒后循环；离屏/后台停止并取消循环计时器，回到可见继续，系统减少动态时显示静态终态。回归覆盖自动输入/执行/报告/新周期、原组件来源与隔离、循环重置期间离屏、父焦点保持、桌面/手机亮暗及无脚本回退。测试消息协议仅用于时钟采样；既有工作方式页的手动步骤与跨页生命周期仍独立检查。模拟后台检查不替代真实后台标签页或所有硬件的性能验收。

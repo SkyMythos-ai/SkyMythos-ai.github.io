@@ -10,14 +10,20 @@ const revision2 = '7295629889d881f3485168832359d16d141021f9';
 const root = '/fixture/out';
 const demo = `${root}/product-demo/${revision}`;
 const scene = `${root}/product-scenes/${revision2}-composed-v1`;
+const leanDemo = `${demo}-lean-v1`;
+const nextScene = `${root}/product-scenes/${revision2}-composed-v2`;
 const tree = {
   [root]: [['product-demo', true], ['product-scenes', true], ['zh', true], ['_next', true]],
-  [`${root}/product-demo`]: [[revision, true]],
+  [`${root}/product-demo`]: [[revision, true], [`${revision}-lean-v1`, true]],
   [demo]: [['index.html', false], ['assets', true]],
   [`${demo}/assets`]: [['app.js', false], ['app.css', false], ['font.woff2', false]],
-  [`${root}/product-scenes`]: [[`${revision2}-composed-v1`, true]],
+  [`${root}/product-scenes`]: [[`${revision2}-composed-v1`, true], [`${revision2}-composed-v2`, true]],
   [scene]: [['index.html', false], ['assets', true]],
   [`${scene}/assets`]: [['app.js', false]],
+  [leanDemo]: [['index.html', false], ['assets', true]],
+  [`${leanDemo}/assets`]: [['app.js', false]],
+  [nextScene]: [['index.html', false], ['assets', true]],
+  [`${nextScene}/assets`]: [['app.js', false]],
   [`${root}/zh`]: [['index.html', false], ['index.txt', false]],
   [`${root}/_next`]: [['main.js', false]],
 };
@@ -60,6 +66,8 @@ assert.equal(decision({}), expected);
 assert.equal(decision({ url: `http://localhost:4173${directory}assets/app.css`, type: 'stylesheet' }), expected);
 assert.equal(decision({ url: `http://localhost:4173${directory}assets/font.woff2`, type: 'font' }), expected);
 assert.equal(decision({ frameUrl: `http://localhost:4173${sceneDirectory}index.html`, url: `http://localhost:4173${sceneDirectory}assets/app.js` }), expected);
+assert.equal(decision({ frameUrl: `http://localhost:4173/stage/product-demo/${revision}-lean-v1/index.html`, url: `http://localhost:4173/stage/product-demo/${revision}-lean-v1/assets/app.js` }), expected);
+assert.equal(decision({ frameUrl: `http://localhost:4173/stage/product-scenes/${revision2}-composed-v2/index.html`, url: `http://localhost:4173/stage/product-scenes/${revision2}-composed-v2/assets/app.js` }), expected);
 for (const [label, options, track] of [
   ['untracked request', {}, false],
   ['live frame', { detached: false }, true],

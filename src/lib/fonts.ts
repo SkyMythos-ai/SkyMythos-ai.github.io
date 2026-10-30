@@ -26,6 +26,7 @@ export const plexSans = IBM_Plex_Sans({
   weight: ["400", "500", "600", "700"],
   style: ["normal", "italic"],
   display: "swap",
+  preload: false,
   variable: "--font-plex-sans",
   fallback: [
     "PingFang SC",
@@ -42,6 +43,7 @@ export const plexMono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
   style: ["normal"],
   display: "swap",
+  preload: false,
   variable: "--font-plex-mono",
   fallback: ["SFMono-Regular", "Consolas", "Liberation Mono", "monospace"],
 });

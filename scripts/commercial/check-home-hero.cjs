@@ -10,7 +10,7 @@ const cases = ['390-light', '390-dark', '1440-light', '1440-dark', 'hero-cycle']
 if (process.env.HERO_CASE) assert(cases.includes(process.env.HERO_CASE), 'Invalid HERO_CASE');
 const selected = name => !process.env.HERO_CASE || process.env.HERO_CASE === name;
 function provenance() {
-  const root = path.join(portable.project, 'public/product-demo', wholeRevision);
+  const root = path.join(portable.project, 'public/product-demo', `${wholeRevision}-lean-v1`);
   const source = JSON.parse(fs.readFileSync(path.join(root, 'source-provenance.json'), 'utf8'));
   assert.equal(source.sourceRevision, wholeRevision);
   for (const file of ['src/components/product-shell.tsx', 'src/pages/workspace-chat-page.tsx', 'src/styles.css', 'src/layers.css']) assert.match(source.actualImports[file] || '', /^[a-f0-9]{64}$/, `whole page product source ${file}`);
@@ -34,12 +34,12 @@ async function ready(page, name) {
   const iframe = player.locator('iframe'); assert.equal(await iframe.count(), 1);
   const url = new URL(await iframe.getAttribute('src'), portable.base);
   if (name === 'hero') {
-    assert.equal(url.pathname, `${portable.siteBasePath}/product-demo/${wholeRevision}/index.html`);
+    assert.equal(url.pathname, `${portable.siteBasePath}/product-demo/${wholeRevision}-lean-v1/index.html`);
     assert.equal(url.searchParams.get('scene'), 'delivery');
     assert.equal(await player.getAttribute('data-source-revision'), wholeRevision);
     assert.equal(await player.getAttribute('data-presentation'), 'whole-page');
   } else {
-    assert.equal(url.pathname, `${portable.siteBasePath}/product-scenes/${sceneRevision}-composed-v1/index.html`);
+    assert.equal(url.pathname, `${portable.siteBasePath}/product-scenes/${sceneRevision}-composed-v2/index.html`);
     assert.equal(url.searchParams.get('scene'), name);
     assert.equal(await player.getAttribute('data-source-revision'), sceneRevision);
     assert.equal(await player.getAttribute('data-presentation'), 'composed-v1');
