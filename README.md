@@ -124,7 +124,7 @@ tests/fixtures/product-reference/  独立冻结的真实组件参照（非 publi
 
 **维护加载性能**：首屏 iframe 随 HTML 安装；正文场景在前一个场景资源就绪后依次预热，实际进入视口时立即安装。首屏只先装配可见操作所需的原生组件与文案，完整原始词典在后台加载；自动发送前等待其就绪并保留同一控制台状态。代码高亮、执行详情、文档渲染和编辑器按实际操作加载，字体使用独立缓存资源。共享 TDesign 样式保持原始加载顺序。不要通过延长12秒期限、提前发送 ready、替换产品组件或隐藏真实错误来通过检查。
 
-`scripts/commercial/check-animation-loading.cjs`在1Mbps、80ms延迟和全新浏览器上下文中串行检查桌面/手机、亮/暗四种整页冷加载，以及三个正文场景独立冷加载；真实核心 DOM 和 mount/viewport 到 ready 均须在12秒内。`check-animation-recovery.cjs`检查晚到词典等待、后台恢复及首屏/知识资源503后的重试。`node --test tests/commercial-runtime/fixed-markdown.cjs tests/commercial-runtime/hero-catalog.cjs`验证固定示例 Markdown 的裁剪边界及词典完整语义。版本目录发布后保持不可变，再次改变产物必须使用新目录。
+`scripts/commercial/check-animation-loading.cjs`在1Mbps、80ms延迟和全新浏览器上下文中串行检查桌面/手机、亮/暗四种整页冷加载，以及三个正文场景独立冷加载；真实核心 DOM 和 mount/viewport 到 ready 均须在12秒内。`check-animation-recovery.cjs`检查晚到词典等待、后台恢复、首屏/知识资源503后的重试，以及首屏延迟装配期间的阅读位置与焦点保持。`node --test tests/commercial-runtime/fixed-markdown.cjs tests/commercial-runtime/hero-catalog.cjs tests/commercial-runtime/embedded-focus.cjs`验证固定示例 Markdown 的裁剪边界及词典完整语义。版本目录发布后保持不可变，再次改变产物必须使用新目录。
 
 
 **改亮暗模式**：`site-theme.tsx`、`site-theme.css` 与 `document-shell.tsx` 共同管理 `html[data-site-theme]`。默认跟随系统，显式切换仅保存 `skymythos-theme`。真实产品演示映射到其原生 `data-theme` 与 `theme-mode`，使用原 TDesign 色板，不用官网色板重画产品。存储不可用时仍可切换，无脚本时通过 CSS 跟随系统。

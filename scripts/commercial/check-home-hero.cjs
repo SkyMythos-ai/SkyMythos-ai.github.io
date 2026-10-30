@@ -13,6 +13,7 @@ function provenance() {
   const root = path.join(portable.project, 'public/product-demo', `${wholeRevision}-lean-v1`);
   const source = JSON.parse(fs.readFileSync(path.join(root, 'source-provenance.json'), 'utf8'));
   assert.equal(source.sourceRevision, wholeRevision);
+  assert.equal(source.focusGuardHash, crypto.createHash('sha256').update(fs.readFileSync(path.join(portable.project, 'scripts/product-runtime/embedded-focus.cjs'))).digest('hex'), 'embedded focus guard matches frozen hero');
   for (const file of ['src/components/product-shell.tsx', 'src/pages/workspace-chat-page.tsx', 'src/styles.css', 'src/layers.css']) assert.match(source.actualImports[file] || '', /^[a-f0-9]{64}$/, `whole page product source ${file}`);
   for (const [file, digest] of Object.entries(source.generatedFiles)) {
     const target = path.resolve(root, file);

@@ -27,9 +27,33 @@ async function runCase(browser, name) {
   let faultUrl;
   let confirmed503 = false;
   const consoleErrors = [];
+  let releaseHero;
+  const heroHeld = new Promise(resolve => { releaseHero = resolve; });
+  let sawHeroEntry;
+  const heroRequested = new Promise(resolve => { sawHeroEntry = resolve; });
+  let releaseFault;
+  const focusVerified = new Promise(resolve => { releaseFault = resolve; });
   try {
     const targets = faultTargets(name);
     result.targets = targets;
+    let heroEntry;
+    let heroEntryRequests = 0;
+    if (name === 'knowledge') {
+      const analysis = JSON.parse(fs.readFileSync(path.join(heroDir, 'bundle-analysis.json'), 'utf8'));
+      const entries = analysis.initialChunks.filter(file => /^assets\/index-[^/]+\.js$/.test(file));
+      assert.equal(entries.length, 1, 'one hero entry in the initial closure');
+      heroEntry = `${portable.siteBasePath}/product-demo/${heroBundle}/${entries[0]}`;
+      result.heroEntry = heroEntry;
+      await page.addInitScript(() => {
+        if (window === window.parent) return;
+        const original = HTMLElement.prototype.focus;
+        window.__nativeFocusCalls = [];
+        HTMLElement.prototype.focus = function (...args) {
+          window.__nativeFocusCalls.push({ pathname: location.pathname, tag: this.tagName, preventScroll: args[0]?.preventScroll === true, parentScroll: parent.scrollY, stack: new Error().stack });
+          return original.apply(this, args);
+        };
+      });
+    }
     page.on('pageerror', error => result.errors.push(`pageerror: ${error.stack || error.message}`));
     page.on('request', request => {
       if (!['GET', 'HEAD'].includes(request.method())) result.writes.push(`${request.method()} ${request.url()}`);
@@ -46,6 +70,12 @@ async function runCase(browser, name) {
     });
     const fault = async route => {
       const pathname = new URL(route.request().url()).pathname;
+      if (name === 'knowledge' && pathname === heroEntry) {
+        heroEntryRequests++;
+        sawHeroEntry();
+        await heroHeld;
+        return route.continue();
+      }
       if (!targets.includes(pathname) || blocked) return route.continue();
       blocked = true;
       faultRequest = route.request();
@@ -56,6 +86,9 @@ async function runCase(browser, name) {
         return { ready: node?.dataset.ready, phase: node?.dataset.phase, playing: node?.dataset.playing, time: node?.dataset.time, fixture: ref && { unknown: [...ref.unknown], writes: [...ref.writes] } };
       }, selector);
       result.interceptions.push({ pathname, state });
+      // Keep the focus experiment independent of the reader's 6s prefetch.
+      // Only the injected network response waits; the real UI clock keeps running.
+      if (name === 'knowledge') await focusVerified;
       await route.fulfill({ status: 503, contentType: 'text/plain', body: 'Expected injected lazy chunk failure' });
     };
     await page.route('**/*', fault);
@@ -63,6 +96,40 @@ async function runCase(browser, name) {
     const player = page.locator(selector);
     await player.scrollIntoViewIfNeeded({ timeout: 15000 });
     await page.waitForFunction(selector => document.querySelector(selector)?.dataset.ready === 'true', selector, { timeout: 15000 });
+    if (name === 'knowledge') {
+      await page.waitForFunction(() => document.querySelector('[data-prototype="hero"] iframe') !== null, null, { timeout: 15000 });
+      let requestTimer;
+      try { await Promise.race([heroRequested, new Promise((_, reject) => { requestTimer = setTimeout(() => reject(new Error('Hero entry request did not arrive')), 15000); })]); }
+      finally { clearTimeout(requestTimer); }
+      assert.equal(heroEntryRequests, 1, 'hero entry was held before knowledge became ready');
+      const before = await page.evaluate(selector => {
+        const anchor = document.querySelector('header a');
+        if (!anchor) throw new Error('Missing header link for focus regression');
+        anchor.focus({ preventScroll: true });
+        window.__focusRegressionAnchor = anchor;
+        const node = document.querySelector(selector);
+        return { scrollY, focused: document.activeElement === anchor, time: Number(node.dataset.time) };
+      }, selector);
+      assert(before.focused, 'header link focused without scrolling');
+      releaseHero();
+      await page.waitForFunction(() => {
+        const hero = document.querySelector('[data-prototype="hero"]');
+        const view = hero?.querySelector('iframe')?.contentWindow;
+        return hero?.dataset.ready === 'true' && view?.__nativeFocusCalls?.some(call => call.preventScroll && call.pathname.includes('/product-demo/'));
+      }, null, { timeout: 15000 });
+      await page.waitForFunction(({ selector, time }) => Number(document.querySelector(selector)?.dataset.time) >= time + 1000, { selector, time: before.time }, { timeout: 12000 });
+      const after = await page.evaluate(selector => {
+        const node = document.querySelector(selector);
+        const view = document.querySelector('[data-prototype="hero"] iframe').contentWindow;
+        return { scrollY, focused: document.activeElement === window.__focusRegressionAnchor, time: Number(node.dataset.time), playing: node.dataset.playing, focusCalls: view.__nativeFocusCalls };
+      }, selector);
+      result.focusRegression = { before, after, heroEntryRequests };
+      assert(Math.abs(after.scrollY - before.scrollY) <= 1, `hero focus must preserve reader scroll: ${JSON.stringify({ before, after })}`);
+      assert(after.focused, 'hero focus must preserve header focus');
+      assert(after.time >= before.time + 1000, 'knowledge natural clock continues');
+      assert.equal(after.playing, 'true', 'knowledge remains playing');
+      releaseFault();
+    }
     await player.getByRole('button', { name: '重新载入演示' }).waitFor({ timeout: 30000 });
     assert.equal(result.interceptions.length, 1, 'one lazy module request was faulted');
     const observed = result.interceptions[0].state;
@@ -116,7 +183,7 @@ async function runCase(browser, name) {
     result.error = error.stack || String(error);
     result.state = await page.evaluate(selector => { const node = document.querySelector(selector); return node && { ...node.dataset }; }, selector).catch(() => null);
     await page.screenshot({ path: path.join(portable.evidence, `animation-recovery-${name}-failure.png`) }).catch(() => {});
-  } finally { await context.close(); }
+  } finally { releaseHero(); releaseFault(); await context.close(); }
   return result;
 }
 // 用完整模块身份定位词库，禁止通过模糊文件名拦截无关动态资源。
