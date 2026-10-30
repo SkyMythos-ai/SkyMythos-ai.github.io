@@ -9,12 +9,13 @@ import { WorkStoryFigure } from "@/components/work-story/figure";
 import { ProductMedia } from "@/components/product-media";
 import { ProductChapter, ProductLink } from "@/components/product-page-parts";
 import { CommercialHome } from "@/components/commercial/content";
+import { commercialHomeMetadata } from "@/content/commercial/home";
 
 interface PageProps { params: Promise<{ locale: string }> }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const locale = toLocale((await params).locale), dictionary = getDictionary(locale);
-  return buildMetadata({ locale, title: locale === "zh" ? "让 AI 完成工作，让能力留在企业" : dictionary.meta.title, description: locale === "zh" ? "企业自己的 AI 工作平台。将 Agent、知识与工具组织进工作，完成交付、复用方法、掌握使用与投入。" : dictionary.meta.description, path: "/", keywords: dictionary.meta.keywords });
+  return buildMetadata({ locale, title: locale === "zh" ? commercialHomeMetadata.title : dictionary.meta.title, description: locale === "zh" ? commercialHomeMetadata.description : dictionary.meta.description, path: "/", keywords: locale === "zh" ? commercialHomeMetadata.keywords : dictionary.meta.keywords });
 }
 
 export default async function HomePage({ params }: PageProps) {

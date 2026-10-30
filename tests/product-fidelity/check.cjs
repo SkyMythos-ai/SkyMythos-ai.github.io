@@ -18,6 +18,7 @@ const manifestBytes = fs.readFileSync(path.join(fixtureRoot, 'manifest.json'));
 const fixture = JSON.parse(manifestBytes);
 const css = fs.readFileSync(path.join(fixtureRoot, fixture.css), 'utf8');
 const scenes = ['delivery', 'methods', 'management'];
+const scenePaths = { delivery: 'product/work-delivery/', methods: 'product/methods/', management: 'product/governance/' };
 const styles = ['fontFamily', 'fontSize', 'fontWeight', 'lineHeight', 'color', 'backgroundColor', 'borderTopWidth', 'visibility', 'display'];
 const rows = [];
 const sourceHashes = () => Object.fromEntries([
@@ -26,6 +27,8 @@ const sourceHashes = () => Object.fromEntries([
   'scripts/commercial/browser-version.json',
   'tests/fixtures/product-reference/manifest.json',
   'src/components/commercial/product-demo.tsx',
+  'src/components/commercial/product-capture-player.tsx',
+  'src/styles/product-capture-player.css',
   'src/lib/product-reference.ts',
   'out/zh/index.html',
 ].filter(file => fs.existsSync(path.join(root, file))).map(file => [file, sha(fs.readFileSync(path.join(root, file)))]));
@@ -72,10 +75,14 @@ async function measure(frame, source, selectors) {
     const counts = {};
     for (const node of element.querySelectorAll('*')) counts[node.tagName] = (counts[node.tagName] || 0) + 1;
     const box = host?.getBoundingClientRect();
+    const scroller = host?.closest('.pc-scroll');
+    const clipBox = scroller?.getBoundingClientRect();
+    const clip = clipBox ? { x: clipBox.left + scroller.clientLeft, y: clipBox.top + scroller.clientTop, right: clipBox.left + scroller.clientLeft + scroller.clientWidth, bottom: clipBox.top + scroller.clientTop + scroller.clientHeight } : null;
     const header = document.querySelector('.site-header')?.getBoundingClientRect();
     return {
       landmarks, counts, text: element.textContent.replace(/\s+/g, ' ').trim(),
       root: { x: origin.x, y: origin.y, width: origin.width, height: origin.height },
+      clip,
       host: box ? { x: box.x, y: box.y, right: box.right, bottom: box.bottom } : null,
       viewport: { width: innerWidth, height: innerHeight, dpr: devicePixelRatio },
       scroll: { x: scrollX, y: scrollY },
@@ -171,10 +178,10 @@ async function compare(page, name, id, label, pixelmatch) {
     const referenceBytes = await expected.page.screenshot({ animations: 'disabled' });
     const afterCamera = await measure(expected.app, true, expected.selectors);
     assert.deepEqual(afterCamera, expected.measured, 'Outer camera must not alter source internal geometry, styles, or viewport');
-    const left = Math.ceil(Math.max(actual.host.x + 2, 0) * dpr);
-    const top = Math.ceil(Math.max(actual.host.y + 2, actual.headerBottom + 2, 0) * dpr);
-    const right = Math.floor(Math.min(actual.host.right - 2, actual.root.x + actual.root.width, actual.viewport.width) * dpr);
-    const bottom = Math.floor(Math.min(actual.host.bottom - 2, actual.root.y + actual.root.height, actual.viewport.height) * dpr);
+    const left = Math.ceil(Math.max(actual.host.x + 2, actual.clip?.x + 2 || 0, 0) * dpr);
+    const top = Math.ceil(Math.max(actual.host.y + 2, actual.clip?.y + 2 || 0, actual.headerBottom + 2, 0) * dpr);
+    const right = Math.floor(Math.min(actual.host.right - 2, actual.clip?.right - 2 || Infinity, actual.root.x + actual.root.width, actual.viewport.width) * dpr);
+    const bottom = Math.floor(Math.min(actual.host.bottom - 2, actual.clip?.bottom - 2 || Infinity, actual.root.y + actual.root.height, actual.viewport.height) * dpr);
     const actualCrop = { x: left, y: top, width: right - left, height: bottom - top };
     assert(actualCrop.width > 100 && actualCrop.height > 50, 'Meaningful unobscured native product area is visible');
     const sourceCrop = { ...actualCrop };
@@ -212,9 +219,9 @@ async function staticCase(browser, viewport, javaScriptEnabled, pixelmatch, muta
   page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
   const label = `${javaScriptEnabled ? 'reduced' : 'nojs'}-${viewport.width}`;
   try {
-    const response = await page.goto(base, { waitUntil: 'networkidle' });
-    assert.equal(response.status(), 200);
     for (const name of scenes) {
+      const response = await page.goto(new URL(scenePaths[name], base).href, { waitUntil: 'networkidle' });
+      assert.equal(response.status(), 200);
       await reveal(page, name);
       const result = await compare(page, name, 'result', `${label}-${name}`, pixelmatch);
       if (mutations && name === 'methods') {
@@ -247,52 +254,24 @@ async function staticCase(browser, viewport, javaScriptEnabled, pixelmatch, muta
   } finally { await context.close(); }
 }
 
-async function animatedCase(browser, viewport, pixelmatch) {
-  const context = await browser.newContext({ viewport, reducedMotion: 'no-preference', deviceScaleFactor: 1.5, colorScheme: 'light', serviceWorkers: 'block' });
+
+async function capturedStages(browser, pixelmatch) {
+  const context = await browser.newContext({ viewport: { width: 1440, height: 1000 }, reducedMotion: 'reduce', deviceScaleFactor: 1.5, colorScheme: 'light', serviceWorkers: 'block' });
   const page = await context.newPage();
-  const errors = [];
-  page.on('pageerror', error => errors.push(error.message));
-  page.on('console', message => { if (message.type() === 'error') errors.push(message.text()); });
-  const label = `animated-${viewport.width}`;
-  const advance = async milliseconds => {
-    await page.clock.runFor(milliseconds);
-    await new Promise(resolve => setTimeout(resolve, 40));
-    await page.clock.runFor(34);
-  };
   try {
-    const start = new Date('2026-10-27T00:00:00Z');
-    await page.clock.install({ time: start });
-    // Pause the empty page before navigation. A 100ms deadline can elapse
-    // during browser IPC under load; this jump cannot advance consumer timers.
-    await page.clock.pauseAt(new Date(start.getTime() + 60_000));
-    const response = await page.goto(base, { waitUntil: 'load' });
-    assert.equal(response.status(), 200);
-    await advance(100);
-    await page.waitForFunction(() => document.querySelector('#product')?.dataset.demoReadiness === 'ready', null, { polling: 50 });
-    for (const [index, name] of scenes.entries()) {
-      const target = await page.evaluate(index => {
-        const root = document.querySelector('#product');
-        const mode = root.dataset.capabilityMode;
-        if (mode !== 'stage') throw new Error(`Expected pinned playback, got ${mode}`);
-        const stage = root.querySelector('.capability-browser');
-        const track = root.querySelector('.capability-track');
-        const height = stage.getBoundingClientRect().height;
-        return track.getBoundingClientRect().top + scrollY - parseFloat(getComputedStyle(stage).top) + ((track.getBoundingClientRect().height - height) / 3) * (index + .15);
-      }, index);
-      await page.evaluate(top => { document.activeElement?.blur(); scrollTo({ top, behavior: 'instant' }); }, target);
-      await advance(300);
-      for (const [id, duration] of [['start', 0], ['middle', 6100], ['result', 6100]]) {
-        if (duration) await advance(duration);
-        await compare(page, name, id, `${label}-${name}-${id}`, pixelmatch);
+    for (const name of scenes) {
+      await page.goto(new URL(scenePaths[name], base).href, { waitUntil: 'networkidle' });
+      assert.equal(fixture.scenes[name].frames.length, 3, `${name}: independent fixture contains three frames`);
+      const player = page.locator(`.product-capture-player[data-player="${name}"]`);
+      for (const [index, phase] of ['start', 'middle'].entries()) {
+        await player.locator('button[aria-pressed]').nth(index).click();
+        await reveal(page, name);
+        assert.equal(await player.getAttribute('data-player-stage'), phase);
+        await compare(page, name, phase, `captured-${name}-${phase}`, pixelmatch);
       }
     }
-    assert.deepEqual(errors, [], 'Animated consumer has no browser or hydration errors');
   } catch (error) {
-    rows.push({ label, pass: false, errors: [error.stack], browserErrors: errors, state: await page.evaluate(() => {
-      const root = document.querySelector('#product');
-      return { readiness: root?.dataset.demoReadiness, mode: root?.dataset.capabilityMode, top: root?.getBoundingClientRect().top, height: innerHeight };
-    }).catch(() => null) });
-    console.error(`FAIL ${label}: ${error.message}`);
+    rows.push({ label: 'captured-start-middle', pass: false, errors: [error.stack] });
   } finally { await context.close(); }
 }
 
@@ -307,9 +286,8 @@ async function animatedCase(browser, viewport, pixelmatch) {
       await staticCase(browser, viewport, false, pixelmatch);
     }
     await staticCase(browser, { width: 1440, height: 1000 }, true, pixelmatch, true);
-    for (const viewport of viewports.filter(viewport => [1440, 390].includes(viewport.width) && selected.includes(viewport.width))) {
-      await animatedCase(browser, viewport, pixelmatch);
-    }
+    await capturedStages(browser, pixelmatch);
+
   } finally { await browser.close(); }
   const endIdentity = sourceHashes();
   try {

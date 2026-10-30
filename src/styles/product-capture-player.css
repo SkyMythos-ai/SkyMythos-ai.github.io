@@ -1,0 +1,69 @@
+.product-capture-player {
+  width: min(996px, 100%);
+  min-width: 0;
+  margin-inline: auto;
+  color: #b5bdcc;
+  font-size: 13px;
+}
+.product-capture-player .pc-toolbar {
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding-block: 8px;
+}
+.product-capture-player .pc-toolbar[hidden] { display: none; }
+.product-capture-player .pc-steps { display: flex; flex-wrap: wrap; gap: 4px; }
+.product-capture-player button {
+  min-height: 44px;
+  padding: 8px 14px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: #b5bdcc;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 160ms ease-out, color 160ms ease-out;
+}
+.product-capture-player button:hover { color: #f4f6fb; background: #1c2431; }
+.product-capture-player button[aria-pressed="true"] { color: #f4f6fb; background: #202a3a; }
+.product-capture-player button:disabled { color: #b5bdcc; cursor: default; background: transparent; }
+.product-capture-player :is(button, .pc-scroll):focus-visible { outline: 2px solid #a9c5ff; outline-offset: 3px; }
+.product-capture-player .pc-play { border-color: #384254; }
+.product-capture-player .pc-scroll {
+  width: 100%;
+  overflow: auto;
+  contain: inline-size;
+  border: 1px solid #384254;
+  border-radius: 8px;
+  background: #fff;
+  scrollbar-color: #67758a #e9edf3;
+  scrollbar-width: thin;
+  overscroll-behavior-x: contain;
+}
+.product-capture-player .native-demo {
+  width: 996px;
+  min-width: 996px;
+  max-width: none;
+  height: 623px;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+}
+.product-capture-player .pc-caption { display: flex; flex-wrap: wrap; gap: 8px 20px; margin: 14px 0 0; line-height: 1.7; }
+.product-capture-player .pc-summary { margin: 0 0 12px; color: #f4f6fb; font-size: 14px; line-height: 1.7; }
+.product-capture-player .pc-summary span { margin-inline-end: 12px; font-variant-numeric: tabular-nums; }
+.product-capture-player .pc-scroll-hint { display: none; }
+@media (max-width: 1050px) {
+  .product-capture-player .pc-scroll-hint { display: block; margin: 0 0 12px; line-height: 1.7; }
+}
+@media (max-width: 520px) {
+  .product-capture-player .pc-toolbar { gap: 4px; }
+  .product-capture-player button { padding-inline: 10px; }
+  .product-capture-player .pc-caption { font-size: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .product-capture-player button { transition: none; }
+}

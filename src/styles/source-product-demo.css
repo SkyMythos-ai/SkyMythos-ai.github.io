@@ -1,0 +1,29 @@
+.source-product-demo { width:100%; margin-inline:auto; color:var(--h-text); }
+.source-demo-stage { position:relative; }
+.source-demo-viewport { position:relative; height:600px; overflow:hidden; background:transparent; }
+.source-demo-delivery .source-demo-viewport { height:640px; }
+.source-demo-viewport iframe { width:100%; height:100%; border:0; display:block; }
+.source-demo-viewport[data-loaded=false] iframe { visibility:hidden; }
+.source-demo-loading { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; font-size:14px; color:var(--h-muted); background:var(--h-bg); }
+.source-demo-loading a,.source-demo-static a { color:var(--h-accent); }
+.source-demo-loading button { min-height:44px; padding:8px 16px; border-radius:6px; border:1px solid var(--h-line); color:var(--h-text); background:var(--h-raised); }
+.source-demo-static { padding:30px; display:grid; gap:16px; }
+.source-demo-static h3 { font-size:20px; font-weight:500; }
+.source-demo-static p { font-size:14px; line-height:1.8; color:var(--h-muted); }
+.source-demo-caption { position:absolute; left:16px; bottom:10px; padding:2px 6px; background:var(--h-bg); color:var(--h-muted); font-size:11px; line-height:20px; border-radius:4px; pointer-events:none; }
+.source-demo-caption[hidden] { display:none; }
+@media(max-width:700px) {
+ .source-demo-viewport,.source-demo-delivery .source-demo-viewport { height:640px; }
+}
+
+/* The opening scene stays as the previously approved complete console. */
+.source-whole-page .source-demo-viewport { height:700px;border:1px solid var(--h-line);border-radius:12px;background:var(--h-surface); }
+.source-whole-page .source-demo-caption { background:var(--h-surface);bottom:12px; }
+.source-demo-pan-hint { display:none; }
+.source-demo-pan-hint[hidden] { display:none; }
+@media(max-width:700px) {
+ .source-whole-page .source-demo-viewport { height:640px;overflow-x:auto;overscroll-behavior-x:contain; }
+ .source-whole-page iframe { width:960px;min-width:960px; }
+ .source-whole-page .source-demo-pan-hint { display:block;padding-top:10px;font-size:12px;color:var(--h-muted); }
+}
+.source-whole-page .source-demo-pan-hint[hidden] { display:none; }

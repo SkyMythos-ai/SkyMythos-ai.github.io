@@ -78,3 +78,19 @@ export function getProductTerminal(name: ProductSceneName): {
   }
   return { scene, frame, html: bytes.toString("utf8"), cssUrl: `${productReferenceBase}/${manifest.css}` };
 }
+
+/** 播放器只发布已逐帧核验的原始 HTML；与静态终态共用冻结 manifest 和双重摘要合同。 */
+export function getProductSequence(name: ProductSceneName) {
+  const manifest = readManifest();
+  const scene = manifest.scenes[name];
+  if (!scene) throw new Error(`Unknown product scene: ${name}`);
+  const frames = (["start", "middle", "result"] as const).map(stage => {
+    const frame = scene.frames[stage];
+    const bytes = readFileSync(path.join(directory, frame.path));
+    if (sha256(bytes) !== manifest.assets[frame.path] || frame.sha256 !== manifest.assets[frame.path]) {
+      throw new Error(`Frozen product frame changed: ${frame.id}`);
+    }
+    return { stage, frame, html: bytes.toString("utf8") };
+  });
+  return { scene, frames, cssUrl: `${productReferenceBase}/${manifest.css}` };
+}

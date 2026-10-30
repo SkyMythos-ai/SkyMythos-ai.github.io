@@ -7,7 +7,7 @@ portable.trackIdentity('lifecycle');
 
 const project = portable.project;
 const evidence = portable.evidence;
-const url = portable.url;
+const url = new URL('resources/how-it-works/', portable.url).href;
 const hero = path.join(project, 'src/components/hero-lifecycle');
 const read = file => fs.readFileSync(file, 'utf8');
 const compiled = ts.transpileModule(read(path.join(hero, 'model.ts')), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText;
@@ -83,7 +83,7 @@ async function ready(page) {
   throw new Error('Lifecycle did not start while in view');
 }
 async function newPage(options = {}) {
-  const context = await browser.newContext({ viewport: { width: 1440, height: 1100 }, reducedMotion: 'no-preference', ...options });
+  const context = await browser.newContext({ viewport: { width: 1440, height: 700 }, reducedMotion: 'no-preference', ...options });
   const page = await context.newPage();
   page.on('pageerror', error => report.errors.push({ page: options.viewport ? 'mobile' : 'desktop', type: 'pageerror', text: error.message }));
   const pageLabel = options.viewport ? 'mobile' : 'desktop';
@@ -155,15 +155,27 @@ async function newPage(options = {}) {
     return { before: before.data.elapsed, held: held.data.elapsed, after: after.data.elapsed };
   });
   await check('pointer press releases keyboard hold without resetting elapsed', async () => {
-    await page.keyboard.press('Tab'); await page.locator('[data-lifecycle="b"]').focus();
+    // Set keyboard modality without Tab moving focus and starting a browser scroll.
+    await scrollBIntoView(page);
+    await page.keyboard.press('Shift');
+    await page.locator('[data-lifecycle="b"]').evaluate(root => root.focus({ preventScroll: true }));
     const before = await snapshot(page); assert.equal(before.held, 'true'); assert.equal(before.data.running, 'false');
-    await page.locator('[data-lifecycle="b"]').dispatchEvent('pointerdown', { pointerType: 'mouse' });
-    await page.clock.runFor(1000); const after = await snapshot(page); compare(after);
+    const geometry = await page.locator('[data-lifecycle="b"]').evaluate(root => {
+      const box = root.getBoundingClientRect();
+      return { top: box.top, bottom: box.bottom, height: box.height, viewport: innerHeight, scrollY, running: root.dataset.running, held: root.dataset.held };
+    });
+    // Real pointer input updates :focus-visible modality; dispatchEvent alone does not.
+    const box = await page.locator('[data-lifecycle="b"]').boundingBox();
+    assert(box && box.y < geometry.viewport && box.y + box.height > 0, 'Pointer target intersects the viewport');
+    await page.mouse.move(box.x + box.width / 2, Math.max(1, Math.min(geometry.viewport - 1, box.y + box.height / 2)));
+    await page.mouse.down(); await page.mouse.up();
+    await page.clock.runFor(1500); const after = await snapshot(page); compare(after);
     assert.equal(after.held, 'false'); assert(Number(after.data.elapsed) > Number(before.data.elapsed) + .9);
     await page.locator('[data-lifecycle="b"]').evaluate(root => root.blur());
-    return { before: before.data.elapsed, after: after.data.elapsed, stimulus: 'synthetic pointerdown on the actual lifecycle scope' };
+    return { before: before.data.elapsed, after: after.data.elapsed, geometry, afterState: after.data, stimulus: 'real mouse press on the visible lifecycle scope' };
   });
   await check('simulated document hidden freezes and visibility restoration resumes', async () => {
+    await ready(page);
     const before = await snapshot(page);
     try {
       await page.evaluate(() => { Object.defineProperty(document, 'hidden', { configurable: true, get: () => true }); document.dispatchEvent(new Event('visibilitychange')); });
@@ -178,6 +190,7 @@ async function newPage(options = {}) {
     }
   });
   await check('simulated persisted pagehide freezes and pageshow restores without resetting', async () => {
+    await ready(page);
     const before = await snapshot(page);
     await page.evaluate(() => dispatchEvent(new PageTransitionEvent('pagehide', { persisted: true })));
     const hidden = await snapshot(page); assert.equal(hidden.data.running, 'false');
@@ -207,7 +220,7 @@ async function newPage(options = {}) {
     const after = await snapshot(page); compare(after); assert(Number(after.data.elapsed) > Number(before.data.elapsed) + .9);
     return { before: before.data.elapsed, still: still.data.elapsed, frozen: frozen.data.elapsed, after: after.data.elapsed };
   });
-  const mobile = await newPage({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: 'reduce' });
+  const mobile = await newPage({ viewport: { width: 390, height: 700 }, isMobile: true, hasTouch: true, reducedMotion: 'reduce' });
   await mobile.goto(url, { waitUntil: 'networkidle' });
   await check('initial mobile below-fold reduced B stays terminal at zero after 5 virtual seconds', () => initialOffscreen(mobile, true));
   await check('compact mobile reduced motion terminal state', async () => {

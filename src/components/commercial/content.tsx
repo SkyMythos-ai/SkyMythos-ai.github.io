@@ -7,7 +7,8 @@ import { ProductDemo } from "@/components/commercial/product-demo";
 import { basePath } from "@/lib/site";
 import { commercialSlugs } from "@/lib/commercial-routes";
 import { getProductImages } from "@/lib/product-reference";
-import { homeBody } from "@/content/commercial/home";
+import { HarnessHome } from "@/components/commercial/harness-home";
+import { ProductCapturePlayer } from "@/components/commercial/product-capture-player";
 import { createPages, type CommercialPage } from "@/content/commercial/pages";
 
 const commercialBase = `${basePath}/zh/`;
@@ -25,7 +26,7 @@ export function CommercialContent({ html }: { html: string }) {
         const marker = node.data.trim();
         if (marker === "LIFECYCLE") return <HeroLifecycle key="lifecycle-b" locale="zh" />;
         const name = marker.replace("CAPABILITY:", "");
-        if (name === "delivery" || name === "methods" || name === "management") return <ProductDemo key={`product-${name}`} name={name} />;
+        if (name === "delivery" || name === "methods" || name === "management") return <div className="product-reference-example" key={`product-${name}`}><ProductCapturePlayer name={name}><ProductDemo name={name} playback /></ProductCapturePlayer><a href={images[name].src} target="_blank" rel="noopener">查看完整产品原图 ↗</a></div>;
       }
       if (node instanceof Element && node.name === "a") {
         const { href, ...attributes } = node.attribs;
@@ -50,7 +51,7 @@ export function getCommercialPages(): CommercialPage[] {
 }
 
 export function CommercialHome() {
-  return <CommercialContent html={homeBody} />;
+  return <HarnessHome />;
 }
 
 export function CommercialBreadcrumbs({ page }: { page: CommercialPage }) {

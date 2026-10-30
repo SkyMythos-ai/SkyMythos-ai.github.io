@@ -25,7 +25,7 @@ async function isolateLifecycle(page) {
   }
   modules.set('animation-hold.js', esm(fs.readFileSync(path.join(project, 'src/lib/animation-hold.ts'), 'utf8')));
   modules.set('lifecycle.js', esm(`import { observeAnimationHold } from './animation-hold.js';\nimport { lifecycleCopy } from './copy.js';\nimport { createLifecyclePainter } from './painter.js';\nexport function mountLifecycle(root: {current: HTMLElement}, locale: 'zh' = 'zh') ${callback.body.getText(tree)}`));
-  const response = await page.request.get(url);
+  const response = await page.request.get(new URL('resources/how-it-works/', url).href);
   assert.equal(response.status(), 200);
   // 使用实际 out SSR markup/CSS，但不加载任何 React 或官网 controller，避免双挂载。
   const html = (await response.text()).replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi, '').replace(/<link\b(?=[^>]*\brel=["'](?:preload|modulepreload)["'])(?=[^>]*\bas=["']script["'])[^>]*>/gi, '');

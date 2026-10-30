@@ -1,9 +1,10 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
 import parse from "html-react-parser";
+import { ThemeToggle } from "@/components/site-theme";
 import { LanguageSwitch } from "@/components/language-switch";
 import { CommercialRuntime } from "@/components/commercial/runtime";
-import { CommercialNavigation } from "@/components/commercial/navigation";
+import { CommercialNavigation, CommercialWordmark, CommercialHeaderAction } from "@/components/commercial/navigation";
 import { commercialDialogs } from "@/content/commercial/dialogs";
 import { basePath } from "@/lib/site";
 import "@/styles/commercial.css";
@@ -11,7 +12,7 @@ import "@/styles/commercial.css";
 function Brand({ footer = false }: { footer?: boolean }) {
   return <Link className="brand" href="/zh/" aria-label={footer ? "返回 SkyMythos 首页" : "SkyMythos 首页"}>
     <img src={`${basePath}/brand/logo-mark.svg`} width="27" height="32" alt="" />
-    <img src={`${basePath}/brand/logo-wordmark.svg`} width="158" height="27" alt="SkyMythos.ai" />
+    <CommercialWordmark />
   </Link>;
 }
 
@@ -21,7 +22,8 @@ function CommercialHeader() {
     <button className="menu-toggle" type="button" aria-expanded="false" aria-controls="navigation" hidden>菜单</button>
     <CommercialNavigation />
     <LanguageSwitch locale="zh" label="切换语言" className="commercial-language" />
-    <a className="button button-small nav-cta" href="#contact" data-contact>预约演示<span aria-hidden="true">↗</span></a>
+    <ThemeToggle />
+    <CommercialHeaderAction />
   </div></header>;
 }
 

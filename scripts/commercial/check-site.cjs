@@ -27,7 +27,7 @@ const routes = [
   { route: 'resources/how-it-works/', name: 'how-it-works', group: '资源', phrases: [/工作/, /交付/, /方法/, /确认/] },
 ];
 const expectedTitles = {
-  home: '让 AI 完成工作，让能力留在企业', product: '产品总览', 'work-delivery': '工作交付', methods: '方法复用', governance: '使用治理', architecture: '企业架构',
+  home: '企业的 AI-Native Harness｜持续工作，积累企业能力', product: '产品总览', 'work-delivery': '工作交付', methods: '方法复用', governance: '使用治理', architecture: '企业架构',
   solutions: '解决方案', engineering: '研发任务交付方案', 'team-reuse': '团队方法复用方案', 'enterprise-adoption': '企业 AI 采用方案', security: '安全与责任边界', resources: '资源中心', 'how-it-works': '工作方式与完整案例',
 };
 const groups = [
@@ -202,7 +202,7 @@ async function checkLayout(page, label) {
   if (geometry.width <= 700) {
     check(await page.locator('.menu-toggle').isVisible(), `${label}: compact navigation has an accessible menu toggle`);
     equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'), 'false', `${label}: compact menu starts closed`);
-    check(await page.locator('.masthead [data-contact]').isVisible(), `${label}: demo action remains visible`);
+    check(await page.locator('#main [data-contact]').first().isVisible(), `${label}: demo action remains visible`);
     const overlap = await page.evaluate(() => {
       const selectors = ['.masthead .brand', '.menu-toggle', '.masthead [data-contact]'];
       const boxes = selectors.map(selector => document.querySelector(selector).getBoundingClientRect());
@@ -308,14 +308,16 @@ async function inspectPage(page, item, response) {
   for (const phrase of item.phrases) check(phrase.test(rawMain), `${item.name}: core content exists before JavaScript`);
   const isHome = item.route === '';
   equal(await page.locator('#product').count(), isHome ? 1 : 0, `${item.name}: no fake hidden homepage product root on inner pages`);
-  equal(await page.locator('[data-tab]').count(), isHome ? 3 : 0, `${item.name}: capability tabs only exist on home`);
+  equal(await page.locator('.harness-home').count(), isHome ? 1 : 0, `${item.name}: harness home scope`);
+  const prototypes = page.locator('.focused-prototype');
+  equal(await prototypes.count(), isHome ? 4 : 0, `${item.name}: homepage demonstrations are scoped to home`);
   if (isHome) {
-    equal(await page.locator('[data-tab]').evaluateAll(links => links.map(link => ({ tag: link.tagName, href: link.getAttribute('href') }))), [
-      { tag: 'A', href: '#panel-delivery' }, { tag: 'A', href: '#panel-methods' }, { tag: 'A', href: '#panel-management' },
-    ], 'Home capabilities retain local native anchors; only global navigation becomes multipage');
+    equal(await prototypes.evaluateAll(nodes => nodes.map(node => [node.dataset.prototype, node.dataset.presentation])), [
+      ['hero', 'whole-page'], ['delivery', 'composed-v1'], ['training', 'composed-v1'], ['knowledge', 'composed-v1'],
+    ], 'Home has the original hero and three distinct composed demonstrations in order');
   }
-  equal(await page.locator('.capability-track').count(), isHome ? 1 : 0, `${item.name}: capability controller is scoped to home`);
-  equal(await page.locator('[data-lifecycle="b"]').count(), isHome || item.route === 'resources/how-it-works/' ? 1 : 0, `${item.name}: lifecycle mounts only on its two intended pages`);
+  equal(await page.locator('.capability-track').count(), 0, `${item.name}: removed capability stage`);
+  equal(await page.locator('[data-lifecycle="b"]').count(), item.route === 'resources/how-it-works/' ? 1 : 0, `${item.name}: lifecycle is on its resource page`);
   const breadcrumb = page.locator('.breadcrumb');
   equal(await breadcrumb.count(), isHome ? 0 : 1, `${item.name}: breadcrumbs exist only on inner pages`);
   if (!isHome) {
@@ -425,7 +427,7 @@ async function contactFlow(page, context, requestCount) {
   await page.waitForLoadState('networkidle');
   const before = await storageSnapshot(page, context);
   const count = requestCount();
-  const trigger = page.locator('.masthead [data-contact]');
+  const trigger = page.locator('#main [data-contact]').first();
   await trigger.click();
   const dialog = page.locator('#contact-dialog');
   check(await dialog.evaluate(element => element instanceof HTMLDialogElement && element.open && element.matches(':modal')), 'Inner-page CTA opens a native modal dialog');
@@ -461,9 +463,9 @@ async function contactFlow(page, context, requestCount) {
 }
 
 async function innerZoom(page) {
-  await goto(page, 'product/work-delivery/');
+  await goto(page, 'product/architecture/');
   const trigger = page.locator('.page-figure a[data-zoom]').first();
-  check(await trigger.count() > 0, 'Inner delivery page has a real product image zoom trigger');
+  check(await trigger.count() > 0, 'Inner architecture page has a real product image zoom trigger');
   await trigger.scrollIntoViewIfNeeded();
   await settle(page);
   const href = await trigger.getAttribute('href');
@@ -527,19 +529,21 @@ async function main() {
         const response = await checkedGet(context, new URL(edge.to, base).href);
         const html = await response.text();
         const id = decodeURIComponent(edge.hash.slice(1)).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        // capability-layer IDs are replaced at runtime with real anchor markers by the home controller.
-        const runtimeCapability = edge.to === base.pathname && /^#panel-(delivery|methods|management)$/.test(edge.hash);
-        check(runtimeCapability || new RegExp(`\\bid=["']${id}["']`).test(html), `Graph fragment has a real server-rendered destination: ${edge.to}${edge.hash}`);
+        check(new RegExp(`\\bid=["']${id}["']`).test(html), `Graph fragment has a real server-rendered destination: ${edge.to}${edge.hash}`);
       }
       diagnostics.push({ label: 'resource-graph', routeCount: routes.length, graphEdges: graph.length, assetCount: resources.size, checkedUrls: urls.size });
     });
 
     await runCase('real-header-footer-hero-and-history-navigation', {}, async page => {
       await goto(page);
-      const heroLink = page.locator('.hero a').filter({ hasText: /了解产品/ });
+      const workflowLink = page.locator('.harness-hero .harness-actions a').filter({ hasText: /查看工作方式/ });
+      equal(await workflowLink.count(), 1, 'Home hero has one workflow anchor');
+      equal(await workflowLink.getAttribute('href'), '#autonomy', 'Home hero workflow anchor points to the execution section');
+      equal(await page.locator('#autonomy').count(), 1, 'Home hero workflow destination exists');
+      const heroLink = page.locator('.harness-hero .harness-actions a').filter({ hasText: /了解产品/ });
       equal(await heroLink.count(), 1, 'Home hero has one next-step product CTA');
-      equal(await heroLink.getAttribute('href'), sitePath('product/'), 'Home hero next step points to product page');
-      await clickAndArrive(page, heroLink, siteUrl('product/'));
+      equal(await heroLink.getAttribute('href'), sitePath('product/work-delivery/'), 'Home hero next step points to work delivery');
+      await clickAndArrive(page, heroLink, siteUrl('product/work-delivery/'));
       await page.goBack({ waitUntil: 'load' });
       equal(page.url(), siteUrl(), 'Browser back returns from product to home');
       await settle(page);
@@ -596,8 +600,8 @@ async function main() {
         const item = routeFor(route);
         await runCase(`nojs-${viewport.width}-${item.name}`, { viewport, javaScriptEnabled: false }, async page => {
           await goto(page, route);
-          equal(await page.locator('#main > :not([inert]) h1, #main > h1').count(), 1, 'No-JS deep page has real H1');
-          const body = await page.locator('main').innerText();
+          equal(await page.evaluate(() => document.querySelectorAll('#main > :not([inert]) h1, #main > h1').length), 1, 'No-JS deep page has real H1');
+          const body = await page.locator('#main').innerText();
           for (const phrase of item.phrases) check(phrase.test(body), `No-JS ${item.name}: core content ${phrase} is visible`);
           check((await layoutSnapshot(page)).scrollWidth <= viewport.width + 1, 'No-JS layout is contained even at 320px');
           check(await page.locator('.breadcrumb').isVisible(), 'No-JS breadcrumb remains visible');
@@ -616,8 +620,16 @@ async function main() {
       for (let pass = 0; pass < 2; pass += 1) {
         await clickAndArrive(page, page.locator('.masthead .brand'), siteUrl());
         equal(await page.evaluate(() => performance.timeOrigin), origin, 'Home entry is a true Next client transition');
-        await page.waitForFunction(() => [...document.querySelectorAll('[data-native-demo]')].length === 3 && [...document.querySelectorAll('[data-native-demo]')].every(root => root.shadowRoot?.querySelector('.product-reference-root[inert]')));
-        await page.waitForFunction(() => document.querySelector('#product')?.dataset.capabilityMode != null);
+        const prototypes = page.locator('.focused-prototype');
+        equal(await prototypes.count(), 4, 'Home returns with four independent demonstrations');
+        for (const [name, presentation] of [['hero', 'whole-page'], ['delivery', 'composed-v1'], ['training', 'composed-v1'], ['knowledge', 'composed-v1']]) {
+          const prototype = page.locator(`.focused-prototype[data-prototype="${name}"]`);
+          equal(await prototype.count(), 1, `Client home has one ${name} demonstration`);
+          equal(await prototype.getAttribute('data-presentation'), presentation, `Client home ${name} keeps its product presentation`);
+          // 场景只有进入视口才挂载，逐项滚动后再等待真实产品就绪。
+          await prototype.scrollIntoViewIfNeeded();
+          await page.waitForFunction(name => document.querySelector(`.focused-prototype[data-prototype="${name}"]`)?.dataset.ready === 'true', name, { timeout: 15000 });
+        }
         const session = await page.context().newCDPSession(page);
         const nodes = (await session.send('Accessibility.getFullAXTree')).nodes.filter(node => !node.ignored);
         await session.detach();
@@ -658,7 +670,7 @@ async function main() {
       assertions, expectedRoutes: routes.map(item => sitePath(item.route)),
       completedCases: rows.length, passedCases: rows.filter(row => row.status === 'passed').length, failedCases: rows.filter(row => row.status === 'failed').length,
       traffic, rows, failures, diagnostics, pages: [...pages.values()].map(item => ({ ...item, body: undefined })), graph, screenshots,
-      exclusions: ['Homepage capability motion, transitions and dynamic zoom stability remain owned by check-pinned.cjs; this script does not replace that suite.'],
+      exclusions: ['Homepage harness layout and disclosures are checked by check-harness.cjs.'],
       limitations: ['Bundled Chromium (or explicit configured browser) only; responsive viewport emulation is not physical touch-device or Safari/Firefox validation.', 'Browser back is verified without claiming BFCache restoration. Screenshots require human visual review.'],
     };
     fs.mkdirSync(evidence, { recursive: true });

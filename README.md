@@ -11,8 +11,8 @@ SkyMythos 产品官网的源码。采用 Next.js 静态导出（`output: 'export
 | 静态导出 | `output: 'export'`，产物在 `out/` |
 | 样式 | Tailwind CSS v4（CSS-first `@theme`） |
 | 字体 | IBM Plex Sans / IBM Plex Mono，构建期自托管；中文使用系统字体栈 |
-| 视觉 | 中文商业站蓝色居中首屏与固定能力舞台；英文保留既有版式，文档保持独立阅读面 |
-| 主视觉 | 真实产品组件的只读 DOM／CSS 投影与完整产品图；B 生命周期继续使用正式组件 |
+| 视觉 | 中文首页采用 Linear + Blueflame 参考的深色工作轨迹与能力沉淀叙事；中文商业内页、英文和文档保留各自版式 |
+| 主视觉 | 首页直接运行本地产品的真实 React 组件与原 CSS/TDesign，组合真实组件连续演示任务执行、经验形成员工方案及知识检索打开原文；旧版冻结参照保留在产品内页，完整 B 生命周期保留在工作方式页 |
 | 文档正文 | Markdown 字符串 + `react-markdown`，构建期渲染 |
 | 语言 | 中文商业站 13 页；英文首页、概念与架构，以及双语文档保留。只为真实对应页生成语言镜像 |
 | SEO | 每页预渲染 HTML、canonical、hreflang、sitemap、robots、JSON-LD |
@@ -105,7 +105,7 @@ tests/fixtures/product-reference/  独立冻结的真实组件参照（非 publi
 
 ## 内容维护
 
-**改界面文案**：中文商业页编辑 `src/content/commercial/`；既有英文营销页与双语共享界面编辑 `src/content/dictionary.ts`。后者是带类型约束的完整记录，漏译会导致编译失败，而不是在页面上留下一块空白。
+**改界面文案**：中文首页正文编辑 `src/components/commercial/harness-home.tsx`，SEO 定位编辑 `src/content/commercial/home.ts`；中文商业内页编辑 `src/content/commercial/`；既有英文营销页与双语共享界面编辑 `src/content/dictionary.ts`。后者是带类型约束的完整记录，漏译会导致编译失败，而不是在页面上留下一块空白。
 
 **改文档**：编辑 `src/content/docs/<语言>/<章节>.ts`。正文是 Markdown 字符串。
 
@@ -115,7 +115,15 @@ tests/fixtures/product-reference/  独立冻结的真实组件参照（非 publi
 
 **改设计令牌**：共享令牌位于 `src/styles/globals.css` 的 `@theme` 区块。中文商业页在 `src/styles/commercial.css` 中以 `.commercial-site` 限定浅色版式；既有英文营销面保留其原有样式，文档使用独立中性阅读面。不要将商业页的全局元素规则泄漏到英文或 docs。
 
-**改生命周期动画**：中文首页直接复用 `src/components/hero-lifecycle/figure.tsx` 的 B 生命周期。产品能力投影由 `src/components/commercial/` 的控制器管理，冻结资源与刷新边界见 `scripts/product-reference/README.md`；不能手工重绘产品 UI 后宣称与真实组件一致。
+**改首页与产品演示**：中文首页使用 harness-home.tsx 与 source-product-demo.tsx。首屏保持原左对齐文案与14f40完整控制台（public/product-demo/），手机保留原桌面界面的左右浏览。首屏之后的持续执行、训练、知识三章统一标题、说明、媒体舞台与功能索引；这些章节的iframe仅隔离产品依赖和原CSS，内部直接组合真实产品的消息、工具、报告、经验来源、员工方案、知识检索与原文组件，不挂完整ProductShell或裁桌面工作台。`scripts/product-scenes/`以共享时钟和对象关系组织24秒原生连续过程，终态3秒后循环；首屏先完整交代已接收目标，再推进工具和报告，超出局部面板的调用与结果随同一时钟滚动。手机主面板使用可用宽度自然换行，不要求横向浏览960px桌面页。
+
+运行 `node scripts/product-scenes/build.cjs` 构建锁定的真实控制台来源，当前输出为 `public/product-scenes/7295629889d881f3485168832359d16d141021f9-composed-v1/`。来源记录包含dirty工作区、源树before/after、实际导入和适配摘要；知识私有组件仅通过构建时追加export暴露，不改产品源。Storage独立内存，数据与API为白名单本地示例，无真实模型、外网或业务写；不构成7×24业务验收。`public/product-demo/14f40.../`仍用于首屏完整控制台；三个正文场景使用新合成产物。正式内页冻结参照独立保留。
+
+`node scripts/commercial/check-home-hero.cjs`验证首屏完整控制台、来源、亮暗/手机及自然周期；`node scripts/commercial/check-composed-scenes.cjs`验证首屏之后的原生场景、自然周期、主题/手机、减少动态、无脚本、焦点/Storage和恢复；`npm run test:commercial -- --suites harness`也映射到该套件。`scripts/product-scenes/check.cjs`用于源组件受控时钟和实际可见矩形检查，不能替代完整自然播放与设计复核。
+
+
+
+**改亮暗模式**：`site-theme.tsx`、`site-theme.css` 与 `document-shell.tsx` 共同管理 `html[data-site-theme]`。默认跟随系统，显式切换仅保存 `skymythos-theme`。真实产品演示映射到其原生 `data-theme` 与 `theme-mode`，使用原 TDesign 色板，不用官网色板重画产品。存储不可用时仍可切换，无脚本时通过 CSS 跟随系统。
 
 **维护既有三幕动画**：`src/components/employee-visual-material.ts` 管理石墨材质，`employee-work-visual.tsx` 与 `employee-knowledge-visual.tsx` 管理原生 SVG 构图，`employee-emblem-motion.ts` 管理确定性分镜。`HeroStage` 持有唯一播放时间，`EmployeeScene` 只跟随该时间绘制。此套实现保留给既有页面，不是新版中文能力舞台的入口。
 
@@ -124,3 +132,9 @@ tests/fixtures/product-reference/  独立冻结的真实组件参照（非 publi
 ## 许可
 
 许可条款以主仓库中的实际声明为准。本仓库当前未包含独立的 LICENSE 文件。产品投影的第三方材料及许可文本见版本目录内的 `NOTICE.txt`；其中包含由标注为 AGPL-3.0-only 的 `@bible-strong/avatar-core`／`@bible-strong/avatar-react` 0.1.0 生成的 SVG 和相关 CSS。上游源码固定于 [`79fe9ba`](https://github.com/smontlouis/bible-strong-avatar-lab/tree/79fe9ba06e4874b11394b8e8a3f2c493c9d197ba)。来源与保真校验不等于已核定输出及组合范围的分发许可／适用源码义务，公开发布前须单独完成此项审查；不能仅因使用生成器就断言整个官网自动采用 AGPL。
+
+## 当前首页回归范围
+
+首页首屏由 `scripts/commercial/check-home-hero.cjs` 检查完整控制台与自然周期；首屏之后的连续场景由 `scripts/commercial/check-composed-scenes.cjs` 检查真实来源、原组件 DOM 与样式、操作过程、亮暗同步、只读边界及播放时钟。默认商业套件为 `harness,site,native-demos,lifecycle`，其中 `harness` 对应 composed-scenes。生命周期在正式工作方式页检查；旧冻结产品参照的独立保真及解析／资源边界仍在对应产品内页检查，不与新版源组件演示混淆。
+
+首页产品演示不提供播放、暂停、重播或进度控件。可见时自动运行24秒操作链，终态停留3秒后循环；离屏/后台停止并取消循环计时器，回到可见继续，系统减少动态时显示静态终态。回归覆盖自动输入/执行/报告/新周期、原组件来源与隔离、循环重置期间离屏、父焦点保持、桌面/手机亮暗及无脚本回退。测试消息协议仅用于时钟采样；既有工作方式页的手动步骤与跨页生命周期仍独立检查。模拟后台检查不替代真实后台标签页或所有硬件的性能验收。

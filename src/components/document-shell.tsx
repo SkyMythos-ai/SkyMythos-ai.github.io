@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { plexSans, plexMono } from "@/lib/fonts";
 import { localeHtmlLang, type Locale } from "@/lib/i18n";
 import "@/styles/globals.css";
+import "@/styles/site-theme.css";
 
 /**
  * DocumentShell — the document element for every entry point.
@@ -33,6 +34,7 @@ export function DocumentShell({
       suppressHydrationWarning
       className={`${plexSans.variable} ${plexMono.variable}`}
     >
+      <head><script dangerouslySetInnerHTML={{ __html: `(function(){var m=window.matchMedia('(prefers-color-scheme: dark)');function saved(){try{return localStorage.getItem('skymythos-theme')}catch(e){return null}}function apply(){var s=saved();document.documentElement.dataset.siteTheme=(s==='light'||s==='dark')?s:(m.matches?'dark':'light')}apply();m.addEventListener('change',function(){if(!document.documentElement.hasAttribute('data-site-theme-chosen'))apply()});window.addEventListener('storage',function(e){if(e.key==='skymythos-theme'){document.documentElement.removeAttribute('data-site-theme-chosen');apply()}})})()` }} /></head>
       <body>{children}</body>
     </html>
   );

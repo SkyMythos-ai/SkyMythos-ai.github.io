@@ -3,7 +3,7 @@ const path = require('node:path');
 const assert = require('node:assert/strict');
 const { spawnSync } = require('node:child_process');
 
-const suites = ['hero', 'pinned', 'scroll', 'preview', 'site', 'native-demos', 'lifecycle'];
+const suites = ['harness', 'site', 'native-demos', 'lifecycle'];
 
 /** CLI 优先于 SUITES；任何未知套件立即失败，避免拼错名字悄悄漏跑。 */
 function selectSuites(args, environment = process.env) {
@@ -30,7 +30,7 @@ function run(selected, options) {
     const startedAt = new Date().toISOString();
     const started = performance.now();
     console.log(`\n=== Commercial regression: ${name} ===`);
-    const child = (options.spawn || spawnSync)(process.execPath, [path.join(__dirname, `check-${name}.cjs`)], {
+    const child = (options.spawn || spawnSync)(process.execPath, [path.join(__dirname, `check-${name === "harness" ? "composed-scenes" : name}.cjs`)], {
       cwd: options.project,
       env: { ...process.env, PREVIEW_URL: options.url, EVIDENCE_DIR: options.evidence },
       stdio: 'inherit', timeout: options.timeout, killSignal: 'SIGTERM',
@@ -44,7 +44,7 @@ function run(selected, options) {
 
 function main() {
   if (process.argv.includes('--help')) {
-    console.log(`Usage: node scripts/commercial/run.cjs [--suites hero,pinned | hero pinned]\nSUITES=${suites.join(',')}\nPREVIEW_URL=http://127.0.0.1:4173/zh/\nEVIDENCE_DIR defaults to a new project-external temporary directory.\nSUITE_TIMEOUT_MS defaults to 600000 per suite.`);
+    console.log(`Usage: node scripts/commercial/run.cjs [--suites harness,site | harness site]\nSUITES=${suites.join(',')}\nPREVIEW_URL=http://127.0.0.1:4173/zh/\nEVIDENCE_DIR defaults to a new project-external temporary directory.\nSUITE_TIMEOUT_MS defaults to 600000 per suite.`);
     return;
   }
   const selected = selectSuites(process.argv.slice(2));

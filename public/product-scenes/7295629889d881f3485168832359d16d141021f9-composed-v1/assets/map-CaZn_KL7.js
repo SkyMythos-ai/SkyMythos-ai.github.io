@@ -1,0 +1,1 @@
+import{l as e,s as t}from"./graphlib-BHMs_Zdk.js";import{X as n,ct as r,lt as i}from"./index-BAgK0OFz.js";function a(e,r){var i=-1,a=n(e)?Array(e.length):[];return t(e,function(e,t,n){a[++i]=r(e,t,n)}),a}function o(t,n){return(r(t)?i:a)(t,e(n,3))}export{a as n,o as t};

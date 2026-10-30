@@ -3,6 +3,7 @@ import "server-only";
 import type { CSSProperties } from "react";
 import {
   getProductImages,
+  getProductSequence,
   getProductTerminal,
   productReferenceManifestUrl,
   productReferenceRevision,
@@ -20,12 +21,15 @@ const stylesheetBoundary = "[data-product-viewport]{visibility:hidden}[data-prod
 const escapeAttribute = (value: string) => value.replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]!);
 
 /**
- * SSR 只发布完整只读终态。产品 DOM 是不透明边界，不能经营销 HTML→React parser 重建。
+ * 默认 SSR 只发布完整只读终态；playback 预置全部已验证帧，仍以终态作为无脚本回退。
+ * 产品 DOM 是不透明边界，不能经营销 HTML→React parser 重建。
  * 浏览器 runtime 接管 ShadowRoot 内部；客户端换页时负责激活声明式 template，失败保留此终态。
  * host 按场景固定 key，防止换页时不同场景复用无法由 innerHTML 更新的既有 ShadowRoot。
  */
-export function ProductDemo({ name }: { name: ProductSceneName }) {
-  const { scene, frame, html, cssUrl } = getProductTerminal(name);
+export function ProductDemo({ name, playback = false }: { name: ProductSceneName; playback?: boolean }) {
+  const terminal = getProductTerminal(name);
+  const { scene, frame, html, cssUrl } = terminal;
+  const frames = playback ? getProductSequence(name).frames : [{ stage: "result", frame, html }];
   const style = {
     "--native-height": `${scene.crop.height}px`,
     "--reference-width": `${scene.width}px`,
@@ -38,7 +42,9 @@ export function ProductDemo({ name }: { name: ProductSceneName }) {
   // 固定 load/error handler 不依赖站点 bundle；无脚本则同步应用完整 CSS，不隐藏任何终态。
   const stylesheet = `<link rel="stylesheet" href="${escapeAttribute(cssUrl)}" media="print" onload="this.onload=null;this.media='all';this.getRootNode().host.dataset.productStyles='ready'" onerror="this.getRootNode().host.dataset.productStyles='error'"><noscript><link rel="stylesheet" href="${escapeAttribute(cssUrl)}"><style>[data-product-viewport]{visibility:visible}[data-product-style-status]{display:none}</style></noscript>`;
   const status = `<p data-product-style-status><span data-product-style-pending>正在载入完整产品界面。</span><span data-product-style-error>产品界面样式暂时无法加载。</span><a href="${escapeAttribute(getProductImages()[name].src)}" target="_blank" rel="noopener">查看完整产品原图 ↗</a></p>`;
-  const shadow = `<template shadowrootmode="open"><style>${embedding}${stylesheetBoundary}</style>${stylesheet}<div data-product-viewport><div data-product-canvas><div data-product-frame="${frame.id}" data-reference-frame="${frame.id}" data-phase="${frame.phase}" data-label="${escapeAttribute(frame.label)}">${html}</div></div></div>${status}</template>`;
+  const frameMarkup = frames.map(({ stage, frame: snapshot, html: source }) => `<div data-product-frame="${snapshot.id}" data-reference-frame="${snapshot.id}" data-phase="${snapshot.phase}" data-label="${escapeAttribute(snapshot.label)}"${stage === "result" ? "" : " hidden"}>${source}</div>`).join("");
+  const playbackStyle = playback ? ":host([data-running=false]) *, :host([data-running=false]) *::before, :host([data-running=false]) *::after{animation-play-state:paused!important}" : "";
+  const shadow = `<template shadowrootmode="open"><style>${embedding}${stylesheetBoundary}${playbackStyle}</style>${stylesheet}<div data-product-viewport><div data-product-canvas>${frameMarkup}</div></div>${status}</template>`;
 
   return (
     <div

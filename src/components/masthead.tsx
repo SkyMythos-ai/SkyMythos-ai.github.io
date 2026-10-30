@@ -2,6 +2,7 @@ import Link from "next/link";
 import { localePath, type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/content/dictionary";
 import { Wordmark } from "@/components/wordmark";
+import { ThemeToggle } from "@/components/site-theme";
 import { LanguageSwitch } from "@/components/language-switch";
 import { NavLink } from "@/components/nav-link";
 import { MobileNavigation } from "@/components/mobile-navigation";
@@ -52,6 +53,7 @@ export function Masthead({ locale }: { locale: Locale }) {
 
         <div className="site-masthead__actions">
           <LanguageSwitch locale={locale} label={dictionary.nav.switchLanguage} />
+          <ThemeToggle locale={locale} />
           <Link
             href={localePath(locale, "/docs/getting-started/overview")}
             className="site-masthead__start site-masthead__desktop-start"
