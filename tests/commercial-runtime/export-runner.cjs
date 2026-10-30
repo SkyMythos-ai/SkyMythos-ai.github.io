@@ -42,6 +42,7 @@ async function exercise({ failed = [], spawnError = false, interrupted = false, 
 }
 
 (async () => {
+  await require('./transport.cjs')();
   for (const failed of [[], ...scripts.map(file => [file]), scripts]) {
     const result = await exercise({ failed });
     assert.deepEqual(result.calls, scripts, 'Every independent suite must execute, including after a failure');

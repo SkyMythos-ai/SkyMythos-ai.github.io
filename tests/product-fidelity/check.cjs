@@ -78,11 +78,19 @@ async function measure(frame, source, selectors) {
     const scroller = host?.closest('.pc-scroll');
     const clipBox = scroller?.getBoundingClientRect();
     const clip = clipBox ? { x: clipBox.left + scroller.clientLeft, y: clipBox.top + scroller.clientTop, right: clipBox.left + scroller.clientLeft + scroller.clientWidth, bottom: clipBox.top + scroller.clientTop + scroller.clientHeight } : null;
+    const canvas = active?.closest('[data-product-canvas]');
+    const matrix = canvas ? new DOMMatrixReadOnly(getComputedStyle(canvas).transform) : null;
     const header = document.querySelector('.site-header')?.getBoundingClientRect();
     return {
       landmarks, counts, text: element.textContent.replace(/\s+/g, ' ').trim(),
       root: { x: origin.x, y: origin.y, width: origin.width, height: origin.height },
       clip,
+      embedding: scroller ? {
+        x: clipBox.x, y: clipBox.y, width: clipBox.width, height: clipBox.height,
+        scrollLeft: scroller.scrollLeft, scrollTop: scroller.scrollTop,
+        viewportWidth: hostBox.width, viewportHeight: hostBox.height,
+        translation: { x: matrix.m41, y: matrix.m42 },
+      } : null,
       host: box ? { x: box.x, y: box.y, right: box.right, bottom: box.bottom } : null,
       viewport: { width: innerWidth, height: innerHeight, dpr: devicePixelRatio },
       scroll: { x: scrollX, y: scrollY },
@@ -135,7 +143,7 @@ async function reference(browser, name, id, dpr, viewport) {
   const unexpected = [];
   await context.route('**/*', route => { unexpected.push(route.request().url()); return route.abort(); });
   const page = await context.newPage();
-  await page.setContent(`<!doctype html><html><body style="margin:0"><iframe title="independent product reference" sandbox="allow-same-origin" width="${scene.width}" height="${scene.height}" style="display:block;border:0" srcdoc="${escape(document)}"></iframe></body></html>`);
+  await page.setContent(`<!doctype html><html><body style="margin:0"><div id="camera-scroll"><div id="camera-viewport"><iframe title="independent product reference" sandbox="allow-same-origin" width="${scene.width}" height="${scene.height}" style="display:block;border:0" srcdoc="${escape(document)}"></iframe></div></div></body></html>`);
   const app = page.frames().find(frame => frame !== page.mainFrame());
   assert(app, 'Independent reference iframe exists');
   await app.waitForSelector('.product-reference-root', { state: 'attached' });
@@ -162,17 +170,25 @@ async function compare(page, name, id, label, pixelmatch) {
     // Reproduce the complete outer document coordinate AND scroll, rather
     // than guessing a fractional phase. The inner product viewport/body stays
     // untouched. Both full-viewport screenshots now use identical clip pixels.
-    await expected.page.evaluate(({ world, scroll, height, paint }) => {
+    await expected.page.evaluate(({ world, scroll, height, paint, embedding }) => {
       const iframe = document.querySelector('iframe');
       document.body.style.cssText = `margin:0;overflow-x:hidden;min-height:${Math.max(world.y + iframe.offsetHeight, scroll.y + height + 100)}px`;
+      // 独立产品视口和原 CSS 不变；复现营销外层两级裁切与滚动合成，
+      // 避免把 pc-scroll 的分数像素栅格与裸 iframe 表面直接比较。
+      const scroller = document.querySelector('#camera-scroll');
+      const viewport = document.querySelector('#camera-viewport');
+      scroller.style.cssText = `position:absolute;box-sizing:border-box;overflow:auto;contain:inline-size;border:1px solid transparent;left:${embedding.x + scroll.x}px;top:${embedding.y + scroll.y}px;width:${embedding.width}px;height:${embedding.height}px`;
+      viewport.style.cssText = `position:relative;overflow:hidden;width:${embedding.viewportWidth}px;height:${embedding.viewportHeight}px`;
       iframe.style.position = 'absolute';
-      iframe.style.left = `${world.x}px`;
-      iframe.style.top = `${world.y}px`;
-      iframe.style.transform = 'translate3d(0,0,0)';
+      iframe.style.left = '0px';
+      iframe.style.top = '0px';
+      iframe.style.transform = `translate3d(${embedding.translation.x}px,${embedding.translation.y}px,0)`;
       // Chromium 会因祖先的 transform 预告禁用 LCD 字体抗锯齿；只同步外层合成条件，保持原产品内部不变。
       iframe.style.willChange = paint.willChangeTransform ? 'transform' : 'auto';
+      scroller.scrollLeft = embedding.scrollLeft;
+      scroller.scrollTop = embedding.scrollTop;
       scrollTo({ left: scroll.x, top: scroll.y, behavior: 'instant' });
-    }, { world, scroll: actual.scroll, height: actual.viewport.height, paint: actual.paint });
+    }, { world, scroll: actual.scroll, height: actual.viewport.height, paint: actual.paint, embedding: actual.embedding });
     const referenceBox = await expected.page.locator('iframe').boundingBox();
     assert(Math.abs(referenceBox.x - actual.root.x) < .002 && Math.abs(referenceBox.y - actual.root.y) < .002, 'Independent outer camera matches the actual product root exactly');
     const referenceBytes = await expected.page.screenshot({ animations: 'disabled' });
@@ -194,7 +210,7 @@ async function compare(page, name, id, label, pixelmatch) {
     fs.writeFileSync(path.join(evidence, `${label}-reference.png`), PNG.sync.write(original));
     fs.writeFileSync(path.join(evidence, `${label}-diff.png`), PNG.sync.write(diff));
     if (ratio > .005) errors.push(`Pixel difference ${ratio} exceeds unchanged 0.5% threshold`);
-    const row = { label, scene: name, frame: id, pass: errors.length === 0, errors, ratio, maximumRatio: .005, camera: { world, scroll: actual.scroll, paint: actual.paint, referenceBox }, actualCrop, sourceCrop, comparedLandmarks: actual.landmarks.length, sourceCameraPreserved: true };
+    const row = { label, scene: name, frame: id, pass: errors.length === 0, errors, ratio, maximumRatio: .005, camera: { world, scroll: actual.scroll, paint: actual.paint, embedding: actual.embedding, referenceBox }, actualCrop, sourceCrop, comparedLandmarks: actual.landmarks.length, sourceCameraPreserved: true };
     rows.push(row);
     console.log(`${row.pass ? 'PASS' : 'FAIL'} ${label}: ${pixels} pixels (${(ratio * 100).toFixed(4)}%) / ${actual.landmarks.length} landmarks`);
     return { actual, expected: expected.measured, selectors: expected.selectors };
@@ -300,7 +316,7 @@ async function capturedStages(browser, pixelmatch) {
     selection: process.env.FIDELITY_WIDTHS || 'full-static-and-animated-matrix',
     fixtureManifestSha256: sha(manifestBytes), startIdentity, endIdentity,
     scope: 'Actual exported website versus independent frozen real-component DOM with original unadapted CSS in a fixed-size browser iframe. Includes no-JS/reduced terminals and actual consumer start/middle/result states advanced through browser RAF. Not live product/business E2E. Timing, pause and failure contracts are checked separately by native playback regression.',
-    cameraRule: 'Outer reference iframe placed at actual product document coordinates; same outer viewport, DPR, scroll and crop pixels. Inner fixed viewport/body/geometry unchanged. No phase guess or offset search.',
+    cameraRule: 'Outer reference scrollport, clipping viewport and canvas translation reproduce actual embedding geometry; same outer viewport, DPR, scroll and crop pixels. Inner fixed product viewport/body/geometry unchanged. No phase guess or offset search.',
     rows, passed: rows.filter(row => row.pass).length, failed: rows.filter(row => !row.pass).length,
   };
   fs.writeFileSync(path.join(evidence, 'report.json'), `${JSON.stringify(report, null, 2)}\n`);

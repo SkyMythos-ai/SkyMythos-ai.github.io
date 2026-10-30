@@ -39,7 +39,12 @@ function wrapPage(page, options = {}) {
   if (pageStates.has(page)) return page;
   const state = { javaScriptEnabled: options.javaScriptEnabled !== false, closing: false, pending: new Set(), canceledReads: new Map() };
   pageStates.set(page, state);
-  page.on('request', request => { state.pending.add(request); requestStates.set(request, state); });
+  page.on('request', request => {
+    state.pending.add(request);
+    requestStates.set(request, state);
+    // 在发起时保存 frame 身份；失败时 frame.url() 可能已因卸载而失效。
+    require('./transport.cjs').trackRequest(request);
+  });
   page.on('requestfinished', request => state.pending.delete(request));
   page.on('requestfailed', request => state.pending.delete(request));
   // 只标记导航发生前已在途的产品静态读取，不把随后新出现的失败一概当作取消。

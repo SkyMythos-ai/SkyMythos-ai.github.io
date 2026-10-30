@@ -100,6 +100,7 @@ async function runCase(label, options, body) {
   let page;
   const issues = [];
   const pending = new Set();
+  const failureInspections = new Set();
   const start = assertions;
   let requests = 0;
   let responses = 0;
@@ -111,7 +112,13 @@ async function runCase(label, options, body) {
     context.on('requestfailed', request => {
       pending.delete(request);
       traffic.requestFailures += 1;
-      if (!require('./transport.cjs').recordExpectedFailure(request)) issues.push({ type: 'requestfailed', url: request.url(), failure: request.failure() });
+      // CDP 的取消通知可能先于同一次卸载的 framedetached；收齐生命周期
+      // 证据再分类，并在断言及关闭时等待，禁止异步错误逃逸检查。
+      const inspection = require('./transport.cjs').recordExpectedFailureAfterLifecycle(request)
+        .then(expected => { if (!expected) issues.push({ type: 'requestfailed', url: request.url(), failure: request.failure() }); })
+        .catch(error => { issues.push({ type: 'transport-inspection', url: request.url(), message: error.message }); })
+        .finally(() => failureInspections.delete(inspection));
+      failureInspections.add(inspection);
     });
     context.on('response', response => {
       traffic.responses += 1;
@@ -138,6 +145,7 @@ async function runCase(label, options, body) {
     await body(page, context, () => requests);
     // 捕获晚到的浏览器错误；不在关闭 context 后把主动取消请求算作成功。
     await page.waitForLoadState('networkidle');
+    await Promise.all(failureInspections);
     equal(issues, [], `${label}: no console/page/request/HTTP errors`);
     console.log(`PASS ${label} (${assertions - start} assertions)`);
   } catch (error) {
@@ -152,6 +160,7 @@ async function runCase(label, options, body) {
       failures.push({ label, phase: 'context.close', message: error.message });
       process.exitCode = 1;
     });
+    await Promise.all(failureInspections);
     if (status === 'passed' && issues.length) {
       status = 'failed';
       failures.push({ label, phase: 'late-browser-errors', message: 'Browser errors arrived while closing the case', issues });
