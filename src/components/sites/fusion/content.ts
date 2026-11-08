@@ -1,3 +1,5 @@
+import type { Locale } from "@/lib/i18n";
+
 export type Capability = {
   slug: string;
   name: string;
@@ -169,3 +171,115 @@ export const questions = [
       "提交 POC 申请，说明公司、关注场景和希望验证的目标。团队会围绕工作环境、连接授权与验收标准和你沟通。页面中的产品场景仅用于说明机制，不直接创建真实任务。",
   },
 ];
+
+const englishCapabilities: Capability[] = [
+  {
+    slug: "skybot",
+    name: "SkyBot",
+    title: "Turn a goal into work with context.",
+    summary: "Bring goals, conversations, tools and deliverables together in a project.",
+    description:
+      "Start with a clear goal. Add context, conversations and tasks in a project workspace. Keep the process and its deliverables together so your team can carry the work forward.",
+    points: [
+      { title: "Start with the goal", text: "Define the context, expected result and completion criteria so every step shares a clear direction." },
+      { title: "Connect the context", text: "Use project materials, knowledge and tools within their authorized scope, keeping the relevant process and results." },
+      { title: "Inspect the result", text: "Review tool records, deliverables and decisions awaiting confirmation. Assess execution and business acceptance separately." },
+    ],
+  },
+  {
+    slug: "employees",
+    name: "AI Employee",
+    title: "Let useful experience inform the next task.",
+    summary: "Define responsibilities, skills, knowledge and tools for your AI employees.",
+    description:
+      "AI employees hold reusable work configurations. Organize experience from a task into a proposed improvement, then decide whether to incorporate it into an employee’s skills and working methods.",
+    points: [
+      { title: "Define responsibilities", text: "Configure an AI employee’s role and capabilities around the work, rather than assembling all the context again for every task." },
+      { title: "Capture useful experience", text: "Identify effective methods in real work, preserving their sources and the conditions where they apply." },
+      { title: "Review improvements", text: "Experience analysis produces a proposal for review. A proposal, a capability update and its subsequent use are separate steps." },
+    ],
+  },
+  {
+    slug: "flows",
+    name: "Tasks & Flows",
+    title: "Give complex engineering work a clear path to delivery.",
+    summary: "Organize analysis, implementation, review and validation with Tasks and Flows.",
+    description:
+      "Bring requirements and repositories into an engineering task, then work through reusable stages and flows. Execute in an isolated environment and hand over changes, artifacts and check results.",
+    points: [
+      { title: "Reuse engineering workflows", text: "Organize analysis, implementation, review and delivery into explicit stages, choosing a suitable flow for each task." },
+      { title: "Keep delivery evidence", text: "Inspect stage status, code changes, artifacts and check results instead of relying on a completion message alone." },
+      { title: "Resume within clear boundaries", text: "Continue work within defined run and stage boundaries. Passing checks does not mean a change has been merged or deployed." },
+    ],
+  },
+  {
+    slug: "automations",
+    name: "Automations",
+    title: "Give recurring work its own rhythm.",
+    summary: "Organize repeatable work into automations and individual runs.",
+    description:
+      "Configure triggers and execution for work suited to repetition, then review the process and result of each run. Decisions still retain the authorization and human confirmation they need.",
+    points: [
+      { title: "Trigger by rule", text: "Configure automations using the currently supported schedule and event triggers. Keep the configuration distinct from each actual run." },
+      { title: "Review each run", text: "Use run records to see whether work executed, what it produced and where follow-up is needed." },
+      { title: "Keep people in control", text: "Retain confirmation steps for publishing, merging and other actions that require authorization in the actual workflow." },
+    ],
+  },
+  {
+    slug: "knowledge",
+    name: "Knowledge",
+    title: "Follow every reference back to its source.",
+    summary: "Organize scattered materials into maintainable enterprise knowledge with sources.",
+    description:
+      "Bring project facts, decisions and working materials into knowledge. Inspect matching passages and source text, share within access boundaries and maintain content that stays useful over time.",
+    points: [
+      { title: "Search around the work", text: "Find relevant materials for the task at hand and use matching passages to assess their relevance." },
+      { title: "Return to the source", text: "Connect search results to the same knowledge base, document and version so their context stays intact." },
+      { title: "Maintain knowledge over time", text: "Distinguish working records from confirmed knowledge. Build team capability with clear sources, permissions and maintenance ownership." },
+    ],
+  },
+  {
+    slug: "environments",
+    name: "Environments & Governance",
+    title: "Autonomous work. Clear boundaries.",
+    summary: "Manage execution environments, model and tool connections, and necessary approvals.",
+    description:
+      "Configure execution environments separately from model and tool connections. Bound access by identity, work scope and connection permissions so the team knows what can proceed and what needs a human decision.",
+    points: [
+      { title: "Prepare the environment", text: "Choose an appropriate execution environment and verify isolation, network and resource conditions for the actual deployment." },
+      { title: "Manage permissions separately", text: "Sharing team capabilities does not mean sharing personal credentials. Model and tool access follows each connection’s authorization." },
+      { title: "Verify actual boundaries", text: "Private deployment does not mean zero external data transfer. Review data flows to models, code hosts and external tools before connecting them." },
+    ],
+  },
+];
+
+const englishQuestions: typeof questions = [
+  {
+    question: "Is SkyMythos a chat tool or a work platform?",
+    answer: "Conversation is one way to start work. SkyMythos brings together goals, AI employees, projects, engineering tasks, automations, knowledge and execution environments, focusing on how work progresses, how results are checked and which experience is worth reusing.",
+  },
+  {
+    question: "What does AI employee training mean?",
+    answer: "It means organizing experience from real work into proposed capability improvements for review. Improving knowledge, skills and working methods does not mean training or changing the underlying model’s parameters.",
+  },
+  {
+    question: "What do people do when work runs autonomously?",
+    answer: "People define goals, authorize access and accept results. High-risk operations, external publishing, code merges and production deployments retain the decision points required by the actual configuration.",
+  },
+  {
+    question: "Does private deployment mean no data leaves the environment?",
+    answer: "Each connection needs review. Private deployment and data flows to external models, repositories and tools are separate questions. Define the access and data scope of every connection during setup.",
+  },
+  {
+    question: "How can we assess whether SkyMythos fits our company?",
+    answer: "Request a POC and describe your company, use case and validation goal. The team can discuss the environment, connection permissions and acceptance criteria with you. Product scenes on this website explain the workflow; they do not create real tasks.",
+  },
+];
+
+export function getCapabilities(locale: Locale = "en"): Capability[] {
+  return locale === "zh" ? capabilities : englishCapabilities;
+}
+
+export function getQuestions(locale: Locale = "en"): typeof questions {
+  return locale === "zh" ? questions : englishQuestions;
+}

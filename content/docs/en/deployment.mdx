@@ -1,0 +1,79 @@
+---
+title: Deploy and operate in an authorized environment
+description: Prepare a cluster and configuration, run preflight checks, install, and verify business behavior.
+---
+
+## Environments covered by this guide [#environments-covered-by-this-guide]
+
+These entry points are for technical teams with authorized access to source code, images, and installation configuration. Run commands from the source repository root. The local examples use the `minikube-ubuntu` context and the `fusion` namespace and release. Other installations should use the values agreed for their delivery.
+
+The current source build uses Node.js 24 and pnpm 9.15.9. Go declares version 1.26.9 with the go1.27.2 toolchain. This is the current version baseline; other delivery versions should follow their accompanying documentation. Deploying images does not require the full source toolchain on cluster nodes.
+
+## Check cluster prerequisites [#check-cluster-prerequisites]
+
+The current chart requires Kubernetes 1.26+ and Helm 3. Prepare kubectl, Bash, jq, and Python 3 on the operator's machine. These queries are read-only:
+
+```bash
+kubectl --context minikube-ubuntu get nodes
+kubectl --context minikube-ubuntu get storageclass
+kubectl --context minikube-ubuntu get crd sandboxes.agents.x-k8s.io
+```
+
+Confirm node readiness, a storage class suitable for persistence, and an installed Agent Sandbox v0.5.4 CRD and Controller. You also need a network layer that actually enforces NetworkPolicy, accessible images pinned by digest and matching node architecture, and a valid model connection. An object existing does not prove isolation or storage has passed acceptance checks.
+
+## Prepare three site configuration files [#prepare-three-site-configuration-files]
+
+Keep configuration outside the repository and reuse it for later upgrades:
+
+| File | Contents and checks |
+| --- | --- |
+| `helm-private.yaml` | Platform and component technical secrets; excludes automatically generated business model keys |
+| `site.yaml` | Actual access URL, real organization ID, Secret references, and component and storage choices |
+| `images.yaml` | Published, pullable control-plane and Runtime images pinned by digest |
+
+For a fresh installation, follow the supplied deployment manual to prepare Secrets, temporarily bootstrap the platform, and create the first administrator and a real organization. Then fill in the organization ID, configure models, and complete LightRAG installation. Temporary bootstrap is not complete delivery. Do not regenerate organizations, secrets, or empty volumes for an existing installation.
+
+## Run preflight checks before installation or upgrade [#run-preflight-checks-before-installation-or-upgrade]
+
+With configuration ready, run preflight first. It reads the real cluster and performs a Helm server-side dry run without installing or upgrading and without printing rendered manifests. Helm must support `--dry-run=server` and `--hide-secret`.
+
+```bash
+deploy/helm/deploy-local.sh "$HOME/.config/fusion/helm-private.yaml" \
+  -f "$HOME/.config/fusion/site.yaml" \
+  -f "$HOME/.config/fusion/images.yaml" --check
+```
+
+After preflight passes, remove `--check` to run this cluster-writing operation:
+
+```bash
+deploy/helm/deploy-local.sh "$HOME/.config/fusion/helm-private.yaml" \
+  -f "$HOME/.config/fusion/site.yaml" \
+  -f "$HOME/.config/fusion/images.yaml"
+```
+
+The standard entry point requires LightRAG for a complete installation, waits for workloads and initialization jobs, and checks materializer deployment parameters. Back up configuration, Secrets, and persistent data before upgrading. Existing tasks and development machines do not automatically change versions when Helm image values change.
+
+## Access the site and verify actual behavior [#access-the-site-and-verify-actual-behavior]
+
+For local access, keep this port forward running and open `http://localhost:8080`. It creates access from the local machine to the cluster service; it does not install resources. The site's `publicURL` should match the actual browser origin.
+
+```bash
+kubectl --context minikube-ubuntu -n fusion port-forward service/fusion-http 8080:8080
+```
+
+In another terminal, run these read-only health checks:
+
+```bash
+helm --kube-context minikube-ubuntu -n fusion status fusion
+kubectl --context minikube-ubuntu -n fusion get deploy,pod,svc,pvc,job
+curl --fail http://localhost:8080/healthz
+curl --fail http://localhost:8080/readyz
+```
+
+After the basic checks, verify an actual model call, file persistence, Knowledge indexing and retrieval, a task using a published Skill, and delivery evidence. Health endpoints do not replace business acceptance. Use [Troubleshooting](/docs/troubleshooting) if issues occur.
+
+## Run the control plane for source development [#run-the-control-plane-for-source-development]
+
+Developers with dependencies and an execution environment configured can use `make run-local`. It builds Console first, starts the host Control Plane, and explicitly uses the Kubernetes execution driver. It is not a complete installer without a cluster and does not prepare every production dependency automatically.
+
+Before your first integration, [confirm the POC environment and delivery scope with the team](/poc).

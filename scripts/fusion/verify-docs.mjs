@@ -4,7 +4,9 @@ import fs from "node:fs";
 const { chromium } = await import(
   process.env.PLAYWRIGHT_MODULE || "playwright"
 );
-const baseURL = process.env.BASE_URL || "http://127.0.0.1:3000";
+const origin = (process.env.BASE_URL || "http://127.0.0.1:3000").replace(/\/$/, "");
+// 原有中文专项回归保持使用中文路由；默认英文与切换由verify-pages覆盖。
+const baseURL = `${origin}/zh`;
 const browser = await chromium.launch({
   executablePath: process.env.CHROME_PATH,
   headless: true,
@@ -34,7 +36,7 @@ async function shot(name) {
 
 try {
   for (const slug of fs
-    .readdirSync("content/docs")
+    .readdirSync("content/docs/zh")
     .filter((file) => file.endsWith(".mdx"))
     .map((file) => (file === "index.mdx" ? "" : file.slice(0, -4)))) {
     const response = await page.goto(`${baseURL}/docs/${slug}`, {
@@ -115,7 +117,7 @@ try {
   await search.press("ArrowDown");
   await search.press("Enter");
   await page.waitForURL(
-    (url) => url.pathname.startsWith("/docs/") && url.hash.length > 1,
+    (url) => url.pathname.startsWith("/zh/docs/") && url.hash.length > 1,
   );
   const anchor = decodeURIComponent(new URL(page.url()).hash.slice(1));
   assert(

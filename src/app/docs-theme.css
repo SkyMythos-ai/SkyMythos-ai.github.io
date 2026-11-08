@@ -50,6 +50,10 @@
   font-style: var(--shiki-dark-font-style);
 }
 @media (max-width: 767px) {
+  /* 切入手机布局时立即移除桌面侧栏列，避免过渡中正文被挤成几十像素。 */
+  .fusionDocs #nd-docs-layout {
+    transition: none;
+  }
   .fusionDocs #nd-page {
     padding-top: 24px;
   }

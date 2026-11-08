@@ -1,0 +1,59 @@
+---
+title: Automation workflows and runs
+description: Configure repeatable work, environments, and trigger rules, then inspect each actual run.
+---
+
+Automations organize repeated work into saved workflows and individual runs. A workflow definition describes how to work; each Run records a particular input, execution, and result. These are separate objects.
+
+## Choose a repeatable goal first [#choose-a-repeatable-goal-first]
+
+For a first attempt, choose checkable work such as producing a summary for review from supplied feedback. Verify it manually before adding a schedule or event. This is a suggested POC method; it does not mean the product supports only manual entry points.
+
+Open the workflow list in Automations and choose "New workflow". Prepare an available execution environment and a suitable employee or capability. Automation workflows and engineering Flows in [Engineering tasks](/docs/tasks) belong to different work surfaces; their configurations are not directly interchangeable.
+
+## Configure tasks and the environment [#configure-tasks-and-the-environment]
+
+The editor supports single-agent and multi-agent modes. Single-agent mode configures one task; multi-agent mode organizes tasks and dependencies into steps. Do not add steps without a real responsibility merely to make a first workflow look complex.
+
+| Setting | What it needs to express |
+| --- | --- |
+| Workflow name | Help an operator recognize the purpose of the repeated work |
+| Task instructions | Define the inputs, method, expected output, and when to request confirmation |
+| Agent / capabilities | Select the employee and additional capabilities the task needs |
+| Execution environment | Select the environment and environment variables the run needs |
+| Trigger | Manual, scheduled, webhook, or an event from an available connector |
+| Result destination | Choose from available destinations if sending is needed; sending is optional |
+
+A multi-agent workflow has a default environment, inherited by steps that do not override it. Environment variable choices come from the selected environment. If one is missing, prepare the correct environment or fix the reference rather than pasting a secret into instructions.
+
+Parameters in instructions become runtime inputs. When a step needs an earlier step's result, use the editor's step-result insertion action and check the dependency. Do not describe a result that has not yet been produced as available context.
+
+## Save and test a workflow [#save-and-test-a-workflow]
+
+Editable drafts and runnable snapshots are managed separately. Once configuration is complete, use "Save". The interface validates tasks, environment, capabilities, and other prerequisites, while the server checks current authorization.
+
+The current product does not require a separate "Publish" action. A complete save produces a runnable configuration. Drafts that are not yet formal runnable configurations can still be edited and tested through the test-run entry point. Test runs validate the current draft, required inputs, environment, and authorization; they do not bypass missing tasks or required environments. Saving an already paused configuration does not decide to resume triggers for you.
+
+Prepare parameters at the run entry point. Defined inputs can be entered using the form or JSON. Check the input, start explicitly, and inspect that run's result. Current test runs do not send workflow result notifications, but they may still call tools and cause external actions. Use authorized POC resources; a test run is not a preview without side effects.
+
+## Add a schedule or event [#add-a-schedule-or-event]
+
+For schedules, check frequency, time, and time zone together. Existing configurations retain their saved time zone; the computer's current time zone does not automatically replace it. Event triggers need an available connector, event type, and any filters or parameter mappings.
+
+Webhook URLs and signing details come from saved configurations. A draft without a runnable configuration does not have an available webhook URL. Signing secrets are provided only to appropriately authorized administrators. Screenshots or complete webhook URLs are not materials to share publicly.
+
+After saving a trigger rule, inspect an actual Run. A rule existing, an event being received, and business work finishing are separate checks. They do not establish that an arbitrary enterprise system is connected.
+
+## Read individual runs [#read-individual-runs]
+
+Open a specific run to inspect its actual inputs, steps, outputs, waiting decisions, and errors. Address the decision needed by that run while it is waiting. After failure or cancellation, "Run again" starts a new run with the original inputs; it does not rewrite the old record.
+
+Use the available action to request cancellation of an active run. An accepted cancellation request does not undo external actions that already happened. Pausing a workflow and cancelling one Run are also different actions; confirm the target first.
+
+If the outcome after submission is uncertain, check the original run and use the available recovery actions instead of creating duplicates. Cost data may be incomplete. Missing or unknown amounts must not be treated as zero cost.
+
+## Suggested POC acceptance evidence [#suggested-poc-acceptance-evidence]
+
+Keep at least one input, its actual run record, its output, and a person's review conclusion. If a trigger is needed, verify that the Run it produces receives the expected input. Agree on authorization and human decisions for notifications, merges, and production changes in advance.
+
+For dependencies, see [Enterprise readiness](/docs/private-deployment). To reuse reviewed methods, see [Digital employees](/docs/employees).

@@ -1,0 +1,55 @@
+---
+title: Troubleshoot deployment and runtime issues
+description: Investigate cluster, image, storage, model, and knowledge issues, and keep evidence suitable for a handoff.
+---
+
+## Identify the affected environment first [#identify-the-affected-environment-first]
+
+Record the product version, cluster context, namespace, time, and affected work or run entry point. Determine whether the issue occurs during installation, environment creation, a model call, knowledge processing, or delivery. Do not treat every failure as a model issue.
+
+These commands use the local example installation. The first three only read state. The health check also needs an existing port forward or the actual configured access endpoint. They do not restart or repair services.
+
+```bash
+helm --kube-context minikube-ubuntu -n fusion status fusion
+kubectl --context minikube-ubuntu -n fusion get deploy,pod,svc,pvc,job
+kubectl --context minikube-ubuntu get crd sandboxes.agents.x-k8s.io
+curl --fail http://localhost:8080/readyz
+```
+
+## Preflight fails or a Sandbox cannot be created [#preflight-fails-or-a-sandbox-cannot-be-created]
+
+If the cluster cannot be reached, check the target context in kubeconfig and the current identity's permissions. If the Sandbox CRD is missing, check Controller installation using the supplied prerequisite manual. Even when the CRD exists, inspect the Controller and an actual Sandbox Pod before declaring the runtime usable.
+
+The current local `default` uses the node's standard OCI runtime. gVisor requires an actual runnable handler on the node and a passing corresponding probe. Creating a RuntimeClass with that name does not install the runtime. Network policies also require actual enforcement by the network layer.
+
+Installing a Controller, running runtime probes, and restarting services change the cluster. Confirm scope before doing them. Do not temporarily disable checks to bypass preflight.
+
+## Image pulls fail or startup times out [#image-pulls-fail-or-startup-times-out]
+
+For `ImagePullBackOff`, check node architecture, the configured image reference, connectivity from the node to the registry, and pull Secrets in the installation namespace. A local Docker login or a local image with the same name does not prove that Kubernetes nodes can pull it.
+
+If a component is waiting for a model download, check download connectivity and Pod events. Do not merely increase timeouts to hide pull failures, invalid credentials, or architecture mismatches. Use a verified release digest rather than replacing a pinned version with a mutable tag.
+
+## A PVC is unbound or files disappear after restart [#a-pvc-is-unbound-or-files-disappear-after-restart]
+
+Check PVC state, StorageClass, and the original volume identity, then inspect the actual mount path. A `Pending` volume and a bound volume with unexpected content are different problems. A restored PVC with the same name may not contain the original data.
+
+Do not replace a missing volume with an empty one or delete the original PVC just to start a Pod. For an existing installation, preserve configuration, Secrets, and backups, then follow the supplied migration manual. A single-node storage test does not prove persistence across nodes or after cluster recreation.
+
+## Console works but models or knowledge fail [#console-works-but-models-or-knowledge-fail]
+
+Passing health endpoints only establishes the corresponding service state. For a model failure, check the actual gateway URL, enabled model, supported protocol, credentials used by this call, and quota. Saving a catalog does not verify calling it; reproduce with a small, explicit request.
+
+For knowledge issues, separately check that LightRAG is enabled, the real organization ID is correct, and the organization's execution environment and embedding service work. Then inspect document indexes and source permissions. Do not disable LightRAG and treat temporary bootstrap as a full installation, or substitute a random organization ID for initialization.
+
+## Pages, previews, or authorization callbacks fail [#pages-previews-or-authorization-callbacks-fail]
+
+If port-forwarded access works but cookies, iframes, or previews fail, compare the actual browser origin with `publicURL`, then inspect domain routing and certificates. Preserve the correct URL and trusted certificate chain for an existing HTTPS installation. Skipping TLS validation is not a repair.
+
+If only older tasks or development machines fail after an upgrade, check their actual Runtime images and persistent configuration. Helm updates do not replace every existing execution environment automatically. Control Plane and Runner must also use compatible versions.
+
+## Write a useful issue report [#write-a-useful-issue-report]
+
+Keep reproduction steps, expected and actual results, the time range, version, redacted state information, and the relevant work entry point. Record actions before and after failure. Distinguish an accepted stop request, an exited process, and completed business work. For external writes with unknown outcomes, check receipts before repeating them.
+
+Remove secrets, tokens, personal data, and private document contents from handoff materials. If you need help, [contact the team](/poc) with that scope. See [Deployment and operation](/docs/deployment) for the installation sequence.

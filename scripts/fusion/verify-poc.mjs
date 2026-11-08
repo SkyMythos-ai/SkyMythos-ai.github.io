@@ -101,6 +101,16 @@ try {
   assert.equal(received.length, 0);
   response = await fetch(`${baseURL}/api/poc`, {
     method: "POST",
+    headers: { "Content-Type": "application/json", "Accept-Language": "en" },
+    body: JSON.stringify({ ...fixture, consent: false }),
+  });
+  assert.equal(response.status, 400);
+  const englishError = await response.json();
+  assert(!/\p{Script=Han}/u.test(englishError.message));
+  assert(!/\p{Script=Han}/u.test(englishError.errors.consent));
+  assert.equal(received.length, 0);
+  response = await fetch(`${baseURL}/api/poc`, {
+    method: "POST",
     body: "invalid json",
   });
   assert.equal(response.status, 400);

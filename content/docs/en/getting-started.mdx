@@ -1,0 +1,57 @@
+---
+title: Start with work you can verify
+description: Prepare a goal, context, and permissions for a focused first pilot.
+---
+
+This guide is for members who already have workspace access. If your organization is evaluating the product, [request a POC](/poc) to agree on an environment and scope with the team. Product scenarios on the website do not create real tasks for you.
+
+## Choose work with a checkable outcome [#choose-work-with-a-checkable-outcome]
+
+For a first attempt, choose a small goal with clear sources and an output that is easy to inspect. For example, turn a set of customer feedback into recommendations with citations, or add a specific validation to a test repository. This is a suggested POC method; the system does not decide your organization's success criteria for you.
+
+State four things before sending: the problem to solve, the materials that may be used, the expected deliverable, and the actions that require a person's decision. Adapt this example to your work:
+
+```text
+Goal: Review the supplied customer feedback and propose three priority improvements.
+Materials: Use only the feedback documents and product integration guide I authorize.
+Deliverable: Explain the issue, source, and suggested acceptance method for each recommendation.
+Boundaries: Propose changes first. Do not change production configuration or send external messages.
+```
+
+Do not paste API keys or another person's credentials into a goal. Prepare connections and authorization through the product's configuration surfaces. A statement such as "access all systems" does not grant permissions.
+
+## Choose an entry point by work type [#choose-an-entry-point-by-work-type]
+
+| Your goal | Suitable entry point | What to check first |
+| --- | --- | --- |
+| Add materials, discuss, and coordinate around an ongoing goal | [Project work](/docs/projects) | Project name, context, main conversation, and related threads |
+| Make a staged, verifiable change in a code repository | [Engineering tasks](/docs/tasks) | Requirements, Repository, Base branch, Flow, and required inputs |
+| Perform defined work on a recurring rule or event | [Automations](/docs/automations) | Workflow definition, environment, trigger, and individual run results |
+
+These are separate entry points, not three stages every task must pass through. A thread in a normal conversation does not automatically become a Task in the engineering task list merely because work was executed.
+
+## Prepare the minimum necessary context [#prepare-the-minimum-necessary-context]
+
+Open the intended workspace and confirm the models, knowledge, and connections available to your membership. Engineering tasks need a readable repository and a base branch. The chosen Flow may require additional inputs or connections. A visible model listing, configured personal credentials, and a successful model call must be checked separately.
+
+For knowledge, first check publication, index availability, and your reading permissions. See [Enterprise knowledge](/docs/knowledge) for the steps. For employee responsibilities and capabilities, see [Digital employees](/docs/employees). Sharing knowledge or an employee definition does not grant access to another member's private credentials.
+
+## What to inspect after starting [#what-to-inspect-after-starting]
+
+On the relevant work surface, check that the input was received, then inspect progress, tool records, and artifacts. When the product asks a question or requests approval, read the object and action before responding. A "running" status or an accepted request does not mean the business goal is complete.
+
+For an initial evaluation, record the original goal, material versions, actual output, check results, and outstanding human decisions. The product provides execution and artifact evidence; your team decides how to incorporate that evidence into its evaluation.
+
+## Accept the work using its artifacts [#accept-the-work-using-its-artifacts]
+
+First check that the output opens and covers the original goal. Then inspect citations and relevant verification. For code work, also review the diff, baseline, and check records. Execution ending, automated checks passing, human acceptance, code merging, and production release are separate facts.
+
+Before reusing a method, review its sources and conditions, then organize it into knowledge or employee capabilities. A historical run does not automatically become the team's authoritative conclusion or prove that future work will produce the same result.
+
+## Common first-use issues [#common-first-use-issues]
+
+- **No usable model or repository:** Check the workspace, model catalog, personal authorization, and connection state. Do not repeatedly submit a task whose prerequisites are unmet.
+- **A page fails to load:** Keep the goal and error message, then use the page's recheck or retry action. A network failure is different from an empty result.
+- **The result does not meet expectations:** Return to the original input, check scope and acceptance requirements, and clarify them in the same work context. Avoid spreading conflicting goals across entry points.
+
+For integration prerequisites, continue with [Enterprise readiness](/docs/private-deployment).

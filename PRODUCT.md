@@ -35,6 +35,8 @@ SkyMythos 是企业的 AI-Native Harness。将目标、数字员工、模型、�
 
 ## Brand Commitments
 
+官网与完整文档支持中英双语，默认英文；中文版以 `/zh/` 区分，切换保留当前页面与章节。产品原型、价格、询价表单和反馈也随语言切换，品牌与已确认商业规则保持一致。
+
 用户要求沿用当前 Linear 复刻基础，融合旧站内容，并以新产品颜色主题为准。正式字标 SkyMythos.ai，品牌资产来自新产品 `public/logo-*`，语义主题以当前 TDesign 映射为权威。用户没有要求重新命名产品或改变既有视觉语言。
 
 ## Evidence on Hand

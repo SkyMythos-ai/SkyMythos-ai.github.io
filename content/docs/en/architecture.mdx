@@ -1,0 +1,47 @@
+---
+title: Technical architecture from control plane to artifacts
+description: Follow a piece of work through the control plane, Runner, stage artifacts, knowledge retrieval, and state storage.
+---
+
+## Distinguish the work entry points [#distinguish-the-work-entry-points]
+
+SkyBot projects support ongoing discussion of goals, materials, and collaborative work. Engineering Tasks execute an engineering goal through a flow. An Automation Run is one execution of an automation definition. These entry points may share execution capabilities while retaining their own identity, state, and ownership of results.
+
+For example, a project conversation turn can initiate background work. Its completion does not mean the entire project conversation is finished. Start from the original business object when reviewing progress, then inspect the related run and evidence.
+
+## The control plane defines who can act [#the-control-plane-defines-who-can-act]
+
+Console is the user workbench. Control Plane handles identity and workspace authorization, flow and capability version resolution, execution environment lifecycle, and controlled dispatch. Actual execution happens in a Sandbox, with Runner managing execution facts.
+
+| Component | Responsibility | What it does not establish |
+| --- | --- | --- |
+| Console / Control Plane | Accept actions, check permissions, resolve versions, select and manage environments | An accepted request does not mean work is complete |
+| Sandbox / Runner | Advance work nodes and manage attempts, agent sessions, and run events | A ready environment does not mean business success |
+| Artifacts and checks | Keep stage artifacts, result descriptions, and verification evidence | An artifact existing does not mean human acceptance |
+| Knowledge | Retrieve under current authorization and retain sources | A match does not grant access to all original documents |
+
+## How engineering flows advance [#how-engineering-flows-advance]
+
+A Flow describes dependencies, inputs, and outputs between work nodes. A WorkNode is a reusable execution definition. A flow can call an existing published version or contain definitions used only by that flow. Applicable versions and capabilities are resolved before work starts so a run does not silently follow the latest external version.
+
+Engineering work might include analysis, implementation, checks, and delivery. This is an example, not a fixed four-step requirement. Runner advances executable nodes according to actual dependencies and records each attempt and state. Downstream work consumes upstream results through declared Artifacts.
+
+Stage handoffs should contain inspectable files, explanations, and content identifiers. Failed checks retain their failure records, and recovery policies create new execution attempts. A later success must not overwrite earlier evidence. Reviewers should inspect requirements, changes, checks, and delivery notes together.
+
+## Knowledge retrieval keeps authorization and sources [#knowledge-retrieval-keeps-authorization-and-sources]
+
+Control Plane maintains knowledge ownership, access scope, and authorization. LightRAG provides the parsing, indexing, and retrieval data plane. Retrieval evidence records the query-time workspace, authorized knowledge bases, index versions, and matched references to explain the evidence used by that work.
+
+This evidence records facts at query time; it does not copy every document into a permanently readable snapshot. Source access remains permission-controlled. Personal memory, project knowledge, and shared tools should not become one context without boundaries.
+
+## State storage and investigation [#state-storage-and-investigation]
+
+PostgreSQL stores structured control-plane business state. Runner's SQLite journal stores Runs, Attempts, events, and recovery receipts. Git holds source code facts, and object storage holds large objects managed by their contracts. Run events and OpenTelemetry traces help connect user actions, execution, and model calls.
+
+When investigating a failure, identify the work object and run version first. Then distinguish environment creation, node execution, check, and delivery failures. An accepted stop request and a process actually exiting are separate facts. When an outcome is unknown, query and reconcile it before rerunning rather than assuming no external action occurred.
+
+## Isolation and deployment depend on the environment [#isolation-and-deployment-depend-on-the-environment]
+
+Tasks use isolated Sandboxes, while personal development environments retain their own persistent workspace. The current local default uses a standard OCI runtime. gVisor is a separate route that requires explicit configuration and actual verification. Runtime, network rules, and persistent storage must all be accepted in the target environment.
+
+Continue with [Enterprise readiness](/docs/private-deployment), [Deployment and operation](/docs/deployment), or [Troubleshooting](/docs/troubleshooting).

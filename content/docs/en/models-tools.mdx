@@ -1,0 +1,41 @@
+---
+title: Configure models, tools, and personal authorization
+description: Distinguish platform services, model protocols, personal credentials, and the capabilities actually used in work.
+---
+
+## Separate service configuration from usage authorization [#separate-service-configuration-from-usage-authorization]
+
+Platform configuration defines which services the organization permits. Personal authorization defines which resources a member can use. Saving a model gateway or connector does not grant access to every user. Sharing a Skill or MCP does not share its creator's private credentials.
+
+Actual model and tool requests may leave the deployment environment. Confirm service URLs, permitted data, and access scope before saving credentials in the official settings or connection interface. Do not put API keys, tokens, or enterprise application secrets in task descriptions, chat examples, or shared Skills.
+
+## Configure the LLM Gateway and model catalog [#configure-the-llm-gateway-and-model-catalog]
+
+A platform Admin or Operations member maintains LLM services in AI Gateway under platform settings. The current settings offer platform presets and custom gateways. For a custom gateway, enter the actual Base URL and save credentials through the controlled inputs.
+
+1. Check the service URL and network reachability, then read the gateway's model catalog. Models specified in an enterprise delivery can also be added.
+2. Preserve the provider's Model ID and check its display name, supported protocols, and capacity information.
+3. Declare only protocols the service actually supports. Current configuration can express OpenAI Responses, OpenAI Chat Completions, and Anthropic Messages. One model may support one or several of them.
+4. After saving the connection, credentials, and model settings, select a compatible model at the relevant work entry point and complete an actual call.
+
+Successful catalog discovery does not prove every protocol works. A candidate with a Model ID but no protocol evidence still needs capability verification. Missing capacity or price values are not verified model parameters. If a model is unavailable at an entry point, check the intersection of its supported protocols and that entry point, not just its name.
+
+## Configure embedding separately for knowledge processing [#configure-embedding-separately-for-knowledge-processing]
+
+Embedding Gateway handles knowledge vectorization and maintains its URL, models, and credentials separately from LLM Gateway. Both may use one provider, but saving one connection does not configure the other.
+
+The current embedding integration supports OpenAI-compatible `/v1/embeddings`. An administrator selects a built-in or configured external service, adds an actual model, detects its vector dimensions, and saves the default. Store the Model ID returned by the service and use dimensions from a real response.
+
+Knowledge indexing also needs its processing pipeline to work. A conversational model replying does not prove document parsing, vectorization, or retrieval is ready. After configuration, use a small document that is permitted for import, finish indexing, and retrieve content that is explicitly present in it.
+
+## Complete personal connections and authorization [#complete-personal-connections-and-authorization]
+
+At the workspace's connections and authorization entry point, confirm the account, workspace, and purpose first. Then save personal Git or model credentials, or complete OAuth as directed by the enterprise connector. Platform service URL, personal authorization state, and actual resource access are three independent checks.
+
+If authorization is expired, revoked, or unreadable, refresh its authoritative state before deciding whether to authorize again. A past "connected" status does not prove a current request is valid, and a failed load does not prove authorization is absent. After rotation, verify with an actual request. Historical work retains its original identities and results.
+
+## Verify with a minimal piece of work [#verify-with-a-minimal-piece-of-work]
+
+Select only the models, tools, and materials actually needed. Begin with a small read-only or clearly bounded task: verify the model call, read an authorized repository or document, and inspect the tool's real response. Describe external writes and their approval method separately.
+
+If the model works but a tool fails, investigate the connection and resource permissions. If knowledge cannot be found, investigate indexing and retrieval. Continue with [Enterprise knowledge](/docs/knowledge) and [Troubleshooting](/docs/troubleshooting).

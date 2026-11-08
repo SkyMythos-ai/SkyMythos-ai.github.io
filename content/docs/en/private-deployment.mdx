@@ -1,0 +1,49 @@
+---
+title: Enterprise and private deployment readiness
+description: Prepare pilot scope, enterprise connections, data boundaries, and acceptance evidence for an evaluable POC.
+---
+
+## Agree on a pilot with acceptance criteria [#agree-on-a-pilot-with-acceptance-criteria]
+
+When integration requirements are unclear, consider a focused POC first. Both parties decide whether a POC is needed for the particular project; an enterprise project with clear scope can also be evaluated directly. For a pilot, choose real work with an accountable owner and define inputs, expected artifacts, permitted systems, and completion criteria. For example, implement a bounded feature in an authorized repository, deliver the code change, checks, and explanation, and have the repository owner accept it.
+
+An initial evaluation does not need access to every repository, knowledge space, or write permission. List the resources actually needed. For code merges and changes to external records, state separately whether they are in scope and who authorizes them. A POC should answer whether the agreed work was completed, not just whether a reply can be generated.
+
+## Identify participants and resource ownership [#identify-participants-and-resource-ownership]
+
+Platform administrators or operations staff configure model services, execution environments, and enterprise connections. Workspace administrators manage workspace membership and policies. Members use their own authorization to perform work. Managing platform configuration does not automatically grant reading access to every workspace's content.
+
+Prepare these materials and assign a maintainer before integration:
+
+| Material | What to confirm |
+| --- | --- |
+| Pilot work | Goal, inputs, artifacts, acceptance owner, and excluded actions |
+| Identities and workspace | Participating accounts, roles, material ownership, and access scope |
+| Models and enterprise tools | Actual service URLs, available models, interface protocols, and authorization |
+| Execution environment | Cluster, storage, network egress, image access, and operations owner |
+| Knowledge sources | Permitted documents, source-reading access, updates, and invalidation handling |
+
+## Check actual data flows [#check-actual-data-flows]
+
+Private deployment does not by itself mean data stays inside the organization. Code, documents, tool parameters, and model inputs may travel through different paths. Check destination URLs for model gateways, code hosting, knowledge retrieval, enterprise connectors, and telemetry separately. Whether an external model or third-party tool may receive that content depends on the organization's requirements for this project.
+
+Sharing a tool or knowledge base does not share personal credentials. Save and rotate secrets through official authorization interfaces, not task descriptions, shared documents, or demo screenshots. After access is revoked, verify that subsequent requests are rejected according to current permissions. Revocation cannot undo external actions that already occurred.
+
+## Verify the environment and business outcome separately [#verify-the-environment-and-business-outcome-separately]
+
+Collect evidence in this order:
+
+1. Sign in with the actual identity and confirm workspace membership and role.
+2. Complete an actual model call and check the model and authorization used.
+3. Create an execution environment, work with files, and check data retention after stopping and restarting.
+4. Import an authorized document, index it, retrieve it, and trace a result to its source.
+5. Perform the agreed work and review code, files, tool results, and check records.
+6. Have the acceptance owner record what is accepted, needs rework, or remains out of scope.
+
+Service health, a run ending, automated checks passing, human acceptance, code merging, and production release are separate outcomes. Record them separately. The website's workbench examples explain interactions and do not replace acceptance in your enterprise environment.
+
+## Expand after the pilot [#expand-after-the-pilot]
+
+Compile a pilot record covering actual versions, environment, scope, artifacts, failure causes, human intervention, and unfinished items. Before expanding to more members, repositories, or ongoing execution, verify the target environment's capacity, backup and recovery, identity integration, and maintenance windows.
+
+The current product includes runnable local validation slices. Production suitability, service commitments, and high-availability arrangements still depend on the agreed delivery scope. Continue with [Technical architecture](/docs/architecture), [Deployment and operation](/docs/deployment), or [contact the team to plan a POC](/poc).

@@ -6,8 +6,21 @@ import Link from "next/link";
 import { ArrowRight, ChevronDown, Menu, Moon, Sun, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { trapDialogTab } from "@/components/ui/dialog-focus";
-import { capabilities } from "./content";
+import { getCapabilities } from "./content";
+import { useLocale } from "@/components/locale-provider";
+import { LanguageSwitch } from "@/components/language-switch";
+import { localizeHref } from "@/lib/i18n";
 import styles from "./site.module.css";
+
+
+function useSiteCopy() {
+  const locale = useLocale();
+  return {
+    t: (en: string, zh: string) => locale === "en" ? en : zh,
+    href: (path: string) => localizeHref(path, locale),
+    capabilities: getCapabilities(locale),
+  };
+}
 
 export function Brand({ compact = false }: { compact?: boolean }) {
   const file = compact ? "logo-mark" : "logo-lockup";
@@ -36,6 +49,7 @@ export function Brand({ compact = false }: { compact?: boolean }) {
 }
 
 function ThemeToggle() {
+  const { t } = useSiteCopy();
   useEffect(() => {
     const media = window.matchMedia("(prefers-color-scheme: dark)");
     const sync = () => {
@@ -58,7 +72,7 @@ function ThemeToggle() {
       variant="ghost"
       size="icon"
       className={styles.themeToggle}
-      aria-label="切换明暗主题"
+      aria-label={t("Toggle color theme", "切换明暗主题")}
       onClick={() => {
         const next =
           document.documentElement.dataset.theme === "dark" ? "light" : "dark";
@@ -77,6 +91,7 @@ function ThemeToggle() {
 }
 
 export function SiteHeader() {
+  const { t, href, capabilities } = useSiteCopy();
   const [productOpen, setProductOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const header = useRef<HTMLElement>(null);
@@ -118,45 +133,46 @@ export function SiteHeader() {
       onMouseLeave={() => setProductOpen(false)}
     >
       <div className={styles.headerInner}>
-        <Link href="/" aria-label="SkyMythos 首页">
+        <Link href={href("/")} aria-label={t("SkyMythos home", "SkyMythos 首页")}>
           <Brand />
         </Link>
-        <nav aria-label="主导航" className={styles.desktopNav}>
+        <nav aria-label={t("Main navigation", "主导航")} className={styles.desktopNav}>
           <button
             aria-expanded={productOpen}
             aria-controls="fusion-products"
             onMouseEnter={() => setProductOpen(true)}
             onClick={() => setProductOpen(!productOpen)}
           >
-            产品能力 <ChevronDown size={13} />
+            {t("Product", "产品能力")} <ChevronDown size={13} />
           </button>
-          <Link href="/#work" onMouseEnter={() => setProductOpen(false)}>
-            工作方式
+          <Link href={href("/#work")} onMouseEnter={() => setProductOpen(false)}>
+            {t("How it works", "工作方式")}
           </Link>
           <Link
-            href="/docs/private-deployment"
+            href={href("/docs/private-deployment")}
             onMouseEnter={() => setProductOpen(false)}
           >
-            企业接入
+            {t("Enterprise", "企业接入")}
           </Link>
-          <Link href="/pricing" onMouseEnter={() => setProductOpen(false)}>
-            价格
+          <Link href={href("/pricing")} onMouseEnter={() => setProductOpen(false)}>
+            {t("Pricing", "价格")}
           </Link>
-          <Link href="/docs" onMouseEnter={() => setProductOpen(false)}>
-            文档
+          <Link href={href("/docs")} onMouseEnter={() => setProductOpen(false)}>
+            {t("Docs", "文档")}
           </Link>
         </nav>
         <div className={styles.headerActions}>
+          <LanguageSwitch />
           <ThemeToggle />
-          <Link className={styles.headerCta} href="/poc">
-            申请 POC <ArrowRight size={14} />
+          <Link className={styles.headerCta} href={href("/poc")}>
+            {t("Request a POC", "申请 POC")} <ArrowRight size={14} />
           </Link>
           <Button
             variant="ghost"
             size="icon"
             className={styles.mobileToggle}
             ref={trigger}
-            aria-label="打开导航"
+            aria-label={t("Open navigation", "打开导航")}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen(true)}
           >
@@ -170,7 +186,7 @@ export function SiteHeader() {
             {capabilities.map((capability) => (
               <Link
                 key={capability.slug}
-                href={`/product/${capability.slug}`}
+                href={href(`/product/${capability.slug}`)}
                 onClick={() => setProductOpen(false)}
               >
                 <strong>{capability.name}</strong>
@@ -180,10 +196,10 @@ export function SiteHeader() {
           </div>
           <Link
             className={styles.menuFooter}
-            href="/#product-demo"
+            href={href("/#product-demo")}
             onClick={() => setProductOpen(false)}
           >
-            从一次工作，了解 SkyMythos <ArrowRight size={16} />
+            {t("See how work moves with SkyMythos", "从一次工作，了解 SkyMythos")} <ArrowRight size={16} />
           </Link>
         </div>
       )}
@@ -191,7 +207,7 @@ export function SiteHeader() {
         <dialog
           ref={mobile}
           className={styles.mobileDialog}
-          aria-label="网站导航"
+          aria-label={t("Site navigation", "网站导航")}
           onKeyDown={trapDialogTab}
           onClose={() => {
             setMobileOpen(false);
@@ -199,24 +215,24 @@ export function SiteHeader() {
           }}
         >
           <div className={styles.mobileDialogHeader}>
-            <Link href="/" onClick={closeMobile}>
+            <Link href={href("/")} onClick={closeMobile}>
               <Brand />
             </Link>
             <Button
               variant="ghost"
               size="icon"
-              aria-label="关闭导航"
+              aria-label={t("Close navigation", "关闭导航")}
               onClick={closeMobile}
             >
               <X />
             </Button>
           </div>
-          <nav aria-label="移动导航">
-            <p>产品能力</p>
+          <nav aria-label={t("Mobile navigation", "移动导航")}>
+            <p>{t("Product", "产品能力")}</p>
             {capabilities.map((capability) => (
               <Link
                 key={capability.slug}
-                href={`/product/${capability.slug}`}
+                href={href(`/product/${capability.slug}`)}
                 onClick={closeMobile}
               >
                 {capability.name}
@@ -224,25 +240,25 @@ export function SiteHeader() {
               </Link>
             ))}
             <div className={styles.mobileOther}>
-              <Link href="/#work" onClick={closeMobile}>
-                工作方式
+              <Link href={href("/#work")} onClick={closeMobile}>
+                {t("How it works", "工作方式")}
               </Link>
-              <Link href="/docs/private-deployment" onClick={closeMobile}>
-                企业接入
+              <Link href={href("/docs/private-deployment")} onClick={closeMobile}>
+                {t("Enterprise", "企业接入")}
               </Link>
-              <Link href="/pricing" onClick={closeMobile}>
-                价格与合作
+              <Link href={href("/pricing")} onClick={closeMobile}>
+                {t("Pricing & cooperation", "价格与合作")}
               </Link>
-              <Link href="/docs" onClick={closeMobile}>
-                文档与指南
+              <Link href={href("/docs")} onClick={closeMobile}>
+                {t("Documentation", "文档与指南")}
               </Link>
             </div>
             <Link
               className={styles.primaryLink}
-              href="/poc"
+              href={href("/poc")}
               onClick={closeMobile}
             >
-              申请 POC <ArrowRight size={16} />
+              {t("Request a POC", "申请 POC")} <ArrowRight size={16} />
             </Link>
           </nav>
         </dialog>
@@ -252,57 +268,59 @@ export function SiteHeader() {
 }
 
 export function SiteFooter() {
+  const { t, href, capabilities } = useSiteCopy();
   return (
     <footer className={styles.footer}>
       <div className={styles.footerGrid}>
         <div className={styles.footerIdentity}>
-          <Link href="/" aria-label="SkyMythos 首页">
+          <Link href={href("/")} aria-label={t("SkyMythos home", "SkyMythos 首页")}>
             <Brand />
           </Link>
           <p>
-            让 AI 完成工作，
+            {t("Let AI deliver.", "让 AI 完成工作，")}
             <br />
-            让能力留在企业。
+            {t("Keep the capability.", "让能力留在企业。")}
           </p>
         </div>
         <div>
-          <h3>产品</h3>
+          <h3>{t("Product", "产品")}</h3>
           {capabilities.slice(0, 3).map((item) => (
-            <Link href={`/product/${item.slug}`} key={item.slug}>
+            <Link href={href(`/product/${item.slug}`)} key={item.slug}>
               {item.name}
             </Link>
           ))}
         </div>
         <div>
-          <h3>能力</h3>
+          <h3>{t("Capabilities", "能力")}</h3>
           {capabilities.slice(3).map((item) => (
-            <Link href={`/product/${item.slug}`} key={item.slug}>
+            <Link href={href(`/product/${item.slug}`)} key={item.slug}>
               {item.name}
             </Link>
           ))}
         </div>
         <div>
-          <h3>开始了解</h3>
-          <Link href="/poc">申请 POC</Link>
-          <Link href="/pricing">价格与合作</Link>
-          <Link href="/docs/getting-started">使用入门</Link>
-          <Link href="/docs/private-deployment">企业接入指南</Link>
-          <Link href="/docs">全部文档</Link>
+          <h3>{t("Get started", "开始了解")}</h3>
+          <Link href={href("/poc")}>{t("Request a POC", "申请 POC")}</Link>
+          <Link href={href("/pricing")}>{t("Pricing & cooperation", "价格与合作")}</Link>
+          <Link href={href("/docs/getting-started")}>{t("Getting started", "使用入门")}</Link>
+          <Link href={href("/docs/private-deployment")}>{t("Enterprise setup", "企业接入指南")}</Link>
+          <Link href={href("/docs")}>{t("All documentation", "全部文档")}</Link>
         </div>
       </div>
       <div className={styles.footerBottom}>
         <span>© 2026 SkyMythos.ai</span>
-        <span>企业的 AI-Native Harness</span>
+        <span>{t("The AI-Native Harness for enterprises", "企业的 AI-Native Harness")}</span>
       </div>
     </footer>
   );
 }
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
+  const { t } = useSiteCopy();
   return (
     <div className={styles.fusionSite}>
       <a href="#main-content" className={styles.skipLink}>
-        跳至主要内容
+        {t("Skip to main content", "跳至主要内容")}
       </a>
       <SiteHeader />
       {children}

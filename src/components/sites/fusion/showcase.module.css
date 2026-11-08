@@ -1445,8 +1445,12 @@
     display: flex;
     gap: 6px;
     margin: 0;
+    min-width: 0;
     min-height: 0;
     align-items: flex-start;
+  }
+  .toolRecord > div {
+    min-width: 0;
   }
   .toolRecord:not(:last-child):before {
     display: none;
@@ -1461,7 +1465,8 @@
   }
   .toolRecord strong {
     font-size: 9px;
-    white-space: nowrap;
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
   .toolRecord p,
   .toolRecord > svg {
@@ -1609,9 +1614,9 @@
     width: 20px;
   }
   .employeeProposal > .eyebrow {
-    position: absolute;
-    top: 16px;
-    left: 56px;
+    position: static;
+    display: block;
+    margin-bottom: 5px;
     font-size: 8px;
   }
   .proposalTop > .pendingState {

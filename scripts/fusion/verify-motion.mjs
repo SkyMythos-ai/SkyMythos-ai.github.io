@@ -3,7 +3,9 @@ import fs from "node:fs";
 const { chromium } = await import(
   process.env.PLAYWRIGHT_MODULE || "playwright"
 );
-const baseURL = process.env.BASE_URL || "http://127.0.0.1:3000";
+const origin = (process.env.BASE_URL || "http://127.0.0.1:3000").replace(/\/$/, "");
+// 原有中文专项回归保持使用中文路由；默认英文与切换由verify-pages覆盖。
+const baseURL = `${origin}/zh`;
 const browser = await chromium.launch({
   executablePath: process.env.CHROME_PATH,
   headless: true,

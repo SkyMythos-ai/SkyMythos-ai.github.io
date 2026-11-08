@@ -1,0 +1,52 @@
+---
+title: Projects and ongoing collaboration
+description: Create a project, prepare materials and repositories, and coordinate work across the main conversation and execution threads.
+---
+
+A project organizes conversations, repositories, and execution context around an ongoing goal. Its purpose differs from a formal engineering Task: discussing work or dispatching a thread inside a project does not automatically create a matching entry in Tasks.
+
+## When to use a project [#when-to-use-a-project]
+
+Use a project when you need to add context over time, share materials across several pieces of work, or keep the relationship between a main conversation and follow-up execution. A brief question can use a normal conversation. For a fixed flow, stages, and engineering delivery, see [Engineering tasks](/docs/tasks).
+
+This page describes the project surface in the current source implementation. Ongoing input and coordination depend on both the control plane and the execution side. A new Console entry point alone does not prove that an existing runtime has been upgraded to match.
+
+## Create a project [#create-a-project]
+
+1. Open SkyBot and choose "New project" in the Projects area of the sidebar.
+2. Enter a project name that reflects its ongoing goal, such as "Improve customer onboarding", rather than a particular run's status.
+3. If code context is needed, select an authorized connection and repository in the repository configuration. Check the directory and other settings. A project without code work does not need an unrelated repository.
+4. Submit creation explicitly, confirm the project appears in the sidebar, and open its conversation to provide the goal.
+
+The creation surface checks required information and repository configuration. Opening an empty input page, selecting a project, or entering an existing conversation does not mean a work goal was sent. If creation fails, read the reason and check whether the project already exists before trying again. Do not create multiple identically named projects because of one network error.
+
+## Explain the goal and project context [#explain-the-goal-and-project-context]
+
+The main conversation keeps track of the goal, receives clarifications, coordinates execution, and summarizes results. Implementation, commands, or tests can be delegated to execution threads. Start by describing the goal, constraints, expected artifacts, and human decision points. Access to materials and connections still depends on the current identity's permissions.
+
+A suggested POC input is to ask the main conversation for a checkable work plan and specify that external notifications or production changes require confirmation first. This is an evaluation method, not a guarantee that the product adds a uniform approval step to every action.
+
+New discussions, the existing main conversation, and execution threads serve different purposes. When checking progress, first confirm which conversation you are viewing. A completion reply in a normal discussion does not mean all background work has ended.
+
+## Add instructions while work is running [#add-instructions-while-work-is-running]
+
+In environments that support ongoing input to the main conversation, you can add goals or ask for progress while work continues. Observe message receipts: received, delivered to the main conversation, and actually performed are different facts.
+
+If the outcome is unknown, preserve the original message and check its state instead of starting another conversation to repeat the request. Changes to an execution configuration that is already in use may be restricted. Changing a model or capability option does not mean current background work has migrated seamlessly.
+
+Stopping the main conversation's current coordination turn does not cancel every execution thread or undo external actions. To stop a particular background job, open that job or thread's managed controls and confirm its status.
+
+## Review results and maintain the project [#review-results-and-maintain-the-project]
+
+After reading the main conversation's summary, open the relevant threads, tool records, and artifacts to check them against the original goal. Execution ending and human acceptance are separate judgments. If rework is needed, describe the precise differences and constraints in the same context.
+
+Project settings manage project information and repositories. Archiving ends a project's active presentation and use; archiving and deletion are different actions, and neither should be treated as a shortcut for stopping all execution. Preserve sources you may need to investigate later.
+
+## Common issues [#common-issues]
+
+- **The project entry point is unavailable:** Check the workspace, current execution environment, and cloud environment availability. Do not switch to someone else's identity to bypass access.
+- **A project disappears or a link does not open:** Check whether it was archived or permissions changed. Reload its state before creating a replacement.
+- **Work continues after the main conversation stops:** Inspect each execution thread rather than repeatedly stopping the main conversation.
+- **Artifacts exist but no task record does:** Project threads and formal Tasks are separate objects; this is an expected boundary.
+
+After acceptance, organize materials that should be shared into [Enterprise knowledge](/docs/knowledge), and use reviewed methods to improve [Digital employees](/docs/employees).

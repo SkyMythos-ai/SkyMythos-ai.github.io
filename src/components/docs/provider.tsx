@@ -15,9 +15,13 @@ import {
 import type { SharedProps } from "fumadocs-ui/contexts/search";
 import { RootProvider } from "fumadocs-ui/provider/next";
 import type { Translations } from "fumadocs-ui/i18n";
+import { useLocale } from "@/components/locale-provider";
 
 function StaticSearchDialog(props: SharedProps) {
-  const search = useStaticSearch({ from: "/search-index.json" });
+  const locale = useLocale();
+  const search = useStaticSearch({
+    from: locale === "zh" ? "/zh/search-index.json" : "/search-index.json",
+  });
 
   return (
     <SearchDialog {...search} {...props}>

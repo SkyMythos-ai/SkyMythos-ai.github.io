@@ -1,0 +1,52 @@
+---
+title: Make knowledge traceable and reusable
+description: Organize materials by source and access scope, and follow search results back to their original text.
+---
+
+A knowledge base connects accessible documents, published versions, and retrieval results. Distinguish drafts, published text, and index state before use. Saving a document does not mean it is searchable or has been used by a particular piece of work.
+
+## Open a knowledge base you can access [#open-a-knowledge-base-you-can-access]
+
+Open a knowledge base visible in your current workspace and check its name, description, and scope. It may be personal, workspace-wide, or public within the organization. Visibility in a list does not grant management permissions.
+
+This guide uses an enabled knowledge base you can manage. Read-only members can view and retrieve within their allowed scope, but will not see every editing action. Recheck visible materials after switching workspaces.
+
+## Create or edit a document [#create-or-edit-a-document]
+
+1. Choose a new document from the add menu in the document directory and enter a title. With management permissions, you may also upload materials or create directories where the interface supports it.
+2. Open the draft editor and add the body. Include its use case, evidence, maintainer, and conditions for rechecking. These are knowledge maintenance suggestions, not mandatory system fields.
+3. Choose "Save draft". Confirm the success message and document content; local changes remaining in an editor are not a saved version.
+4. To make the document available for later retrieval, return to its details, choose "Publish new version", and review and confirm publication.
+
+Publication uses the saved draft and retains earlier versions. Save unsaved changes before publishing. Publication happens per document; a single action does not turn every draft in a knowledge base into one unified version.
+
+Externally sourced documents may have different editing capabilities from manually maintained ones. For example, synchronized content may not support direct editing or publication here. Follow its actual source and permissions. Do not copy it and present the copy as an update to the original.
+
+## Check indexing after publication [#check-indexing-after-publication]
+
+The document list distinguishes unpublished, processing, failed, unknown, and searchable states. Accepted publication and completed indexing are separate steps. Check the index state for the current published version.
+
+If processing fails, read the details before using the index retry action available for that version. Do not repeatedly retry without correcting connection, permission, or document issues. Unknown state means confirmation is unavailable; it does not mean there is no content or indexing succeeded.
+
+## Test retrieval with a question [#test-retrieval-with-a-question]
+
+Open "Retrieval test", enter a natural-language question or keywords, and choose "Test retrieval". The test searches published, indexed content in that knowledge base. Saving a draft does not immediately make all unpublished text searchable.
+
+Results show the title, matching content, and available version or chunk information. Open a result's title to view the corresponding document version. Confirm that the matching passage exists in that source before deciding whether its context supports your work.
+
+For example, ask "Who confirms the priority of feedback improvements?" and check responsibility and applicable conditions in the original. This is a POC sample question, not a promise that your knowledge base contains the answer. If nothing matches, check materials, publication, indexing, permissions, and wording separately.
+
+## Maintain outdated and historical content [#maintain-outdated-and-historical-content]
+
+To update knowledge, change the draft, publish a new version, and rerun important retrieval questions. Historical versions retain their own identity. A page reached from an old citation must not be mistaken for the latest version.
+
+Archiving a document or knowledge base affects future retrieval and the use of existing citations. Check the scope before acting. Do not delete materials a team still uses merely to remove one incorrect match. Maintainers should address missing sources, outdated content, and contradictions rather than importing every run record directly as knowledge.
+
+## Acceptance checks and common issues [#acceptance-checks-and-common-issues]
+
+- **Saved content cannot be found:** Check whether only a draft was saved, whether a published version exists, and whether its index is searchable.
+- **A result matches but the conclusion is uncertain:** Open the same version and inspect its surrounding text. A match score does not prove the content is correct.
+- **Editing controls are missing:** Check management permissions, knowledge base state, and document source. Readers should not bypass restrictions.
+- **Publication or saving conflicts:** Reload the latest version and compare retained changes before saving so that another person's update is not overwritten.
+
+A useful POC should support going from a question to a matching passage and back to the corresponding source. Successful retrieval does not prove that a [project](/docs/projects) or [engineering task](/docs/tasks) actually used that material.

@@ -5,7 +5,7 @@ const browser=await chromium.launch({executablePath:process.env.CHROME_PATH,head
 const report={phase,engine:'Chromium，本地模拟视口',cases:[],errors:[]};
 for(const width of [320,390,640,768,1024,1440,1920])for(const theme of ['light','dark']){
  const page=await browser.newPage({viewport:{width,height:1000},reducedMotion:'reduce'});page.on('pageerror',e=>report.errors.push(e.message));await page.addInitScript(t=>localStorage.setItem('skymythos-theme',t),theme);
- await page.goto('http://127.0.0.1:3000/pricing',{waitUntil:'networkidle'});await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})))});
+ await page.goto('http://127.0.0.1:3000/zh/pricing',{waitUntil:'networkidle'});await page.evaluate(async()=>{await document.fonts.ready;await Promise.all([...document.images].map(i=>i.decode().catch(()=>{})))});
  const metrics=await page.evaluate(()=>({width:innerWidth,documentWidth:document.documentElement.scrollWidth,tableWidth:document.querySelector('table')?.getBoundingClientRect().width ?? null,tableParentWidth:document.querySelector('table')?.parentElement.clientWidth ?? null,markers:document.querySelector('ol') ? getComputedStyle(document.querySelector('ol')).listStyleType : null,quotes:[...document.querySelectorAll('main section')].filter(e=>e.querySelector('h2') && e.querySelector('a')).map(e=>({quoteY:e.querySelector('h2').getBoundingClientRect().y,actionY:e.querySelector('a').getBoundingClientRect().y}))}));
  const entry={width,theme,metrics};
  if([390,1440].includes(width)){

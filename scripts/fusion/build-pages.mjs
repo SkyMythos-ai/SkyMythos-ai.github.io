@@ -23,7 +23,7 @@ try {
   // Next export固定使用.next作为中间目录。在独立副本构建，源文件和Node缓存始终不动。
   await rm(staging, { recursive: true, force: true });
   await mkdir(staging, { recursive: true });
-  const excluded = ["src/app/api/poc", "src/app/reference"];
+  const excluded = ["src/app/api/poc", "src/app/(en)/reference"];
   const linearAssets = path.join(root, "public/sites/linear");
   const sharedFonts = ["inter-variable.woff2", "berkeley-mono-variable.woff2"];
   for (const relative of [

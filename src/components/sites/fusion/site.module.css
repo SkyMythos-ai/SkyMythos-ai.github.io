@@ -120,6 +120,24 @@
   align-items: center;
   gap: 16px;
 }
+.languageSwitch {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  min-height: 36px;
+  padding: 6px;
+  border-radius: 6px;
+  color: var(--f-muted);
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: nowrap;
+  text-decoration: none;
+}
+.languageSwitch:hover {
+  color: var(--f-accent);
+  background: var(--f-raised);
+}
 .themeToggle {
   width: 36px;
   height: 36px;
@@ -1061,6 +1079,9 @@
   }
 }
 @media (max-width: 640px) {
+  .languageSwitch > svg {
+    display: none;
+  }
   .container,
   .headerInner,
   .footerGrid,
@@ -1429,6 +1450,17 @@
   .docsGrid p {
     font-size: 14px;
     line-height: 26px;
+  }
+}
+@media (max-width: 380px) {
+  .headerInner {
+    gap: 8px;
+  }
+  .headerInner .brandLockup img {
+    width: 120px;
+  }
+  .headerActions {
+    gap: 4px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -1,0 +1,62 @@
+---
+title: Create and review engineering tasks
+description: Prepare requirements, a repository, a baseline, and a flow, then inspect changes, artifacts, and verification evidence.
+---
+
+An engineering Task is for engineering work with explicit requirements, a code repository, and checks. It is not another name for a normal chat history, and a final "done" message does not replace code or verification evidence.
+
+## Prepare before creation [#prepare-before-creation]
+
+Confirm the workspace, personal model credentials, Git connection, and repository read permissions. For a first attempt, choose a small change in a test repository and state the behavior that must stay unchanged and how to accept the result. This is a suggested POC scope, not a product limitation to small changes.
+
+The selected flow and model must also meet the current runtime's compatibility requirements. Seeing a model in the catalog does not mean your personal credentials are configured. Reading a repository does not automatically grant merge or release permissions.
+
+## Create from the task list [#create-from-the-task-list]
+
+Open Tasks and choose "New task". Prepare the inputs in the creation drawer. The current interface does not require opening a separate creation workbench first.
+
+| Input | Meaning and checks |
+| --- | --- |
+| Task requirements | Describe the goal, constraints, and acceptance conditions directly; use the requirement sources currently enabled if appropriate |
+| Task name | Identify this piece of work and confirm that the name matches its requirements |
+| Repository | The repository the task is actually allowed to read and modify |
+| Base branch | The task baseline; avoid selecting a production release branch by mistake |
+| Task flow | Select intelligent orchestration or an available published Flow |
+| Flow inputs | Follow the selected Flow's actual definition and complete every required input |
+| Knowledge and connections | Add only the materials and tools needed for the work that you are authorized to use |
+
+Requirement sources come from the current deployment's available list. They may include Markdown, Git issues, a knowledge base, or external services. An interface recognizing a source does not mean your organization has connected it. If a link cannot be read, check the source URL, connection, and authorization first.
+
+## Write actionable requirements [#write-actionable-requirements]
+
+Include acceptance conditions in the requirements text rather than assuming there is a separate "acceptance criteria" field. For example:
+
+```text
+Goal: Add empty-name validation to the configuration save endpoint.
+Constraints: Preserve existing permissions and the success response format. Do not change unrelated endpoints.
+Artifacts: Code change, relevant verification results, and a delivery summary.
+Acceptance: Empty names are rejected; valid names still save as before.
+Follow-up: Team review is required. Do not merge or deploy automatically.
+```
+
+If you select a workspace Flow, its inputs come from the published version. Repository-related inputs correspond to the Repository selection above; fill other required inputs according to their descriptions. Recheck parameters and connections after changing flows instead of retaining invalid selections.
+
+## Create and track execution [#create-and-track-execution]
+
+Before creating, check for feedback about unavailable models, credentials, Git services, repositories, branches, or flow inputs. Correct an identified cause before submitting again. A failed read does not mean the resource does not exist.
+
+After successful creation, open the task details and inspect its stages and execution information. Identify the current node and execution attempt before reading conversations, context, changes, artifacts, and check records. A completed node does not mean all stages are complete. An accepted creation request does not prove that the isolated environment and model chain have actually run successfully.
+
+## Review delivery beyond the summary [#review-delivery-beyond-the-summary]
+
+At minimum, check four things: whether the change scope matches the goal, which repository and branch form its baseline, which checks actually ran, and whether artifact or delivery links open. Checks that did not run remain unverified, regardless of a summary's confident wording.
+
+Code merging, production deployment, and business acceptance follow their own processes. If a PR or MR exists, inspect its target branch and diff. A generated link does not mean the change is live.
+
+## Failure, recovery, and recreating a task [#failure-recovery-and-recreating-a-task]
+
+When input is needed, respond at the relevant execution question. For authorization failures, fix the connection first. For execution failures, preserve the error and history, then use the recovery actions available in the current details view without erasing earlier attempts.
+
+If requirements or the baseline must change, or a task must be recreated, check the new repository, branch, materials, Flow, and required inputs. An old snapshot is not new authorization. Neither retrying nor recreating automatically rolls back external actions that already occurred.
+
+If creation is disabled, start with the missing credentials, unavailable model, unauthorized Git connection, or incomplete inputs reported by the page. Do not substitute a more privileged account for the required authorization review. For environment prerequisites, see [Enterprise readiness](/docs/private-deployment).
