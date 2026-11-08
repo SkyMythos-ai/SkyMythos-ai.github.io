@@ -1,0 +1,63 @@
+:root {
+  --color-fd-background: var(--f-bg);
+  --color-fd-foreground: var(--f-text);
+  --color-fd-muted: var(--f-raised);
+  --color-fd-muted-foreground: var(--f-muted);
+  --color-fd-popover: var(--f-surface);
+  --color-fd-popover-foreground: var(--f-text);
+  --color-fd-card: var(--f-surface);
+  --color-fd-card-foreground: var(--f-text);
+  --color-fd-border: var(--f-line);
+  --color-fd-primary: var(--f-accent);
+  --color-fd-primary-foreground: var(--f-bg);
+  --color-fd-secondary: var(--f-raised);
+  --color-fd-secondary-foreground: var(--f-text);
+  --color-fd-accent: var(--f-accent-soft);
+  --color-fd-accent-foreground: var(--f-accent);
+  --color-fd-ring: var(--f-accent);
+}
+
+.fusionDocs,
+[role="dialog"]:has(#fd-search-list) {
+  --border: var(--f-line);
+  --ring: var(--f-accent);
+}
+.fusionDocs {
+  font-family: "PingFang SC", "Microsoft YaHei", var(--font-inter), sans-serif;
+  min-height: 100vh;
+}
+.fusionDocs #nd-docs-layout {
+  --fd-layout-width: 1536px;
+}
+.fusionDocs #nd-page {
+  padding-top: 40px;
+}
+.fusionDocs .prose {
+  line-height: 1.9;
+}
+.fusionDocs pre,
+.fusionDocs code {
+  font-family: var(--f-mono);
+}
+/* Shiki 的内置深色规则依赖 .dark，官网主题使用 data-theme。 */
+:root[data-theme="dark"]
+  .fusionDocs
+  .shiki:not(.not-fumadocs-codeblock *)
+  code
+  span,
+:root[data-theme="dark"] .fusionDocs code.shiki:not(.not-fumadocs-code *) span {
+  color: var(--shiki-dark);
+  font-style: var(--shiki-dark-font-style);
+}
+@media (max-width: 767px) {
+  .fusionDocs #nd-page {
+    padding-top: 24px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fusionDocs *,
+  [role="dialog"] * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

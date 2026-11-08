@@ -1,144 +1,241 @@
 ---
-name: SkyMythos
-description: 企业 AI-Native Harness 官网的现有视觉系统
+name: SkyMythos.ai
+description: 以真实品牌、TDesign 语义主题与宽幅产品场景呈现企业 AI-Native Harness。
 colors:
-  home-ground: "#080a0e"
-  home-ink: "#f4f6fb"
-  home-muted: "#b5bdcc"
-  home-line: "#282d38"
-  home-panel: "#111722"
-  home-accent: "#a9c5ff"
-  light-ground: "#f7f8fa"
-  light-surface: "#fff"
-  light-raised: "#eef1f5"
-  light-ink: "#182233"
-  light-muted: "#526174"
-  light-line: "#d4dce6"
-  light-accent: "#315caa"
-  dark-raised: "#1b2432"
-  dark-line: "#303b4b"
-  dark-accent-fill: "#3867b5"
-  commercial-ground: "#f4f6f8"
-  commercial-ink: "#2d4260"
-  commercial-accent: "#4b72bc"
+  brand-blue: '#3156FF'
+  action-light: '#0052d9'
+  action-hover-light: '#366ef4'
+  action-dark: '#2667d4'
+  accent-dark: '#699ef5'
+  accent-soft-light: '#f2f3ff'
+  accent-soft-dark: '#1b2f51'
+  page-light: '#fff'
+  raised-light: '#f3f3f3'
+  text-light: '#191919'
+  muted-light: '#666'
+  line-light: '#ddd'
+  page-dark: '#181818'
+  surface-dark: '#242424'
+  raised-dark: '#2c2c2c'
+  text-dark: '#e8e8e8'
+  muted-dark: '#b0b0b0'
+  line-dark: '#393939'
+  positive-light: '#2ba471'
+  positive-dark: '#72c9a3'
+  danger-light: '#b9433d'
+  danger-dark: '#f49c96'
 typography:
   display:
-    fontFamily: "IBM Plex Sans, PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif"
-    fontSize: "clamp(38px, 4.4vw, 60px)"
-    fontWeight: 600
-    lineHeight: 1.2
-    letterSpacing: "-.035em"
-  body:
-    fontFamily: "IBM Plex Sans, PingFang SC, Hiragino Sans GB, Microsoft YaHei, sans-serif"
-    fontSize: "16px"
-    lineHeight: 1.75
-  home-section-title:
-    fontSize: "clamp(32px, 3.3vw, 44px)"
+    fontFamily: '"PingFang SC", "Microsoft YaHei", var(--font-inter), sans-serif'
+    fontSize: 64px
     fontWeight: 550
-    lineHeight: 1.3
-    letterSpacing: "-.03em"
-  home-section-title-mobile:
-    fontSize: "30px"
-    lineHeight: 1.4
-  home-title-mobile:
-    fontSize: "clamp(24px, 6.7vw, 34px)"
-    lineHeight: 1.38
-  home-body:
-    fontSize: "15px"
-    lineHeight: 1.8
-  home-lead:
-    fontSize: "17px"
-    lineHeight: 1.8
-  demo-hint:
-    fontSize: "12px"
-  home-resource-title:
-    fontSize: "18px"
-  home-link:
-    fontSize: "14px"
-  home-supporting:
-    fontSize: "13px"
-  demo-caption:
-    fontSize: "11px"
-  demo-fallback-heading:
-    fontSize: "20px"
+    lineHeight: 1.22
+    letterSpacing: -.035em
+  headline:
+    fontFamily: '"PingFang SC", "Microsoft YaHei", var(--font-inter), sans-serif'
+    fontSize: 44px
+    fontWeight: 550
+    lineHeight: 1.35
+    letterSpacing: -.03em
+  lead:
+    fontFamily: '"PingFang SC", "Microsoft YaHei", var(--font-inter), sans-serif'
+    fontSize: 18px
+    lineHeight: 1.9
+  body:
+    fontFamily: '"PingFang SC", "Microsoft YaHei", var(--font-inter), sans-serif'
+    fontSize: 15px
+    lineHeight: 1.75
+  label:
+    fontFamily: '"PingFang SC", "Microsoft YaHei", var(--font-inter), sans-serif'
+    fontSize: 13px
+    lineHeight: 22px
+  product-ui:
+    fontFamily: '"PingFang SC", "Microsoft YaHei", Arial, sans-serif'
+    fontSize: 13px
+    lineHeight: 1.5
+  mono:
+    fontFamily: '"Sky Mono", monospace'
+    fontWeight: 400
 rounded:
-  home-button: "6px"
-  home-panel: "12px"
-  commercial-button: "999px"
-  scene-window: "12px"
-  hero-viewport: "12px"
-  demo-caption: "4px"
+  control: 6px
+  guide: 8px
+  scene-mobile: 9px
+  panel: 12px
+  chip: 4px
 spacing:
-  home-section: "112px"
-  home-hero-top: "58px"
-  home-gutter: "40px"
+  field-label: 8px
+  inline: 16px
+  form-field: 24px
+  copy-to-visual: 64px
+  section: 112px
+  section-opening: 120px
+  mobile-section: 64px
+  mobile-gutter: 20px
 components:
-  home-button-primary:
-    backgroundColor: "{colors.home-ink}"
-    textColor: "#101724"
-    rounded: "{rounded.home-button}"
-    height: "44px"
-    padding: "0 20px"
+  button-primary:
+    backgroundColor: '{colors.action-light}'
+    textColor: '#fff'
+    rounded: '{rounded.control}'
+    padding: 12px 20px
+    typography: '{typography.body}'
+  button-primary-hover:
+    backgroundColor: '{colors.action-hover-light}'
+  button-primary-dark:
+    backgroundColor: '{colors.action-dark}'
+    textColor: '#fff'
+  button-secondary:
+    backgroundColor: '{colors.page-light}'
+    textColor: '{colors.text-light}'
+    rounded: '{rounded.control}'
+    padding: 12px 20px
+  input-field:
+    backgroundColor: '{colors.page-light}'
+    textColor: '{colors.text-light}'
+    rounded: '{rounded.control}'
+    padding: 10px 12px
+  product-scene:
+    backgroundColor: '{colors.page-light}'
+    textColor: '{colors.text-light}'
+    rounded: '{rounded.panel}'
+    height: 510px
+  state-chip:
+    backgroundColor: '{colors.accent-soft-light}'
+    textColor: '{colors.action-light}'
+    rounded: '{rounded.chip}'
+    padding: 2px 6px
+  poc-form:
+    backgroundColor: '{colors.page-light}'
+    textColor: '{colors.text-light}'
+    rounded: '{rounded.panel}'
+    padding: 36px
 ---
-# Design System: SkyMythos
+# Design System: SkyMythos.ai
 
 ## Overview
 
-**Creative North Star: "真实的工作界面"**
+**Creative North Star: "看得见的企业工作能力"**
 
-中文首页以真实产品组件聚焦核心操作，解释企业能力；官网保留亮暗语义色，演示内部以产品原组件及其 CSS 为权威。
+现有视觉以 Linear 式宽幅留白和清楚的阅读层次为基础：左侧标题与右侧说明相互对应，产品场景在其后展开。SkyMythos.ai 的官方标志、TDesign 蓝色与亮暗表面承担品牌身份；页面的视觉重点是工作目标、执行依据与可检查的成果。
 
-主题默认跟随系统，页头可显式切换并保存选择；中文商业内页、英文页面和文档提供主题入口及语义色适配，保留各自内容和版式。正式内页的冻结产品捕获与首页运行中的源组件演示分开。
+官网采用较低的信息密度，产品场景保留更紧凑的工作界面密度。主操作引导访客填写 POC 联系表单，文档与能力说明承担继续了解的入口。场景由 React、CSS 和本地示例状态构成，截图仅作为来源或比较证据，不是页面实现。
 
 **Key Characteristics:**
-- 亮暗表面与克制的蓝色层次
-- 大标题、宽间距与细分隔线
-- 源组件演示与冻结产品捕获分别标注
+
+- 宽幅留白、左对齐标题与说明对照，随后展开产品场景。
+- SkyMythos.ai 官方亮暗标志与 TDesign 蓝色语义主题。
+- 中性色表面、细边线和轻阴影，按状态使用蓝色、绿色与错误色。
+- 官网阅读与产品界面采用不同密度；手机重排内容。
+- 以联系团队开展 POC 为主要转化，保留可用的键盘和反馈状态。
+
+当前实现权威为 `src/app/fusion-theme.css`、`src/components/sites/fusion/site.module.css`、`showcase.module.css`、`poc.module.css` 与 `src/app/layout.tsx`。新产品主题来源记录在 `docs/research/fusion/product-tokens.json`；提取文档保留产品来源值，但官网实际语义映射以已实现 CSS 为准。`.impeccable/config.json` 继续使用 `buildPath: code`。
 
 ## Colors
 
-官网及演示外框使用 `--h-bg`、`--h-surface`、`--h-raised`、`--h-text`、`--h-muted`、`--h-line`、`--h-accent` 等语义变量；亮暗值见 frontmatter，具体映射以 `site-theme.css` 为准。状态使用绿色和琥珀色。
+### Primary
+
+品牌蓝出现在官方标志中；交互蓝用于 POC 主行动、链接、选中项、焦点与产品状态。品牌蓝与交互蓝承担不同职责，不强制改成同一个色值。
+
+`.impeccable/design.json` 的八阶 OKLCH 色带仅是面板浏览元数据；它们按现有蓝色与状态色相合成，不是新增的应用色阶或 CSS 变量。
+
+亮色与暗色主题使用分别定义的行动填色；暗色文字链接采用更明亮的强调色，避免直接把亮色按钮值套到全部前景。柔和蓝色表面用于选中导航、待确认标签和产品对象的小面积背景。
+
+### Neutral
+
+亮色页面以白色为主，浅灰用于背景衬面；暗色页面使用深灰背景，面板与抬升表面逐层变亮。主要文字、次要文字与边线分别使用语义变量。`--f-canvas` 还保留产品画布用途，不能把产品来源中的灰画布误写成官网白色页面背景。
+
+成功绿色只表达可见的完成/证据状态；错误色用于字段和提交错误。它们是功能状态色，不构成另一套营销主题。输入错误边框目前为实现中的固定值 `#c84a43`，错误文字仍跟随 `--f-danger`。
+
+**The Semantic Theme Rule.** 新增官网和场景表面使用现有 --f-* 语义变量；切换主题时同时更新背景、文字、边线、状态与品牌资产。
 
 ## Typography
 
-官网使用 IBM Plex Sans 承担正文及标题，IBM Plex Mono 用于适用的机器信息；中文使用平台字形。源产品演示内部字体以产品 `fonts.css` 和 TDesign 为准。首页标题桌面采用 display 规格；二级标题为 `clamp(32px, 3.3vw, 44px)`、行高 1.3。520px 以下首页标题为 `clamp(24px, 6.7vw, 34px)`、行高 1.38，二级标题为 30px、行高 1.4。
+官网标题与正文优先采用 PingFang SC、Microsoft YaHei，拉丁字符由本地 Inter Variable 回退承担。产品场景使用 PingFang SC、Microsoft YaHei、Arial。两者不是同一字体栈，Inter 不作为新产品原生字体的宣传依据。
+
+代码与机器信息通过 `Sky Mono` 使用本地 JetBrains Mono 的常规和半粗文件。根布局仍加载 Berkeley Mono 变量以兼容既有页面，但当前 Fusion 样式不将其作为主要等宽字体。
+
+- **Display**：首页大标题，对应前言 display；1024px 以下缩至 56px，手机使用 `clamp(32px,8.8vw,40px)` 与 1.35 行高。
+- **Headline**：章节标题，对应前言 headline；1024px 以下缩至 38px，手机为 32px。引导语、CTA 和内页标题有各自已实现刻度，不将所有标题机械统一。
+- **Lead / Body**：大段说明与正文保留明显层级；文档正文通常 16px、1.9 行高，阅读段落最大约 68ch。
+- **Label / Product UI**：导航、说明标记与表单标签小于正文。产品场景内部存在 8–13px 辅助信息，以自身尺度展示工作界面；不推广到官网正文。
+
+**The Two Densities Rule.** 官网用宽间距解释价值，产品场景用紧凑工作面展示状态；不把场景中的微型字号用作正文或表单字号。
 
 ## Layout
 
-首页内容最大宽1200px，桌面两侧40px、800px及以下20px。按持续执行、经验转成员工能力、知识留存、治理和接入组织叙事。首屏标题、定义与行动入口左对齐纵向排列；完整控制台下方用三步说明工作过程。原则转场之后，持续执行、训练和知识章节共用标题与说明、媒体及功能索引骨架，章节标题说明在800px及以下单列；治理和接入延续标题与说明结构。
+网站版心最大宽 1280px，默认宽度为视口减去 96px；手机为视口减去 40px。页头固定，桌面内部高 80px；手机高 72px，页面和锚点留出对应偏移。
 
-首屏保留完整原生控制台，桌面高700px，700px及以下高640px；手机保留960px宽产品页面、左右浏览提示，自动跟随演示且访客触碰后停止跟随。正文交付舞台高640px，训练与知识桌面高600px；700px及以下均高640px。正文 iframe 宽高匹配舞台，内部原生组件分层组织上下文和前景成果，边缘退隐用于舞台过渡；手机前景使用可用宽度自然换行，后景保留必要上下文。正式内页冻结捕获仍996×623px。
+首页首段上方留出 180px，超宽视口为 208px。章节采用标题与说明两栏、80px 栏间距，首页原型与按钮间隔 48px（超宽视口 64px），首屏说明为一句自然换行的短文案，正文场景与上方说明间隔 64px；常用章节上下间距为 112–128px。900px 以下标题说明转单列，段落之间保持 24–28px 的呼吸；640px 以下章节通常以 64px 为主要纵向间距。
 
-章节通常上下各留112px，800px及以下72px；首屏顶部58px，800px及以下40px。页头1000px以下隐藏CTA，保留正文入口。
+导航在1100px以下切换为全屏原生对话框，避免200%文字放大时拥挤裁切；正文区块仍保留900px断点。产品场景在1100px以下去掉右侧上下文，900px以下收起重复的顶部产品导航，767px以下折叠为主内容工作面；不是缩小一张桌面截图。首页原型独立于1280px正文容器，宽度为calc(100% - clamp(48px, 10vw, 192px))、最大1600px；手机两侧20px。桌面首屏工作台高度为clamp(600px, 44vw, 780px)、正文场景高510px；手机两者高440px，首屏原型在360px以下增高至464px以容纳标题换行。
+
+POC 页面桌面采用说明与表单双栏，比例 .85 / 1.15，间隔 100px；800px 以下单列，480px 以下字段也转单列。表单手机内边距缩为 24px / 20px，保证输入框与说明保持可读。
 
 ## Elevation & Depth
 
-主要使用表面、细线区分层次；主题浮层阴影亮色为 `0 16px 36px #18223318`，暗色为 `0 16px 36px #0008`。
+现有系统以中性色表面和细边线组织深度，阴影只轻微提示浮层与前景，不依赖大面积辉光。页头用半透明主题表面和 20px 背景模糊保持滚动时的层次。导航菜单使用轻阴影，产品工作台、员工方案与紧凑报告采用更轻的局部阴影；具体值保存在 sidecar 的 shadows，不扩展成新的高度体系。
+
+**The Quiet Depth Rule.** 默认用表面与细边线区分层级，只在导航浮层和产品内部前景使用现有轻阴影。
 
 ## Shapes
 
-首页主要按钮为6px圆角；首屏控制台外框及正文演示内部场景窗口为12px圆角，细边框组织信息。首页演示不提供播放控件。商业内页保留既有胶囊按钮与圆角浮层。
+按钮和输入框以控制圆角为主，面板与表单使用较宽的面板圆角。产品场景手机圆角缩小；报告和工具对象按自身层级使用较细的轮廓。状态标签紧凑，圆点与完成标记用于状态识别。布局主要保持矩形工作面的清楚边界，不将所有内容包装成独立卡片。
 
 ## Components
 
-- 首页主操作为浅色实底按钮，最小高度 44px，悬停变为浅蓝；次操作为文字链接。
-- 演示由原生组件、原样式及共享时钟驱动，Storage 使用内存隔离，本地示例适配 API 和 SSE；无外部业务网络、真实模型或业务写入，不构成业务验收。首屏完整控制台来自 `14f40b0fc37f7a20eeab00293e3527725552a255`，正文三个合成场景来自 `7295629889d881f3485168832359d16d141021f9` 加 dirty 工作区；正文来源记录及实际导入见 `public/product-scenes/7295629889d881f3485168832359d16d141021f9-composed-v1/source-provenance.json`。私有知识组件仅在构建 loader 中追加 export，原产品源文件只读。
-- 正式内页保留冻结的 ProductDemo 与旧播放器参考，固定示例和原图入口与首页源组件演示分开；旧参照与本次源组件属于不同版本体系。
-- 页头使用官方亮暗双色字标和主题切换；选择持久化于 `skymythos-theme`，未选择时跟随系统。
-- 商业内页联系表单使用白色输入框、细边框和 12px 圆角。
+### Buttons
+
+主按钮采用行动蓝与白色文字，使用前言 button-primary 的留白；POC 提交按钮独立固定高 46px。悬停切换到当前主题行动色，键盘焦点使用强调色轮廓；发送中禁用重复操作并降低不透明度。次按钮为主题表面与细边框，文字链接只改变颜色，带箭头的链接在悬停时小幅前移。
+
+主要行动文字是“申请 POC”。表单按钮依据真实通道显示提交、生成邮件或发送中；这些是联系动作，不是产品试用入口。此处只记录视觉与反馈合同，接收渠道是否已配置由实际实现与运行结果证明。
+
+### Chips
+
+蓝色浅表面、强调文字和细描边构成待确认状态标签；选中导航、经验来源与标签沿用该语义。完成状态配合勾选图标或文字，不能只依赖颜色。
+
+### Cards / Containers
+
+产品工作台与场景是此站的主要视觉容器。页头、侧栏、上下文、Tab 和报告通过真实 HTML/CSS 层次形成；React 状态切换项目、任务、自动化、来源经验与知识内容。场景保留示例说明，避免被理解为在线生产操作。资源列表采用轻量图形背景和自然文字流，不为每个段落增加面板。
+
+### Inputs / Fields
+
+POC 表单使用主题背景、细边线、控制圆角；字段最小高 44px，textarea 最小高 124px。640px 以下的可编辑字段统一为 16px / 26px，保留手机填写时的可读性，避免较小字号引发的聚焦放大。焦点显示强调边框与柔和外轮廓。必填与选填由标签说明，错误文本位于对应字段下方；错误、等待、邮件准备和完成消息各有可见反馈。未经接收通道确认的申请不显示伪造成功。
+
+### Navigation
+
+固定页头包含官方品牌、产品能力菜单、文档/企业接入及 POC 行动，主题按钮独立可达。桌面导航菜单双栏排列标题和说明；手机对话框使用纵向链接，保留关闭、键盘约束和返回触发点的焦点。主题默认跟随系统，显式选择保存在 `skymythos-theme`，并同步品牌资产与场景表面。
+
+### Product Scenes
+
+场景用紧凑工作面展示目标、工具调用、报告、待确认员工方案与可打开的知识原文。首页原型自动展示目标明确、读取资料、执行、整理交付、报告生成与等待确认，约12秒完成一个场景，再轮换项目、研发任务和自动化；手机报告内同步显示当前阶段。首屏原型页头仅保留产品导航，不显示演示说明或播放控制；焦点进入工作内容、离屏或后台时暂停，减少动态偏好直接显示完整报告。正文其他场景保留原有阅读切换与轻微入场效果。它们是本地示例状态，不是复制截图，也不证明产品后台或真实模型已经运行。
+
+### Documentation
+
+文档采用Fumadocs UI/Core 16.18.1与Fumadocs MDX 15.5.0，使用框架的DocsLayout、DocsPage、侧栏、本文目录、前后篇、代码块与搜索弹窗。内容以content/docs中的MDX为唯一来源；官网精选指南也从相同内容源读取，避免标题与描述分叉。
+
+文档为Read模式：固定字号、16px正文与1.9行高，桌面显示分组侧栏和本文目录，手机折叠为文档导航及目录弹层。框架色板映射到自有f-token，主题与官网共享data-theme和skymythos-theme存储键；Shiki深色语法颜色通过该主题属性同步。手机导航保持非模态语义，键盘焦点离开导航时同步关闭遮罩。
+
+搜索使用框架默认ZBSearch多语言索引，提供中文正文与章节结果、键盘选择和无结果反馈；无需外部搜索账号。现有六篇指南URL保留，索引、目录和导航由MDX构建生成。
+
+### Pricing
+
+价格作为既有官网的商业信息扩展，沿用自有主题与留白。按用户提供的Comma截图降低信息密度：/pricing最大宽度1040px，小标题与一句说明之后是两张灰底报价卡，每张只保留用途、单独报价、三条沟通范围与咨询按钮；底部一行费用说明及文档入口。删除费用长表、流程、FAQ和重复CTA，桌面首屏可同时比较两类报价。首页概览保留。金额、免费规则、交期与SLA没有确认值，不构造套餐数字或承诺。
+
+官网桌面/手机导航、页脚与文档导航均可进入价格页。POC咨询沿用/poc，企业项目进入/poc?enquiry=enterprise，表单显示对应目标与提交文案，并将企业询价类型传递给接收端。接收通道状态仍遵守已有真实确认规则。
 
 ## Do's and Don'ts
 
 ### Do:
-- **Do** 明确区分首页源组件演示与正式内页冻结产品捕获。
-- **Do** 按页面所属视觉面使用现有配色与组件。
+
+- **Do** 保留官方 SkyMythos.ai 标志比例，随主题切换亮暗资产。
+- **Do** 使用 --f-* 语义变量，让官网、产品场景与 POC 表单共享亮暗主题。
+- **Do** 在宽幅产品场景前保留清楚的标题与说明，用工作对象和可见成果解释能力。
+- **Do** 让手机内容自然重排，并保留焦点、错误说明、等待反馈与减少动态支持。
+- **Do** 把主要行动统一为 POC 联系申请；按真实接收通道呈现发送、失败或待发送状态。
 
 ### Don't:
-- **Don't** 改画或虚构真实产品映射中不存在的字段和步骤，也不要把示例表述为已验证的生产业务。
-- **Don't** 把固定示例表现为实时运行。
 
-## 原生产品演示与页面叙事（当前合同）
-
-正文 iframe 隔离依赖和原 CSS；舞台以共享时钟将真实产品组件组织为前后层，保留对象与状态关系。交付展示已接收目标，3.1–6.1秒执行详情前移，9–11.2秒面板自身滚动跟随第二项工具；15秒后同一任务报告前移，21–23秒自身滚动展示待人工验收的末尾。训练由经验选择与同一分析操作形成待确认方案，18–23秒面板自身滚动显示技能来源至确认按钮。知识演示原生检索输入、提交、结果点击，打开同一知识库、文档及版本的原文；不声称任务自动引用知识。
-
-演示自动运行24秒，终态停留3秒后循环，无播放、暂停、重播或进度控件。离屏或后台暂停时钟和原生 CSS 动画，返回可见时继续；系统减少动态显示静态终态，不循环。框内标注“示例数据”，自动运行不接管父页面焦点；无脚本和加载失败时提供说明与功能入口，seek 仅供测试。首屏挂载 `public/product-demo/14f40b0fc37f7a20eeab00293e3527725552a255`，正文挂载 `public/product-scenes/7295629889d881f3485168832359d16d141021f9-composed-v1`，两种来源独立记录。本地示例不证明真实后台、模型、7×24运行或业务验收。
+- **Don't** 将 Linear 品牌、客户背书或截图直接当作 SkyMythos 的产品实现。
+- **Don't** 把旧官网石墨配色、IBM Plex 字体或旧播放器样式当作当前视觉权威。
+- **Don't** 用主题切换只改变页面背景，留下产品面板、输入框或标志的错误主题。
+- **Don't** 用展示中的待确认方案、完成图标或模拟结果暗示真实后台任务已完成。
+- **Don't** 把联系 POC 改写成自助试用，或在接收通道未就绪时显示提交成功。

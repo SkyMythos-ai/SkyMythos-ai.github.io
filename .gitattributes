@@ -1,7 +1,9 @@
-# Frozen captures retain exported bytes, including line endings, across checkouts.
-public/product-reference/** -text
-tests/fixtures/product-reference/** -text
+# Auto-detect text files and normalise line endings to LF in the repo
+* text=auto
 
-# SHA-256 gates, rather than whitespace cleanup, validate captured CSS integrity.
-public/product-reference/*/product.css -whitespace
-tests/fixtures/product-reference/original.css -whitespace
+# Shell scripts must always use LF, even on Windows
+*.sh text eol=lf
+
+# Batch files must always use CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf

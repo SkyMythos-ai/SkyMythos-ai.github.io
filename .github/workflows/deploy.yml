@@ -1,150 +1,44 @@
-name: Deploy site to GitHub Pages
-
-# Builds the static export and publishes it. The site is fully pre-rendered, so
-# the deploy step is a plain file upload with no server runtime involved.
-#
-# One-time repository setup:
-#   Settings → Pages → Build and deployment → Source: GitHub Actions
-#
-# `BASE_PATH` decides which kind of Pages site this is:
-#   - project site  (https://<user>.github.io/<repo>/) → set BASE_PATH to "/<repo>"
-#   - user/org site (https://<user>.github.io/) or a custom domain → leave it empty
-# The workflow derives it automatically: empty for a user/org site (repository
-# named `<owner>.github.io`) or when a CNAME file is present, otherwise the
-# repository name.
+name: 发布官网到 GitHub Pages
 
 on:
   push:
     branches: [main]
-  # Allows a manual run from the Actions tab.
   workflow_dispatch:
-    inputs:
-      deploy:
-        description: Deploy after all checks pass
-        type: boolean
-        default: true
 
-# Least privilege: only what Pages deployment needs.
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
-# Never run two deploys at once, but do let a queued one finish rather than
-# cancelling it — a cancelled deploy can leave the published site stale.
 concurrency:
-  group: pages
+  group: github-pages
   cancel-in-progress: false
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
     steps:
-      - name: Check out
-        uses: actions/checkout@v4
-
-      - name: Set up Node
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v7.0.1
+      - uses: actions/setup-node@v7.1.0
         with:
-          node-version: 22
+          node-version: 24
           cache: npm
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Validate source and frozen product assets
-        run: |
-          npm run lint
-          npm run test:locale-routes
-          npm run test:product-reference
-          npm run test:browser-installer
-          npm run test:export-runner
-          node --test tests/commercial-runtime/fixed-markdown.cjs tests/commercial-runtime/hero-catalog.cjs tests/commercial-runtime/embedded-focus.cjs
-          node scripts/check-site-content.cjs
-          node scripts/check-hero-lifecycle.cjs
-
-      - name: Determine base path
-        id: base
-        run: |
-          repo="${GITHUB_REPOSITORY#*/}"
-          owner="${GITHUB_REPOSITORY%/*}"
-
-          # Two things serve from the root of their origin, and so need no prefix:
-          #   1. a custom domain, marked by a CNAME file;
-          #   2. a user/org site, whose repository is named `<owner>.github.io`.
-          # Everything else is a project site at /<repo>, and that prefix has to
-          # be baked into every asset URL and link at build time.
-          if [ -f public/CNAME ]; then
-            echo "path=" >> "$GITHUB_OUTPUT"
-            echo "Custom domain detected — serving from root."
-          elif printf '%s' "$repo" | grep -qiE '\.github\.io$'; then
-            echo "path=" >> "$GITHUB_OUTPUT"
-            echo "User/org site ($repo) detected — serving from root."
-          else
-            echo "path=/$repo" >> "$GITHUB_OUTPUT"
-            echo "Project site detected — serving from /$repo."
-          fi
-
-          # Pages serves `<owner>.github.io` in lowercase regardless of how the
-          # account name is capitalised. Canonical URLs, the sitemap and Open
-          # Graph tags all embed this origin verbatim, so fold the case here
-          # rather than publishing two spellings of the same URL.
-          printf 'site_url=https://%s.github.io\n' \
-            "$(printf '%s' "$owner" | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
-
-      - name: Build static export
-        env:
-          BASE_PATH: ${{ steps.base.outputs.path }}
-          NEXT_PUBLIC_BASE_PATH: ${{ steps.base.outputs.path }}
-          # Canonical origin for sitemap, robots and Open Graph tags.
-          # Override with a repository variable if you deploy to a custom domain.
-          NEXT_PUBLIC_SITE_URL: ${{ vars.SITE_URL || steps.base.outputs.site_url }}
-        run: npm run build
-
-      - name: Check generated framework types
-        run: npm run typecheck
-
-      - name: Install pinned browser with completed-stream fix
-        timeout-minutes: 5
-        run: |
-          npx playwright install-deps chromium
-          npx playwright install ffmpeg
-          npm run install:browser
-
-      - name: Verify exported pages and readonly demonstrations
-        env:
-          BASE_PATH: ${{ steps.base.outputs.path }}
-          EVIDENCE_DIR: ${{ runner.temp }}/website-checks
-        run: npm run test:export
-
-      - name: Preserve failed browser evidence
-        if: failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: website-checks
-          path: ${{ runner.temp }}/website-checks
-          if-no-files-found: ignore
-          retention-days: 7
-
-      # Jekyll would silently drop the `_next` directory, because it ignores
-      # paths starting with an underscore. This file disables that.
-      - name: Add .nojekyll
-        run: touch out/.nojekyll
-
-      - name: Upload Pages artefact
-        uses: actions/upload-pages-artifact@v3
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build:pages
+      - run: npm run typecheck
+      - uses: actions/upload-pages-artifact@v5.0.0
         with:
           path: out
-
   deploy:
-    if: github.event_name != 'workflow_dispatch' || inputs.deploy
     needs: build
+    permissions:
+      pages: write
+      id-token: write
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
+      - name: 部署
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5.0.1

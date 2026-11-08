@@ -1,0 +1,855 @@
+{
+  "Linear Agent": {
+    "title": "Linear Agent",
+    "description": "The Linear Agent is an AI agent available in Linear’s intake integrations. It converts supported conversations into Linear issues by extracting requests, summarizing context, and populating issue fields.",
+    "images": [
+      {
+        "src": "/sites/linear/specs/d4523b570e0519b69e72024f2fb8b1d9245cbcb5-576x280.svg",
+        "alt": "A blueprint image of the Linear Agent in Slack"
+      }
+    ],
+    "rows": [
+      [
+        "Slack",
+        "Converts Slack threads into issues by mentioning @Linear. The agent uses the full thread context to auto-generate issues with title, summary, and supporting details. Conversations containing multiple distinct requests can generate multiple issues."
+      ],
+      [
+        "Microsoft Teams",
+        "Converts Teams conversations into issues by mentioning @Linear. The agent uses the full conversation context to auto-generate issues with title, summary, and supporting details. Conversations containing multiple distinct requests can generate multiple issues."
+      ],
+      [
+        "Intercom",
+        "Converts Intercom conversations into issues. The agent analyzes the full conversation and files issues for relevant bugs or feature requests. Issues include concise summaries, key details, and relevant screenshots. Conversations containing multiple distinct requests can generate multiple issues."
+      ],
+      [
+        "Zendesk",
+        "Converts Zendesk conversations into issues. The agent analyzes the full conversation and files issues for relevant bugs or feature requests. Issues include concise summaries, key details, and relevant screenshots. Conversations containing multiple distinct requests can generate multiple issues."
+      ],
+      [
+        "Gong",
+        "Automatically converts Gong call transcripts into issues. The agent reviews transcripts to extract product feedback and feature requests without requiring prompts or manual actions."
+      ]
+    ],
+    "headers": [
+      [
+        "Integration",
+        "Details"
+      ]
+    ],
+    "subheadings": [
+      "Integrations"
+    ],
+    "text": "Tech specs\nLinear Agent\nThe Linear Agent is an AI agent available in Linear’s intake integrations. It converts supported conversations into Linear issues by extracting requests, summarizing context, and populating issue fields.\nLinear Agent in Slack\nIntegrations\nIntegration\nDetails\nSlack\nConverts Slack threads into issues by mentioning @Linear. The agent uses the full thread context to auto-generate issues with title, summary, and supporting details. Conversations containing multiple distinct requests can generate multiple issues.\nMicrosoft Teams\nConverts Teams conversations into issues by mentioning @Linear. The agent uses the full conversation context to auto-generate issues with title, summary, and supporting details. Conversations containing multiple distinct requests can generate multiple issues.\nIntercom\nConverts Intercom conversations into issues. The agent analyzes the full conversation and files issues for relevant bugs or feature requests. Issues include concise summaries, key details, and relevant screenshots. Conversations containing multiple distinct requests can generate multiple issues.\nZendesk\nConverts Zendesk conversations into issues. The agent analyzes the full conversation and files issues for relevant bugs or feature requests. Issues include concise summaries, key details, and relevant screenshots. Conversations containing multiple distinct requests can generate multiple issues.\nGong\nAutomatically converts Gong call transcripts into issues. The agent reviews transcripts to extract product feedback and feature requests without requiring prompts or manual actions.",
+    "links": []
+  },
+  "Customer Requests": {
+    "title": "Customer requests",
+    "description": "Customer Requests links customer feedback and customer metadata to issues and projects in Linear. Requests can be created manually or through supported integrations, and customer data can be used for filtering, prioritization, and reporting across the workspace.",
+    "images": [
+      {
+        "src": "/sites/linear/specs/b3ad120b12b51e17486991d1a1512a5552fe114b-576x440.svg",
+        "alt": "A blueprint of a customer page in Linear with requested issues and projects"
+      }
+    ],
+    "rows": [
+      [
+        "Intake",
+        "Intercom\nZendesk\nEmail\nSalesforce\nLinear API\nSlack\nFront\nLinear Asks\nAttio"
+      ],
+      [
+        "Attributes",
+        "Customer name\nOwner\nSize\nTier\nDomain\nRevenue\nStatus"
+      ]
+    ],
+    "headers": [
+      [
+        "Category",
+        "Supported options"
+      ]
+    ],
+    "subheadings": [
+      "Integrations"
+    ],
+    "text": "TECH SPECS\nCustomer requests\n\nCustomer Requests links customer feedback and customer metadata to issues and projects in Linear. Requests can be created manually or through supported integrations, and customer data can be used for filtering, prioritization, and reporting across the workspace.\n\nCUSTOMER PAGE WITH ASSOCIATED ISSUES AND PROJECTS\nIntegrations\n\nCustomer Requests works with a variety of integrations to create requests and optionally sync customer attributes.\n\nCategory\nSupported options\nIntake\n\nIntercom\n\nZendesk\n\nEmail\n\nSalesforce\n\nLinear API\n\nSlack\n\nFront\n\nLinear Asks\n\nAttio\n\nAttributes\n\nCustomer name\n\nOwner\n\nSize\n\nTier\n\nDomain\n\nRevenue\n\nStatus",
+    "links": []
+  },
+  "Triage": {
+    "title": "Triage",
+    "description": "Triage is an AI-powered inbox for teams to manage unplanned work such as incoming bug reports and feature requests. When an issue is created by an integration or by a user not belonging to a specific Linear team, it will appear here. Triage offers an opportunity to review, update, and prioritize issues before they are added to the team’s workflow.",
+    "images": [
+      {
+        "src": "/sites/linear/specs/11e9ed42ad8f09aa2ea8018b60e146dc950b8892-576x268.svg",
+        "alt": "A blueprint image of Triage Intelligence suggesting assignees, labels and duplicates"
+      }
+    ],
+    "rows": [
+      [
+        "Manual schedule",
+        "Create a schedule directly in Linear"
+      ],
+      [
+        "API-based schedule",
+        "Build a custom schedule using the Linear API"
+      ],
+      [
+        "Integration",
+        "Pagerduty\n\nOpsgenie\n\nRootly\n\nIncident.io"
+      ],
+      [
+        "Filters",
+        "Assignee\n\nCreator\n\nEstimate\n\nSLA status\n\nDates\n\nAgent\n\nPriority\n\nLabels\n\nRelations"
+      ],
+      [
+        "Actions",
+        "Move team\n\nSet project\n\nSet status\n\nDelegate to agent\n\nSet priority\n\nAssign\n\nLabel"
+      ]
+    ],
+    "headers": [
+      [
+        "Method",
+        "Supported options"
+      ],
+      [
+        "Component",
+        "Supported properties"
+      ]
+    ],
+    "subheadings": [
+      "Triage intelligence",
+      "Triage responsibility",
+      "Triage rules"
+    ],
+    "text": "TECH SPECS\nTriage\n\nTriage is an AI-powered inbox for teams to manage unplanned work such as incoming bug reports and feature requests. When an issue is created by an integration or by a user not belonging to a specific Linear team, it will appear here. Triage offers an opportunity to review, update, and prioritize issues before they are added to the team’s workflow.\n\nTRIAGE INTELLIGENCE\nTriage intelligence\n\nTriage Intelligence automates issue triage by analyzing new issues as they enter Triage and generating suggested properties (such as teams, projects, assignees, and labels) and relationships (related issues and duplicates). Suggestions can be reviewed manually or configured to auto-apply.\n\nTriage responsibility\n\nTriage responsibility defines who triages new issues for a team during a given time window. It supports notifying specific members, automatically assigning incoming issues, and integrating with on-call schedule providers to\nautomate rotations.\n\nMethod\nSupported options\nManual schedule\n\nCreate a schedule directly in Linear\n\nAPI-based schedule\n\nBuild a custom schedule using the Linear API\n\nIntegration\n\nPagerduty\n\nOpsgenie\n\nRootly\n\nIncident.io\n\nTriage rules\n\nTriage rules automatically route incoming new issues and updates issue attributes based on pre-configured rules. Rules can be triggered on filterable properties and can update an issue’s team, status, assignee, labels, project, and priority.\n\nComponent\nSupported properties\nFilters\n\nAssignee\n\nCreator\n\nEstimate\n\nSLA status\n\nDates\n\nAgent\n\nPriority\n\nLabels\n\nRelations\n\nActions\n\nMove team\n\nSet project\n\nSet status\n\nDelegate to agent\n\nSet priority\n\nAssign\n\nLabel",
+    "links": []
+  },
+  "Linear Asks": {
+    "title": "Linear Asks",
+    "description": "Linear Asks supports collecting internal workplace requests from Slack, email and web forms, and converting them into issues for triage. Asks can be submitted by anyone, including users without Linear accounts, and can be configured with templates and form fields to standardize intake for workflows like bug reports, IT help desk requests, and HR or operations tickets.",
+    "images": [
+      {
+        "src": "/sites/linear/specs/97f4b8460a993b41c40db5c12aa281124a2c9ea6-576x440.svg",
+        "alt": "A blueprint image of a Linear Asks form in Slack"
+      }
+    ],
+    "rows": [
+      [
+        "Slack",
+        "Turn Slack messages into asks\n\nBi-directionally synced threads\n\nAuto-create with emoji reactions\n\nAuto-create by mentioning @Linear Asks\n\nPrivate Asks via DM\n\nAsks in private channels\n\nPer channel configurations\n\nTemplates\n\nConnect multiple Slack workspaces"
+      ],
+      [
+        "Email",
+        "Turn emails into asks\n\nBi-directionally synced replies\n\nCustom email domains"
+      ],
+      [
+        "Web forms",
+        "Turn form submissions into asks"
+      ]
+    ],
+    "headers": [
+      [
+        "Channel",
+        "Features"
+      ]
+    ],
+    "subheadings": [
+      "Intake channels"
+    ],
+    "text": "TECH SPECS\nLinear Asks\n\nLinear Asks supports collecting internal workplace requests from Slack, email and web forms, and converting them into issues for triage. Asks can be submitted by anyone, including users without Linear accounts, and can be configured with templates and form fields to standardize intake for workflows like bug reports, IT help desk requests, and HR or operations tickets.\n\nASKS FORM IN SLACK\nIntake channels\nChannel\nFeatures\nSlack\n\nTurn Slack messages into asks\n\nBi-directionally synced threads\n\nAuto-create with emoji reactions\n\nAuto-create by mentioning @Linear Asks\n\nPrivate Asks via DM\n\nAsks in private channels\n\nPer channel configurations\n\nTemplates\n\nConnect multiple Slack workspaces\n\nEmail\n\nTurn emails into asks\n\nBi-directionally synced replies\n\nCustom email domains\n\nWeb forms\n\nTurn form submissions into asks",
+    "links": []
+  },
+  "Projects": {
+    "title": "Projects",
+    "description": "Projects are units of work that have a clear outcome or planned completion timeframe, such as a new feature’s launch, and are comprised of issues, an overview, and optional documents. They can be shared across multiple teams and come with their own unique features, progress graph, and notification options.",
+    "images": [
+      {
+        "src": "/sites/linear/specs/fff0153e67b188a79cb376848a9a365beb80a886-576x440.svg",
+        "alt": "A blueprint image of the overview page of a project in Linear"
+      }
+    ],
+    "rows": [
+      [
+        "Lead",
+        "The person responsible for the project’s delivery"
+      ],
+      [
+        "Members",
+        "People contributing work to the project"
+      ],
+      [
+        "Label",
+        "Custom tags for grouping and filtering projects"
+      ],
+      [
+        "Start date",
+        "The planned start date or timeframe for the project"
+      ],
+      [
+        "Target date",
+        "The planned completion date or timeframe for the project"
+      ],
+      [
+        "Priority",
+        "The urgency level of the project"
+      ],
+      [
+        "Teams",
+        "Teams with issues associated with the project"
+      ],
+      [
+        "Dependencies",
+        "Projects this project blocks or is blocked by"
+      ],
+      [
+        "Initiatives",
+        "Higher-level initiatives the project contributes to"
+      ],
+      [
+        "Milestones",
+        "Major divisions of work within the project"
+      ],
+      [
+        "Documents",
+        "Collaborative documents for notes, specs, and resources"
+      ],
+      [
+        "Project updates",
+        "Progress updates shared with subscribers"
+      ],
+      [
+        "Comments",
+        "Provide feedback and discuss open questions"
+      ],
+      [
+        "Templates",
+        "Predefined project structure and properties"
+      ],
+      [
+        "Customer requests",
+        "Customer feedback and requests linked to the project"
+      ]
+    ],
+    "headers": [
+      [
+        "Property",
+        "Function"
+      ]
+    ],
+    "subheadings": [
+      "Features & properties"
+    ],
+    "text": "TECH SPECS\nProjects\n\nProjects are units of work that have a clear outcome or planned completion timeframe, such as a new feature’s launch, and are comprised of issues, an overview, and optional documents. They can be shared across multiple teams and come with their own unique features, progress graph, and notification options.\n\nPROJECT OVERVIEW PAGE\nFeatures & properties\nProperty\nFunction\nLead\n\nThe person responsible for the project’s delivery\n\nMembers\n\nPeople contributing work to the project\n\nLabel\n\nCustom tags for grouping and filtering projects\n\nStart date\n\nThe planned start date or timeframe for the project\n\nTarget date\n\nThe planned completion date or timeframe for the project\n\nPriority\n\nThe urgency level of the project\n\nTeams\n\nTeams with issues associated with the project\n\nDependencies\n\nProjects this project blocks or is blocked by\n\nInitiatives\n\nHigher-level initiatives the project contributes to\n\nMilestones\n\nMajor divisions of work within the project\n\nDocuments\n\nCollaborative documents for notes, specs, and resources\n\nProject updates\n\nProgress updates shared with subscribers\n\nComments\n\nProvide feedback and discuss open questions\n\nTemplates\n\nPredefined project structure and properties\n\nCustomer requests\n\nCustomer feedback and requests linked to the project",
+    "links": []
+  },
+  "Documents": {
+    "title": "Documents",
+    "description": "Documents are collaborative, realtime pages that can be attached to projects and initiatives. They support inline comments, templates, subscriptions, and references to issues and projects.",
+    "images": [
+      {
+        "src": "/sites/linear/specs/81a46a4a07ac4f2d18a1d43a5943c8eef65e80b8-576x440.svg",
+        "alt": "A blueprint of a meeting note document in Linear"
+      }
+    ],
+    "rows": [
+      [
+        "Headers",
+        "H1, H2, H3"
+      ],
+      [
+        "Lists",
+        "Bulleted, numbered, checklists"
+      ],
+      [
+        "Code",
+        "Inline, codeblocks"
+      ],
+      [
+        "Blockquotes",
+        "✓"
+      ],
+      [
+        "Collapsibles",
+        "✓"
+      ],
+      [
+        "Mermaid diagrams",
+        "✓"
+      ]
+    ],
+    "headers": [
+      [
+        "Object",
+        "Details"
+      ]
+    ],
+    "subheadings": [
+      "Formatting options"
+    ],
+    "text": "TECH SPECS\nDocuments\n\nDocuments are collaborative, realtime pages that can be attached to projects and initiatives. They support inline comments, templates, subscriptions, and references to issues and projects.\n\nMEETING NOTE DOCUMENT\nFormatting options\nObject\nDetails\nHeaders\n\nH1, H2, H3\n\nLists\n\nBulleted, numbered, checklists\n\nCode\n\nInline, codeblocks\n\nBlockquotes\n\n✓\n\nCollapsibles\n\n✓\n\nMermaid diagrams\n\n✓",
+    "links": []
+  },
+  "Pulse": {
+    "title": "Pulse",
+    "description": "Pulse is a centralized feed of project and initiative updates that provides visibility into ongoing work across a workspace, with full updates availablein-app and summarized delivery via Inbox notifications.",
+    "images": [],
+    "rows": [
+      [
+        "Feed",
+        "Central feed of project and initiative updates, including For me (interest-based), Recent, Popular, and user-defined custom feeds."
+      ],
+      [
+        "Inbox digest",
+        "Daily or weekly AI summary delivered to Inbox"
+      ],
+      [
+        "Pulse audio",
+        "Text-to-speech playback of summarized Pulse updates, available from Inbox digests."
+      ]
+    ],
+    "headers": [
+      [
+        "Format",
+        "Details"
+      ]
+    ],
+    "subheadings": [
+      "Formats"
+    ],
+    "text": "TECH SPECS\nPulse\n\nPulse is a centralized feed of project and initiative updates that provides visibility into ongoing work across a workspace, with full updates available\nin-app and summarized delivery via Inbox notifications.\n\nFormats\nFormat\nDetails\nFeed\n\nCentral feed of project and initiative updates, including For me (interest-based), Recent, Popular, and user-defined custom feeds.\n\nInbox digest\n\nDaily or weekly AI summary delivered to Inbox\n\nPulse audio\n\nText-to-speech playback of summarized Pulse updates, available from Inbox digests.",
+    "links": []
+  },
+  "Initiatives": {
+    "title": "Initiatives",
+    "description": "Initiatives are workspace-level groupings of projects aligned to company objectives. Each initiative includes an overview, target date, status, and progress reporting to support high-level planning and tracking across multiple projects. Initiatives can also be nested into sub-initiatives to support multiple levels of planning.",
+    "images": [
+      {
+        "src": "/sites/linear/specs/199fef65a1cc6f4c03a7cb9b166e1964d6e4c12e-576x360.svg",
+        "alt": "A blueprint image of parent initiatives and nested sub-initiatives"
+      }
+    ],
+    "rows": [
+      [
+        "Status",
+        "Whether the initiative is proposed, planned, active, completed, or canceled"
+      ],
+      [
+        "Priority",
+        "Urgency level (Urgent, High, Medium, Low, No priority)"
+      ],
+      [
+        "Owner",
+        "The person responsible for the initiative"
+      ],
+      [
+        "Target date",
+        "The expected completion date of the initiative"
+      ],
+      [
+        "Labels",
+        "Categorical tags, scoped specifically to the initiative level"
+      ],
+      [
+        "Documents",
+        "Collaborative documents attached to the initiative"
+      ],
+      [
+        "Initiative updates",
+        "Progress updates shared with subscribers"
+      ],
+      [
+        "Associations",
+        "Projects, Sub-initiatives, Parent initiatives"
+      ],
+      [
+        "Comments",
+        "Provide feedback and discuss open questions"
+      ]
+    ],
+    "headers": [
+      [
+        "Property",
+        "Function"
+      ]
+    ],
+    "subheadings": [
+      "Properties"
+    ],
+    "text": "TECH SPECS\nInitiatives\n\nInitiatives are workspace-level groupings of projects aligned to company objectives. Each initiative includes an overview, target date, status, and progress reporting to support high-level planning and tracking across multiple projects. Initiatives can also be nested into sub-initiatives to support multiple levels of planning.\n\nPARENT AND SUB-INITIATIVES\nProperties\nProperty\nFunction\nStatus\n\nWhether the initiative is proposed, planned, active, completed, or canceled\n\nPriority\n\nUrgency level (Urgent, High, Medium, Low, No priority)\n\nOwner\n\nThe person responsible for the initiative\n\nTarget date\n\nThe expected completion date of the initiative\n\nLabels\n\nCategorical tags, scoped specifically to the initiative level\n\nDocuments\n\nCollaborative documents attached to the initiative\n\nInitiative updates\n\nProgress updates shared with subscribers\n\nAssociations\n\nProjects, Sub-initiatives, Parent initiatives\n\nComments\n\nProvide feedback and discuss open questions",
+    "links": []
+  },
+  "Visual planning": {
+    "title": "Visual planning",
+    "description": "Visual planning provides multiple ways to view and organize work across projects and initiatives. It supports saved custom views with filtering, grouping, and ordering, and can be displayed as a list, board (including swimlanes), or timeline for higher-level planning.",
+    "images": [
+      {
+        "src": "/sites/linear/specs/e0833801f50e4750bf0dceb1ecd1ed5185e9c505-576x280.svg",
+        "alt": "A blueprint image of a project list view in Linear"
+      },
+      {
+        "src": "/sites/linear/specs/8bed77f0567017a14e71be4ec4e437a6ce9a0852-576x320.svg",
+        "alt": "A blueprint image of a project board view in Linear"
+      },
+      {
+        "src": "/sites/linear/specs/3707c1b7fce083670684002bfc8162a8a461f36e-576x320.svg",
+        "alt": "A blueprint image of a timeline view in Linear"
+      }
+    ],
+    "rows": [],
+    "headers": [],
+    "subheadings": [
+      "List",
+      "Board",
+      "Timeline"
+    ],
+    "text": "TECH SPECS\nVisual planning\n\nVisual planning provides multiple ways to view and organize work across projects and initiatives. It supports saved custom views with filtering, grouping, and ordering, and can be displayed as a list, board (including swimlanes), or timeline for higher-level planning.\n\nList\n\nTable-based view for scanning, filtering, and ordering work.\n\nBoard\n\nColumn-based view for visualizing workflow stages, with optional swimlanes.\n\nTimeline\n\nChronological view for planning and tracking projects across time.",
+    "links": []
+  },
+  "Insights": {
+    "title": "Insights",
+    "description": "Insights provides real-time analytics across Linear issue data, allowing teams to analyze work patterns, throughput, and bottlenecks.",
+    "images": [
+      {
+        "src": "/sites/linear/specs/cd22aff012e59cc508b1f137847b3db7ec5cf6b6-576x400.svg",
+        "alt": "A blueprint image of a scatterplot chart in Linear Insights"
+      }
+    ],
+    "rows": [
+      [
+        "Measure",
+        "Issue count\n\nEffort\n\nCycle time\n\nTriage time\n\nLead time\n\nIssue age"
+      ],
+      [
+        "Slice",
+        "Status\n\nStatus type\n\nAssignee\n\nCreator\n\nPriority\n\nLabel\n\nLabel group\n\nSLA status\n\nEstimate\n\nTemplate\n\nExternal source\n\nProject\n\nInitiative\n\nProject label\n\nProject label group\n\nCycle\n\nAdded to cycle\n\nTeam\n\nCreated date\n\nCompleted date\n\nCanceled date\n\nStarted date\n\nDue date\n\nBurn-up"
+      ],
+      [
+        "Segment",
+        "Status\n\nStatus type\n\nAssignee\n\nCreator\n\nLabel\n\nLabel group\n\nSLA status\n\nEstimate\n\nTemplate\n\nExternal source\n\nProject\n\nInitiative\n\nProject label\n\nProject label group\n\nAdded to Cycle\n\nTeam"
+      ],
+      [
+        "Time series grouping",
+        "Daily\n\nWeekly\n\nMonthly\n\nQuarterly\n\nYearly"
+      ],
+      [
+        "Chart types",
+        "Scatter plot (latency)\n\nBar chart (distribution)\n\nBurn-up chart (cumulative flow diagrams)"
+      ]
+    ],
+    "headers": [
+      [
+        "Category",
+        "Details"
+      ]
+    ],
+    "subheadings": [
+      "Specifications"
+    ],
+    "text": "TECH SPECS\nInsights\n\nInsights provides real-time analytics across Linear issue data, allowing teams to analyze work patterns, throughput, and bottlenecks.\n\nIt exposes configurable measures such as issue count, effort, and cycle time, and supports filtering, slicing, and segmentation across teams, projects, labels, and time ranges to support operational and planning decisions.\n\nSpecifications\nCategory\nDetails\nMeasure\n\nIssue count\n\nEffort\n\nCycle time\n\nTriage time\n\nLead time\n\nIssue age\n\nSlice\n\nStatus\n\nStatus type\n\nAssignee\n\nCreator\n\nPriority\n\nLabel\n\nLabel group\n\nSLA status\n\nEstimate\n\nTemplate\n\nExternal source\n\nProject\n\nInitiative\n\nProject label\n\nProject label group\n\nCycle\n\nAdded to cycle\n\nTeam\n\nCreated date\n\nCompleted date\n\nCanceled date\n\nStarted date\n\nDue date\n\nBurn-up\n\nSegment\n\nStatus\n\nStatus type\n\nAssignee\n\nCreator\n\nLabel\n\nLabel group\n\nSLA status\n\nEstimate\n\nTemplate\n\nExternal source\n\nProject\n\nInitiative\n\nProject label\n\nProject label group\n\nAdded to Cycle\n\nTeam\n\nTime series grouping\n\nDaily\n\nWeekly\n\nMonthly\n\nQuarterly\n\nYearly\n\nChart types\n\nScatter plot (latency)\n\nBar chart (distribution)\n\nBurn-up chart (cumulative flow diagrams)",
+    "links": []
+  },
+  "Cloud Coding Agent": {
+    "title": "Coding sessions",
+    "description": "Coding sessions let you run agentic coding workflows in Linear. When you delegate an issue to Linear, we start a secure coding session through Claude Code or Codex. Linear opens a draft pull request and returns the diff for review.",
+    "images": [
+      {
+        "src": "/sites/linear/specs/ee8751b19ee090977c53013cdb57dc983b32721b-576x340.svg",
+        "alt": "A blueprint image of a coding session opening a draft pull request in Linear"
+      }
+    ],
+    "rows": [
+      [
+        "Coding agents",
+        "Claude Code\n\nCodex"
+      ],
+      [
+        "Models",
+        "Auto\n\nClaude Fable 5\n\nClaude Opus 5\n\nClaude Opus 4.8\n\nClaude Sonnet 5\n\nGPT-5.6 Sol\n\nGPT-5.5\n\nGPT-5.4"
+      ],
+      [
+        "Runtimes",
+        "Node.js\n\nPython\n\nRuby\n\nGo\n\nRust\n\nJava"
+      ],
+      [
+        "Environment",
+        "Managed development sandbox"
+      ],
+      [
+        "Source control",
+        "GitHub; opens draft pull requests and returns diffs to Linear for review"
+      ],
+      [
+        "Availability",
+        "Basic, Business, and Enterprise plans; uses AI credits"
+      ],
+      [
+        "Docs",
+        "https://linear.app/docs/coding-sessions"
+      ]
+    ],
+    "headers": [
+      [
+        "Category",
+        "Supported options"
+      ]
+    ],
+    "subheadings": [
+      "How coding sessions work",
+      "Technical support",
+      "Learn more"
+    ],
+    "text": "TECH SPECS\nCoding sessions\n\nCoding sessions let you run agentic coding workflows in Linear. When you delegate an issue to Linear, we start a secure coding session through Claude Code or Codex. Linear opens a draft pull request and returns the diff for review.\n\nLINEAR AGENT\nHow coding sessions work\n\nStart: Delegate an issue, prompt Linear Agent, mention @linear in Slack or Teams, or trigger a session automatically from a loop.\n\nImplement: Linear gathers context from your workspace and repository, prepares a secure cloud environment, and implements the change.\n\nVerify: Linear runs tests, launches local applications, and can capture screenshots or recordings to verify its work.\n\nReview: Inspect the diff, steer the session, request revisions, and merge the pull request directly from Linear.\n\nTechnical support\nCategory\nSupported options\nCoding agents\n\nClaude Code\n\nCodex\n\nModels\n\nAuto\n\nClaude Fable 5\n\nClaude Opus 5\n\nClaude Opus 4.8\n\nClaude Sonnet 5\n\nGPT-5.6 Sol\n\nGPT-5.5\n\nGPT-5.4\n\nRuntimes\n\nNode.js\n\nPython\n\nRuby\n\nGo\n\nRust\n\nJava\n\nEnvironment\n\nManaged development sandbox\n\nSource control\n\nGitHub; opens draft pull requests and returns diffs to Linear for review\n\nAvailability\n\nBasic, Business, and Enterprise plans; uses AI credits\n\nLearn more\nDocs\n\nhttps://linear.app/docs/coding-sessions",
+    "links": [
+      {
+        "text": "https://linear.app/docs/coding-sessions",
+        "href": "https://linear.app/docs/coding-sessions"
+      }
+    ]
+  },
+  "Linear MCP": {
+    "title": "Linear MCP",
+    "description": "The Linear MCP server exposes a standardized interface that allows AI models and agents to securely read from and write to Linear. It enables tools to create, update, and query issues, projects, and related data through the Model Context Protocol, supporting both native MCP clients and broader compatibility via remote connections.",
+    "images": [],
+    "rows": [
+      [
+        "Engineering",
+        "Claude\n\nCursor\n\nOpenAI Codex\n\nReplit\n\nWindsurf\n\nZed"
+      ],
+      [
+        "Design",
+        "Figma\n\nv0"
+      ],
+      [
+        "Others",
+        "See integrations directory"
+      ]
+    ],
+    "headers": [
+      [
+        "Category",
+        "Integrations"
+      ]
+    ],
+    "subheadings": [
+      "Available AI clients"
+    ],
+    "text": "TECH SPECS\nLinear MCP\n\nThe Linear MCP server exposes a standardized interface that allows AI models and agents to securely read from and write to Linear. It enables tools to create, update, and query issues, projects, and related data through the Model Context Protocol, supporting both native MCP clients and broader compatibility via remote connections.\n\nAvailable AI clients\nCategory\nIntegrations\nEngineering\n\nClaude\n\nCursor\n\nOpenAI Codex\n\nReplit\n\nWindsurf\n\nZed\n\nDesign\n\nFigma\n\nv0\n\nOthers\n\nSee integrations directory",
+    "links": [
+      {
+        "text": "integrations directory",
+        "href": "https://linear.app/integrations/ai-clients"
+      }
+    ]
+  },
+  "Issues": {
+    "title": "Issues",
+    "description": "Issues are Linear’s atomic work item, used to track tasks, bugs, and requests within a team workflow. Each issue can be assigned to a teammate or delegated to an agent, and can optionally include properties and relationships for routing, prioritization, and reporting.",
+    "images": [
+      {
+        "src": "/sites/linear/specs/06d8664a5083e9be8d679ad643c4ad64eee9cd82-576x280.svg",
+        "alt": "A blueprint image of an issue list in Linear"
+      }
+    ],
+    "rows": [
+      [
+        "Assignee",
+        "(Human) user responsible for the issue"
+      ],
+      [
+        "Agent",
+        "Delegated AI agent"
+      ],
+      [
+        "Status",
+        "Workflow state, customizable per team (Triage, Backlog, Todo, In Progress, Completed, Canceled, Duplicate)"
+      ],
+      [
+        "Priority",
+        "Urgency level (Urgent, High, Medium, Low, No priority)"
+      ],
+      [
+        "Estimate",
+        "Effort value (Exponential, Fibonacci, Linear, T-Shirt)"
+      ],
+      [
+        "Labels and label groups",
+        "Categorical tags, scoped to workspace or team-level"
+      ],
+      [
+        "Due date",
+        "Target date"
+      ],
+      [
+        "SLAs",
+        "Auto-applied deadlines based on rules"
+      ],
+      [
+        "Associations",
+        "Projects\n\nCycles\n\nReleases\n\nParent issues\n\nSub-issues"
+      ],
+      [
+        "Relations",
+        "Related\n\nBlocks\n\nBlocked by\n\nDuplicate"
+      ],
+      [
+        "Templates",
+        "Pre-fill fields to standardize issue creation"
+      ]
+    ],
+    "headers": [
+      [
+        "Property",
+        "Details"
+      ]
+    ],
+    "subheadings": [
+      "Properties"
+    ],
+    "text": "TECH SPECS\nIssues\n\nIssues are Linear’s atomic work item, used to track tasks, bugs, and requests within a team workflow. Each issue can be assigned to a teammate or delegated to an agent, and can optionally include properties and relationships for routing, prioritization, and reporting.\n\nISSUE LIST\nProperties\nProperty\nDetails\nAssignee\n\n(Human) user responsible for the issue\n\nAgent\n\nDelegated AI agent\n\nStatus\n\nWorkflow state, customizable per team (Triage, Backlog, Todo, In Progress, Completed, Canceled, Duplicate)\n\nPriority\n\nUrgency level (Urgent, High, Medium, Low, No priority)\n\nEstimate\n\nEffort value (Exponential, Fibonacci, Linear, T-Shirt)\n\nLabels and label groups\n\nCategorical tags, scoped to workspace or team-level\n\nDue date\n\nTarget date\n\nSLAs\n\nAuto-applied deadlines based on rules\n\nAssociations\n\nProjects\n\nCycles\n\nReleases\n\nParent issues\n\nSub-issues\n\nRelations\n\nRelated\n\nBlocks\n\nBlocked by\n\nDuplicate\n\nTemplates\n\nPre-fill fields to standardize issue creation",
+    "links": []
+  },
+  "Git automations": {
+    "title": "Git automations",
+    "description": "The GitHub and GitLab integrations connect Linear issues with pull requests or merge requests to synchronize planning and code execution.",
+    "images": [],
+    "rows": [
+      [
+        "GitHub",
+        "Pull request linking\n\nBranch name formatting\n\nStatus automation from PRs\n\nMagic words for linking\n\nCommit linking\n\nGitHub Issues Sync\n\nIssues Sync → multiple repositories to single team"
+      ],
+      [
+        "GitLab",
+        "Merge request linking\n\nMagic words for linking\n\nMerge request automations\n\nBranch-specific rules\n\nAuto-assign and update status\n\nAuto-linking"
+      ]
+    ],
+    "headers": [
+      [
+        "Platform",
+        "Details"
+      ]
+    ],
+    "subheadings": [
+      "Features"
+    ],
+    "text": "TECH SPECS\nGit automations\n\nThe GitHub and GitLab integrations connect Linear issues with pull requests or merge requests to synchronize planning and code execution.\n\nThey support issue linking, bidirectional context via linkbacks, and configurable workflow automation that updates issue status based on development activity.\n\nFeatures\nPlatform\nDetails\nGitHub\n\nPull request linking\n\nBranch name formatting\n\nStatus automation from PRs\n\nMagic words for linking\n\nCommit linking\n\nGitHub Issues Sync\n\nIssues Sync → multiple repositories to single team\n\nGitLab\n\nMerge request linking\n\nMagic words for linking\n\nMerge request automations\n\nBranch-specific rules\n\nAuto-assign and update status\n\nAuto-linking",
+    "links": []
+  },
+  "Guided reviews": {
+    "title": "Guided reviews",
+    "description": "Guided Reviews make large pull requests easier to understand. Instead of reviewing files one by one, Linear organizes related changes into a clear path through the implementation.",
+    "images": [
+      {
+        "src": "/sites/linear/specs/aee78b6f651c37830724667a4f6cf69a23c69f57-576x380.svg",
+        "alt": "A blueprint image of a guided review walkthrough in Linear"
+      }
+    ],
+    "rows": [
+      [
+        "Semantic ordering",
+        "Presents changes in the order they’re most useful to understand, rather than by file structure."
+      ],
+      [
+        "Structured sections",
+        "Groups related changes and separates core implementation from supporting code."
+      ],
+      [
+        "Explanations in context",
+        "Pairs each section with an explanation of its purpose and impact alongside the relevant diffs."
+      ],
+      [
+        "Direct navigation",
+        "Links each section to the underlying code so you can move between the guide and full diff."
+      ],
+      [
+        "Docs",
+        "linear.app/docs/diffs#guides"
+      ]
+    ],
+    "headers": [
+      [
+        "Capability",
+        "Details"
+      ]
+    ],
+    "subheadings": [
+      "How it works",
+      "Learn more"
+    ],
+    "text": "TECH SPECS\nGuided reviews\n\nGuided Reviews make large pull requests easier to understand. Instead of reviewing files one by one, Linear organizes related changes into a clear path through the implementation.\n\nGUIDED REVIEW\nHow it works\nCapability\nDetails\nSemantic ordering\n\nPresents changes in the order they’re most useful to understand, rather than by file structure.\n\nStructured sections\n\nGroups related changes and separates core implementation from supporting code.\n\nExplanations in context\n\nPairs each section with an explanation of its purpose and impact alongside the relevant diffs.\n\nDirect navigation\n\nLinks each section to the underlying code so you can move between the guide and full diff.\n\nLearn more\nDocs\n\nlinear.app/docs/diffs#guides",
+    "links": [
+      {
+        "text": "linear.app/docs/diffs#guides",
+        "href": "https://linear.app/docs/diffs#guides"
+      }
+    ]
+  },
+  "Cycles": {
+    "title": "Cycles",
+    "description": "Cycles are time-boxed planning periods, similar to sprints, used to organize work into a consistent team cadence. They generate automatically on a fixed schedule, roll unfinished work forward, and provide visibility into capacity, scope, and completion over time.",
+    "images": [
+      {
+        "src": "/sites/linear/specs/92b22e477ee0d7c7b983a94eb2be248b7a4f1c91-576x320.svg",
+        "alt": "A blueprint image of the cycle progress graph in Linear"
+      }
+    ],
+    "rows": [
+      [
+        "Core settings",
+        "Duration (1-8 weeks)\n\nCooldowns\n\nStarting day of the week\n\nNumber of upcoming cycles"
+      ],
+      [
+        "Automations",
+        "Unfinished work rolls over to the next cycle\n\nAuto-add active issues to current cycle"
+      ]
+    ],
+    "headers": [
+      [
+        "Configuration",
+        "Details"
+      ]
+    ],
+    "subheadings": [
+      "Configurations"
+    ],
+    "text": "TECH SPECS\nCycles\n\nCycles are time-boxed planning periods, similar to sprints, used to organize work into a consistent team cadence. They generate automatically on a fixed schedule, roll unfinished work forward, and provide visibility into capacity, scope, and completion over time.\n\nCYCLE PROGRESS\nConfigurations\nConfiguration\nDetails\nCore settings\n\nDuration (1-8 weeks)\n\nCooldowns\n\nStarting day of the week\n\nNumber of upcoming cycles\n\nAutomations\n\nUnfinished work rolls over to the next cycle\n\nAuto-add active issues to current cycle",
+    "links": []
+  },
+  "Diffs": {
+    "title": "Diffs",
+    "description": "Linear Diffs brings code review into the product development workflow. See pull requests alongside the issues behind them, review and discuss changes, and merge without switching between Linear and GitHub.",
+    "images": [
+      {
+        "src": "/sites/linear/specs/6ad4df65b3c7824d3b64f381b3034b178e424d2b-576x380.svg",
+        "alt": "A blueprint image of the Diffs review inbox and pull request view in Linear"
+      }
+    ],
+    "rows": [
+      [
+        "Review inbox",
+        "See pull requests that need your attention, reviews you created, and conversations you’ve participated in."
+      ],
+      [
+        "Guided Reviews",
+        "Organizes larger pull requests into meaningful sections that explain what changed and why."
+      ],
+      [
+        "Structural highlighting",
+        "Uses syntax-aware highlighting to emphasize meaningful code changes and reduce formatting noise."
+      ],
+      [
+        "Review and iterate",
+        "Comment, approve, request changes, merge, or ask an agent to address feedback. Everything stays synced with GitHub."
+      ],
+      [
+        "Source control",
+        "GitHub"
+      ],
+      [
+        "Diff views",
+        "Unified and split"
+      ],
+      [
+        "Pull request data",
+        "Changed files, activity, checks, comments, review state, and preview links"
+      ],
+      [
+        "Notifications",
+        "Review requests, comments, mentions, failed checks, and merge queue updates"
+      ],
+      [
+        "Docs",
+        "linear.app/docs/diffs"
+      ]
+    ],
+    "headers": [
+      [
+        "Capability",
+        "Details"
+      ],
+      [
+        "Category",
+        "Details"
+      ]
+    ],
+    "subheadings": [
+      "Capabilities",
+      "Technical specifications",
+      "Learn more"
+    ],
+    "text": "TECH SPECS\nDiffs\n\nLinear Diffs brings code review into the product development workflow. See pull requests alongside the issues behind them, review and discuss changes, and merge without switching between Linear and GitHub.\n\nLINEAR DIFFS\nCapabilities\nCapability\nDetails\nReview inbox\n\nSee pull requests that need your attention, reviews you created, and conversations you’ve participated in.\n\nGuided Reviews\n\nOrganizes larger pull requests into meaningful sections that explain what changed and why.\n\nStructural highlighting\n\nUses syntax-aware highlighting to emphasize meaningful code changes and reduce formatting noise.\n\nReview and iterate\n\nComment, approve, request changes, merge, or ask an agent to address feedback. Everything stays synced with GitHub.\n\nTechnical specifications\nCategory\nDetails\nSource control\n\nGitHub\n\nDiff views\n\nUnified and split\n\nPull request data\n\nChanged files, activity, checks, comments, review state, and preview links\n\nNotifications\n\nReview requests, comments, mentions, failed checks, and merge queue updates\n\nLearn more\nDocs\n\nlinear.app/docs/diffs",
+    "links": [
+      {
+        "text": "linear.app/docs/diffs",
+        "href": "https://linear.app/docs/diffs"
+      }
+    ]
+  },
+  "Releases": {
+    "title": "Releases",
+    "description": "Releases connect product work in Linear to what reaches customers. Integrate your CI/CD system to automatically group issues by release and environment, track what shipped, and keep a clear record across continuous and scheduled delivery cycles.",
+    "images": [
+      {
+        "src": "/sites/linear/specs/ed0d899a52fbe2feaaa9c0bf017d5e808ca34b93-576x320.svg",
+        "alt": "A blueprint image of a release in Linear with its issues, deployment date, and assignees"
+      }
+    ],
+    "rows": [
+      [
+        "Release pipelines",
+        "Model delivery by product and environment with continuous or scheduled pipelines."
+      ],
+      [
+        "Deployment tracking",
+        "Connect issues to the release and commit where they shipped—not just where the work was marked done."
+      ],
+      [
+        "Workflow automations",
+        "Update issue status when changes reach a specific release or environment."
+      ],
+      [
+        "Release communication",
+        "Generate release notes with Linear Agent and maintain a chronological changelog for each pipeline."
+      ],
+      [
+        "Pipeline types",
+        "Continuous and scheduled"
+      ],
+      [
+        "CI/CD",
+        "Integrates with any CI/CD system; includes a prebuilt GitHub Action"
+      ],
+      [
+        "Monorepos",
+        "Glob-based path filters route relevant commits to each pipeline"
+      ],
+      [
+        "Availability",
+        "Business: up to 15 pipelines\n\nEnterprise: unlimited pipelines"
+      ],
+      [
+        "Docs",
+        "linear.app/docs/releases"
+      ]
+    ],
+    "headers": [
+      [
+        "Capability",
+        "Details"
+      ],
+      [
+        "Category",
+        "Details"
+      ]
+    ],
+    "subheadings": [
+      "Capabilities",
+      "Technical specifications",
+      "Learn more"
+    ],
+    "text": "TECH SPECS\nReleases\n\nReleases connect product work in Linear to what reaches customers. Integrate your CI/CD system to automatically group issues by release and environment, track what shipped, and keep a clear record across continuous and scheduled delivery cycles.\n\nRELEASE DETAILS\nCapabilities\nCapability\nDetails\nRelease pipelines\n\nModel delivery by product and environment with continuous or scheduled pipelines.\n\nDeployment tracking\n\nConnect issues to the release and commit where they shipped—not just where the work was marked done.\n\nWorkflow automations\n\nUpdate issue status when changes reach a specific release or environment.\n\nRelease communication\n\nGenerate release notes with Linear Agent and maintain a chronological changelog for each pipeline.\n\nTechnical specifications\nCategory\nDetails\nPipeline types\n\nContinuous and scheduled\n\nCI/CD\n\nIntegrates with any CI/CD system; includes a prebuilt GitHub Action\n\nMonorepos\n\nGlob-based path filters route relevant commits to each pipeline\n\nAvailability\n\nBusiness: up to 15 pipelines\n\nEnterprise: unlimited pipelines\n\nLearn more\nDocs\n\nlinear.app/docs/releases",
+    "links": [
+      {
+        "text": "linear.app/docs/releases",
+        "href": "https://linear.app/docs/releases"
+      }
+    ]
+  }
+}

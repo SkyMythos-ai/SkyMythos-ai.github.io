@@ -1,0 +1,525 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-07T22:50:21+08:00",
+  "title": "Design System: SkyMythos.ai",
+  "extensions": {
+    "colorMeta": {
+      "brand-blue": {
+        "role": "primary",
+        "displayName": "brand blue",
+        "tonalRamp": [
+          "oklch(15% 0.05 264)",
+          "oklch(26% 0.13 264)",
+          "oklch(38% 0.2 264)",
+          "oklch(49% 0.2 264)",
+          "oklch(61% 0.2 264)",
+          "oklch(73% 0.2 264)",
+          "oklch(85% 0.13 264)",
+          "oklch(95% 0.05 264)"
+        ]
+      },
+      "action-light": {
+        "role": "primary",
+        "displayName": "action light",
+        "tonalRamp": [
+          "oklch(15% 0.05 264)",
+          "oklch(26% 0.13 264)",
+          "oklch(38% 0.2 264)",
+          "oklch(49% 0.2 264)",
+          "oklch(61% 0.2 264)",
+          "oklch(73% 0.2 264)",
+          "oklch(85% 0.13 264)",
+          "oklch(95% 0.05 264)"
+        ]
+      },
+      "action-hover-light": {
+        "role": "primary",
+        "displayName": "action hover light",
+        "tonalRamp": [
+          "oklch(15% 0.05 264)",
+          "oklch(26% 0.13 264)",
+          "oklch(38% 0.2 264)",
+          "oklch(49% 0.2 264)",
+          "oklch(61% 0.2 264)",
+          "oklch(73% 0.2 264)",
+          "oklch(85% 0.13 264)",
+          "oklch(95% 0.05 264)"
+        ]
+      },
+      "action-dark": {
+        "role": "primary",
+        "displayName": "action dark",
+        "tonalRamp": [
+          "oklch(15% 0.05 264)",
+          "oklch(26% 0.13 264)",
+          "oklch(38% 0.2 264)",
+          "oklch(49% 0.2 264)",
+          "oklch(61% 0.2 264)",
+          "oklch(73% 0.2 264)",
+          "oklch(85% 0.13 264)",
+          "oklch(95% 0.05 264)"
+        ]
+      },
+      "accent-dark": {
+        "role": "primary",
+        "displayName": "accent dark",
+        "tonalRamp": [
+          "oklch(15% 0.05 264)",
+          "oklch(26% 0.13 264)",
+          "oklch(38% 0.2 264)",
+          "oklch(49% 0.2 264)",
+          "oklch(61% 0.2 264)",
+          "oklch(73% 0.2 264)",
+          "oklch(85% 0.13 264)",
+          "oklch(95% 0.05 264)"
+        ]
+      },
+      "accent-soft-light": {
+        "role": "primary",
+        "displayName": "accent soft light",
+        "tonalRamp": [
+          "oklch(15% 0.05 264)",
+          "oklch(26% 0.13 264)",
+          "oklch(38% 0.2 264)",
+          "oklch(49% 0.2 264)",
+          "oklch(61% 0.2 264)",
+          "oklch(73% 0.2 264)",
+          "oklch(85% 0.13 264)",
+          "oklch(95% 0.05 264)"
+        ]
+      },
+      "accent-soft-dark": {
+        "role": "primary",
+        "displayName": "accent soft dark",
+        "tonalRamp": [
+          "oklch(15% 0.05 264)",
+          "oklch(26% 0.13 264)",
+          "oklch(38% 0.2 264)",
+          "oklch(49% 0.2 264)",
+          "oklch(61% 0.2 264)",
+          "oklch(73% 0.2 264)",
+          "oklch(85% 0.13 264)",
+          "oklch(95% 0.05 264)"
+        ]
+      },
+      "page-light": {
+        "role": "neutral",
+        "displayName": "page light",
+        "tonalRamp": [
+          "oklch(15% 0.0 0)",
+          "oklch(26% 0.0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(73% 0 0)",
+          "oklch(85% 0.0 0)",
+          "oklch(95% 0.0 0)"
+        ]
+      },
+      "raised-light": {
+        "role": "neutral",
+        "displayName": "raised light",
+        "tonalRamp": [
+          "oklch(15% 0.0 0)",
+          "oklch(26% 0.0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(73% 0 0)",
+          "oklch(85% 0.0 0)",
+          "oklch(95% 0.0 0)"
+        ]
+      },
+      "text-light": {
+        "role": "neutral",
+        "displayName": "text light",
+        "tonalRamp": [
+          "oklch(15% 0.0 0)",
+          "oklch(26% 0.0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(73% 0 0)",
+          "oklch(85% 0.0 0)",
+          "oklch(95% 0.0 0)"
+        ]
+      },
+      "muted-light": {
+        "role": "neutral",
+        "displayName": "muted light",
+        "tonalRamp": [
+          "oklch(15% 0.0 0)",
+          "oklch(26% 0.0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(73% 0 0)",
+          "oklch(85% 0.0 0)",
+          "oklch(95% 0.0 0)"
+        ]
+      },
+      "line-light": {
+        "role": "neutral",
+        "displayName": "line light",
+        "tonalRamp": [
+          "oklch(15% 0.0 0)",
+          "oklch(26% 0.0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(73% 0 0)",
+          "oklch(85% 0.0 0)",
+          "oklch(95% 0.0 0)"
+        ]
+      },
+      "page-dark": {
+        "role": "neutral",
+        "displayName": "page dark",
+        "tonalRamp": [
+          "oklch(15% 0.0 0)",
+          "oklch(26% 0.0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(73% 0 0)",
+          "oklch(85% 0.0 0)",
+          "oklch(95% 0.0 0)"
+        ]
+      },
+      "surface-dark": {
+        "role": "neutral",
+        "displayName": "surface dark",
+        "tonalRamp": [
+          "oklch(15% 0.0 0)",
+          "oklch(26% 0.0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(73% 0 0)",
+          "oklch(85% 0.0 0)",
+          "oklch(95% 0.0 0)"
+        ]
+      },
+      "raised-dark": {
+        "role": "neutral",
+        "displayName": "raised dark",
+        "tonalRamp": [
+          "oklch(15% 0.0 0)",
+          "oklch(26% 0.0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(73% 0 0)",
+          "oklch(85% 0.0 0)",
+          "oklch(95% 0.0 0)"
+        ]
+      },
+      "text-dark": {
+        "role": "neutral",
+        "displayName": "text dark",
+        "tonalRamp": [
+          "oklch(15% 0.0 0)",
+          "oklch(26% 0.0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(73% 0 0)",
+          "oklch(85% 0.0 0)",
+          "oklch(95% 0.0 0)"
+        ]
+      },
+      "muted-dark": {
+        "role": "neutral",
+        "displayName": "muted dark",
+        "tonalRamp": [
+          "oklch(15% 0.0 0)",
+          "oklch(26% 0.0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(73% 0 0)",
+          "oklch(85% 0.0 0)",
+          "oklch(95% 0.0 0)"
+        ]
+      },
+      "line-dark": {
+        "role": "neutral",
+        "displayName": "line dark",
+        "tonalRamp": [
+          "oklch(15% 0.0 0)",
+          "oklch(26% 0.0 0)",
+          "oklch(38% 0 0)",
+          "oklch(49% 0 0)",
+          "oklch(61% 0 0)",
+          "oklch(73% 0 0)",
+          "oklch(85% 0.0 0)",
+          "oklch(95% 0.0 0)"
+        ]
+      },
+      "positive-light": {
+        "role": "secondary",
+        "displayName": "positive light",
+        "tonalRamp": [
+          "oklch(15% 0.03 160)",
+          "oklch(26% 0.078 160)",
+          "oklch(38% 0.12 160)",
+          "oklch(49% 0.12 160)",
+          "oklch(61% 0.12 160)",
+          "oklch(73% 0.12 160)",
+          "oklch(85% 0.078 160)",
+          "oklch(95% 0.03 160)"
+        ]
+      },
+      "positive-dark": {
+        "role": "secondary",
+        "displayName": "positive dark",
+        "tonalRamp": [
+          "oklch(15% 0.03 160)",
+          "oklch(26% 0.078 160)",
+          "oklch(38% 0.12 160)",
+          "oklch(49% 0.12 160)",
+          "oklch(61% 0.12 160)",
+          "oklch(73% 0.12 160)",
+          "oklch(85% 0.078 160)",
+          "oklch(95% 0.03 160)"
+        ]
+      },
+      "danger-light": {
+        "role": "tertiary",
+        "displayName": "danger light",
+        "tonalRamp": [
+          "oklch(15% 0.037 26)",
+          "oklch(26% 0.098 26)",
+          "oklch(38% 0.15 26)",
+          "oklch(49% 0.15 26)",
+          "oklch(61% 0.15 26)",
+          "oklch(73% 0.15 26)",
+          "oklch(85% 0.098 26)",
+          "oklch(95% 0.037 26)"
+        ]
+      },
+      "danger-dark": {
+        "role": "tertiary",
+        "displayName": "danger dark",
+        "tonalRamp": [
+          "oklch(15% 0.037 26)",
+          "oklch(26% 0.098 26)",
+          "oklch(38% 0.15 26)",
+          "oklch(49% 0.15 26)",
+          "oklch(61% 0.15 26)",
+          "oklch(73% 0.15 26)",
+          "oklch(85% 0.098 26)",
+          "oklch(95% 0.037 26)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "官网首屏标题",
+        "purpose": "宽幅首屏中的产品价值表达。"
+      },
+      "headline": {
+        "displayName": "章节标题",
+        "purpose": "与右侧说明构成清楚对照。"
+      },
+      "body": {
+        "displayName": "官网正文",
+        "purpose": "页面阅读与介绍。"
+      },
+      "product-ui": {
+        "displayName": "产品场景界面",
+        "purpose": "更紧凑的本地示例工作面，不作为营销正文刻度。"
+      },
+      "mono": {
+        "displayName": "机器信息",
+        "purpose": "使用本地 JetBrains Mono。"
+      }
+    },
+    "shadows": [
+      {
+        "name": "navigation-menu",
+        "value": "0 20px 48px #0000000d",
+        "purpose": "产品菜单浮层。"
+      },
+      {
+        "name": "product-scene",
+        "value": "0 8px 40px #00000006",
+        "purpose": "产品场景整体边界。"
+      },
+      {
+        "name": "employee-proposal",
+        "value": "0 8px 24px #00000004",
+        "purpose": "员工待确认方案前景。"
+      },
+      {
+        "name": "compact-report",
+        "value": "0 5px 20px #00000003",
+        "purpose": "紧凑报告前景。"
+      }
+    ],
+    "motion": [
+      {
+        "name": "interactive-background",
+        "value": "background .2s, color .2s",
+        "purpose": "按钮与文字行动反馈。"
+      },
+      {
+        "name": "field-border",
+        "value": "border-color .15s",
+        "purpose": "POC 字段焦点变化。"
+      },
+      {
+        "name": "scene-arrive",
+        "value": "arrive .55s ease both; transform: translateY(5px) → translateY(0); opacity: .35 → 1",
+        "purpose": "入场时显示报告要点与执行记录。"
+      },
+      {
+        "name": "scene-stagger",
+        "value": ".12s / .24s",
+        "purpose": "第二、第三条产品信息依次进入。"
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce → animation: none; transition: none; scroll-behavior: auto",
+        "purpose": "减少动态时保留内容，关闭入场及过渡。"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "wide-page",
+        "value": "1600px"
+      },
+      {
+        "name": "scene-context-collapse",
+        "value": "1100px"
+      },
+      {
+        "name": "page-tablet",
+        "value": "1024px"
+      },
+      {
+        "name": "navigation",
+        "value": "1100px"
+      },
+      {
+        "name": "sections",
+        "value": "900px"
+      },
+      {
+        "name": "poc-single-column",
+        "value": "800px"
+      },
+      {
+        "name": "product-mobile",
+        "value": "767px"
+      },
+      {
+        "name": "page-mobile",
+        "value": "640px"
+      },
+      {
+        "name": "poc-fields-single-column",
+        "value": "480px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "POC 主行动",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "联系团队开展 POC 的主要行动。",
+      "html": "<a class=\"ds-primary\" href=\"#poc\">申请 POC <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></a>",
+      "css": ".ds-primary{font-family:\"PingFang SC\",\"Microsoft YaHei\",Arial,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:14px;padding:12px 20px;min-height:46px;background:var(--f-action,#0052d9);color:#fff;text-decoration:none;border:0;border-radius:6px;font-size:15px;font-weight:500;transition:background .2s}.ds-primary:hover{background:var(--f-action-hover,#366ef4)}.ds-primary:focus-visible{outline:2px solid var(--f-accent,#0052d9);outline-offset:5px}"
+    },
+    {
+      "name": "次行动",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "继续阅读产品内容的低强调行动。",
+      "html": "<a class=\"ds-secondary\" href=\"#guide\">了解企业接入 <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></a>",
+      "css": ".ds-secondary{font-family:\"PingFang SC\",\"Microsoft YaHei\",Arial,sans-serif;display:inline-flex;align-items:center;gap:14px;padding:12px 20px;min-height:46px;border:1px solid var(--f-line,#ddd);border-radius:6px;background:var(--f-surface,#fff);color:var(--f-text,#191919);font-size:15px;text-decoration:none;transition:background .2s}.ds-secondary:hover{background:var(--f-raised,#f3f3f3)}.ds-secondary:focus-visible{outline:2px solid var(--f-accent,#0052d9);outline-offset:5px}"
+    },
+    {
+      "name": "POC 联系字段",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "有明确标签与焦点反馈的联系字段。",
+      "html": "<div class=\"ds-field\"><label for=\"ds-email\">工作邮箱 <span>*</span></label><input id=\"ds-email\" type=\"email\" placeholder=\"you@company.com\" required /></div>",
+      "css": ".ds-field{font-family:\"PingFang SC\",\"Microsoft YaHei\",Arial,sans-serif;width:280px;max-width:100%;color:var(--f-text,#191919)}.ds-field label{display:block;font-size:13px;line-height:22px;margin-bottom:8px}.ds-field label span{color:var(--f-muted,#666)}.ds-field input{width:100%;min-height:44px;padding:10px 12px;border:1px solid var(--f-line,#ddd);border-radius:6px;background:var(--f-bg,#fff);color:var(--f-text,#191919);font:inherit;font-size:14px;outline:none;transition:border-color .15s}.ds-field input:hover{border-color:var(--f-muted,#666)}.ds-field input:focus{border-color:var(--f-accent,#0052d9);outline:2px solid var(--f-accent-soft,#f2f3ff);outline-offset:1px}"
+    },
+    {
+      "name": "产品能力导航",
+      "kind": "nav",
+      "description": "轻量文字导航，突出当前工作和继续阅读。",
+      "html": "<nav class=\"ds-nav\" aria-label=\"产品导航\"><a href=\"#product\">产品能力</a><a href=\"#work\">工作方式</a><a href=\"#docs\">文档</a></nav>",
+      "css": ".ds-nav{font-family:\"PingFang SC\",\"Microsoft YaHei\",Arial,sans-serif;display:flex;align-items:center;gap:30px;font-size:14px}.ds-nav a{padding:12px 0;color:var(--f-muted,#666);text-decoration:none}.ds-nav a:hover{color:var(--f-accent,#0052d9)}.ds-nav a:focus-visible{outline:2px solid var(--f-accent,#0052d9);outline-offset:5px}"
+    },
+    {
+      "name": "待确认状态",
+      "kind": "chip",
+      "refersTo": "state-chip",
+      "description": "产品场景中的待人工确认状态。",
+      "html": "<span class=\"ds-chip\"><i></i>待确认</span>",
+      "css": ".ds-chip{font-family:\"PingFang SC\",\"Microsoft YaHei\",Arial,sans-serif;display:inline-flex;align-items:center;gap:5px;padding:2px 6px;border:1px solid color-mix(in srgb,var(--f-accent,#0052d9) 12%,transparent);border-radius:4px;background:var(--f-accent-soft,#f2f3ff);color:var(--f-accent,#0052d9);font-size:10px;white-space:nowrap}.ds-chip i{width:4px;height:4px;border-radius:50%;background:currentColor}"
+    },
+    {
+      "name": "产品报告前景",
+      "kind": "card",
+      "refersTo": "product-scene",
+      "description": "本地产品场景中的报告表面；仅为样式样本。",
+      "html": "<section class=\"ds-report\"><small>工作成果 · 本地示例</small><h3>客户反馈改进计划</h3><p>归纳反馈主题，整理改进建议与验收要求。</p><footer>等待团队确认后续行动</footer></section>",
+      "css": ".ds-report{font-family:\"PingFang SC\",\"Microsoft YaHei\",Arial,sans-serif;width:320px;max-width:100%;padding:24px;border:1px solid var(--f-line,#ddd);border-radius:7px;background:var(--f-surface,#fff);color:var(--f-text,#191919)}.ds-report small{font-size:10px;color:var(--f-muted,#666)}.ds-report h3{font-size:21px;line-height:1.4;font-weight:550;letter-spacing:-.4px;margin:6px 0 10px}.ds-report p{font-size:12px;line-height:1.7;color:var(--f-muted,#666)}.ds-report footer{border-top:1px solid var(--f-line,#ddd);padding-top:16px;margin-top:20px;color:var(--f-muted,#666);font-size:10px}"
+    },
+    {
+      "name": "POC 表单外壳",
+      "kind": "card",
+      "refersTo": "poc-form",
+      "description": "联系场景中的克制面板，不使用产品试用叙事。",
+      "html": "<section class=\"ds-poc\"><h3>告诉我们您的需求</h3><p>先了解场景，再一起明确 POC 的目标与验收方式。</p></section>",
+      "css": ".ds-poc{font-family:\"PingFang SC\",\"Microsoft YaHei\",Arial,sans-serif;width:360px;max-width:100%;padding:36px;border:1px solid var(--f-line,#ddd);border-radius:12px;background:var(--f-surface,#fff);color:var(--f-text,#191919)}.ds-poc h3{font-size:24px;line-height:1.4;font-weight:500;margin:0 0 12px}.ds-poc p{font-size:13px;line-height:24px;color:var(--f-muted,#666);margin:0}"
+    }
+  ],
+  "narrative": {
+    "northStar": "看得见的企业工作能力",
+    "overview": "现有视觉以 Linear 式宽幅留白和清楚的阅读层次为基础：左侧标题与右侧说明相互对应，产品场景在其后展开。SkyMythos.ai 的官方标志、TDesign 蓝色与亮暗表面承担品牌身份；页面的视觉重点是工作目标、执行依据与可检查的成果。\n\n官网采用较低的信息密度，产品场景保留更紧凑的工作界面密度。主操作引导访客填写 POC 联系表单，文档与能力说明承担继续了解的入口。场景由 React、CSS 和本地示例状态构成，截图仅作为来源或比较证据，不是页面实现。",
+    "keyCharacteristics": [
+      "宽幅留白、左对齐标题与说明对照，随后展开产品场景。",
+      "SkyMythos.ai 官方亮暗标志与 TDesign 蓝色语义主题。",
+      "中性色表面、细边线和轻阴影，按状态使用蓝色、绿色与错误色。",
+      "官网阅读与产品界面采用不同密度；手机重排内容。",
+      "以联系团队开展 POC 为主要转化，保留可用的键盘和反馈状态。"
+    ],
+    "rules": [
+      {
+        "name": "The Semantic Theme Rule",
+        "body": "新增官网和场景表面使用现有 --f-* 语义变量；切换主题时同时更新背景、文字、边线、状态与品牌资产。",
+        "section": "colors"
+      },
+      {
+        "name": "The Two Densities Rule",
+        "body": "官网用宽间距解释价值，产品场景用紧凑工作面展示状态；不把场景中的微型字号用作正文或表单字号。",
+        "section": "typography"
+      },
+      {
+        "name": "The Quiet Depth Rule",
+        "body": "默认用表面与细边线区分层级，只在导航浮层和产品内部前景使用现有轻阴影。",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** 保留官方 SkyMythos.ai 标志比例，随主题切换亮暗资产。",
+      "**Do** 使用 --f-* 语义变量，让官网、产品场景与 POC 表单共享亮暗主题。",
+      "**Do** 在宽幅产品场景前保留清楚的标题与说明，用工作对象和可见成果解释能力。",
+      "**Do** 让手机内容自然重排，并保留焦点、错误说明、等待反馈与减少动态支持。",
+      "**Do** 把主要行动统一为 POC 联系申请；按真实接收通道呈现发送、失败或待发送状态。"
+    ],
+    "donts": [
+      "**Don't** 将 Linear 品牌、客户背书或截图直接当作 SkyMythos 的产品实现。",
+      "**Don't** 把旧官网石墨配色、IBM Plex 字体或旧播放器样式当作当前视觉权威。",
+      "**Don't** 用主题切换只改变页面背景，留下产品面板、输入框或标志的错误主题。",
+      "**Don't** 用展示中的待确认方案、完成图标或模拟结果暗示真实后台任务已完成。",
+      "**Don't** 把联系 POC 改写成自助试用，或在接收通道未就绪时显示提交成功。"
+    ]
+  }
+}

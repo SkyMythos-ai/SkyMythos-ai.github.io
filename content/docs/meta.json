@@ -1,0 +1,20 @@
+{
+  "title": "产品文档",
+  "pages": [
+    "index",
+    "---开始使用---",
+    "getting-started",
+    "projects",
+    "tasks",
+    "automations",
+    "---组织能力---",
+    "employees",
+    "knowledge",
+    "models-tools",
+    "---企业接入---",
+    "private-deployment",
+    "architecture",
+    "deployment",
+    "troubleshooting"
+  ]
+}

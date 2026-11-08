@@ -1,50 +1,60 @@
 {
   "name": "skymythos-website",
-  "version": "1.0.0",
+  "version": "0.6.1",
   "private": true,
-  "description": "SkyMythos 产品官网 — enterprise private-deployment autonomous software R&D platform",
+  "description": "SkyMythos.ai product website and documentation",
+  "author": "JCodesMore",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SkyMythos-ai/SkyMythos-ai.github.io.git"
+  },
+  "homepage": "https://skymythos.ai",
+  "bugs": {
+    "url": "https://github.com/SkyMythos-ai/SkyMythos-ai.github.io/issues"
+  },
+  "keywords": [
+    "skymythos",
+    "website",
+    "documentation",
+    "nextjs"
+  ],
+  "engines": {
+    "node": ">=24"
+  },
   "scripts": {
     "dev": "next dev",
-    "prebuild": "node scripts/product-reference/validate.cjs",
     "build": "next build",
-    "start": "node scripts/serve-export.cjs out",
-    "lint": "eslint src scripts tests next.config.mjs eslint.config.mjs",
+    "build:pages": "node scripts/fusion/build-pages.mjs",
+    "start": "next start",
+    "lint": "eslint",
     "typecheck": "tsc --noEmit",
-    "test:commercial": "node scripts/commercial/run.cjs",
-    "test:export": "node scripts/check-export.cjs",
-    "test:export-runner": "node tests/commercial-runtime/export-runner.cjs",
-    "test:product-reference": "node scripts/product-reference/check.cjs",
-    "test:locale-routes": "node scripts/check-locale-routes.cjs",
-    "test:fidelity": "node tests/product-fidelity/check.cjs",
-    "test:runtime": "node tests/commercial-runtime/check.cjs",
-    "install:browser": "python3 -I scripts/commercial/install-browser.py",
-    "test:browser-installer": "python3 -I tests/commercial-runtime/browser-install.py",
-    "preview": "bash scripts/preview.sh static",
-    "local": "bash scripts/preview.sh dev"
+    "check": "npm run lint && npm run typecheck && npm run build"
   },
   "dependencies": {
-    "html-react-parser": "6.1.9",
-    "next": "16.4.3",
-    "react": "19.3.0",
-    "react-dom": "19.3.0",
-    "react-markdown": "^10.1.0",
-    "remark-gfm": "^4.0.1"
+    "@base-ui/react": "^1.3.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "fumadocs-core": "^16.18.1",
+    "fumadocs-mdx": "^15.5.0",
+    "fumadocs-ui": "^16.18.1",
+    "lucide-react": "^1.6.0",
+    "next": "16.3.5",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "shadcn": "^4.1.0",
+    "tailwind-merge": "^3.5.0",
+    "tw-animate-css": "^1.4.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "4.3.3",
-    "@types/node": "26.2.0",
-    "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.4",
-    "eslint": "9.39.5",
-    "eslint-config-next": "16.4.3",
-    "lighthouse": "13.5.0",
-    "pixelmatch": "8.0.0",
-    "playwright": "1.64.1",
-    "pngjs": "7.0.0",
-    "tailwindcss": "4.3.3",
-    "typescript": "5.9.3"
-  },
-  "engines": {
-    "node": ">=22.19.0"
+    "@tailwindcss/postcss": "^4",
+    "@types/mdx": "^2.0.14",
+    "@types/node": "^24",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "16.3.5",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
