@@ -53,6 +53,12 @@ try {
   watch(page);
   await page.goto(baseURL, { waitUntil: "networkidle" });
   await page.locator(selector).scrollIntoViewIfNeeded();
+  const showResult = page.getByRole("button", { name: "直接查看成果", exact: true });
+  if (await showResult.isVisible()) await showResult.click();
+  await waitPlayback(page, "complete");
+  await waitStage(page, "confirmation");
+  report.desktop.directResult = true;
+  await page.getByRole("button", { name: "重播演示", exact: true }).click();
   const stages = [];
   for (const stage of [
     "goal",
@@ -66,22 +72,20 @@ try {
     stages.push(await state(page));
   }
   report.desktop.stages = stages;
-  await page.waitForFunction(
-    (selector) => document.querySelector(selector)?.dataset.scene === "task",
-    selector,
-    { timeout: 6000 },
-  );
-  report.desktop.autoCycle = await state(page);
-  assert.equal(report.desktop.autoCycle.scene, "task");
+  await waitPlayback(page, "complete");
+  report.desktop.completed = await state(page);
+  assert.equal(report.desktop.completed.scene, "project");
+  assert.equal(report.desktop.completed.stage, "confirmation");
   assert.equal(await page.locator(selector).locator('[data-playback-control]').count(), 0);
   assert.equal(await page.locator(selector).locator('header').getByText(/产品场景示意|示例数据|静态示意/).count(), 0);
-  report.desktop.headerControlsRemoved = true;
+  assert(await page.getByRole("button", { name: "重播演示", exact: true }).isVisible());
+  report.desktop.controlsOutsideWorkbench = true;
   const tabs = page
     .locator(selector)
     .getByRole("tablist", { name: "选择产品工作场景" });
   await tabs.getByRole("tab", { name: "研发任务", exact: true }).click();
   await page.keyboard.press("ArrowRight");
-  await waitPlayback(page, "suspended");
+  await waitPlayback(page, "complete");
   const focused = await state(page);
   await page.waitForTimeout(4500);
   assert.deepEqual(await state(page), focused);
@@ -93,7 +97,16 @@ try {
     true,
   );
   report.desktop.focusKeepsSelectedScene = true;
-  await page.locator("h1").click();
+  await page.getByRole("button", { name: "重播演示", exact: true }).click();
+  await waitPlayback(page, "playing");
+  await page.getByRole("button", { name: "暂停演示", exact: true }).click();
+  await waitPlayback(page, "suspended");
+  const paused = await state(page);
+  await page.waitForTimeout(1800);
+  assert.deepEqual(await state(page), paused);
+  report.desktop.manualPause = true;
+  await page.getByRole("button", { name: "继续演示", exact: true }).click();
+  await waitPlayback(page, "playing");
   await page.locator("footer").scrollIntoViewIfNeeded();
   await waitPlayback(page, "suspended");
   const outside = await state(page);
@@ -160,8 +173,10 @@ try {
       .isVisible(),
     true,
   );
-  assert.equal(await mobile.getByRole("button", { name: "暂停自动演示", exact: true }).count(), 0);
-  report.mobile.headerControlsRemoved = true;
+  await waitPlayback(mobile, "complete");
+  assert(await mobile.getByRole("button", { name: "重播演示", exact: true }).isVisible());
+  assert.equal((await state(mobile)).scene, "project");
+  report.mobile.completedWithoutSceneChange = true;
   await mobile.setViewportSize({ width: 320, height: 740 });
   report.mobile.narrowWidth = await mobile.evaluate(
     () => document.documentElement.scrollWidth,

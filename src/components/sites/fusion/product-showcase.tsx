@@ -29,10 +29,12 @@ import {
   ListTodo,
   LoaderCircle,
   PanelRight,
+  Pause,
+  Play,
+  RotateCcw,
   Search,
   ShieldCheck,
   Sparkles,
-  Terminal,
   Users,
   Workflow,
 } from "lucide-react";
@@ -40,7 +42,6 @@ import styles from "./showcase.module.css";
 import { useShowcaseCopy, type ShowcaseTranslate } from "./showcase-copy";
 
 type Scene = "project" | "task" | "automation";
-const sceneOrder = ["project", "task", "automation"] as const;
 function getScenarioTabs(t: ShowcaseTranslate) {
   return [
     { id: "project", label: t("项目工作") },
@@ -359,6 +360,7 @@ export function ProductShowcase() {
   });
   const [inView, setInView] = useState(false);
   const [focusPaused, setFocusPaused] = useState(false);
+  const [playback, setPlayback] = useState<"playing" | "paused" | "complete">("playing");
   const reducedMotion = useSyncExternalStore(
     subscribeMotionPreference,
     readMotionPreference,
@@ -376,7 +378,7 @@ export function ProductShowcase() {
   const phase = reducedMotion ? 5 : frame.phase;
   const data = scenarios[scene];
   const playing =
-    inView && pageVisible && !reducedMotion && !focusPaused;
+    playback === "playing" && inView && pageVisible && !reducedMotion && !focusPaused;
   useEffect(() => {
     const element = ref.current;
     if (!element) return;
@@ -396,14 +398,12 @@ export function ProductShowcase() {
           setFrame((current) => ({ ...current, phase: 0 }));
           return;
         }
-        setFrame((current) => {
-          if (current.phase < 5)
-            return { ...current, phase: current.phase + 1 };
-          const next =
-            (sceneOrder.findIndex((id) => id === current.scene) + 1) %
-            sceneOrder.length;
-          return { scene: sceneOrder[next], phase: 0 };
-        });
+        // 一个案例播放完后保留成果，避免阅读时自动切换到另一份工作。
+        if (frame.phase < 5) {
+          setFrame((current) => ({ ...current, phase: current.phase + 1 }));
+        } else {
+          setPlayback("complete");
+        }
       },
       started.current ? phaseDurations[frame.phase] : 120,
     );
@@ -412,6 +412,16 @@ export function ProductShowcase() {
   function selectScene(next: Scene) {
     started.current = true;
     setFrame({ scene: next, phase: 5 });
+    setPlayback("complete");
+  }
+  function togglePlayback() {
+    if (playback === "complete") {
+      started.current = true;
+      setFrame((current) => ({ ...current, phase: 0 }));
+      setPlayback("playing");
+    } else {
+      setPlayback(playback === "playing" ? "paused" : "playing");
+    }
   }
   const stageLabel =
     phase === 0
@@ -422,272 +432,293 @@ export function ProductShowcase() {
           ? t("交付报告已整理")
           : t("等待人工确认");
   return (
-    <div
-      className={styles.workbench}
-      ref={ref}
-      aria-label={t("SkyMythos 产品场景示意")}
-      data-scene={scene}
-      data-stage={phaseNames[phase]}
-      data-playback={
-        reducedMotion
-          ? "reduced"
-          : playing
-            ? "playing"
-            : "suspended"
-      }
-      onFocusCapture={() => setFocusPaused(true)}
-      onBlurCapture={(event) => {
-        if (
-          !(event.relatedTarget instanceof Node) ||
-          !event.currentTarget.contains(event.relatedTarget)
-        )
-          setFocusPaused(false);
-      }}
-    >
-      <header className={styles.shellHeader}>
-        <div className={styles.shellBrand}>
-          <BrandMark />
-          <span className={styles.wordmark}>
-            <Image
-              className={styles.markLight}
-              src="/sites/fusion/brand/logo-wordmark.svg"
-              width={106}
-              height={18}
-              alt="SkyMythos.ai"
-              loading="eager"
-              unoptimized
-            />
-            <Image
-              className={styles.markDark}
-              src="/sites/fusion/brand/logo-wordmark-dark.svg"
-              width={106}
-              height={18}
-              alt=""
-              loading="eager"
-              unoptimized
-            />
-          </span>
-        </div>
-        <nav className={styles.primaryNav} aria-label={t("产品演示导航")}>
-          <button
-            type="button"
-            className={scene === "project" ? styles.navActive : ""}
-            onClick={() => selectScene("project")}
-          >
-            <Bot size={15} />
-            SkyBot
-          </button>
-          <button
-            type="button"
-            className={scene === "task" ? styles.navActive : ""}
-            onClick={() => selectScene("task")}
-          >
-            <ListTodo size={15} />
-            {t("任务")}
-          </button>
-          <button
-            type="button"
-            className={scene === "automation" ? styles.navActive : ""}
-            onClick={() => selectScene("automation")}
-          >
-            <Workflow size={15} />
-            {t("自动化")}
-          </button>
-          <a href="#employees">
-            <Users size={15} />
-            {t("数字员工")}
-          </a>
-          <a href="#knowledge">
-            <BookOpen size={15} />
-            {t("知识库")}
-          </a>
-        </nav>
-      </header>
-      <div className={styles.shellBody}>
-        <aside className={styles.sidebar}>
-          <div className={styles.workspace}>
-            <span className={styles.workspaceMonogram}>S</span>
-            <span>
-              {t("产品团队")}<small>{t("示例工作空间")}</small>
-            </span>
-            <ChevronDown size={13} />
-          </div>
-          <span className={styles.sidebarLabel}>{t("快速对话")}</span>
-          <span className={styles.sidebarItem}>
-            <Bot size={15} />
-            {t("日常工作交流")}
-          </span>
-          <span className={styles.sidebarLabel}>{t("项目")}</span>
-          <button
-            type="button"
-            className={`${styles.sidebarItem} ${scene === "project" ? styles.sidebarActive : ""}`}
-            onClick={() => selectScene("project")}
-          >
-            <Folder size={15} />
-            {t("客户反馈改进")}
-          </button>
-          <button
-            type="button"
-            className={`${styles.sidebarItem} ${scene === "task" ? styles.sidebarActive : ""}`}
-            onClick={() => selectScene("task")}
-          >
-            <Folder size={15} />
-            {t("产品接入体验")}
-          </button>
-          <span className={styles.sidebarLabel}>{t("工作入口")}</span>
-          <a className={styles.sidebarItem} href="#work">
-            <Layers3 size={15} />
-            {t("工作与交付")}
-          </a>
-          <a className={styles.sidebarItem} href="#employees">
-            <Users size={15} />
-            {t("数字员工")}
-          </a>
-          <a className={styles.sidebarItem} href="#knowledge">
-            <BookOpen size={15} />
-            {t("企业知识")}
-          </a>
-          <div className={styles.sidebarBottom}>
-            <ShieldCheck size={14} />
-            <span>{t("工作保留上下文与来源")}</span>
-          </div>
-        </aside>
-        <div className={styles.workspaceMain}>
-          <div className={styles.workspaceBreadcrumb}>
-            <Folder size={13} />
-            <span>{t("项目")}</span>
-            <ChevronRight size={12} />
-            <strong>{data.title}</strong>
-            <span className={styles.pendingState}>
-              <i />
-              {phaseLabels[phase]}
+    <>
+      <div
+        className={styles.workbench}
+        ref={ref}
+        aria-label={t("SkyMythos 产品场景示意")}
+        data-scene={scene}
+        data-stage={phaseNames[phase]}
+        data-playback={
+          reducedMotion
+            ? "reduced"
+            : playback === "complete"
+              ? "complete"
+              : playing
+                ? "playing"
+                : "suspended"
+        }
+        onFocusCapture={() => setFocusPaused(true)}
+        onBlurCapture={(event) => {
+          if (
+            !(event.relatedTarget instanceof Node) ||
+            !event.currentTarget.contains(event.relatedTarget)
+          )
+            setFocusPaused(false);
+        }}
+      >
+        <header className={styles.shellHeader}>
+          <div className={styles.shellBrand}>
+            <BrandMark />
+            <span className={styles.wordmark}>
+              <Image
+                className={styles.markLight}
+                src="/sites/fusion/brand/logo-wordmark.svg"
+                width={106}
+                height={18}
+                alt="SkyMythos.ai"
+                loading="eager"
+                unoptimized
+              />
+              <Image
+                className={styles.markDark}
+                src="/sites/fusion/brand/logo-wordmark-dark.svg"
+                width={106}
+                height={18}
+                alt=""
+                loading="eager"
+                unoptimized
+              />
             </span>
           </div>
-          <div className={styles.workspaceHeading}>
-            <span className={styles.eyebrow}>{t("从目标到交付")}</span>
-            <h3>{data.goal}</h3>
-            <TabList
-              id={tabsId}
-              label={t("选择产品工作场景")}
-              items={scenarioTabs}
-              value={scene}
-              onChange={selectScene}
-            />
-          </div>
-          <div
-            className={styles.heroPanel}
-            id={`${tabsId}-panel-${scene}`}
-            role="tabpanel"
-            aria-labelledby={`${tabsId}-tab-${scene}`}
-            tabIndex={0}
-          >
-            <div className={styles.executionSummary}>
-              <div className={styles.assistantHeading}>
-                <span className={styles.botAvatar}>
-                  <Bot size={17} />
-                </span>
-                <strong>SkyBot</strong>
-                <span>{t("执行记录示例")}</span>
-              </div>
-              <div className={styles.miniTimeline}>
-                {data.steps.map((step, index) => (
-                  <div
-                    key={`${scene}-${step}`}
-                    data-step-state={
-                      phase > index + 1
-                        ? "done"
-                        : phase === index + 1
-                          ? "active"
-                          : "pending"
-                    }
-                  >
-                    <span className={styles.timelineCheck}>
-                      {phase > index + 1 ? (
-                        <Check size={11} />
-                      ) : phase === index + 1 ? (
-                        <LoaderCircle
-                          size={11}
-                          className={styles.stageSpinner}
-                        />
-                      ) : (
-                        <span className={styles.pendingDot} />
-                      )}
-                    </span>
-                    <p>{step}</p>
-                    <small>0{index + 1}</small>
-                  </div>
-                ))}
-              </div>
-              <div className={styles.heroArtifact} data-ready={phase > 3}>
-                <FileCheck2 size={17} />
-                <span>
-                  {data.output}
-                  <small>{t("交付报告 · 验收要求")}</small>
-                </span>
-                <span className={styles.artifactReady}>
-                  {phase > 3 ? t("已整理") : t("整理中")}
-                </span>
-              </div>
-              <p className={styles.confirmation}>
-                <Clock3 size={13} />
-                {phase > 3 ? data.next : t("示例正在推进，交付后保留人工确认。")}
-              </p>
-            </div>
-            <Report
-              compact
-              title={data.output}
-              points={data.points}
-              phase={phase}
-              stageLabel={stageLabel}
-            />
-          </div>
-          <div className={styles.goalCriteria}>
-            <ClipboardCheck size={15} />
-            <div>
-              <strong>{t("交付有明确的完成标准")}</strong>
-              <span>{t("保留资料来源、可检查的成果与待确认事项。")}</span>
-            </div>
-            <span className={styles.criteriaNote}>{t("产品场景示意")}</span>
-          </div>
-        </div>
-        <aside className={styles.contextPanel}>
-          <div className={styles.contextHeading}>
-            <PanelRight size={14} />
-            {t("工作上下文")}
-          </div>
-          <span className={styles.sidebarLabel}>{t("协作的数字员工")}</span>
-          <div className={styles.employeeContext}>
-            <span className={styles.botAvatar}>
-              <Sparkles size={18} />
-            </span>
-            <div>
-              <strong>{data.employee}</strong>
-              <small>{t("职责与能力可配置")}</small>
-            </div>
-          </div>
-          <span className={styles.sidebarLabel}>{t("使用的知识")}</span>
-          {data.context.split(" · ").map((name) => (
-            <a className={styles.contextSource} key={name} href="#knowledge">
-              <FileText size={14} />
-              <span>{name}</span>
-              <ChevronRight size={12} />
+          <nav className={styles.primaryNav} aria-label={t("产品演示导航")}>
+            <button
+              type="button"
+              className={scene === "project" ? styles.navActive : ""}
+              onClick={() => selectScene("project")}
+            >
+              <Bot size={15} />
+              SkyBot
+            </button>
+            <button
+              type="button"
+              className={scene === "task" ? styles.navActive : ""}
+              onClick={() => selectScene("task")}
+            >
+              <ListTodo size={15} />
+              {t("任务")}
+            </button>
+            <button
+              type="button"
+              className={scene === "automation" ? styles.navActive : ""}
+              onClick={() => selectScene("automation")}
+            >
+              <Workflow size={15} />
+              {t("自动化")}
+            </button>
+            <a href="#employees">
+              <Users size={15} />
+              {t("数字员工")}
             </a>
-          ))}
-          <div className={styles.contextBoundary}>
-            <ShieldCheck size={17} />
-            <strong>{t("结果由你确认")}</strong>
-            <p>{t("保留资料来源、执行过程与交付成果，让下一步有据可依。")}</p>
+            <a href="#knowledge">
+              <BookOpen size={15} />
+              {t("知识库")}
+            </a>
+          </nav>
+        </header>
+        <div className={styles.shellBody}>
+          <aside className={styles.sidebar}>
+            <div className={styles.workspace}>
+              <span className={styles.workspaceMonogram}>S</span>
+              <span>
+                {t("产品团队")}<small>{t("示例工作空间")}</small>
+              </span>
+              <ChevronDown size={13} />
+            </div>
+            <span className={styles.sidebarLabel}>{t("快速对话")}</span>
+            <span className={styles.sidebarItem}>
+              <Bot size={15} />
+              {t("日常工作交流")}
+            </span>
+            <span className={styles.sidebarLabel}>{t("项目")}</span>
+            <button
+              type="button"
+              className={`${styles.sidebarItem} ${scene === "project" ? styles.sidebarActive : ""}`}
+              onClick={() => selectScene("project")}
+            >
+              <Folder size={15} />
+              {t("客户反馈改进")}
+            </button>
+            <button
+              type="button"
+              className={`${styles.sidebarItem} ${scene === "task" ? styles.sidebarActive : ""}`}
+              onClick={() => selectScene("task")}
+            >
+              <Folder size={15} />
+              {t("产品接入体验")}
+            </button>
+            <span className={styles.sidebarLabel}>{t("工作入口")}</span>
+            <a className={styles.sidebarItem} href="#work">
+              <Layers3 size={15} />
+              {t("工作与交付")}
+            </a>
+            <a className={styles.sidebarItem} href="#employees">
+              <Users size={15} />
+              {t("数字员工")}
+            </a>
+            <a className={styles.sidebarItem} href="#knowledge">
+              <BookOpen size={15} />
+              {t("企业知识")}
+            </a>
+            <div className={styles.sidebarBottom}>
+              <ShieldCheck size={14} />
+              <span>{t("工作保留上下文与来源")}</span>
+            </div>
+          </aside>
+          <div className={styles.workspaceMain}>
+            <div className={styles.workspaceBreadcrumb}>
+              <Folder size={13} />
+              <span>{t("项目")}</span>
+              <ChevronRight size={12} />
+              <strong>{data.title}</strong>
+              <span className={styles.pendingState}>
+                <i />
+                {phaseLabels[phase]}
+              </span>
+            </div>
+            <div className={styles.workspaceHeading}>
+              <span className={styles.eyebrow}>{t("从目标到交付")}</span>
+              <h3>{data.goal}</h3>
+              <TabList
+                id={tabsId}
+                label={t("选择产品工作场景")}
+                items={scenarioTabs}
+                value={scene}
+                onChange={selectScene}
+              />
+            </div>
+            <div
+              className={styles.heroPanel}
+              id={`${tabsId}-panel-${scene}`}
+              role="tabpanel"
+              aria-labelledby={`${tabsId}-tab-${scene}`}
+              tabIndex={0}
+            >
+              <div className={styles.executionSummary}>
+                <div className={styles.assistantHeading}>
+                  <span className={styles.botAvatar}>
+                    <Bot size={17} />
+                  </span>
+                  <strong>SkyBot</strong>
+                  <span>{t("执行记录示例")}</span>
+                </div>
+                <div className={styles.miniTimeline}>
+                  {data.steps.map((step, index) => (
+                    <div
+                      key={`${scene}-${step}`}
+                      data-step-state={
+                        phase > index + 1
+                          ? "done"
+                          : phase === index + 1
+                            ? "active"
+                            : "pending"
+                      }
+                    >
+                      <span className={styles.timelineCheck}>
+                        {phase > index + 1 ? (
+                          <Check size={11} />
+                        ) : phase === index + 1 ? (
+                          <LoaderCircle
+                            size={11}
+                            className={styles.stageSpinner}
+                          />
+                        ) : (
+                          <span className={styles.pendingDot} />
+                        )}
+                      </span>
+                      <p>{step}</p>
+                      <small>0{index + 1}</small>
+                    </div>
+                  ))}
+                </div>
+                <div className={styles.heroArtifact} data-ready={phase > 3}>
+                  <FileCheck2 size={17} />
+                  <span>
+                    {data.output}
+                    <small>{t("交付报告 · 验收要求")}</small>
+                  </span>
+                  <span className={styles.artifactReady}>
+                    {phase > 3 ? t("已整理") : t("整理中")}
+                  </span>
+                </div>
+                <p className={styles.confirmation}>
+                  <Clock3 size={13} />
+                  {phase > 3 ? data.next : t("示例正在推进，交付后保留人工确认。")}
+                </p>
+              </div>
+              <Report
+                compact
+                title={data.output}
+                points={data.points}
+                phase={phase}
+                stageLabel={stageLabel}
+              />
+            </div>
+            <div className={styles.goalCriteria}>
+              <ClipboardCheck size={15} />
+              <div>
+                <strong>{t("交付有明确的完成标准")}</strong>
+                <span>{t("保留资料来源、可检查的成果与待确认事项。")}</span>
+              </div>
+              <span className={styles.criteriaNote}>{t("产品场景示意")}</span>
+            </div>
           </div>
-        </aside>
+          <aside className={styles.contextPanel}>
+            <div className={styles.contextHeading}>
+              <PanelRight size={14} />
+              {t("工作上下文")}
+            </div>
+            <span className={styles.sidebarLabel}>{t("协作的数字员工")}</span>
+            <div className={styles.employeeContext}>
+              <span className={styles.botAvatar}>
+                <Sparkles size={18} />
+              </span>
+              <div>
+                <strong>{data.employee}</strong>
+                <small>{t("职责与能力可配置")}</small>
+              </div>
+            </div>
+            <span className={styles.sidebarLabel}>{t("使用的知识")}</span>
+            {data.context.split(" · ").map((name) => (
+              <a className={styles.contextSource} key={name} href="#knowledge">
+                <FileText size={14} />
+                <span>{name}</span>
+                <ChevronRight size={12} />
+              </a>
+            ))}
+            <div className={styles.contextBoundary}>
+              <ShieldCheck size={17} />
+              <strong>{t("结果由你确认")}</strong>
+              <p>{t("保留资料来源、执行过程与交付成果，让下一步有据可依。")}</p>
+            </div>
+          </aside>
+        </div>
       </div>
-    </div>
+      <div className={styles.demoControls} role="group" aria-label={t("演示播放控制")}>
+        <span>{t("本地交互示例，不会创建真实任务。")}</span>
+        {!reducedMotion && (
+          <div>
+            <button type="button" onClick={togglePlayback} data-playback-control>
+              {playback === "complete" ? <RotateCcw size={14} /> : playback === "playing" ? <Pause size={14} /> : <Play size={14} />}
+              {playback === "complete" ? t("重播演示") : playback === "playing" ? t("暂停演示") : t("继续演示")}
+            </button>
+            {playback !== "complete" && (
+              <button type="button" onClick={() => selectScene(scene)}>
+                {t("直接查看成果")} <ArrowRight size={14} />
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
 export function WorkDeliveryVisual() {
   const t = useShowcaseCopy();
   const scenarios = getScenarios(t);
-  const [view, setView] = useState<"report" | "evidence">("report");
+  const [view, setView] = useState<"report" | "evidence" | "review">("report");
+  const documents = getDocuments(t);
   const id = useId();
   const ref = useReveal();
   return (
@@ -705,11 +736,10 @@ export function WorkDeliveryVisual() {
       </div>
       <div className={styles.deliveryBody}>
         <div className={styles.deliveryTimeline}>
-          <span className={styles.eyebrow}>{t("目标 / 客户反馈改进")}</span>
           <h3>
-            {t("每一步工作，")}
+            {t("整理本周反馈，")}
             <br />
-            {t("都有迹可循。")}
+            {t("提出三项优先改进。")}
           </h3>
           <div className={styles.toolRecord}>
             <span>
@@ -752,6 +782,7 @@ export function WorkDeliveryVisual() {
             items={[
               { id: "report", label: t("交付报告") },
               { id: "evidence", label: t("执行证据") },
+              { id: "review", label: t("人工确认") },
             ]}
             value={view}
             onChange={setView}
@@ -768,39 +799,44 @@ export function WorkDeliveryVisual() {
                 title={t("客户反馈改进计划")}
                 points={scenarios.project.points}
               />
-            ) : (
+            ) : view === "evidence" ? (
               <div className={styles.evidenceList}>
                 <div className={styles.evidenceTitle}>
-                  <Terminal size={20} />
+                  <BookOpen size={20} />
                   <h4>{t("把结论和依据放在一起")}</h4>
                   <p>{t("以下为演示材料，不是真实执行日志。")}</p>
                 </div>
-                {[
-                  {
-                    title: t("输入资料"),
-                    text: t("保留关联文档及其来源。"),
-                    icon: BookOpen,
-                  },
-                  {
-                    title: t("工作记录"),
-                    text: t("记录工具调用与关键输出。"),
-                    icon: Workflow,
-                  },
-                  {
-                    title: t("交付与验证"),
-                    text: t("附上成果、验收要求与待决事项。"),
-                    icon: ClipboardCheck,
-                  },
-                ].map(({ title, text, icon: Icon }) => (
-                  <div className={styles.evidenceItem} key={title}>
-                    <Icon size={17} />
+                {documents.slice(0, 2).map((document) => (
+                  <div className={styles.evidenceItem} key={document.id}>
+                    <FileText size={17} />
                     <div>
-                      <strong>{title}</strong>
-                      <p>{text}</p>
+                      <strong>{document.title}</strong>
+                      <p>{document.excerpt}</p>
                     </div>
-                    <Check size={14} />
                   </div>
                 ))}
+                <a href="#knowledge" className={styles.sourceLink}>
+                  {t("在知识库中核对来源")} <ArrowRight size={14} />
+                </a>
+              </div>
+            ) : (
+              <div className={`${styles.evidenceList} ${styles.reviewPanel}`}>
+                <span className={styles.pendingState}><i />{t("等待人工确认")}</span>
+                <h4>{t("成果已整理，接下来由你判断。")}</h4>
+                <p>{t("执行完成后，核对这三个问题，再决定下一步。")}</p>
+                <ul>
+                  {[
+                    t("建议是否与来源资料一致？"),
+                    t("哪些改进应该优先处理？"),
+                    t("验收标准是否清楚、可检查？"),
+                  ].map((question) => (
+                    <li key={question}><ClipboardCheck size={16} />{question}</li>
+                  ))}
+                </ul>
+                <a href="#employees" className={styles.sourceLink}>
+                  {t("看看经验如何复用")} <ArrowRight size={14} />
+                </a>
+                <small>{t("示例仅说明确认过程，不会批准或发布实际工作。")}</small>
               </div>
             )}
           </div>

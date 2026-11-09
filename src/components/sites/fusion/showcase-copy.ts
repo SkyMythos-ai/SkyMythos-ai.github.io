@@ -1,6 +1,23 @@
 import { useLocale } from "@/components/locale-provider";
 
 const english: Record<string, string> = {
+  "演示播放控制": "Demo playback controls",
+  "本地交互示例，不会创建真实任务。": "Interactive example. No real tasks are created.",
+  "重播演示": "Replay demo",
+  "暂停演示": "Pause demo",
+  "继续演示": "Resume demo",
+  "直接查看成果": "Show the result",
+  "整理本周反馈，": "Review this week’s feedback.",
+  "提出三项优先改进。": "Propose three improvements.",
+  "人工确认": "Human review",
+  "在知识库中核对来源": "Check the knowledge sources",
+  "成果已整理，接下来由你判断。": "The work is ready for your judgment.",
+  "执行完成后，核对这三个问题，再决定下一步。": "Review these three questions before deciding what happens next.",
+  "建议是否与来源资料一致？": "Do the recommendations match the sources?",
+  "哪些改进应该优先处理？": "Which improvements should come first?",
+  "验收标准是否清楚、可检查？": "Are the acceptance criteria clear and verifiable?",
+  "看看经验如何复用": "See how the experience is reused",
+  "示例仅说明确认过程，不会批准或发布实际工作。": "This example explains the review. No actual work is approved or published.",
   "项目工作": "Project work",
   "研发任务": "Engineering",
   "自动化": "Automations",

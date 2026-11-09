@@ -1,0 +1,98 @@
+.heroDescription {
+  max-width: 780px;
+  text-wrap: pretty;
+}
+.firstStory {
+  margin-top: 80px;
+}
+.reviewSummary {
+  padding: 28px 24px 12px;
+}
+.reviewStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--f-accent);
+  font-size: 12px;
+}
+.reviewStatus > span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.reviewSummary h3 {
+  max-width: 24ch;
+  margin: 16px 0 0;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.pocSteps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 40px;
+  max-width: 1040px;
+  margin: 48px auto 44px;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+  counter-reset: poc-step;
+}
+.pocSteps li {
+  position: relative;
+  padding-top: 24px;
+  border-top: 1px solid var(--f-line);
+  counter-increment: poc-step;
+}
+.pocSteps li::before {
+  content: "0" counter(poc-step);
+  display: block;
+  margin-bottom: 14px;
+  color: var(--f-accent);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+}
+.pocSteps h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 550;
+}
+.pocSection .pocSteps p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.8;
+}
+@media (max-width: 900px) {
+  .pocSteps {
+    gap: 24px;
+  }
+}
+@media (max-width: 640px) {
+  .firstStory {
+    margin-top: 40px;
+  }
+  .reviewSummary {
+    padding: 24px 18px 12px;
+  }
+  .reviewSummary h3 {
+    font-size: 23px;
+  }
+  .pocSteps {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-block: 36px;
+  }
+  .pocSteps li {
+    padding: 20px 0 0 36px;
+  }
+  .pocSteps li::before {
+    position: absolute;
+    left: 0;
+    top: 23px;
+    margin: 0;
+  }
+}

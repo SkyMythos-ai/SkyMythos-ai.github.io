@@ -357,9 +357,14 @@
 }
 .heroActions {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 28px;
   margin-top: 24px;
+}
+.heroActions > a {
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 .heroProduct {
   width: calc(100% - clamp(48px, 10vw, 192px));
@@ -368,84 +373,6 @@
   scroll-margin-top: 112px;
   margin-top: 48px;
   position: relative;
-}
-.productVocabulary {
-  margin-top: 56px;
-  padding: 0 0 88px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  border-bottom: 1px solid var(--f-line);
-  color: var(--f-muted);
-  font-size: 12px;
-}
-.productVocabulary > div {
-  display: flex;
-  gap: 30px;
-  font-weight: 500;
-  font-size: 15px;
-  color: var(--f-text);
-}
-.intro {
-  padding-top: 112px;
-  padding-bottom: 128px;
-}
-.intro > h2 {
-  font-size: 48px;
-  line-height: 1.3;
-  letter-spacing: -0.03em;
-  font-weight: 550;
-  margin: 0 0 28px;
-}
-.intro > h2 > span {
-  color: var(--f-muted);
-}
-.manifesto {
-  font-size: 26px;
-  line-height: 1.75;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  color: var(--f-muted);
-  margin: 0;
-  max-width: 1000px;
-}
-.principles {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0;
-  margin-top: 72px;
-}
-.principles > div {
-  padding: 0 40px;
-  border-left: 1px solid var(--f-line);
-}
-.principles > div:first-child {
-  padding-left: 0;
-  border-left: 0;
-}
-.principles > div:last-child {
-  padding-right: 0;
-}
-.principles svg {
-  width: 30px;
-  height: 30px;
-  stroke-width: 1.3;
-  color: var(--f-accent);
-  margin-bottom: 22px;
-}
-.principles h3 {
-  font-size: 17px;
-  line-height: 26px;
-  font-weight: 550;
-  margin: 0 0 10px;
-}
-.principles p {
-  font-size: 14px;
-  line-height: 26px;
-  color: var(--f-muted);
-  margin: 0;
-  max-width: 34ch;
 }
 .storySection {
   border-top: 1px solid var(--f-line);
@@ -601,75 +528,6 @@
 .environmentPanel > p svg {
   color: var(--f-accent);
 }
-.resources {
-  padding-top: 104px;
-  padding-bottom: 112px;
-  border-top: 1px solid var(--f-line);
-}
-.sectionLabelRow {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-}
-.sectionLabelRow h2 {
-  font-size: 36px;
-  line-height: 1.4;
-  letter-spacing: -0.025em;
-  font-weight: 550;
-  margin: 0;
-}
-.guideList {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 32px;
-  margin-top: 48px;
-}
-.guideList > a {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-}
-.guideArt {
-  height: 132px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: var(--f-raised);
-  border-radius: 8px;
-  transition: background 0.2s;
-}
-.guideArt svg {
-  width: 44px;
-  height: 44px;
-  stroke-width: 1;
-  color: var(--f-accent);
-  transition: transform 0.25s;
-}
-.guideList > a:hover .guideArt svg {
-  transform: translateY(-4px);
-}
-.guideList h3 {
-  font-size: 18px;
-  line-height: 1.6;
-  font-weight: 500;
-  margin: 22px 0 10px;
-}
-.guideList p {
-  font-size: 14px;
-  line-height: 26px;
-  color: var(--f-muted);
-  margin: 0 0 24px;
-  max-width: 38ch;
-}
-.guideList > a > span {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  font-size: 13px;
-  color: var(--f-muted);
-  margin-top: auto;
-}
 .faq {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -793,9 +651,6 @@
   line-height: 20px;
   color: var(--f-muted);
   padding-top: 48px;
-}
-.mobileBreak {
-  display: none;
 }
 .article {
   padding: 160px 0 120px;
@@ -961,20 +816,10 @@
   .sectionHeading > div > p {
     font-size: 17px;
   }
-  .productVocabulary {
-    display: block;
-  }
-  .productVocabulary > div {
-    margin-top: 20px;
-    gap: 24px;
-  }
   .governanceLayout,
   .faq,
   .capabilityIndex {
     gap: 48px;
-  }
-  .principles > div {
-    padding-inline: 24px;
   }
   .footerGrid {
     gap: 32px;
@@ -1012,19 +857,6 @@
   }
   .sectionHeading > div > p {
     max-width: 38em;
-  }
-  .principles {
-    gap: 28px;
-  }
-  .principles > div {
-    padding-inline: 0;
-    border: 0;
-  }
-  .intro > h2 {
-    font-size: 40px;
-  }
-  .manifesto {
-    font-size: 23px;
   }
   .storySection {
     padding-block: 88px;
@@ -1119,9 +951,6 @@
     font-size: 15px;
     line-height: 1.8;
   }
-  .desktopBreak {
-    display: none;
-  }
   .heroActions {
     margin-top: 28px;
     gap: 24px;
@@ -1140,62 +969,6 @@
     width: calc(100% - 40px);
     margin-top: 44px;
     scroll-margin-top: 96px;
-  }
-  .productVocabulary {
-    margin-top: 32px;
-    padding-bottom: 56px;
-  }
-  .productVocabulary > span {
-    font-size: 12px;
-  }
-  .productVocabulary > div {
-    font-size: 13px;
-    gap: 16px 22px;
-    flex-wrap: wrap;
-    margin-top: 18px;
-  }
-  .intro {
-    padding-top: 64px;
-    padding-bottom: 72px;
-  }
-  .intro > h2 {
-    font-size: 32px;
-    line-height: 1.45;
-    margin-bottom: 22px;
-  }
-  .mobileBreak {
-    display: block;
-  }
-  .manifesto {
-    font-size: 19px;
-    line-height: 1.9;
-    letter-spacing: -0.01em;
-  }
-  .principles {
-    grid-template-columns: 1fr;
-    gap: 28px;
-    margin-top: 40px;
-  }
-  .principles > div {
-    display: grid;
-    grid-template-columns: 28px 1fr;
-    gap: 0 16px;
-  }
-  .principles svg {
-    width: 24px;
-    height: 24px;
-    margin: 3px 0 0;
-    grid-row: 1/3;
-  }
-  .principles h3 {
-    font-size: 16px;
-    line-height: 26px;
-    margin-bottom: 7px;
-  }
-  .principles p {
-    font-size: 14px;
-    line-height: 26px;
-    max-width: none;
   }
   .storySection {
     padding-top: 64px;
@@ -1269,55 +1042,6 @@
   .environmentPanel > p {
     padding: 16px 18px;
     font-size: 11px;
-  }
-  .resources {
-    padding-top: 64px;
-    padding-bottom: 64px;
-  }
-  .sectionLabelRow {
-    align-items: flex-end;
-    gap: 16px;
-  }
-  .sectionLabelRow h2 {
-    font-size: 28px;
-    max-width: 220px;
-  }
-  .sectionLabelRow > a {
-    white-space: nowrap;
-    font-size: 12px;
-    gap: 5px;
-  }
-  .guideList {
-    grid-template-columns: 1fr;
-    gap: 32px;
-    margin-top: 32px;
-  }
-  .guideList > a {
-    display: grid;
-    grid-template-columns: 72px 1fr;
-    gap: 0 20px;
-    border-bottom: 1px solid var(--f-line);
-    padding-bottom: 28px;
-  }
-  .guideArt {
-    height: 72px;
-    grid-row: 1/4;
-  }
-  .guideArt svg {
-    width: 28px;
-    height: 28px;
-  }
-  .guideList h3 {
-    font-size: 16px;
-    margin: 0 0 8px;
-  }
-  .guideList p {
-    font-size: 13px;
-    line-height: 24px;
-    margin: 0 0 14px;
-  }
-  .guideList > a > span {
-    font-size: 12px;
   }
   .faq {
     padding-top: 24px;

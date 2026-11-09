@@ -1242,6 +1242,116 @@
     transform: translateY(0);
   }
 }
+.demoControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding: 12px 2px 0;
+  color: var(--f-muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+.demoControls > div {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+}
+.demoControls button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  padding: 5px 0;
+  border: 0;
+  background: transparent;
+  color: var(--f-muted);
+  font: inherit;
+  cursor: pointer;
+}
+.demoControls button:hover {
+  color: var(--f-accent);
+}
+.demoControls button:focus-visible {
+  outline: 2px solid var(--f-accent);
+  outline-offset: 4px;
+}
+.sourceLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--f-accent) !important;
+}
+.sourceLink:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.reviewPanel h4 {
+  font-size: 22px;
+  font-weight: 500;
+  line-height: 1.5;
+  margin: 18px 0 10px;
+  letter-spacing: -0.02em;
+}
+.reviewPanel > p {
+  color: var(--f-muted);
+  font-size: 12px;
+  margin: 0 0 20px;
+}
+.reviewPanel ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.reviewPanel li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 0;
+  border-top: 1px solid var(--f-line);
+  font-size: 13px;
+}
+.reviewPanel li > svg {
+  margin-top: 2px;
+  color: var(--f-accent);
+}
+.reviewPanel > small {
+  display: block;
+  margin-top: 16px;
+  color: var(--f-muted);
+  font-size: 10px;
+}
+@media (max-width: 767px) {
+  .demoControls {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+    font-size: 11px;
+  }
+  .demoControls button {
+    min-height: 44px;
+  }
+  .reviewPanel h4 {
+    font-size: 17px;
+    margin-block: 12px 8px;
+  }
+  .reviewPanel > p {
+    margin-bottom: 12px;
+    font-size: 11px;
+  }
+  .reviewPanel li {
+    padding-block: 9px;
+    font-size: 12px;
+  }
+  .reviewPanel > small {
+    font-size: 10px;
+    margin-top: 8px;
+  }
+}
 @media (min-width: 1600px) {
   .workspaceHeading h3 {
     font-size: 20px;
