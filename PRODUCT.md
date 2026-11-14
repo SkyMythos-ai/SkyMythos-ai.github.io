@@ -22,7 +22,7 @@ SkyMythos 是企业的 AI-Native Harness。将目标、数字员工、模型、�
 
 ## Operating Context
 
-当前项目是独立 Next.js 16 官网。旧站 `../fusion-website-backup-20261107-213041` 与新产品 `../fusion-harness` 是只读证据源；当前页面保留 Linear 首页的空间、层次与交互基础，并采用自有品牌。
+当前项目是独立 Next.js 16 官网。旧站 `../fusion-website-backup-20261107-213041` 与新产品 `../fusion-harness` 是只读证据源；当前页面延续原有空间、层次与产品交互基础，融合支付宝 AI 付的居中首屏与胶囊语言，并采用自有品牌。
 
 ## Capabilities and Constraints
 
@@ -37,7 +37,7 @@ SkyMythos 是企业的 AI-Native Harness。将目标、数字员工、模型、�
 
 官网与完整文档支持中英双语，默认英文；中文版以 `/zh/` 区分，切换保留当前页面与章节。产品原型、价格、询价表单和反馈也随语言切换，品牌与已确认商业规则保持一致。
 
-用户要求沿用当前 Linear 复刻基础，融合旧站内容，并以新产品颜色主题为准。正式字标 SkyMythos.ai，品牌资产来自新产品 `public/logo-*`，语义主题以当前 TDesign 映射为权威。用户没有要求重新命名产品或改变既有视觉语言。
+用户已确认在现有官网基础上融合支付宝 AI 付的设计，保留旧站内容与新产品颜色主题。正式字标 SkyMythos.ai，品牌资产来自新产品 `public/logo-*`，语义主题以当前 TDesign 映射为权威。
 
 ## Evidence on Hand
 

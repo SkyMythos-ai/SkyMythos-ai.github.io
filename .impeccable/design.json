@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-07T22:50:21+08:00",
+  "generatedAt": "2026-11-14T13:29:05Z",
   "title": "Design System: SkyMythos.ai",
   "extensions": {
     "colorMeta": {
@@ -316,7 +316,7 @@
     "typographyMeta": {
       "display": {
         "displayName": "官网首屏标题",
-        "purpose": "宽幅首屏中的产品价值表达。"
+        "purpose": "首页居中两行标题；手机采用独立响应式刻度。"
       },
       "headline": {
         "displayName": "章节标题",
@@ -355,6 +355,21 @@
         "name": "compact-report",
         "value": "0 5px 20px #00000003",
         "purpose": "紧凑报告前景。"
+      },
+      {
+        "name": "home-task-pill",
+        "value": "0 5px 12px color-mix(in srgb, var(--f-accent) 13%, transparent)",
+        "purpose": "首页标题中的工作胶囊。"
+      },
+      {
+        "name": "capability-paper",
+        "value": "0 14px 40px color-mix(in srgb, var(--f-text) 10%, transparent)",
+        "purpose": "首页能力区成果文档在主题画布上的单层表面。"
+      },
+      {
+        "name": "brand-companion-popup",
+        "value": "0 12px 36px #152c962b",
+        "purpose": "官网导览弹层。"
       }
     ],
     "motion": [
@@ -382,6 +397,56 @@
         "name": "reduced-motion",
         "value": "prefers-reduced-motion: reduce → animation: none; transition: none; scroll-behavior: auto",
         "purpose": "减少动态时保留内容，关闭入场及过渡。"
+      },
+      {
+        "name": "home-title-reel",
+        "value": "2800ms interval; transform 650ms cubic-bezier(.16, 1, .3, 1); opacity 480ms ease; filter 520ms ease",
+        "purpose": "首页三词轮换；悬停、焦点进入、离屏和后台时暂停。"
+      },
+      {
+        "name": "home-node-and-line",
+        "value": "nodeFloat 5s ease-in-out infinite alternate; knowledgeFlow 6s linear infinite",
+        "purpose": "首页工具、知识、流程、数字员工节点及连线；离屏和后台暂停循环。"
+      },
+      {
+        "name": "home-scroll-camera",
+        "value": "rotateX 8deg → 0deg; scale .94 → 1; mobile translateY 12px → 0 and scale .98 → 1",
+        "purpose": "产品工作台随原生滚动展开；页面暂停或减少动态时静态显示。"
+      },
+      {
+        "name": "capability-indicator",
+        "value": "450ms cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "首页能力 Tab 指示器动画。"
+      },
+      {
+        "name": "capability-scene-arrive",
+        "value": "450ms cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "首页能力成果面板与文档入场。"
+      },
+      {
+        "name": "home-governance-scroll",
+        "value": "clip-path inset 3% → 0, radius 40px → 0; review panel translateY 28px → 0",
+        "purpose": "首页治理章节随滚动展开，展示动作不改变验收状态。"
+      },
+      {
+        "name": "brand-companion-handoff",
+        "value": "scroll 16–240px; sampled upper/lower path interpolation; spring-driven form",
+        "purpose": "导航 S 从真实标志位置脱离并形变为角色；回顶同帧恢复原 S。减少动态时直接切换静态状态。"
+      },
+      {
+        "name": "brand-companion-blink",
+        "value": "random interval 1600–3400ms; blink 140ms; dizzy 3000ms",
+        "purpose": "白眼随机眨动；2200ms 内四次快速反向滚动触发晕眼，减少动态时静态。"
+      },
+      {
+        "name": "brand-companion-follow",
+        "value": "spring stiffness 115; damping 16; rotation ±14deg; area-preserving stretch ≤1.24",
+        "purpose": "导航 S 形态完成后沿章节路径移动；能力区宽侧边留白时在左侧外部，窄留白时在右侧画布内边距避让 Tab。眼神跟随指针或速度，交互时暂停位移。"
+      },
+      {
+        "name": "brand-companion-popup",
+        "value": "opening 460ms cubic-bezier(.16, 1.25, .3, 1); closing 300ms cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "角色形变层与面板层在展开前 28% 和收回末 38% 交接；同一张脸移动。手动暂停或减少动态直接到终态；后台暂停并在前台续完。"
       }
     ],
     "breakpoints": [
@@ -420,6 +485,14 @@
       {
         "name": "poc-fields-single-column",
         "value": "480px"
+      },
+      {
+        "name": "home-capability-tabs",
+        "value": "1100px"
+      },
+      {
+        "name": "capability-scroll-stage",
+        "value": "min-width: 1280px and min-height: 900px"
       }
     ]
   },
@@ -430,7 +503,7 @@
       "refersTo": "button-primary",
       "description": "联系团队开展 POC 的主要行动。",
       "html": "<a class=\"ds-primary\" href=\"#poc\">申请 POC <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></a>",
-      "css": ".ds-primary{font-family:\"PingFang SC\",\"Microsoft YaHei\",Arial,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:14px;padding:12px 20px;min-height:46px;background:var(--f-action,#0052d9);color:#fff;text-decoration:none;border:0;border-radius:6px;font-size:15px;font-weight:500;transition:background .2s}.ds-primary:hover{background:var(--f-action-hover,#366ef4)}.ds-primary:focus-visible{outline:2px solid var(--f-accent,#0052d9);outline-offset:5px}"
+      "css": ".ds-primary{font-family:\"PingFang SC\",\"Microsoft YaHei\",Arial,sans-serif;display:inline-flex;align-items:center;justify-content:center;gap:14px;padding:12px 24px;min-height:46px;background:var(--f-action,#0052d9);color:#fff;text-decoration:none;border:0;border-radius:999px;font-size:15px;font-weight:500;transition:background .2s}.ds-primary:hover{background:var(--f-action-hover,#366ef4)}.ds-primary:focus-visible{outline:2px solid var(--f-accent,#0052d9);outline-offset:5px}"
     },
     {
       "name": "次行动",
@@ -438,7 +511,7 @@
       "refersTo": "button-secondary",
       "description": "继续阅读产品内容的低强调行动。",
       "html": "<a class=\"ds-secondary\" href=\"#guide\">了解企业接入 <svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\" aria-hidden=\"true\"><path d=\"M5 12h14m-6-6 6 6-6 6\"/></svg></a>",
-      "css": ".ds-secondary{font-family:\"PingFang SC\",\"Microsoft YaHei\",Arial,sans-serif;display:inline-flex;align-items:center;gap:14px;padding:12px 20px;min-height:46px;border:1px solid var(--f-line,#ddd);border-radius:6px;background:var(--f-surface,#fff);color:var(--f-text,#191919);font-size:15px;text-decoration:none;transition:background .2s}.ds-secondary:hover{background:var(--f-raised,#f3f3f3)}.ds-secondary:focus-visible{outline:2px solid var(--f-accent,#0052d9);outline-offset:5px}"
+      "css": ".ds-secondary{font-family:\"PingFang SC\",\"Microsoft YaHei\",Arial,sans-serif;display:inline-flex;align-items:center;gap:14px;padding:12px 24px;min-height:46px;border:1px solid var(--f-line,#ddd);border-radius:999px;background:var(--f-surface,#fff);color:var(--f-text,#191919);font-size:15px;text-decoration:none;transition:background .2s}.ds-secondary:hover{background:var(--f-raised,#f3f3f3)}.ds-secondary:focus-visible{outline:2px solid var(--f-accent,#0052d9);outline-offset:5px}"
     },
     {
       "name": "POC 联系字段",
@@ -451,9 +524,9 @@
     {
       "name": "产品能力导航",
       "kind": "nav",
-      "description": "轻量文字导航，突出当前工作和继续阅读。",
+      "description": "桌面导航胶囊，突出当前工作和继续阅读。",
       "html": "<nav class=\"ds-nav\" aria-label=\"产品导航\"><a href=\"#product\">产品能力</a><a href=\"#work\">工作方式</a><a href=\"#docs\">文档</a></nav>",
-      "css": ".ds-nav{font-family:\"PingFang SC\",\"Microsoft YaHei\",Arial,sans-serif;display:flex;align-items:center;gap:30px;font-size:14px}.ds-nav a{padding:12px 0;color:var(--f-muted,#666);text-decoration:none}.ds-nav a:hover{color:var(--f-accent,#0052d9)}.ds-nav a:focus-visible{outline:2px solid var(--f-accent,#0052d9);outline-offset:5px}"
+      "css": ".ds-nav{font-family:\"PingFang SC\",\"Microsoft YaHei\",Arial,sans-serif;display:flex;align-items:center;gap:24px;padding:0 22px;border-radius:999px;background:var(--f-raised,#f3f3f3);font-size:14px}.ds-nav a{padding:12px 0;color:var(--f-muted,#666);text-decoration:none}.ds-nav a:hover{color:var(--f-accent,#0052d9)}.ds-nav a:focus-visible{outline:2px solid var(--f-accent,#0052d9);outline-offset:5px}"
     },
     {
       "name": "待确认状态",
@@ -482,13 +555,16 @@
   ],
   "narrative": {
     "northStar": "看得见的企业工作能力",
-    "overview": "现有视觉以 Linear 式宽幅留白和清楚的阅读层次为基础：左侧标题与右侧说明相互对应，产品场景在其后展开。SkyMythos.ai 的官方标志、TDesign 蓝色与亮暗表面承担品牌身份；页面的视觉重点是工作目标、执行依据与可检查的成果。\n\n官网采用较低的信息密度，产品场景保留更紧凑的工作界面密度。主操作引导访客填写 POC 联系表单，文档与能力说明承担继续了解的入口。场景由 React、CSS 和本地示例状态构成，截图仅作为来源或比较证据，不是页面实现。",
+    "overview": "现有视觉延续宽幅留白和清楚的阅读层次，融合支付宝 AI 付的居中首屏与圆润胶囊语言：首页以两行大标题、蓝色工作胶囊和淡蓝氛围引出真实 HTML/CSS 产品场景。SkyMythos.ai 官方标志、TDesign 蓝色和亮暗表面承担品牌身份。\n\n官网采用较低的信息密度，产品场景保留更紧凑的工作界面密度。主操作引导访客填写 POC 联系表单，文档与能力说明承担继续了解的入口。",
     "keyCharacteristics": [
-      "宽幅留白、左对齐标题与说明对照，随后展开产品场景。",
+      "宽幅留白、首页居中首屏与工作胶囊，随后展开产品场景。",
       "SkyMythos.ai 官方亮暗标志与 TDesign 蓝色语义主题。",
       "中性色表面、细边线和轻阴影，按状态使用蓝色、绿色与错误色。",
       "官网阅读与产品界面采用不同密度；手机重排内容。",
-      "以联系团队开展 POC 为主要转化，保留可用的键盘和反馈状态。"
+      "以联系团队开展 POC 为主要转化，保留可用的键盘和反馈状态。",
+      "首页动效支持暂停和减少动态；宽屏能力场景随原生滚动切换，其他情况使用手动 Tab。",
+      "首页能力区以左侧导航和浅蓝画布中的可读成果文档解释三类能力；窄屏自然排列。",
+      "导航 S 随滚动变为品牌助手并提供真实官网入口，支持暂停、键盘和减少动态。"
     ],
     "rules": [
       {
@@ -503,20 +579,22 @@
       },
       {
         "name": "The Quiet Depth Rule",
-        "body": "默认用表面与细边线区分层级，只在导航浮层和产品内部前景使用现有轻阴影。",
+        "body": "默认用表面与细边线区分层级；首页氛围和工作胶囊、导航浮层及产品内部前景使用已实现的局部渐变或轻阴影。",
         "section": "elevation"
       }
     ],
     "dos": [
       "**Do** 保留官方 SkyMythos.ai 标志比例，随主题切换亮暗资产。",
       "**Do** 使用 --f-* 语义变量，让官网、产品场景与 POC 表单共享亮暗主题。",
-      "**Do** 在宽幅产品场景前保留清楚的标题与说明，用工作对象和可见成果解释能力。",
+      "**Do** 在产品场景前保留清楚的标题与说明，用工作对象和可见成果解释能力；首页首屏使用居中标题与工作胶囊。",
       "**Do** 让手机内容自然重排，并保留焦点、错误说明、等待反馈与减少动态支持。",
-      "**Do** 把主要行动统一为 POC 联系申请；按真实接收通道呈现发送、失败或待发送状态。"
+      "**Do** 把主要行动统一为 POC 联系申请；按真实接收通道呈现发送、失败或待发送状态。",
+      "**Do** 保留页面动效暂停、减少动态回退及工作台独立播放控制；滚动展示不改变业务状态。"
     ],
     "donts": [
       "**Don't** 将 Linear 品牌、客户背书或截图直接当作 SkyMythos 的产品实现。",
       "**Don't** 把旧官网石墨配色、IBM Plex 字体或旧播放器样式当作当前视觉权威。",
+      "**Don't** 将首页治理色或导航胶囊圆角推广为全站暗主题或表单、产品控件规范。",
       "**Don't** 用主题切换只改变页面背景，留下产品面板、输入框或标志的错误主题。",
       "**Don't** 用展示中的待确认方案、完成图标或模拟结果暗示真实后台任务已完成。",
       "**Don't** 把联系 POC 改写成自助试用，或在接收通道未就绪时显示提交成功。"

@@ -133,7 +133,7 @@ export function SiteHeader() {
       onMouseLeave={() => setProductOpen(false)}
     >
       <div className={styles.headerInner}>
-        <Link href={href("/")} aria-label={t("SkyMythos home", "SkyMythos 首页")}>
+        <Link href={href("/")} aria-label={t("SkyMythos home", "SkyMythos 首页")} data-brand-origin>
           <Brand />
         </Link>
         <nav aria-label={t("Main navigation", "主导航")} className={styles.desktopNav}>

@@ -652,7 +652,7 @@
   margin: 5px 0 0;
 }
 .visualFrame {
-  height: 510px;
+  height: var(--showcase-scene-height, 510px);
   display: flex;
   flex-direction: column;
 }

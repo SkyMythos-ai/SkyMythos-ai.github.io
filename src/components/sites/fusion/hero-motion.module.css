@@ -1,0 +1,117 @@
+.hero { --hero-spread: 0; }
+.wordReel {
+  position: relative;
+  display: inline-grid;
+  vertical-align: middle;
+  perspective: 700px;
+  isolation: isolate;
+}
+.wordSizer {
+  grid-area: 1 / 1;
+  visibility: hidden;
+  pointer-events: none;
+}
+.wordReel .reelWord {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max-content;
+  color: var(--f-accent);
+  transform: translate(-50%, -50%);
+  transition: transform 650ms cubic-bezier(.16, 1, .3, 1), opacity 480ms ease, filter 520ms ease;
+  backface-visibility: hidden;
+}
+.reelWord[data-offset="0"] { z-index: 2; opacity: 1; }
+.reelWord[data-offset="-1"] {
+  transform: translate(-50%, -132%) rotateX(25deg) scale(.9);
+  opacity: .07;
+  filter: blur(2px) grayscale(1);
+  pointer-events: none;
+}
+.reelWord[data-offset="1"] {
+  transform: translate(-50%, 32%) rotateX(-25deg) scale(.9);
+  opacity: 0;
+  filter: blur(2px) grayscale(1);
+  pointer-events: none;
+}
+.field {
+  position: absolute;
+  z-index: -1;
+  inset: 86px 0 auto;
+  height: 560px;
+  pointer-events: none;
+}
+.nodePosition {
+  position: absolute;
+  opacity: .8;
+}
+.nodePosition > span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  color: var(--f-muted);
+  font-size: 13px;
+  background: var(--f-surface);
+  border-radius: 12px;
+  box-shadow: 0 8px 28px #00000008;
+}
+.nodePosition svg { width: 20px; height: 20px; color: var(--f-accent); stroke-width: 1.5; }
+.tools { left: 8%; top: 150px; }
+.knowledge { right: 9%; top: 85px; }
+.flows { left: 5%; top: 345px; }
+.employees { right: 5%; top: 355px; }
+.connections { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; }
+.connections path { stroke: var(--f-accent); stroke-opacity: .1; stroke-width: 1; stroke-dasharray: 3 6; }
+:global([data-site-motion="active"]) .connections path { animation: knowledgeFlow 6s linear infinite; }
+:global([data-site-motion="active"]) .nodePosition > span { animation: nodeFloat 5s ease-in-out infinite alternate; }
+:global([data-site-motion="active"]) .knowledge > span { animation-delay: -2s; }
+:global([data-site-motion="active"]) .flows > span { animation-delay: -3.5s; }
+:global([data-site-motion="active"]) .employees > span { animation-delay: -1s; }
+:global([data-site-motion="active"]) .nodePosition { opacity: calc(.8 - var(--hero-spread) * .7); }
+:global([data-site-motion="active"]) .tools,
+:global([data-site-motion="active"]) .flows { transform: translateX(calc(var(--hero-spread) * -100px)); }
+:global([data-site-motion="active"]) .knowledge,
+:global([data-site-motion="active"]) .employees { transform: translateX(calc(var(--hero-spread) * 100px)); }
+:global([data-motion-running="false"]) .nodePosition > span,
+.hero[data-hero-playing="false"] .nodePosition > span { animation-play-state: paused; }
+:global([data-motion-running="false"]) .connections path,
+.hero[data-hero-playing="false"] .connections path { animation-play-state: paused; }
+.cameraAnchor { perspective: 1600px; }
+.hero .cameraAnchor { margin-top: 24px; }
+.cameraFrame { transform-origin: 50% 18%; }
+:global([data-site-motion="active"]) .cameraFrame {
+  transform: rotateX(calc((1 - var(--camera-progress, 1)) * 8deg)) scale(calc(.94 + var(--camera-progress, 1) * .06));
+}
+.controls { position: absolute; top: -35px; right: 0; }
+.controls button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 30px;
+  padding: 2px 8px;
+  border: 0;
+  border-radius: 6px;
+  color: var(--f-muted);
+  background: transparent;
+  font-size: 12px;
+}
+.controls button:hover:not(:disabled) { background: var(--f-accent-soft); color: var(--f-accent); }
+.controls button:disabled { cursor: default; }
+:global([data-site-motion="static"]) .reelWord { transition: none; }
+:global([data-site-motion="static"]) .field { opacity: .45; }
+@keyframes nodeFloat { from { transform: translateY(-6px) rotate(-2deg); } to { transform: translateY(7px) rotate(2deg); } }
+@keyframes knowledgeFlow { to { stroke-dashoffset: -54; } }
+@media (max-width: 1200px) { .field { display: none; } }
+@media (max-width: 640px) {
+  .wordReel { max-width: 100%; }
+  .reelWord[data-offset="-1"] { opacity: 0; }
+  .controls { top: -34px; }
+  :global([data-site-motion="active"]) .cameraFrame {
+    transform: translateY(calc((1 - var(--camera-progress, 1)) * 12px)) scale(calc(.98 + var(--camera-progress, 1) * .02));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .reelWord, .cameraFrame, .nodePosition, .nodePosition > span { animation: none !important; transition: none !important; }
+  .cameraFrame { transform: none !important; }
+}
