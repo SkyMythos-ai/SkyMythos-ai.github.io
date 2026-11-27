@@ -1,9 +1,8 @@
 import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { DocumentationProvider } from "@/components/docs/provider";
-import { Brand } from "@/components/sites/fusion/site-shell";
+import { SiteHeader } from "@/components/sites/fusion/site-shell";
 import { getDocsSource } from "@/lib/docs-source";
 import { localizeHref, type Locale } from "@/lib/i18n";
-import { LanguageSwitch } from "@/components/language-switch";
 import { SidebarFocusDismiss } from "@/components/docs/sidebar-focus-dismiss";
 import type { Translations } from "fumadocs-ui/i18n";
 
@@ -49,19 +48,18 @@ export function LocalizedDocumentationLayout({
   return (
     <DocumentationProvider translations={zh ? translations : {}}>
       <div className="fusionDocs">
+        <div className="docsHeaderHost">
+          <SiteHeader />
+        </div>
         <DocsLayout
           tree={getDocsSource(locale).pageTree}
-          nav={{ title: <Brand />, url: href("/") }}
+          nav={{ title: zh ? "产品文档" : "Documentation", url: href("/docs") }}
+          themeSwitch={{ enabled: false }}
           sidebar={{
             collapsible: false,
             footer: <SidebarFocusDismiss key="focus-dismiss" />,
           }}
-          links={[
-            { text: zh ? "返回官网" : "Website", url: href("/"), active: "none" },
-            { text: zh ? "价格与合作" : "Pricing", url: href("/pricing") },
-            { type: "custom", children: <LanguageSwitch /> },
-            { text: zh ? "申请 POC" : "Request a POC", url: href("/poc"), type: "button" },
-          ]}
+          links={[]}
         >
           {children}
         </DocsLayout>
