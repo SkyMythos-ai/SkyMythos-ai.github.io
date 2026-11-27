@@ -10,7 +10,9 @@ export async function verifyBilingual(page, baseURL, report) {
   for (const locale of ["en", "zh"]) {
     const prefix = locale === "zh" ? "/zh" : "";
     const docs = (await readdir(`content/docs/${locale}`)).filter(file => file.endsWith(".mdx"));
-    const routes = ["/", "/pricing/", "/poc/", "/privacy/",
+    const roles = ["hr", "finance", "sales", "legal", "operations", "product", "engineering", "it-admin"];
+    const routes = ["/", "/solutions/", "/pricing/", "/security/", "/poc/", "/privacy/",
+      ...roles.map(role => `/solutions/${role}/`),
       ...["skybot", "employees", "flows", "automations", "knowledge", "environments"].map(slug => `/product/${slug}/`),
       ...docs.map(file => file === "index.mdx" ? "/docs/" : `/docs/${file.slice(0, -4)}/`),
     ];
@@ -33,8 +35,12 @@ export async function verifyBilingual(page, baseURL, report) {
     const text = await page.locator("main").innerText();
     if (locale === "en") assert(!/\p{Script=Han}/u.test(text), "英文首页不能残留中文可见文案");
     else assert.match(text, /让 AI 完成工作/);
-    const nav = await page.locator('header nav').first().innerText();
-    assert(nav.indexOf(locale === "en" ? "Pricing" : "价格") < nav.indexOf(locale === "en" ? "Docs" : "文档"));
+    const headerText = await page.locator("header").first().innerText();
+    const pricingLabel = locale === "en" ? "Pricing" : "定价";
+    const securityLabel = locale === "en" ? "Security" : "安全合规";
+    const docsLabel = locale === "en" ? "Docs" : "产品文档";
+    assert(headerText.indexOf(pricingLabel) !== -1 && headerText.indexOf(securityLabel) !== -1 && headerText.indexOf(docsLabel) !== -1, `页头导航缺失：${headerText}`);
+    assert(headerText.indexOf(pricingLabel) < headerText.indexOf(securityLabel) && headerText.indexOf(securityLabel) < headerText.indexOf(docsLabel), `页头顺序不符：${headerText}`);
     const theme = page.getByRole("button", { name: locale === "en" ? "Toggle color theme" : "切换明暗主题", exact: true });
     await theme.click();
     assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
@@ -101,8 +107,12 @@ export async function verifyBilingual(page, baseURL, report) {
     assert.equal(await page.getByRole("option").count(), 0);
     await page.keyboard.press("Escape");
 
-    for (const pathname of ["/", "/pricing/", "/poc/", "/product/employees/", "/docs/deployment/"]) {
+    for (const pathname of ["/", "/security/", "/solutions/", "/solutions/hr/", "/solutions/engineering/", "/pricing/", "/poc/", "/product/employees/", "/docs/deployment/"]) {
       await page.goto(route(locale, pathname), { waitUntil: "networkidle" });
+      if (locale === "en") {
+        const mainText = await page.locator("main").innerText();
+        assert(!/\p{Script=Han}/u.test(mainText), `英文路由残留中文：${pathname}`);
+      }
       for (const width of [320, 390, 768, 1100, 1280, 1440]) {
         await page.setViewportSize({ width, height: 1000 });
         await page.evaluate(() => document.fonts.ready);

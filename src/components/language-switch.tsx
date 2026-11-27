@@ -8,15 +8,24 @@ import { useLocale } from "./locale-provider";
 import styles from "./sites/fusion/site.module.css";
 
 function subscribeURL(callback: () => void) {
+  let active = true;
+  const notify = () => {
+    // Next.js App Router 会在 HistoryUpdater 的 useInsertionEffect 内调用 history.pushState，
+    // Chromium 的 Navigation API 会同步触发 currententrychange；推迟至微任务避免在 useInsertionEffect 中调度更新。
+    queueMicrotask(() => {
+      if (active) callback();
+    });
+  };
   const navigation = (window as Window & { navigation?: EventTarget }).navigation;
   // 同页章节链接可通过history更新，未必触发hashchange。
-  navigation?.addEventListener("currententrychange", callback);
-  window.addEventListener("hashchange", callback);
-  window.addEventListener("popstate", callback);
+  navigation?.addEventListener("currententrychange", notify);
+  window.addEventListener("hashchange", notify);
+  window.addEventListener("popstate", notify);
   return () => {
-    navigation?.removeEventListener("currententrychange", callback);
-    window.removeEventListener("hashchange", callback);
-    window.removeEventListener("popstate", callback);
+    active = false;
+    navigation?.removeEventListener("currententrychange", notify);
+    window.removeEventListener("hashchange", notify);
+    window.removeEventListener("popstate", notify);
   };
 }
 

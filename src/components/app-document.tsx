@@ -25,6 +25,7 @@ export function AppDocument({
   return (
     <html
       lang={locale === "zh" ? "zh-CN" : "en"}
+      data-scroll-behavior="smooth"
       suppressHydrationWarning
       className={`${inter.variable} ${berkeley.variable}`}
     >
