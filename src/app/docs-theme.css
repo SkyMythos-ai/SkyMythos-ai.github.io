@@ -23,14 +23,37 @@
   --ring: var(--f-accent);
 }
 .fusionDocs {
+  --fd-banner-height: 68px;
+  padding-top: var(--fd-banner-height);
   font-family: "PingFang SC", "Microsoft YaHei", var(--font-inter), sans-serif;
   min-height: 100vh;
+}
+/* 在文档页复用全站统一顶栏：z-index 介于侧栏/子导航与弹层抽屉/搜索弹窗之间。 */
+.docsHeaderHost {
+  color: var(--f-text);
+  font-size: 15px;
+  line-height: 1.75;
+  -webkit-font-smoothing: antialiased;
+}
+.docsHeaderHost > header {
+  z-index: 35;
+}
+.docsHeaderHost a {
+  color: inherit;
+  text-decoration: none;
+}
+.docsHeaderHost button {
+  font: inherit;
+  cursor: pointer;
+}
+.docsHeaderHost svg {
+  flex-shrink: 0;
 }
 .fusionDocs #nd-docs-layout {
   --fd-layout-width: 1536px;
 }
 .fusionDocs #nd-page {
-  padding-top: 40px;
+  padding-top: 32px;
 }
 .fusionDocs .prose {
   line-height: 1.9;
@@ -56,6 +79,11 @@
   }
   .fusionDocs #nd-page {
     padding-top: 24px;
+  }
+}
+@media (max-width: 640px) {
+  .fusionDocs {
+    --fd-banner-height: 73px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

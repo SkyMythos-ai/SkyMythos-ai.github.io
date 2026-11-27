@@ -4,13 +4,13 @@
 .hero {
   position: relative;
   isolation: isolate;
-  padding: 174px 0 0;
+  padding: 164px 0 0;
 }
 .hero::before {
   content: "";
   position: absolute;
   z-index: -1;
-  inset: 70px 0 14%;
+  inset: 64px 0 14%;
   background:
     radial-gradient(ellipse at 23% 36%, var(--home-wash), transparent 48%),
     radial-gradient(ellipse at 77% 47%, var(--home-wash), transparent 49%);
@@ -21,7 +21,7 @@
 }
 .hero h1 {
   margin: 0;
-  font-size: clamp(48px, 4.6vw, 68px);
+  font-size: clamp(46px, 4.6vw, 66px);
   font-weight: 600;
   line-height: 1.32;
   letter-spacing: -0.035em;
@@ -52,10 +52,10 @@
   stroke-width: 1.7;
 }
 .heroDescription {
-  max-width: 660px;
-  margin: 30px auto 0;
+  max-width: 640px;
+  margin: 28px auto 0;
   color: var(--f-muted);
-  font-size: 18px;
+  font-size: 17.5px;
   line-height: 1.85;
   text-wrap: pretty;
 }
@@ -74,7 +74,7 @@
   position: relative;
   width: calc(100% - 96px);
   max-width: 1280px;
-  margin: 68px auto 0;
+  margin: 64px auto 0;
   scroll-margin-top: 112px;
 }
 .heroProduct::before {
@@ -96,13 +96,13 @@
 }
 .workCycle > p {
   margin: 0;
-  font-size: 15px;
+  font-size: 14.5px;
   font-weight: 500;
 }
 .workCycle ol {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 20px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -112,7 +112,7 @@
 .workCycle li {
   display: flex;
   align-items: center;
-  gap: 22px;
+  gap: 20px;
 }
 .workCycle svg {
   color: var(--f-accent);
@@ -140,7 +140,7 @@
   padding-block: 104px 112px;
 }
 .governance h2 {
-  font-size: 44px;
+  font-size: 42px;
 }
 .governanceBand a:focus-visible {
   outline-color: var(--f-accent);
@@ -155,87 +155,48 @@
   color: var(--f-accent);
   font-size: 12px;
 }
-.reviewStatus > span {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: currentColor;
-}
 .reviewSummary h3 {
   max-width: 24ch;
   margin: 16px 0 0;
-  font-size: 26px;
+  font-size: 25px;
   font-weight: 500;
   line-height: 1.5;
   letter-spacing: -0.02em;
   text-wrap: balance;
 }
-.faq {
-  border-top: 1px solid var(--f-line-soft);
-}
 .pocSection {
   background:
     radial-gradient(ellipse at 50% 100%, var(--home-wash), transparent 70%),
     var(--f-bg);
-  padding-top: 96px;
+  padding-block: 104px 120px;
+  border-top: 1px solid var(--f-line-soft);
 }
 .pocSection h2 {
-  font-size: 52px;
+  font-size: clamp(32px, 3.8vw, 46px);
+  line-height: 1.3;
 }
-.pocSteps {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 40px;
-  max-width: 1040px;
-  margin: 52px auto 44px;
-  padding: 0;
-  list-style: none;
-  text-align: left;
-  counter-reset: poc-step;
-}
-.pocSteps li {
-  position: relative;
-  padding-top: 24px;
-  border-top: 1px solid var(--f-line);
-  counter-increment: poc-step;
-}
-.pocSteps li::before {
-  content: "0" counter(poc-step);
-  display: block;
-  margin-bottom: 14px;
-  color: var(--f-accent);
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
-}
-.pocSteps h3 {
-  margin: 0 0 8px;
-  font-size: 16px;
-  line-height: 1.6;
-  font-weight: 550;
-}
-.pocSection .pocSteps p {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.8;
+.pocSection p {
+  max-width: 52ch;
+  margin-inline: auto;
 }
 @media (min-width: 1800px) {
   .hero {
-    padding-top: 200px;
+    padding-top: 192px;
   }
 }
 @media (max-width: 1100px) {
   .workCycle {
     flex-direction: column;
-    align-items: center;
-    gap: 18px;
+    align-items: flex-start;
+    gap: 16px;
   }
 }
 @media (max-width: 900px) {
   .hero {
-    padding-top: 148px;
+    padding-top: 144px;
   }
   .hero h1 {
-    font-size: 52px;
+    font-size: 50px;
   }
   .heroProduct {
     margin-top: 52px;
@@ -243,17 +204,14 @@
   .governance {
     padding-block: 80px;
   }
-  .pocSteps {
-    gap: 24px;
-  }
 }
 @media (max-width: 640px) {
   .hero {
-    padding-top: 136px;
+    padding-top: 128px;
   }
   .hero h1 {
-    font-size: clamp(30px, 7.8vw, 46px);
-    line-height: 1.45;
+    font-size: clamp(30px, 7.8vw, 44px);
+    line-height: 1.44;
     letter-spacing: -0.03em;
   }
   .titleLine + .titleLine {
@@ -270,9 +228,9 @@
   }
   .heroDescription {
     max-width: 440px;
-    margin-top: 24px;
-    font-size: 16px;
-    line-height: 1.9;
+    margin-top: 22px;
+    font-size: 15.5px;
+    line-height: 1.85;
   }
   .heroActions {
     gap: 12px;
@@ -295,7 +253,6 @@
     border-radius: 24px;
   }
   .workCycle {
-    align-items: flex-start;
     margin-top: 26px;
     padding-bottom: 36px;
   }
@@ -317,35 +274,15 @@
     padding-block: 64px;
   }
   .governance h2 {
-    font-size: 32px;
+    font-size: 30px;
   }
   .reviewSummary {
     padding: 24px 18px 12px;
   }
   .reviewSummary h3 {
-    font-size: 23px;
-  }
-  .faq {
-    padding-top: 56px;
+    font-size: 22px;
   }
   .pocSection {
-    padding-top: 56px;
-  }
-  .pocSection h2 {
-    font-size: 32px;
-  }
-  .pocSteps {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    margin-block: 36px;
-  }
-  .pocSteps li {
-    padding: 20px 0 0 36px;
-  }
-  .pocSteps li::before {
-    position: absolute;
-    left: 0;
-    top: 23px;
-    margin: 0;
+    padding-block: 64px 80px;
   }
 }

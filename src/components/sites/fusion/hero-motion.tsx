@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, BookOpen, Bot, Code2, Layers3, Pause, Play, Users, Wrench } from "lucide-react";
+import { ArrowRight, BookOpen, Bot, Layers3, Pause, Play, Users, Wrench } from "lucide-react";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { localizeHref, type Locale } from "@/lib/i18n";
 import { useSiteMotion } from "./site-motion";
@@ -11,9 +11,9 @@ import home from "./home.module.css";
 import motion from "./hero-motion.module.css";
 
 const words = [
-  { zh: "完成工作", en: "do the work.", href: "/product/skybot", Icon: Bot },
-  { zh: "协同研发", en: "write code.", href: "/product/flows", Icon: Code2 },
-  { zh: "沉淀知识", en: "use context.", href: "/product/knowledge", Icon: BookOpen },
+  { zh: "完成工作", en: "deliver work.", href: "/product/skybot", Icon: Bot },
+  { zh: "协同业务", en: "align teams.", href: "/solutions", Icon: Users },
+  { zh: "沉淀知识", en: "keep context.", href: "/product/knowledge", Icon: BookOpen },
 ];
 
 /** 词带按时间推进，工作台按滚动展开；二者不截获访客的原生滚轮。 */
@@ -100,10 +100,10 @@ export function HomeHero({ locale, children }: { locale: Locale; children: React
           </span>
           <span className={home.titleLine}>{text("让能力留在企业。", "Keep the capability.")}</span>
         </h1>
-        <p className={home.heroDescription}>{text("面向企业的 AI 工作平台。连接数字员工、工具与知识，交付可检查的成果，让确认后的经验用于下一次工作。", "An AI workspace for enterprise teams. Bring AI employees, tools and knowledge together. Review the results and reuse what works.")}</p>
+        <p className={home.heroDescription}>{text("私有化部署的企业级数字员工与 AI 协作平台。连接内部知识与办公工具，交付有据可查的成果，沉淀组织可复用的能力。", "The self-hosted enterprise platform for AI employees and collaborative work. Connect company knowledge and tools to deliver verifiable results.")}</p>
         <div className={home.heroActions}>
-          <Link href={localizeHref("/poc", locale)} className={site.primaryLink}>{text("申请 POC", "Request a POC")}<ArrowRight size={16} /></Link>
-          <a href="#product-demo" className={site.secondaryLink}>{text("查看工作演示", "Explore the workflow")}<ArrowRight size={15} /></a>
+          <Link href={localizeHref("/poc", locale)} className={site.primaryLink}>{text("预约演示", "Book a Demo")}<ArrowRight size={16} /></Link>
+          <a href="#product-demo" className={site.secondaryLink}>{text("查看工作台演示", "Watch live workflow")}<ArrowRight size={15} /></a>
         </div>
         <BrandCompanion locale={locale} />
       </div>

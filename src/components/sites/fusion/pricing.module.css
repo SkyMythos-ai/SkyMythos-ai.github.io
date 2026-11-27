@@ -1,91 +1,215 @@
 .page {
-  max-width: 1040px;
-  padding-top: 156px;
-  padding-bottom: 88px;
+  padding-top: 128px;
 }
 .heading {
-  margin-bottom: 40px;
+  max-width: 780px;
+  margin-bottom: 44px;
+}
+.eyebrowPill {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 14px;
+  border-radius: 999px;
+  background: var(--f-accent-soft);
+  color: var(--f-accent);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  margin-bottom: 18px;
 }
 .heading h1 {
-  font-size: 32px;
-  line-height: 1.4;
-  letter-spacing: -0.025em;
-  font-weight: 550;
-  margin: 0 0 12px;
+  margin: 0 0 16px;
+  font-size: clamp(34px, 4.2vw, 50px);
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  color: var(--f-text);
+  text-wrap: balance;
 }
 .heading > p {
-  color: var(--f-muted);
-  font-size: 15px;
-  line-height: 1.8;
   margin: 0;
+  color: var(--f-muted);
+  font-size: 16.5px;
+  line-height: 1.8;
+  max-width: 60ch;
 }
+
 .offerings {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 24px;
 }
 .offering {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 28px;
-  border-radius: 16px;
-  background: var(--f-raised);
+  padding: 38px 36px;
+  border-radius: 22px;
+  background: var(--f-surface);
+  border: 1px solid var(--f-line);
+  box-shadow: 0 12px 32px rgba(0, 36, 102, 0.04);
 }
-.offering h2 {
-  font-size: 21px;
-  font-weight: 550;
-  line-height: 1.5;
-  margin: 0 0 8px;
+.featuredOffering {
+  border-color: var(--f-accent);
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--f-accent-soft) 45%, var(--f-surface)) 0%,
+    var(--f-surface) 38%
+  );
+  box-shadow: 0 18px 44px rgba(0, 62, 179, 0.08);
 }
-.description {
-  color: var(--f-muted);
-  font-size: 14px;
-  line-height: 1.8;
-  margin: 0;
-}
-.quote {
-  font-size: 30px;
-  line-height: 1.4;
-  font-weight: 500;
-  letter-spacing: -0.02em;
-  margin: 32px 0 4px;
-}
-.scope {
-  font-size: 13px;
-  line-height: 1.8;
-  color: var(--f-muted);
-  margin: 0;
-}
-.offering ul {
-  list-style: none;
-  padding: 0;
-  margin: 32px 0;
-  display: grid;
-  gap: 10px;
-}
-.offering li {
+.offeringTop {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  line-height: 1.8;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
 }
-.offering li svg {
+.offering h2 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--f-text);
+}
+.tierBadge {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--f-accent);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.description {
+  margin: 0;
+  min-height: 52px;
+  color: var(--f-muted);
+  font-size: 14.5px;
+  line-height: 1.75;
+}
+.priceBlock {
+  margin: 26px 0 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--f-line-soft);
+}
+.quote {
+  margin: 0 0 6px;
+  font-size: 28px;
+  line-height: 1.28;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--f-text);
+}
+.scope {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.65;
   color: var(--f-muted);
 }
 .offering > a {
-  margin-top: auto;
+  width: 100%;
 }
+.featureList {
+  list-style: none;
+  padding: 24px 0 0;
+  margin: 24px 0 0;
+  border-top: 1px solid var(--f-line-soft);
+  display: grid;
+  gap: 13px;
+}
+.featureList li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--f-text);
+}
+.featureList svg {
+  margin-top: 4px;
+  color: var(--f-positive);
+}
+
+/* 三项费用边界 */
+.boundarySection {
+  margin-top: 72px;
+  padding: 44px;
+  border-radius: 22px;
+  background: color-mix(in srgb, var(--f-accent-soft) 55%, var(--f-surface));
+  border: 1px solid color-mix(in srgb, var(--f-accent) 12%, var(--f-line-soft));
+  scroll-margin-top: 96px;
+}
+.boundarySection h2,
+.rolloutSection h2 {
+  margin: 0 0 32px;
+  font-size: clamp(24px, 2.8vw, 32px);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  color: var(--f-text);
+}
+.boundaryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.boundaryCard {
+  padding: 24px 26px;
+  border-radius: 16px;
+  background: var(--f-surface);
+  border: 1px solid var(--f-line-soft);
+}
+.stepNum {
+  display: block;
+  margin-bottom: 10px;
+  font-family: var(--f-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--f-accent);
+}
+.boundaryCard h3,
+.rolloutCard h3 {
+  margin: 0 0 8px;
+  font-size: 16.5px;
+  font-weight: 600;
+  color: var(--f-text);
+}
+.boundaryCard p,
+.rolloutCard p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.75;
+  color: var(--f-muted);
+}
+
+/* 四步推进流程 */
+.rolloutSection {
+  margin-top: 72px;
+}
+.rolloutGrid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+}
+.rolloutCard {
+  padding-top: 20px;
+  border-top: 1px solid var(--f-line);
+}
+
 .footnote {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   gap: 24px;
-  margin-top: 28px;
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--f-line-soft);
   color: var(--f-muted);
-  font-size: 13px;
-  line-height: 1.8;
+  font-size: 13.5px;
+  line-height: 1.75;
 }
 .footnote p {
   margin: 0;
@@ -93,32 +217,31 @@
 .footnote > a {
   flex-shrink: 0;
 }
+
+/* 首页精简席位授权概览 */
 .overview {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  padding-top: 80px;
-  padding-bottom: 80px;
-  border-top: 1px solid var(--f-line);
+  grid-template-columns: 0.95fr 1.05fr;
+  gap: 72px;
+  padding-block: 104px;
+  border-top: 1px solid var(--f-line-soft);
+  align-items: center;
 }
-.overview h2 {
-  font-size: 36px;
-  line-height: 1.4;
-  letter-spacing: -0.025em;
-  font-weight: 550;
+.overviewLead h2 {
   margin: 0 0 24px;
-}
-.overview > div > p {
-  color: var(--f-muted);
-  max-width: 30em;
-  margin: 0 0 24px;
-  line-height: 1.9;
+  font-size: clamp(30px, 3.5vw, 44px);
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  color: var(--f-text);
 }
 .overviewOptions {
   margin: 0;
+  display: flex;
+  flex-direction: column;
 }
 .overviewOptions > div {
-  padding: 24px 0;
+  padding: 22px 0;
   border-bottom: 1px solid var(--f-line);
   display: flex;
   align-items: baseline;
@@ -126,52 +249,67 @@
   gap: 24px;
 }
 .overviewOptions > div:first-child {
-  padding-top: 0;
+  border-top: 1px solid var(--f-line);
 }
 .overviewOptions dt {
-  color: var(--f-muted);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--f-text);
+  white-space: nowrap;
 }
 .overviewOptions dd {
   margin: 0;
-  font-size: 22px;
-  font-weight: 500;
+  font-size: 14px;
+  color: var(--f-muted);
+  text-align: right;
 }
-@media (max-width: 1000px) {
+
+@media (max-width: 1024px) {
+  .offerings,
+  .boundaryGrid,
   .overview {
-    gap: 48px;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+  .rolloutGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .description {
+    min-height: 0;
   }
 }
+
 @media (max-width: 640px) {
   .page {
-    padding-top: 120px;
-    padding-bottom: 56px;
-  }
-  .heading {
-    margin-bottom: 28px;
-  }
-  .heading h1 {
-    font-size: 28px;
-  }
-  .offerings {
-    grid-template-columns: 1fr;
+    padding-top: 100px;
   }
   .offering {
-    padding: 24px;
+    padding: 26px 22px;
+  }
+  .boundarySection {
+    padding: 28px 20px;
+    margin-top: 48px;
+  }
+  .rolloutSection {
+    margin-top: 48px;
+  }
+  .rolloutGrid {
+    grid-template-columns: 1fr;
+    gap: 22px;
   }
   .footnote {
     flex-direction: column;
     gap: 12px;
-    margin-top: 24px;
   }
   .overview {
-    grid-template-columns: 1fr;
-    gap: 36px;
-    padding-block: 56px;
+    padding-block: 72px;
+    gap: 32px;
   }
-  .overview h2 {
-    font-size: 28px;
+  .overviewOptions > div {
+    flex-direction: column;
+    gap: 6px;
   }
   .overviewOptions dd {
-    font-size: 19px;
+    text-align: left;
   }
 }

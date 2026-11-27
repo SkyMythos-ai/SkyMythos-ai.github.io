@@ -42,7 +42,8 @@ function routeTarget(anchor: HTMLElement, width: number, height: number): Point 
   const endY = height - 104;
   const work = document.querySelector("#work")?.getBoundingClientRect();
   const governance = document.querySelector("#governance")?.getBoundingClientRect();
-  if (width < 700) {
+  const containerGutter = Math.max(0, (width - 1280) / 2);
+  if (width < 700 || containerGutter < 96) {
     const t = clamp((window.scrollY - 240) / Math.max(300, rect.top + window.scrollY - 80), 0, 1);
     return { x: mix(centerX, width - 92, t * t * (3 - 2 * t)), y: mix(rect.top, endY, t) };
   }
@@ -99,10 +100,10 @@ export function BrandCompanion({ locale }: { locale: Locale }) {
   const following = enabled && running && phase === "closed" && !hovered && !focused;
   const text = (zh: string, en: string) => locale === "zh" ? zh : en;
   const links = [
-    { href: "#product-demo", label: text("看工作演示", "Watch the workflow"), Icon: SquarePlay },
-    { href: "#work", label: text("探索产品能力", "Explore capabilities"), Icon: Layers3 },
-    { href: localizeHref("/docs", locale), label: text("阅读文档", "Read the docs"), Icon: BookOpen },
-    { href: localizeHref("/poc", locale), label: text("申请 POC", "Request a POC"), Icon: ArrowRight },
+    { href: "#product-demo", label: text("看工作台演示", "Watch live workflow"), Icon: SquarePlay },
+    { href: localizeHref("/solutions", locale), label: text("岗位解决方案", "Role solutions"), Icon: Layers3 },
+    { href: localizeHref("/docs", locale), label: text("阅读产品文档", "Read documentation"), Icon: BookOpen },
+    { href: localizeHref("/poc", locale), label: text("预约演示", "Book a Demo"), Icon: ArrowRight },
   ];
 
   useEffect(() => {
