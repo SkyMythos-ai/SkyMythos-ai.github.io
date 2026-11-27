@@ -144,16 +144,14 @@ export function SiteHeader() {
       onMouseLeave={() => setSolutionsOpen(false)}
     >
       <div className={styles.headerInner}>
-        <div className={styles.brandGroup}>
-          <Link
-            href={href("/")}
-            aria-label={t("SkyMythos home", "SkyMythos 首页")}
-            data-brand-origin
-          >
-            <Brand />
-          </Link>
-          <span className={styles.editionBadge}>{t("Enterprise", "企业版")}</span>
-        </div>
+        <Link
+          href={href("/")}
+          className={styles.brandGroup}
+          aria-label={t("SkyMythos home", "SkyMythos 首页")}
+          data-brand-origin
+        >
+          <Brand />
+        </Link>
 
         <nav aria-label={t("Main navigation", "主导航")} className={styles.desktopNav}>
           <Link
@@ -268,12 +266,9 @@ export function SiteHeader() {
           }}
         >
           <div className={styles.mobileDialogHeader}>
-            <div className={styles.brandGroup}>
-              <Link href={href("/")} onClick={closeMobile}>
-                <Brand />
-              </Link>
-              <span className={styles.editionBadge}>{t("Enterprise", "企业版")}</span>
-            </div>
+            <Link href={href("/")} onClick={closeMobile}>
+              <Brand />
+            </Link>
             <Button
               variant="ghost"
               size="icon"
@@ -339,12 +334,9 @@ export function SiteFooter() {
     <footer className={styles.footer}>
       <div className={styles.footerGrid}>
         <div className={styles.footerIdentity}>
-          <div className={styles.brandGroup}>
-            <Link href={href("/")} aria-label={t("SkyMythos home", "SkyMythos 首页")}>
-              <Brand />
-            </Link>
-            <span className={styles.editionBadge}>{t("Enterprise", "企业版")}</span>
-          </div>
+          <Link href={href("/")} aria-label={t("SkyMythos home", "SkyMythos 首页")}>
+            <Brand />
+          </Link>
           <p>
             {t("Let AI deliver the work.", "让 AI 完成工作，")}
             <br />

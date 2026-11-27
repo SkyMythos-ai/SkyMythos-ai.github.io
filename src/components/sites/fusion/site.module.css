@@ -67,17 +67,7 @@
 .brandGroup {
   display: inline-flex;
   align-items: center;
-  gap: 12px;
   justify-self: start;
-}
-.editionBadge {
-  padding-left: 12px;
-  border-left: 1px solid var(--f-line);
-  font-size: 12.5px;
-  line-height: 18px;
-  color: var(--f-muted);
-  font-weight: 400;
-  white-space: nowrap;
 }
 .brandLockup {
   display: flex;
@@ -1181,11 +1171,7 @@
     gap: 6px;
   }
   .headerInner .brandLockup img {
-    width: 114px;
-  }
-  .editionBadge {
-    padding-left: 8px;
-    font-size: 11px;
+    width: 124px;
   }
   .headerActions {
     gap: 4px;
