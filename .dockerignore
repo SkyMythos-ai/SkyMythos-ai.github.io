@@ -6,6 +6,15 @@ yarn-debug.log*
 
 # Build output
 .next
+.next-linear
+.next-pages
+.source
+temp
+output
+.playwright-cli
+.codegraph
+.impeccable
+context-kg
 out
 build
 dist

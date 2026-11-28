@@ -1,0 +1,10 @@
+{
+  "title": "白皮书、授权与支持",
+  "collapsible": true,
+  "defaultOpen": false,
+  "pages": [
+    "whitepaper",
+    "domain-model",
+    "licensing-and-support"
+  ]
+}

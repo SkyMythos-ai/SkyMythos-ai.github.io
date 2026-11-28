@@ -35,10 +35,19 @@ async function shot(name) {
 }
 
 try {
-  for (const slug of fs
-    .readdirSync("content/docs/zh")
+  const docSlugs = fs
+    .readdirSync("content/docs/zh", { recursive: true })
+    .map((entry) => String(entry).replaceAll("\\", "/"))
     .filter((file) => file.endsWith(".mdx"))
-    .map((file) => (file === "index.mdx" ? "" : file.slice(0, -4)))) {
+    .map((file) =>
+      file
+        .slice(0, -4)
+        .split("/")
+        .filter((seg) => !/^\(.+\)$/.test(seg))
+        .join("/"),
+    )
+    .map((slug) => (slug === "index" ? "" : slug));
+  for (const slug of docSlugs) {
     const response = await page.goto(`${baseURL}/docs/${slug}`, {
       waitUntil: "networkidle",
     });

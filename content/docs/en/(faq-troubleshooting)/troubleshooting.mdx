@@ -1,0 +1,69 @@
+---
+title: Error Prompts & Troubleshooting
+description: Quick triage table for common Console prompts alongside deep diagnostics for Kubernetes clusters, images, persistent storage, models, and knowledge.
+---
+
+When something blocks your workflow or deployment, start with the **UI Error Prompts Quick Triage** table below, then move down to **Infrastructure Diagnostics** if the issue lies in the cluster or backing gateways.
+
+## 1. Console Error Prompts Quick Triage [#ui-error-prompts-quick-triage]
+
+| UI Symptom / Prompt | Common Root Cause | Recommended Action |
+| --- | --- | --- |
+| **No Models Listed / Missing Model Error** | No gateway model matches the surface's supported protocols, or fetch failed | Retry fetch while keeping form data; ask ops to verify [Model Gateways](/docs/models-tools) protocol overlap |
+| **Create Task Button Disabled** | Missing personal model/Git token, missing repo read permission, or unfilled Flow inputs | Fix each highlighted form error directly; never swap in someone else's admin token |
+| **Required Connector / MCP Disconnected** | Selected AI Employee or Skill needs a `Connector Slot` you have not authorized | Follow the prompt to [Connectors](/docs/connectors) and complete personal OAuth or token binding |
+| **Request Timeout / Unknown Receipt State** | Network drop or delayed backend ack | Preserve prompt text and refresh status first before re-submitting duplicates |
+| **Saved Document Missing from Search** | Saved as draft only, indexing still processing/failed, or lacking read scope | Publish a new release per document, wait for `Searchable`, and verify the Embedding Gateway |
+| **Experience Entry Disabled in Form** | Experience status is pending verification, ineligible, or version-drifted | Read the eligibility badge reason and select valid sources instead |
+| **Background Work Continues After Stopping** | Clicking Stop on a Project main thread halts the coordinator turn only | Open the active worker thread or task detail view to stop background work directly |
+
+## 2. Baseline Diagnostics & Cluster Read-Only Checks [#identify-the-affected-environment-first]
+
+Record the **product version, Kubernetes context, namespace, timestamp**, and **affected work surface**, then run these read-only checks (assuming an active port-forward or ingress for `/readyz`):
+
+```bash
+helm --kube-context minikube-ubuntu -n fusion status fusion
+kubectl --kube-context minikube-ubuntu -n fusion get deploy,pod,svc,pvc,job
+kubectl --context minikube-ubuntu get crd sandboxes.agents.x-k8s.io
+curl --fail http://localhost:8080/readyz
+```
+
+## 3. Infrastructure Topic-Based Troubleshooting [#topic-based-troubleshooting]
+
+<Accordions type="multiple">
+  <Accordion id="preflight-fails-or-a-sandbox-cannot-be-created" title="1. Preflight Fails, Sandbox Creation Blocks, or Network Isolation Issues">
+    - Verify `kubeconfig` context and RBAC permissions; if `sandboxes.agents.x-k8s.io` is missing, install the Agent Sandbox Controller per prerequisites.
+    - CRD presence alone does not prove runtime readiness—inspect controller logs and verify a real Sandbox pod schedules.
+    - For gVisor, worker nodes must have working `runsc` handlers installed; `NetworkPolicy` requires CNI enforcement. Never bypass preflight checks.
+  </Accordion>
+
+  <Accordion id="image-pulls-fail-or-startup-times-out" title="2. ImagePullBackOff or Startup Timeouts">
+    - Check node CPU architecture (`amd64`/`arm64`), pinned digest spelling, **worker node** registry connectivity (local `docker login` does not authorize cluster nodes), and namespace `imagePullSecrets`.
+    - Inspect `kubectl describe pod` events when init containers stall instead of blindly raising timeouts.
+  </Accordion>
+
+  <Accordion id="a-pvc-is-unbound-or-files-disappear-after-restart" title="3. Unbound PVC Persistent Storage or Missing Files After Restart">
+    - Inspect PVC binding state, `StorageClass`, and volume identity, and verify files live inside `/workspace` or `/home/fusion` (paths like `/tmp` are wiped on pod recreation).
+    - **Never delete an existing PVC or substitute an empty volume to force a pod to start.** Retain existing Secrets, configs, and backups during recovery.
+  </Accordion>
+
+  <Accordion id="console-works-but-models-or-knowledge-fail" title="4. Console Loads, But Models or Knowledge Retrieval Fail">
+    - Passing `/healthz` and `/readyz` only verifies core process liveness. Check AI Gateway Base URL, declared protocol compatibility, active credentials, and quotas with a minimal request.
+    - For empty knowledge results, check publication status, `Searchable` index state, active Embedding Gateway + LightRAG, initialized `Organization ID` in `site.yaml`, and caller permissions.
+  </Accordion>
+
+  <Accordion id="pages-previews-or-authorization-callbacks-fail" title="5. Port-Forward Previews, Cookies, or Enterprise OAuth Callbacks Fail">
+    - Verify browser Origin matches `publicURL`, check registered callback paths (e.g., `/auth/enterprise/lark/callback`), and keep valid TLS chains instead of skipping verification.
+    - If only legacy tasks or older Dev Machines fail after an upgrade, inspect their pinned runtime image compatibility.
+  </Accordion>
+</Accordions>
+
+## 4. Writing a Useful, Sanitized Issue Report [#write-a-useful-issue-report]
+
+When escalating an issue, prepare a concise, **fully sanitized** report:
+
+1. **Environment & Reproduction**: Product version, cluster context/namespace, timestamp window, surface, and exact reproduction steps.
+2. **Expected vs. Actual Behavior**: Expected outcome, UI errors, and read-only command outputs (keeping "stop accepted," "process exited," and "work succeeded" distinct).
+3. **Strict Secret Scrubbing**: **Always strip** API keys, Git tokens, OAuth secrets, personal data, and private document contents before sharing logs.
+
+Once ready, reach out via [Contact & POC](/poc) or check [Licensing, Usage & Support](/docs/licensing-and-support); revisit [Kubernetes Deployment & Upgrades](/docs/deployment) to double-check setup steps.

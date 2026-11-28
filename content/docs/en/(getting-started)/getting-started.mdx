@@ -1,0 +1,80 @@
+---
+title: Start Your First Task
+description: A five-step beginner guide covering prerequisites, entry-point selection, structured prompting, execution monitoring, and artifact acceptance.
+---
+
+This guide is designed for members who already have workspace access. Teams evaluating deployment can [request a POC](/poc) first. Follow the five steps below to complete your first verifiable piece of work.
+
+## Minimum Prerequisites Checklist [#minimum-prerequisites]
+
+Before starting your first task, confirm these three items:
+
+1. **Workspace Membership**: Verify you are signed into the target Workspace with collaborator permissions (such as Member).
+2. **Available Model & Credentials**: Confirm at least one compatible model is visible in your workspace; if personal keys are required, configure them under personal credentials (see [Model Gateways & Credentials](/docs/models-tools)).
+3. **Material & Repository Access**: Confirm target Knowledge Bases are published and indexed for document work, or confirm your Git credential and repository read access for code work.
+
+## Five Steps to Complete Your First Verifiable Work [#five-steps-to-complete-your-first-work]
+
+<Steps>
+  <Step>
+    ### Pick a Small Target with Clear Right-or-Wrong Criteria
+
+    For your first run, select work with bounded inputs and an easily inspectable result—for example, summarizing three priority improvements from a published feedback document or adding input validation to a test repository endpoint.
+  </Step>
+  <Step>
+    ### Choose the Matching Work Surface
+
+    | Your Goal | Recommended Surface | Key Fields to Verify First |
+    | --- | --- | --- |
+    | Add context iteratively, share files, and collaborate on a lasting goal | [SkyBot & Projects](/docs/projects) | Project name, shared directory, main thread vs. worker threads |
+    | Deliver staged, gate-checked code changes in a Git repository | [Engineering Tasks](/docs/tasks) | Requirements, Repository, Base branch, Flow, required inputs |
+    | Repeat a standardized workflow on a schedule or external event | [Automations](/docs/automations) | Workflow definition, runtime environment, triggers, individual runs |
+
+    These are distinct entry points tailored to different jobs—a single task does not need to pass through all three sequentially.
+  </Step>
+  <Step>
+    ### Write a Four-Part Structured Prompt
+
+    Before submitting, state your **Goal, Authorized Materials, Expected Deliverables, and Human Boundaries**. Adapt this template to your task:
+
+    ```text
+    Goal: Analyze this week's customer feedback and propose three priority improvements.
+    Materials: Use only the published "Product Feedback Summary" knowledge base I have access to.
+    Deliverables: For each item, state the issue, cite the exact source passage, and suggest a validation check.
+    Boundaries: Produce a reviewable report only; do not modify production configs or send external messages.
+    ```
+  </Step>
+  <Step>
+    ### Monitor Progress & Respond to Approvals
+
+    On the execution page, monitor input acceptance, live tool logs, and emerging artifacts. If the agent raises an explicit question or action approval request, read the target object and impact carefully before approving or replying.
+
+    <DocScreenshot
+      name="inbox-management"
+      alt="SkyMythos Web Console Inbox showing category filters, search/source toolbar, and pending human decisions"
+      caption="Centralized Inbox for answering agent questions, approving proposals, and reviewing deliverables"
+      annotations={[
+        { step: "1", title: "Inbox Category Filters", description: "Filter pending work by Action Needed, Questions, Authorizations, Acceptance, and Exceptions." },
+        { step: "2", title: "Search & Source Filters", description: "Narrow items by keyword and origin (SkyBot, Tasks, Automations, Platform Assistant)." },
+        { step: "3", title: "Actionable Decisions & Approvals", description: "Open any row to inspect full evidence and approve or respond cleanly." },
+      ]}
+    />
+  </Step>
+  <Step>
+    ### Accept Work Based on Real Artifacts & Citations
+
+    Once execution finishes, inspect four items: can deliverables be opened, do they cover the original goal, do cited passages match the exact source document revision, and (for code) are the Git diff and executed check logs attached?
+  </Step>
+</Steps>
+
+<Callout type="warn" title="Credential & Secret Hygiene">
+  Never paste plaintext API keys, tokens, or passwords inside task prompts, chats, or shared documents. Always store model and connector secrets through the platform's dedicated credential settings.
+</Callout>
+
+## Troubleshooting First-Time Runs [#common-first-use-issues]
+
+- **No Models or Repositories Visible**: Check your personal connection and authorization settings for the gateway or Git OAuth status; use the page retry button on network errors instead of assuming the resource does not exist.
+- **Output Drifts from Expectations**: Keep clarifications inside the original working context rather than scattering conflicting instructions across multiple new threads.
+- **Ready to Reuse a Good Approach**: Verify the deliverable first, then promote reviewed methods into an [AI Employee](/docs/employees) or publish verified facts to [Enterprise Knowledge](/docs/knowledge).
+
+Next, explore [Console Navigation & Platform Assistant](/docs/workspace-guide) to familiarize yourself with every area of the workspace.

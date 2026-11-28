@@ -1,0 +1,51 @@
+---
+title: 连接器（Connectors）
+description: 通过管理员连接目录与成员个人凭据双层协同，安全接入 Git 仓库、企业 IM 与标准化 MCP 工具服务，并处理未连接引导与授权撤销。
+---
+
+**连接器（Connectors）** 负责打通 SkyMythos 与企业既有系统（Git 代码托管、飞书 / Lark / Slack 及外部 MCP 工具服务）。平台将**管理员定义服务目录**与**成员个人授权**彻底分开，防止个人凭据在共享工作中越权扩散。
+
+## 双层协同架构：企业目录 vs 个人授权 [#two-layer-connector-model]
+
+| 治理层 | 操作人 | 负责内容 | 严守边界 |
+| --- | --- | --- | --- |
+| **企业连接目录**（`settings?section=platform-connectors` / Git 配置） | `Organization Admin` | 登记官方或受控服务地址、API Base URL、CA 证书及 OAuth 应用参数 | 平台目录不保存也不向普通成员暴露他人 Token |
+| **成员个人连接**（`connectors`） | 每位成员本人 | 查看工作空间可用连接列表，在个人授权弹窗完成 OAuth 跳转或绑定私有凭据 | 分享技能、员工或项目绝不会同时转交创建者的私人 Token |
+
+<DocScreenshot
+  name="connectors-auth"
+  alt="连接器与授权管理界面：状态筛选页签、浏览能力市场入口与 Git/企业连接/个人凭据状态列表"
+  caption="连接器（Connectors）目录：独立呈现每位成员的 LLM、Git、企业 IM 与 MCP 个人授权状态"
+  annotations={[
+    { step: "1", title: "授权状态筛选页签", description: "按全部、可使用、待配置与状态待确认实时过滤个人授权清单。" },
+    { step: "2", title: "前往能力市场关联 MCP", description: "跳转 Marketplace 浏览工作区与组织公开提供的 MCP 工具服务。" },
+    { step: "3", title: "Git、企业连接与个人凭据列表", description: "查看每项服务的个人连接状态（已连接/已授权），并独立执行管理或撤销。" },
+  ]}
+/>
+
+## 授权接入外部服务的标准流程 [#authorize-a-connector]
+
+<Steps>
+  <Step>
+    ### 查看可用连接器与所需权限
+
+    进入一级导航 **连接器**（`connectors`），浏览当前企业已经开放的 Git 服务、企业应用与 MCP 连接项，确认连接用途与所需访问范围。
+  </Step>
+  <Step>
+    ### 完成 OAuth 授权或保存个人凭据
+
+    点击目标连接器进入详情，按提示完成 OAuth 登录确认，或在凭据对话框填入个人私有 Token（如 `User Git Credential`）。同一用户绑定的个人 Git 凭据可跨自己有权访问的多个工作空间使用。
+  </Step>
+  <Step>
+    ### 核对 MCP 工具清单与参数定义
+
+    对于 MCP 类型连接器，可在详情页查看该服务实际暴露的 Tool 列表、功能描述与必填参数 Schema，先通过只读查询确认服务可用后再挂载给数字员工或研发节点。
+  </Step>
+</Steps>
+
+## 当任务依赖的服务尚未连接时 [#when-a-required-service-is-disconnected]
+
+- **按提示完成前置授权**：当选用的数字员工、Skill 或 Flow 声明了某个 `Connector Slot`，但当前成员尚未完成授权时，系统会明确提示缺失的连接项并引导至连接器配置入口，不会借用管理员或其他成员的凭据代为执行。
+- **状态刷新与轮换**：授权过期或读取失败时，点击刷新权威状态并重新授权。撤销某项个人连接后，后续新请求立即被拒绝，但已经执行的外部操作无法因撤销授权而自动撤回。
+
+关于 Skill、MCP 等可复用资产在市场中的发布与版本锁定，请配合阅读[技能与能力市场（Marketplace）](/zh/docs/marketplace-connectors)。

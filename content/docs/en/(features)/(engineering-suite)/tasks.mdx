@@ -1,0 +1,93 @@
+---
+title: Engineering Tasks & Code Delivery
+description: Bind repositories, base branches, and Flows in Engineering Tasks, track staged execution, and review diffs, Artifacts, and Unit Gates before merge.
+---
+
+**Engineering Tasks** are built for structured software delivery against a real codebase. Unlike open-ended chats, a Task freezes its input specification (`TaskSpec`) at creation, executes across isolated stages, and hands over reviewable code diffs alongside deterministic check evidence.
+
+## Readiness Check Before Creation [#prepare-before-creation]
+
+Before creating a Task, confirm four prerequisites:
+
+1. At least one compatible model is enabled in your workspace and your personal or platform credentials are ready.
+2. Your `User Git Credential` is configured with read access to the target `Repository` (note that read access does not grant merge rights to protected branches).
+3. You have selected an appropriate `Base branch`—avoid pointing directly at protected production release branches.
+4. Any required inputs or connectors declared by your chosen Flow are filled in.
+
+## Creating a Task & Form Fields [#create-from-the-task-list]
+
+Open **Tasks** (`tasks`) from the primary rail and click **New Task** to open the creation drawer:
+
+| Input Field | Purpose & What to Check |
+| --- | --- |
+| Requirements | State the goal, constraints, and acceptance criteria; supports active sources such as Markdown, Git Issues, or Knowledge documents |
+| Task Name | Concise title identifying the engineering objective |
+| Repository | Target repository authorized for reading and generating diffs |
+| Base branch | Starting branch baseline for task execution |
+| Flow | Choose intelligent dynamic orchestration or a published workspace/marketplace Flow template |
+| Flow Inputs | Dynamically rendered from the selected Flow revision; verify all required parameters after switching Flows |
+| Knowledge & Connections | Attach only the Knowledge Bases and tools needed and authorized for this task |
+
+<DocScreenshot
+  name="tasks-list"
+  alt="SkyMythos Web Console Engineering Tasks surface showing Task/Flow toggle, Create task button, and branch/Unit Gate status table"
+  caption="Engineering Tasks list: inspect target branches, Flow versions, Unit Gate progress, and recovery actions"
+  annotations={[
+    { step: "1", title: "Tasks & Task Flow Nav", description: "Toggle between the active Tasks list and reusable Flow Templates from the left rail." },
+    { step: "2", title: "Create Engineering Task", description: "Click + Create task to bind your Repository, Base branch, and Flow." },
+    { step: "3", title: "Status, Base Branch & Actions", description: "Monitor execution stage, Unit Gate pass rate, branch target, and view/rebuild actions." },
+  ]}
+/>
+
+### Writing Actionable Engineering Requirements [#write-actionable-requirements]
+
+Write explicit acceptance criteria and boundaries directly in the requirements body:
+
+```text
+Goal: Add empty-name validation to the configuration save endpoint and return a standard 400 error.
+Constraints: Keep existing permission checks and success response payloads unchanged; do not touch unrelated endpoints.
+Deliverables: Code diff, unit test execution logs (Unit Gate), and delivery summary.
+Acceptance: Empty or whitespace-only names are rejected; valid names save and all existing tests pass.
+Follow-up: Prepare diff and summary for human code review; do not auto-merge or deploy.
+```
+
+<Callout type="info" title="Requirement Source Availability">
+  Enabled requirement sources depend on your deployment connectors. If fetching an external issue or document link fails, inspect the URL, connection status, and personal OAuth grants.
+</Callout>
+
+## Tracking Execution & Reviewing Delivery Evidence [#track-execution-and-review-delivery]
+
+Before submission, the form validates model compatibility, Git credentials, repository/branch existence, and required Flow inputs. If the submit button is disabled, resolve the reported field issues directly rather than substituting a higher-privilege admin account.
+
+Once created, follow four steps on the task detail view:
+
+<Steps>
+  <Step>
+    ### Check Active WorkNode & Generation
+
+    Verify which WorkNode is running along with its Execution Generation and Attempt count. Completion of an early node does not mean the full Flow has finished.
+  </Step>
+  <Step>
+    ### Inspect Agent Session & Tool Logs
+
+    Review live agent session output and tool invocations to see how requirements were interpreted and which files or test suites ran.
+  </Step>
+  <Step>
+    ### Verify Diffs, Artifacts & Unit Gates
+
+    Check four delivery facts: (1) changes stay within stated scope, (2) diffs target the right repository and base branch, (3) deterministic Unit Gates actually executed and passed (never treat skipped checks as verified), and (4) produced Artifacts and links open cleanly.
+  </Step>
+  <Step>
+    ### Human Code Review & Merge
+
+    When an MR/PR link is produced, inspect the full diff and target branch in your Git provider and follow your team's review and CI/CD release rules.
+  </Step>
+</Steps>
+
+## Handling Prompts, Failures & Recovery [#failure-recovery-and-recreating-a-task]
+
+- **Waiting for Input**: Respond directly on the active node prompt or approval card when execution pauses for clarification.
+- **Stage Failures & `Fusion Resume`**: Fix expired credentials first; for code or check failures, preserve prior attempt logs and use the recovery control on the detail page to resume from a selected WorkNode or supply targeted rework instructions.
+- **Changing Scope or Baseline**: When requirements or base branches change fundamentally, create a new Task and re-verify every binding—neither retries nor new tasks automatically undo prior external side effects.
+
+To design custom multi-stage workflows and deterministic gates, continue to [Engineering Flows & WorkNode Authoring](/docs/flows-worknodes).

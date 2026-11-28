@@ -1,0 +1,47 @@
+---
+title: Technical Architecture & Security Boundaries
+description: Deep dive into the SkyMythos Control Plane, isolated Sandbox Runner, version freezing contracts, LightRAG pipeline, and observability storage.
+---
+
+SkyMythos is architected around three structural separations: **Control Plane vs. Execution Plane**, **Capability Definitions vs. User Credentials**, and **Process Telemetry vs. Business Truth**. This ensures agents can work autonomously inside isolated environments while permissions, egress boundaries, and failure recovery stay governed by the platform.
+
+<SystemArchitectureDiagram />
+
+## Control Plane & Execution Plane Responsibilities [#control-plane-and-execution-plane]
+
+| Layer | Components & Stack | Primary Responsibilities | State & Authority Boundary |
+| --- | --- | --- | --- |
+| Presentation Layer | Web Console (React) & Platform Assistant | Renders work surfaces, displays delivery evidence, and collects human approvals or draft reviews | Accepting a UI action means the request was submitted; authoritative gating lives in the Control Plane |
+| Control Plane | Control Plane (Go) | Enforces Org/Workspace AuthZ, resolves Asset/Flow versions, gates knowledge access, schedules Sandboxes | Queuing execution does not equal runtime readiness or task completion |
+| Execution Plane | Agent Sandbox (K8s / E2B Pool) & Runner / Supervisor | Runs stage DAGs, tracks Attempts/Generations, hosts Agent Sessions, and evaluates artifact contracts | Container readiness proves runtime health, not business success |
+| Knowledge Data Plane | LightRAG & Dedicated Embedding Service | Parses, chunks, embeds, and indexes published document revisions | Serves retrieval compute only; access decisions always remain with the Control Plane |
+| Persistence & Telemetry | PostgreSQL, SQLite Journal, Git, S3 Storage, OTel + GreptimeDB | Stores authoritative domain state, local run journals, Git commits, large artifacts, and trace spans | Cancellation acceptance, process exit, and business acceptance are recorded separately |
+
+## Input Freezing, Artifact Handoff & Fusion Resume [#freezing-handoff-and-resume]
+
+To eliminate long-context drift and destructive retries in engineering workflows, SkyMythos relies on three deterministic mechanisms:
+
+1. **Frozen Specifications (`TaskSpec` & `CapabilityLock`)**: Before execution starts, the Control Plane resolves requirements, repository, base branch, Flow snapshot, model bindings, and exact Skill/MCP digests into an immutable `TaskSpec` (with zero plaintext secrets). Active runs never silently pick up unreviewed draft edits.
+2. **Contractual Stage Handoff (`Artifact` & `Unit Gate`)**: Each WorkNode executes in its own isolated Agent Session. Beyond narrative summaries (`result.md`), stages communicate via explicit `artifacts.json` manifests and deterministic `Unit Gate` commands (tests, linters, schema checks).
+3. **Generation-Based Recovery (`Fusion Resume`)**: When a stage fails a gate or requires human steering, all prior Attempts and evidence remain intact. Users or Gate Decisions invoke `Fusion Resume` from a chosen WorkNode to spin up a new Execution Generation and rerun only the affected subgraph.
+
+## Real-Time Authorized Knowledge Recall [#knowledge-authorization-and-provenance]
+
+Rather than baking static knowledge dumps into sandbox containers, SkyMythos splits retrieval into **policy evaluation (Control Plane)** and **search compute (LightRAG)**:
+
+- On every recall call from the Console or a Sandbox agent, the Control Plane re-verifies the caller's `Subject`, `Organization`, `Workspace`, and active grants, restricting retrieval to `ready` published revisions.
+- Every query records provenance evidence—workspace, authorized knowledge base, index version, and matching passages—so reviewers can open the exact source document revision to verify claims.
+
+<Callout type="warn" title="Recall Evidence Is Live-Authorized, Not an Unbounded Snapshot">
+  While `TaskSpec` freezes code and capability versions, knowledge recall records live authorization facts at query time. If access to a knowledge base is subsequently revoked, new recall queries are denied immediately.
+</Callout>
+
+## Isolation Runtime & Cluster Security Boundaries [#isolation-and-cluster-security]
+
+- **Persistent Dev Machines vs. Ephemeral Task Sandboxes**: Personal Dev Machines mount a single-user Kubernetes PVC accessed through governed gateway endpoints (Workspace API, Web Terminal) rather than raw open ports. Engineering Tasks launch one isolated Sandbox per task.
+- **Container Runtime Options**: Local setups default to the Kubernetes `agent-sandbox` controller with standard OCI runtime (`default`). Clusters requiring kernel-level isolation can deploy verified **gVisor** (`runsc`) node handlers or connect external multi-cluster pools via the standard **E2B** protocol.
+- **Network & Secret Hygiene**: Cluster `NetworkPolicy` enforcement governs outbound sandbox traffic; private user Git tokens and model API keys are consumed solely along authorized runtime paths and never written into `TaskSpec` or shared assets.
+
+<Callout type="info" title="Next Steps for Evaluation & Deployment">
+  Review [Enterprise Readiness & POC Acceptance](/docs/private-deployment) to map real data flows and pilot checks, or proceed to [Kubernetes Deployment & Upgrades](/docs/deployment) for cluster setup commands.
+</Callout>

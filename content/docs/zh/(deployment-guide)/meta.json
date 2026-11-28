@@ -1,0 +1,11 @@
+{
+  "title": "环境与部署指南",
+  "collapsible": true,
+  "defaultOpen": false,
+  "pages": [
+    "private-deployment",
+    "deployment",
+    "im-integration",
+    "architecture"
+  ]
+}

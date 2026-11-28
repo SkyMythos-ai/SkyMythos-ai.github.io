@@ -1,0 +1,72 @@
+---
+title: SkyBot & Project Collaboration
+description: Distinguish Quick Chats from persistent Projects in SkyBot, and organize shared directories, repositories, coordination threads, and project memory.
+---
+
+SkyBot is the starting point for most daily work. It supports both lightweight **Quick Chats** for instant exploration and persistent **Projects** for multi-day goals—keeping context, files, digital employees, and deliverables together.
+
+## Choosing Between Quick Chats, Projects, and Engineering Tasks [#choosing-between-chats-projects-and-tasks]
+
+| Dimension | Quick Chats | Projects | Engineering Tasks |
+| --- | --- | --- | --- |
+| Best For | One-off questions, quick document reviews, code explanations | Ongoing goals requiring shared working directories and project memory | Formal requirements demanding frozen flows, Unit Gates, and code diffs |
+| Files & Workspace | Scoped to the single conversation context | Multiple threads share a fixed project working directory | Isolated per-task Sandbox cloning a target repository and branch |
+| Determinism | Free-form interactive Turns | Main thread coordinates goals and delegates to worker threads | Executes versioned Flow/WorkNode DAGs with deterministic checks |
+| Object Boundary | Does not appear in the engineering Task list | Project threads do not automatically turn into Tasks | Produces an immutable TaskSpec and typed Artifacts |
+
+## Create and Configure a Project [#create-and-configure-a-project]
+
+<Steps>
+  <Step>
+    ### Open SkyBot and Create a Project
+
+    Navigate to **SkyBot** in the primary rail and click **New Project** under the `Projects` section of the context sidebar.
+  </Step>
+  <Step>
+    ### Set a Clear Long-Lived Name
+
+    Name the project after the enduring goal (for example, "Customer Onboarding Revamp") rather than a temporary status, and add a concise project description.
+  </Step>
+  <Step>
+    ### Attach Authorized Repositories (Optional)
+
+    If the project involves reading or analyzing source code, select authorized Git connections and repositories in project settings. Non-code business projects do not need a dummy repository.
+  </Step>
+  <Step>
+    ### Confirm Creation and Start the Main Thread
+
+    Verify the new project appears in the sidebar, then enter the main thread to submit your first goal. Opening an empty project page does not start any background work.
+  </Step>
+</Steps>
+
+## Collaborating Effectively in Project Context [#collaborate-effectively-in-projects]
+
+### 1. State Goals and Human Decision Gates [#explain-the-goal-and-project-context]
+
+The main thread holds the overarching goal, accepts follow-up clarifications, and synthesizes outcomes, while focused implementation or analysis can run in worker threads. On your first turn, ask the main thread to outline a checkable plan and state explicit approval boundaries (such as confirming before external notifications or config writes).
+
+### 2. Steer Active Work & Read Receipts [#add-instructions-while-work-is-running]
+
+In environments supporting mid-run steering, you can add clarifications while work progresses. Distinguish these delivery states carefully:
+
+- **Received / Queued**: Confirms your message entered the active coordination turn—not that background steps are already complete.
+- **Unknown Delivery State**: Keep your original message and refresh status first rather than firing duplicate conflicting instructions across multiple windows.
+- **Stopping Main vs. Worker Threads**: Stopping the active main coordination turn does not automatically cancel already-dispatched worker threads or roll back external actions. Manage active background jobs directly in their respective thread controls.
+
+### 3. Shared Directories & Project Memory [#shared-directory-and-project-memory]
+
+Threads inside the same Project read and write to a shared working directory and leverage sourced **Project Memory** (capturing confirmed facts, decisions, and leads). At the same time, each thread keeps its own isolated conversation history so unrelated discussions stay clean.
+
+## Reviewing Results, Archiving, and FAQ [#review-archive-and-troubleshooting]
+
+After reading the main thread summary, open the linked worker threads, tool logs, and generated files to verify everything against your original criteria.
+
+<Callout type="info" title="Archiving vs. Deleting Projects">
+  Use **Archive** in project settings when an initiative wraps up to hide it from active lists while keeping traceable history and source files intact. Archiving is not a shortcut to abort running threads—verify no background work remains active first.
+</Callout>
+
+- **Project Entry or Cloud Environment Unavailable**: Verify your workspace permissions and personal environment readiness; never work around access blocks using someone else's credentials.
+- **Background Work Continues After Stopping Main Thread**: Inspect and stop individual worker threads directly instead of repeatedly clicking stop on the main thread.
+- **Deliverables Exist Without a Task Entry**: Project threads and formal engineering Tasks are separate domain objects by design. To run frozen Flows with Unit Gates, create a task in [Engineering Tasks](/docs/tasks).
+
+Verified materials from a project can be published into [Enterprise Knowledge](/docs/knowledge), and proven workflows can be packaged into [AI Employees](/docs/employees).

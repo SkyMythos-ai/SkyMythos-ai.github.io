@@ -1,0 +1,49 @@
+---
+title: Licensing, Usage & Support
+description: Understand SkyMythos private-deployment annual seat licensing, three clear cost boundaries, usage tracking views, and enterprise support channels.
+---
+
+This reference explains SkyMythos's commercial licensing model, where members and administrators monitor token usage and costs, and how to engage our team for POCs or support. You can also visit the [Pricing page](/pricing) directly.
+
+## Commercial Model & Two Engagement Paths [#commercial-model-and-engagement-paths]
+
+SkyMythos is delivered for **enterprise private deployment** across two structured paths, each scoped and quoted individually rather than sold as self-serve credit packs:
+
+| Engagement Stage | Scope & Purpose | Evaluation & Quoting |
+| --- | --- | --- |
+| **Scenario Pilot (POC)** | End-to-end validation across 1–2 real departmental or engineering scenarios against agreed acceptance criteria | Evaluated and quoted individually based on pilot scope and integration setup |
+| **Enterprise Production Deployment** | Full-stack private deployment on your infrastructure licensed annually by team seats | Quoted individually by seat count, deployment topology, and integration scope |
+
+## Three Clear Cost Boundaries [#three-clear-cost-boundaries]
+
+1. **Annual Team Seat Licensing**: Software licensing is structured around annual team seat counts rather than consumer-style chat credits.
+2. **Deployment & Enterprise Integration**: Infrastructure onboarding, enterprise SSO/IM wiring, and custom integration services are scoped transparently per delivery.
+3. **Direct Model Billing**: SkyMythos connects to your own or chosen LLM and Embedding gateways—underlying model inference fees are settled directly with your model provider.
+
+## Monitoring Usage & Cost Attribution [#usage-and-cost-visibility]
+
+Members and administrators track usage through two role-appropriate Console views:
+
+- **Execution-Level View (`Observability → Usage & Cost`)**: Members inspect input/output tokens and known costs (where model pricing metadata is configured) across authorized SkyBot Turns, Tasks, and Automation Runs (see [Observability](/docs/observability)).
+- **Team Attribution View (`Team Settings → Member Usage & Cost`)**: Workspace Admins monitor per-member activity and spend breakdown across the workspace (see [Team & System Settings](/docs/administration)).
+
+<DocScreenshot
+  name="team-settings"
+  alt="Team Settings navigation showing Member Usage, Cost Analysis, and Model Quotas entries alongside workspace settings"
+  caption="Workspace Admins inspect team usage, cost breakdowns, and model quotas under Team Settings"
+  annotations={[
+    { step: "1", title: "Members, Usage, Cost & Quotas", description: "Switch directly to per-member consumption, known cost attribution, and model quota limits." },
+    { step: "2", title: "Workspace Identity & Settings Form", description: "Confirm which workspace scope is active before editing settings or reviewing usage." },
+    { step: "3", title: "Save Workspace Settings", description: "Save updated workspace metadata under Workspace Admin governance." },
+  ]}
+/>
+
+<Callout type="info" title="About Unknown Cost Entries">
+  If a run shows missing or unknown cost fields, it means model pricing metadata was not configured or telemetry ingestion was incomplete—**it never implies zero model spend**.
+</Callout>
+
+## Contact & Enterprise Support Channels [#contact-and-enterprise-support]
+
+- **Request a POC Pilot**: Visit [Request a POC](/poc) to share your organization, target scenarios, and acceptance goals.
+- **Enterprise Project & Quote Inquiry**: Use the [Enterprise Inquiry Form](/poc?enquiry=enterprise#main-content) to discuss deployment architecture, seat planning, and commercial quotes.
+- **Technical Assistance**: Before reaching out on a runtime or cluster issue, compile a fully sanitized diagnostic report following [Error Prompts & Troubleshooting](/docs/troubleshooting)—never include plaintext tokens or confidential payloads.

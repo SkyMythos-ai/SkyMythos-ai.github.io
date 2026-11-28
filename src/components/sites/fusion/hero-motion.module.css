@@ -78,7 +78,6 @@
 :global([data-motion-running="false"]) .connections path,
 .hero[data-hero-playing="false"] .connections path { animation-play-state: paused; }
 .cameraAnchor { perspective: 1600px; }
-.hero .cameraAnchor { margin-top: 24px; }
 .cameraFrame { transform-origin: 50% 18%; }
 :global([data-site-motion="active"]) .cameraFrame {
   transform: rotateX(calc((1 - var(--camera-progress, 1)) * 8deg)) scale(calc(.94 + var(--camera-progress, 1) * .06));

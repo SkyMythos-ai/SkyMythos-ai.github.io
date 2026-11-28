@@ -1,0 +1,27 @@
+---
+title: 默认权限与安全沙箱
+description: 了解 SkyMythos 如何用平台级身份鉴权、凭据隔离、隔离沙箱运行时、NetworkPolicy 与人工审批关口替代脆弱的“提示词自律”。
+---
+
+在企业环境中，“让模型在 Prompt 里承诺不删库、不泄密”并不是安全机制。SkyMythos 明确规定：**Prompt、Skill 与 Agent 自律不构成安全边界**；真正的安全边界由控制面鉴权、凭据隔离、沙箱运行时以及高风险动作的人工审批共同保证。
+
+## 四道平台级安全防线 [#four-platform-security-layers]
+
+| 防线维度 | 机制设计 | 实际约束效果 |
+| --- | --- | --- |
+| **1. 双层角色与最小权限** | Organization（`Admin`/`Operations`/`Member`）与 Workspace（`Admin`/`Member`/`Viewer`）分别鉴权 | 成员只访问获授权的工作空间、知识库与连接；平台管理员亦不越权直读成员私有会话 |
+| **2. 凭据与任务规格隔离** | 个人模型密钥、Git Token 加密归属个人；`TaskSpec` 冻结规格不含明文密钥 | 共享数字员工、Skill 或 Flow 时绝不泄露创建者密钥；撤销连接后新请求立即失效 |
+| **3. 容器级沙箱与网络策略** | 个人开发机与研发 Task 分别运行在受控容器或 `agent-sandbox` / 标准 E2B 池内，配合集群 `NetworkPolicy` | 限制沙箱出站网络，未授权访问被集群网络层阻断；开发机仅暴露声明过的受管服务而非扫描任意端口 |
+| **4. 关键动作人工确认关口** | `ActionProposal` 审批、Inbox 待办与代码交付人工 Review 机制 | 涉及代码合并、生产变更、对外发送通知等高影响动作，由责任人确认后才可执行 |
+
+## 隔离沙箱运行时路线（OCI / gVisor / E2B） [#sandbox-runtime-options]
+
+- **本地与默认集群路线**：内置 Kubernetes `agent-sandbox` 控制器默认使用节点标准 OCI 容器运行时（`default`）。
+- **强内核隔离路线（gVisor）**：对多租户或高敏感执行有强内核隔离诉求的环境，可在集群节点部署并验证 `runsc` handler 后启用 gVisor 运行时（注意：必须在目标集群完成真实运行时与网络探针验收）。
+- **外部多集群云沙箱（E2B）**：控制面支持通过标准 E2B 协议对接外部云沙箱池（`e2bpool`），统一纳入平台调度与生命周期管理。
+
+## 正确理解“默认安全”与企业核查要求 [#understanding-security-boundaries]
+
+<Callout type="warn" title="接入前务必核对真实边界">
+  私有化部署赋予企业对基础设施的控制权，但不自动等于“零数据出境”。例如，如果模型网关或企业 Git/IM 指向企业外部地址，相关请求仍会按配置出站。请务必参考[企业接入准备与 POC 验收](/zh/docs/private-deployment)逐项核实网络出站与数据流边界，并阅读[安全合规专页](/zh/security)了解平台安全机制设计。
+</Callout>

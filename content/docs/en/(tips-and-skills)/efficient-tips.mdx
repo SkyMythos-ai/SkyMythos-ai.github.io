@@ -1,0 +1,55 @@
+---
+title: 10 Essential Usage Tips
+description: Ten practical habits with good-vs-bad examples to help you turn vague ideas into reliable, verifiable deliverables in SkyMythos.
+---
+
+If you are new to SkyMythos, adopting these ten habits upfront will prevent most prompt drift, permission surprises, and wasted rework.
+
+## 1. Use the Four-Part Formula—Don't Make AI Guess [#tip-1-four-part-prompt]
+
+State **Goal + Authorized Materials + Deliverable Format + Boundaries** clearly to eliminate ambiguity on turn one.
+
+- **Avoid**: "Clean up our recent customer feedback."
+- **Prefer**: "Read this week's feedback export in the project folder, cross-check our Onboarding Guide Knowledge Base, and output a Markdown table categorized by Bug / Gap / Docs with exact citations; draft only—do not update external tickets."
+
+## 2. Break Big Goals into Checked Stages [#tip-2-small-steps]
+
+Instead of asking for a massive refactor or 100-page report in a single turn, work in two or three checkpoints:
+
+- **Turn 1**: Ask SkyBot to propose a structured outline or change plan first.
+- **Turn 2**: Approve the plan and expand into full content or code changes.
+
+## 3. Steer in the Same Thread Instead of Restarting [#tip-3-iterate-in-place]
+
+Treat the first reply as a working draft. When 80% is solid, **give targeted feedback inside the same thread** ("Keep sections 1 and 3; expand section 2 with figures from the expense policy") rather than opening fresh chats and re-explaining everything.
+
+## 4. Unsure What to Provide? Ask SkyBot for an Input Checklist [#tip-4-ask-for-inputs]
+
+When kicking off unfamiliar work, start with: "I want to accomplish X. Given our workspace setup, which files, repositories, or acceptance criteria do you need from me first?"
+
+## 5. Query Published Knowledge Instead of Pasting Whole Manuals [#tip-5-use-published-knowledge]
+
+Pasting massive raw documents into chat bloats input tokens, slows responses, and dilutes focus. Publish team standards into [Enterprise Knowledge](/docs/knowledge) so agents retrieve only relevant passages with exact source links.
+
+## 6. Match the Work Surface to the Determinism Needed [#tip-6-pick-the-right-surface]
+
+- Quick exploration or Q&A → **SkyBot Quick Chats**
+- Multi-day initiatives sharing files and memory → **SkyBot Projects**
+- Code changes requiring diffs and deterministic tests → **Engineering Tasks**
+- Recurring scheduled or event-driven workflows → **Automations**
+
+## 7. Turn Proven Runs into AI Employees or Skills [#tip-7-capture-reusable-assets]
+
+Whenever a project thread nails a repeatable workflow or review checklist, immediately capture it via **Learn from Work Experience** in [AI Employees](/docs/employees) or package it as a shared `Skill`.
+
+## 8. Always Run a Sample Test Run Before Enabling Cron Schedules [#tip-8-test-run-before-cron]
+
+Before turning on recurring Cron or event triggers in `Automations`, run a **Test Run** against sanitized sample data to validate field mappings and output formatting (keeping in mind Test Runs can still execute real bound tools).
+
+## 9. State Human Decision Gates Explicitly [#tip-9-explicit-human-gates]
+
+Alongside platform RBAC and sandbox controls, explicitly stating "Draft only; wait for my confirmation before merging, changing configs, or sending external messages" keeps boundaries crystal clear.
+
+## 10. Inspect Citations & Diffs—Never Trust "Done" Alone [#tip-10-verify-sources-and-diffs]
+
+Make two verification habits automatic: for reports, click citations to verify context inside the **exact source document revision**; for engineering tasks, inspect the **Git diff** and live `Unit Gate` command logs directly.

@@ -1,0 +1,14 @@
+{
+  "title": "Practice Cases",
+  "collapsible": true,
+  "defaultOpen": false,
+  "pages": [
+    "practice-doc-processing",
+    "practice-compliance-writing",
+    "practice-data-analysis",
+    "practice-daily-briefing",
+    "practice-self-evolution",
+    "practice-git-delivery",
+    "practice-lark-knowledge"
+  ]
+}

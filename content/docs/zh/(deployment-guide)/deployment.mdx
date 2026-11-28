@@ -1,0 +1,92 @@
+---
+title: Kubernetes 私有化部署与升级
+description: 在已授权的私有化环境检查集群前置条件、持久化存储与沙箱控制器，准备三份站点配置并执行 Helm 服务端预检、安装与验证。
+---
+
+本手册面向已取得授权源码、容器镜像与站点配置材料的技术及运维团队，提供标准 **Kubernetes 部署**与升级流程。文中本地示例默认使用 `minikube-ubuntu` context、`fusion` namespace 与 release；企业环境部署时请替换为交付确认后的目标集群参数。
+
+<Callout type="info" title="源码构建基线 vs 容器镜像部署">
+  若需从授权源码构建，当前版本构建基线为 **Node.js 24**、**pnpm 9.15.9**、**Go 1.26.9（toolchain go1.27.2）**；使用已发布容器镜像进行 Kubernetes 部署时，集群节点无需安装整套前端与 Go 开发工具链。
+</Callout>
+
+## 检查集群前置条件与持久化存储 [#check-persistent-storage-and-cluster-prerequisites]
+
+当前 Helm Chart 要求 **Kubernetes 1.26+** 与 **Helm 3**（须支持 `--dry-run=server` 和 `--hide-secret`），操作机需准备 `kubectl`、`Bash`、`jq` 与 `Python 3`。
+
+首先运行以下命令检查目标集群节点、**持久化**存储类（`StorageClass`）与沙箱 CRD（以下命令为只读状态查询，不改动集群资源）：
+
+```bash
+kubectl --context minikube-ubuntu get nodes
+kubectl --context minikube-ubuntu get storageclass
+kubectl --context minikube-ubuntu get crd sandboxes.agents.x-k8s.io
+```
+
+除对象可见外，部署前还须确认以下基础设施已真正就绪：
+
+- **Agent Sandbox 控制器与运行时**：已按前置安装指南部署 v0.5.4 CRD/Controller 并通过运行时 smoke 验证；本地默认使用普通 OCI 运行时 `default`，若使用 gVisor 路线须提前在节点部署 `runsc` 并验证。
+- **持久化存储（PVC）与网络策略**：`StorageClass` 能真实动态供给并绑定 PVC，且集群 CNI 网络层真正执行 `NetworkPolicy`。
+- **受控镜像与外部依赖**：节点可拉取与 CPU 架构匹配的固定 digest 镜像；云环境备妥 S3 兼容对象存储、HTTPS 入口域名，以及真实可达的模型网关。
+
+## 准备三份仓库外站点配置文件 [#prepare-three-site-configuration-files]
+
+所有安装点敏感信息与差异化配置均保存在代码仓库之外（例如 `$HOME/.config/fusion/`），并在后续版本升级中持续复用：
+
+| 配置文件 | 职责定位与管理重点 |
+| --- | --- |
+| `helm-private.yaml` | 保存平台及底层组件所需的技术密钥（不包含自动生成的业务模型 API Key） |
+| `site.yaml` | 声明站点 `publicURL`、初始化后的真实 `Organization ID`、Secret 引用、组件开关与持久化存储选择 |
+| `images.yaml` | 固定指向经验证、与节点架构匹配的控制面及 Runtime 镜像 digest |
+
+<Callout type="warn" title="全新安装顺序 vs 存量环境升级">
+  **全新安装**需按交付手册先准备 Secret 并执行临时 bootstrap，登录创建首位管理员和唯一真实 `Organization` 后，将 `orgId` 写回 `site.yaml`、配置平台模型，再通过标准入口启用 LightRAG 完成完整交付（临时关闭 LightRAG 的引导步骤不可作为最终交付状态）。**存量环境升级**必须保留原 Secret 与 PVC 持久化卷，严禁重新生成空卷或覆盖已有组织配置。
+</Callout>
+
+## 服务端预检、安装与升级 [#run-preflight-checks-before-installation-or-upgrade]
+
+三份配置准备完毕后，先执行服务端 dry-run 预检。`--check` 参数会连接真实集群校验参数与资源合法性，但不会实际安装或修改集群，也不会泄露渲染后的 Secret：
+
+```bash
+deploy/helm/deploy-local.sh "$HOME/.config/fusion/helm-private.yaml" \
+  -f "$HOME/.config/fusion/site.yaml" \
+  -f "$HOME/.config/fusion/images.yaml" --check
+```
+
+预检通过后，去掉 `--check` 执行正式安装或升级（此步骤会写入集群并强制校验 `lightrag.required=true`、等待初始化 Job 与能力物化器部署参数）：
+
+```bash
+deploy/helm/deploy-local.sh "$HOME/.config/fusion/helm-private.yaml" \
+  -f "$HOME/.config/fusion/site.yaml" \
+  -f "$HOME/.config/fusion/images.yaml"
+```
+
+<Callout type="info" title="升级窗口与存量运行环境说明">
+  升级前请先备份三份配置文件、集群 Secret 与持久化数据。Helm 更新镜像版本后，**已经运行中的开发机与历史任务不会自动重启换版**，请在约定维护窗口内按需通知用户升级个人开发机或核对兼容版本。阿里云 ACK 与 AWS EKS 已提供环境预设配置，但预设不负责替你创建底层集群、IAM 或负载均衡器。
+</Callout>
+
+## 访问站点与多层次验收检查 [#access-the-site-and-verify-actual-behavior]
+
+本地测试集群可通过以下命令建立端口转发通道，再打开浏览器访问 `http://localhost:8080`（确保 `site.yaml` 中的 `publicURL` 与浏览器实际访问来源一致）：
+
+```bash
+kubectl --context minikube-ubuntu -n fusion port-forward service/fusion-http 8080:8080
+```
+
+在另一个终端执行以下只读健康状态检查：
+
+```bash
+helm --kube-context minikube-ubuntu -n fusion status fusion
+kubectl --context minikube-ubuntu -n fusion get deploy,pod,svc,pvc,job
+curl --fail http://localhost:8080/healthz
+curl --fail http://localhost:8080/readyz
+```
+
+基础健康接口返回正常后，还必须继续完成业务级验证：真实身份登录、LLM/Embedding 实际调用、开发机持久化写入与重启保留、Knowledge 索引与原文召回、含已发布 Skill 的研发 Task 交付以及遥测回链检查。
+
+## 源码本地开发与聚合校验入口 [#run-the-control-plane-for-source-development]
+
+针对已授权源码开发环境，仓库根目录提供两项常用工程入口：
+
+- `make run-local`：先构建 Web Console，再在宿主机以 Kubernetes 驱动启动 Control Plane（默认监听 `http://127.0.0.1:8080`）。它面向本地源码联调，不会自动搭建外部集群或数据面依赖。
+- `make verify`：执行 Proto/OpenAPI 边界门禁、各 Go Module 静态检查与单元测试，以及前端类型检查和构建校验。
+
+如在集群初始化或运行过程中遇到异常，请前往[常见问题与故障排查手册](/zh/docs/troubleshooting)；如需团队协同规划企业落地，可随时[联系团队规划 POC](/zh/poc)。

@@ -1,0 +1,48 @@
+---
+title: Lark, Feishu & Slack Setup
+description: Configure enterprise SSO, single OAuth callback paths, auto-provisioning rules, and scoped document sync for Lark, Feishu, and Slack.
+---
+
+SkyMythos integrates with **Feishu**, **Lark (International)**, and **Slack** for enterprise authentication and explicit document ingestion. Settings are maintained centrally by Org Admins and take effect immediately upon saving without a service restart.
+
+## Prerequisites & Security Boundaries [#prerequisites-and-boundaries]
+
+- **Identity Mode Requirement**: Enterprise connector integrations require PostgreSQL-backed identity mode. Your single `Organization` may store multiple provider configs, with one active configuration at a time.
+- **Write-Only App Secret**: Once saved or rotated, `App Secret` is encrypted at rest and never echoed back through UI forms or RPC responses.
+- **Explicit Document Scope**: Document ingestion supports Workspace Admins importing specific Docx URLs into a Knowledge Base—it never crawls entire external workspaces or claims to replicate upstream ACL permission trees automatically.
+
+## Configure the App in Platform Settings [#configure-enterprise-app-in-platform-settings]
+
+<Steps>
+  <Step>
+    ### Enter App Credentials & Region
+
+    Sign in as `Organization Admin`, open **Platform Settings → Enterprise Identity & Docs** (`settings?section=platform-im`), choose the provider/region (Feishu, Lark International, or Slack), and fill in `App ID`, `App Secret`, and `Public Base URL` (matching the browser origin).
+  </Step>
+  <Step>
+    ### Register a Single OAuth Callback URL
+
+    In your provider's developer console, register **one** callback URL (shared across SSO login and member grants; the server differentiates flows via single-use OAuth state tokens):
+
+    | Enterprise IM Provider | OAuth Callback Path |
+    | --- | --- |
+    | Lark (International) | `https://<your-domain>/auth/enterprise/lark/callback` |
+    | Feishu (China) | `https://<your-domain>/auth/enterprise/feishu/callback` |
+    | Slack | `https://<your-domain>/auth/enterprise/slack/callback` |
+  </Step>
+  <Step>
+    ### Enable Login, Document Grants & Provisioning Policy
+
+    Toggle unified login and document authorization as needed and save. For first-time bootstrap or disaster recovery, environment variables (`FUSION_LARK_APP_ID`, `FUSION_LARK_APP_SECRET`, `FUSION_PUBLIC_BASE_URL`, `FUSION_LARK_AUTO_PROVISION`) seed initial configuration only when no admin revision exists in the database.
+  </Step>
+</Steps>
+
+<Callout type="warn" title="Auto-Provisioning & Account Merging Boundaries">
+  When auto-provisioning is enabled, first-time enterprise logins create a `Member` solely inside `Public Workspace`. When disabled, an explicit `IdentityLink` must be provisioned beforehand—**SkyMythos never auto-merges accounts simply because email addresses match**.
+</Callout>
+
+## Document Pull & Official CLI Authorization [#document-sync-and-official-cli]
+
+1. **Document Content Scopes**: Ensure your enterprise app grants `docs:document.content:read` and `offline_access` for explicit Docx imports (see [External Sync & Quality Governance](/docs/knowledge-sync)).
+2. **Official Lark/Feishu CLI Grants**: When enabling the official CLI integration, you do not duplicate scope lists inside SkyMythos. Member authorization requests the user-scoped permissions enabled in the provider console and records exact granted scopes returned by OAuth. Reading app metadata requires `application:application:self_manage` (or equivalent read permissions) in the provider console; re-authorize members whenever app scopes change.
+3. **International Lark Endpoints**: International Lark setups can specify `FUSION_LARK_AUTHORIZATION_URL=https://accounts.larksuite.com/open-apis/authen/v1/authorize` and `FUSION_LARK_API_BASE_URL=https://open.larksuite.com`.

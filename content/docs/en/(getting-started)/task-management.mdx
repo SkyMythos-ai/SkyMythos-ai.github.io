@@ -1,0 +1,44 @@
+---
+title: Task Management
+description: Monitor active work across Overview, Inbox, and module lists; interpret execution statuses; handle approvals; and resume interrupted tasks cleanly.
+---
+
+When multiple Project threads, Engineering Tasks, and Automations are running concurrently in a workspace, **Overview**, **Inbox**, and module lists keep everything visible and controllable.
+
+## View & Filter Active Work [#view-and-filter-work]
+
+- **Overview (`overview`)**: Your workspace landing summary displaying recent Projects, active Engineering Tasks, and quick-launch entry points.
+- **Inbox (`inbox`)**: Centralizes every pending `ActionProposal` / approval request, mid-run agent question, and runtime upgrade notice so nothing gets buried in background threads.
+- **Module Lists**: Browse conversations and Projects in the **SkyBot** sidebar, filter engineering jobs in **Tasks**, and inspect individual executions in **Automations → Runs**.
+
+<DocScreenshot
+  name="inbox-management"
+  alt="Annotated SkyMythos Inbox view highlighting category sidebar, filter bar, and decision rows"
+  caption="Manage cross-surface questions, authorizations, and acceptance items in Inbox"
+  annotations={[
+    { step: "1", title: "Inbox Category Filters", description: "Switch between pending answers, ActionProposals, acceptance reviews, and exceptions." },
+    { step: "2", title: "Search & Source Filters", description: "Filter collected items by search text, source module, and recency." },
+    { step: "3", title: "Actionable Decisions & Approvals", description: "Review underlying evidence and submit explicit human confirmations." },
+  ]}
+/>
+
+## Interpret Five Core Statuses [#understand-core-statuses]
+
+| Status | Actual Meaning | Recommended Action |
+| --- | --- | --- |
+| **Queued / Accepted** | Control Plane validated inputs and queued execution; provisioning Sandbox or scheduling | Wait briefly rather than submitting duplicate tasks |
+| **Running** | Agent or Sandbox WorkNode is actively executing steps or tools | Inspect live session logs and tool calls in the detail view |
+| **Waiting for Input / Approval** | Execution paused at a human gate for clarification or action confirmation | Read the target object and scope in Inbox or the task card before approving |
+| **Completed** | Agent Turn or all Flow stages exited cleanly | Open deliverables, citations, or diffs to complete human acceptance (see [Viewing Results](/docs/results)) |
+| **Failed / Cancelled** | A Unit Gate failed, credentials broke, or a stop signal was issued | Preserve failure logs to diagnose root cause, then resume cleanly |
+
+<Callout type="info" title="Keep State Boundaries Distinct">
+  Sandbox readiness does not mean the task succeeded, and run completion does not equal human business acceptance or a merged branch.
+</Callout>
+
+## Continue, Resume & Archive Existing Work [#resume-and-maintain-work]
+
+1. **Continue in the Same Context**: For SkyBot chats or Projects, reply inside the existing thread to refine direction instead of opening disconnected duplicates.
+2. **Targeted Task Recovery (`Fusion Resume`)**: When an engineering Task fails at a specific WorkNode or Unit Gate, you do not need to rerun earlier passing stages from scratch. Trigger a new Execution Generation from that WorkNode with updated guidance—prior attempt logs stay preserved.
+3. **Cancelling a Run vs. Pausing an Automation**: Cancelling an active Automation Run does not undo external tool actions already executed; to stop future scheduled or event triggers, pause the Automation workflow itself.
+4. **Archive Completed Projects**: Use **Archive** in project settings after final sign-off to clean up active sidebars while keeping full audit trails intact (ensure active worker threads have stopped first).

@@ -1,0 +1,47 @@
+---
+title: 技术架构与安全边界
+description: 深入解析 SkyMythos 的控制面、隔离沙箱 Runner、版本冻结契约、LightRAG 知识链路与可观测存储底座。
+---
+
+SkyMythos 在架构设计上遵循**控制面与执行面分离、能力定义与凭据授权分离、过程状态与业务事实分离**三项核心原则，确保 Agent 具备充分执行自主性的同时，关键权限、数据边界与失败恢复始终处于平台治理之下。
+
+<SystemArchitectureDiagram />
+
+## 控制面与执行面的权责分层 [#control-plane-and-execution-plane]
+
+| 架构层级 | 核心组件与技术栈 | 核心职责 | 状态边界约束 |
+| --- | --- | --- | --- |
+| 交互展示层 | Web Console（React）与 Platform Assistant | 组合产品工作流界面、展示执行证据、接收人工确认与变更草案审阅 | 页面按钮可触发动作，但真实准入由控制面校验；界面已展示能力不代表底层运行端必然已就绪 |
+| 控制面 | Control Plane（Go） | 组织与工作空间鉴权、Asset/Flow 版本解析、知识授权裁决、Sandbox 生命周期调度 | 受理请求后返回执行记录，不直接代替 Sandbox 内节点执行状态 |
+| 隔离执行面 | Agent Sandbox（K8s / 标准 E2B 沙箱池）与 Runner / Supervisor | 容器内推进 DAG 节点、维护 Attempt 世代、托管 Agent Session 与产物校验 | 沙箱容器就绪仅代表运行环境可用，不代表业务目标已经达成 |
+| 知识数据面 | LightRAG 与独立 Embedding 服务 | 承担已发布文档的解析切分、向量化索引与语义/图谱检索 | 仅承担数据面计算，访问策略与原文授权始终由控制面实时裁决 |
+| 持久化与观测底座 | PostgreSQL、SQLite Journal、Git、S3 对象存储、OTel + GreptimeDB | 分层持久保存结构化业务事实、节点执行日志、代码版本、大对象产物与追踪链 | 取消请求受理、进程退出与业务最终成功分别记录，互不覆盖 |
+
+## 任务冻结、阶段交接与定向恢复 [#freezing-handoff-and-resume]
+
+在研发任务与结构化流程执行中，SkyMythos 通过三项机制消除“长任务漂移”和“黑盒重试”：
+
+1. **输入与能力冻结（TaskSpec & CapabilityLock）**：任务启动前，控制面将需求正文、仓库与基线分支、选定（或自动生成）的 Flow 快照、模型配置以及关联的 Skill / MCP 版本摘要全部固化进不可变 `TaskSpec`。运行期间不会无提示地跟随外部草稿改动而改变行为。
+2. **契约化阶段交接（Artifact & Unit Gate）**：每个 WorkNode 拥有独立的 Agent Session 与输出目录。阶段结束时不仅产出文本摘要（`result.md`），还需通过结构化产物清单（`artifacts.json`）与确定性门禁命令（`Unit Gate`，如单测、静态检查）校验；上游失败时不会污染下游。
+3. **基于世代的恢复机制（Fusion Resume）**：当某节点检查失败、需要人工介入或补充要求时，系统完整保留既有的执行世代（Generation）、`Attempt` 记录与历史证据。用户或 Gate Decision 可基于指定节点触发 `Fusion Resume`——在不抹除历史尝试的前提下生成新的执行世代推进或重跑受影响子图。
+
+## 知识实时授权与溯源链路 [#knowledge-authorization-and-provenance]
+
+不同于将知识库全量打包进静态容器的粗放做法，SkyMythos 将知识召回拆分为**授权校验（Control Plane）**与**数据检索（LightRAG）**两段：
+
+- 当 Sandbox 内的 Agent 或工作台发起知识检索时，控制面根据调用主体（`Subject`）、`Organization`、`Workspace` 及授权列表重新核验权限，只针对当前可访问且处于 `ready` 状态的发布版本执行查询。
+- 每次查询均保留完整的召回证据（包含命中工作空间、知识库标识、发布版本号及片段原文引用），支持使用者一键回溯至同一版本文档原文进行事实核验。
+
+<Callout type="warn" title="为什么召回证据不等于静态快照">
+  `TaskSpec` 冻结的是任务输入与能力版本，而知识检索记录的是**查询当时**经权限过滤后的实时召回事实。如果某篇文档的访问权限随后被管理员撤销，后续新的查询将立即按最新策略被拒绝。
+</Callout>
+
+## 隔离运行时与集群安全边界 [#isolation-and-cluster-security]
+
+- **个人开发机与任务沙箱隔离**：个人开发机面向单用户提供带独立 PVC 的持久编码环境，托管服务（如 Workspace API、Web Terminal）经由控制面网关受控访问，不默认暴露容器原始端口；研发任务则按“一 Task 一 Sandbox”分配隔离实例。
+- **运行时路线**：本地默认采用 Kubernetes `agent-sandbox` 控制器配合节点标准 OCI 运行时（`default`）；对强内核隔离有要求的环境，支持在节点预先部署并验证 `runsc` 后切换至 **gVisor** 运行时，或通过标准 **E2B** 协议接入外部多集群云沙箱池。
+- **网络与凭据边界**：依赖集群网络层实际执行 `NetworkPolicy` 限制非授权出站流量；成员个人 Git Token 与模型 API Key 仅在受控路径消费，不以明文形式写入 `TaskSpec` 或共享资产清单。
+
+<Callout type="info" title="继续了解接入与部署">
+  如果你正在评估企业 POC 试点的数据流与验收准备，请阅读[企业接入准备与 POC 验收](/zh/docs/private-deployment)；如需查看集群安装前置要求，请前往[Kubernetes 私有化部署与升级](/zh/docs/deployment)。
+</Callout>

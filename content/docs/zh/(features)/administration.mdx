@@ -1,0 +1,64 @@
+---
+title: 团队治理与平台管理指南
+description: 管理组织级与工作空间级双层角色权限、团队模型配额与成本、沙箱运行时集群以及飞书/Lark/Slack 企业统一登录。
+---
+
+SkyMythos 将治理权限划分为**工作空间团队设置（Team Settings）**与**全组织平台管理（Platform Settings）**两层，确保日常研发与业务团队享有自治协作空间的同时，基础设施、安全策略与外部连接始终在组织级边界内可控运行。
+
+## 双层角色权限矩阵 [#dual-layer-role-matrix]
+
+| 层级 | 角色名称 | 核心管理与操作权限 | 明确边界约束 |
+| --- | --- | --- | --- |
+| 组织级（Organization） | `Admin` | 成员账户生命周期、工作空间创建与分配、沙箱集群/镜像、AI Gateway、企业 IM 与连接目录 | 平台级管理权不自动授予读取普通工作空间私有对话与项目内容的权限 |
+| 组织级（Organization） | `Operations` | 与 `Admin` 拥有同等基础设施运维权限（网关、沙箱集群、镜像、运行监控） | 不承担组织成员账号分配与工作空间权限变更治理职责 |
+| 组织级（Organization） | `Member` | 参与所属工作空间的日常业务与研发工作，管理个人凭据与个人开发机 | 自动加入全员共享的 `Public Workspace` |
+| 工作空间级（Workspace） | `Workspace Admin` | 管理本工作空间成员、模型配额、共享凭据、安全策略及拉取授权的外部文档 | 仅作用于当前工作空间内部 |
+| 工作空间级（Workspace） | `Member` / `Viewer` | `Member` 可创建并协作推进项目、任务、资产与知识库；`Viewer` 按只读范围查阅 | 严格遵循各资源的授权范围与个人凭据隔离 |
+
+<Callout type="info" title="成员账户禁用与删除语义">
+  所有账号均代表真实人类成员（不再使用“服务用户”作为成员类型）。**禁用账户**保留历史成员关系且可随时恢复；**删除账户**会撤销所有登录与成员关系，并保留带删除时间戳与操作者的永久墓碑记录，不可重新启用。删除后释放的邮箱可用于注册全新 UUID 账号，但历史权限与私有数据不会随邮箱转移。
+</Callout>
+
+## 团队设置：工作空间治理（Team Settings） [#workspace-team-settings]
+
+工作空间管理员可通过一级导航 **团队设置**（`settings?section=team-overview`）管理日常团队协作规则：
+
+- **成员管理与移出**：邀请或调整成员的 `Admin` / `Member` / `Viewer` 角色；将成员移出某个工作空间仅撤销其在该工作空间的访问权，不影响其平台账户及其他工作空间。
+- **成员用量与成本分析**：查看本工作空间内各成员的调用活跃度、Token 消耗与已知模型费用明细（`team-members` / `team-cost`）。
+- **模型配额与共享凭据**：配置当前工作空间允许使用的模型列表与配额策略（`workspace-settings?section=models`），维护工作空间受控共享凭据与安全策略。
+
+<DocScreenshot
+  name="team-settings"
+  alt="工作空间团队设置与管理控制台界面：左侧成员/用量/成本/配额导航与基本信息保存表单"
+  caption="工作空间团队设置（Team & Workspace Settings）：成员权限、用量成本与工作策略治理入口"
+  annotations={[
+    { step: "1", title: "成员、用量、成本分析与配额导航", description: "在团队成员管理、成员用量、成本分析、模型配额与共享凭据/策略之间切换。" },
+    { step: "2", title: "工作空间名称与基本信息表单", description: "维护当前工作空间的标识名称与协作边界说明。" },
+    { step: "3", title: "保存工作空间设置", description: "经 Workspace Admin 权限与版本乐观锁校验后保存变更。" },
+  ]}
+/>
+
+## 平台设置：组织基础设施与企业集成（Platform Settings） [#organization-platform-settings]
+
+组织管理员或运维人员可通过 **平台管理**（`settings?section=platform-home`）维护部署级底座：
+
+<Tabs items={["沙箱运行时与集群", "模型与记忆底座", "企业 IM 登录与连接器"]}>
+  <Tab value="沙箱运行时与集群">
+    在 `Runtime Environments` 分组下统一管理：
+    - **Sandbox 集群与标准 E2B 池**：配置内置 Kubernetes `agent-sandbox` 集群，或通过控制面标准 E2B 协议接入外部多集群云沙箱池（`e2bpool`）。
+    - **运行时基础镜像**：按 SkyBot 开发机、Tasks 研发流与 Automations 分别维护兼容的镜像模板与升级计划。
+    - **运行实例监控**：在 `runtimes?view=overview` 集中查看当前活跃沙箱实例与负载健康情况。
+  </Tab>
+  <Tab value="模型与记忆底座">
+    在 `Model Services` 分组下统一管理：
+    - **AI Gateway**：维护全局 LLM Gateway 与 Embedding Gateway 目录及平台托管凭据。
+    - **Platform Assistant**：配置全局平台助手所使用的服务与能力范围。
+    - **记忆引擎（Memory）与 Agent CLI**：管理基于 PostgreSQL 与异步检索投影的 Mem0 记忆后端参数，以及受控的 Agent CLI 工具目录。
+  </Tab>
+  <Tab value="企业 IM 登录与连接器">
+    在 `Organization Integrations` 与 `Connector Providers` 中管理企业 SSO 与文档入口：
+    - **飞书 / Lark 统一登录与文档授权**：配置区域、App ID、App Secret（只写不回显）、`Public Base URL`，保存后即时生效无需重启。应用中只需登记单个 OAuth 回调地址（Lark 使用 `/auth/enterprise/lark/callback`，飞书使用 `/auth/enterprise/feishu/callback`，Slack 使用 `/auth/enterprise/slack/callback`）。
+    - **自动开户策略（Auto Provision）**：开启时仅为新身份在 `Public Workspace` 创建 `Member`；关闭时必须预先存在显式 `IdentityLink`，平台绝不凭同邮箱自动合并账户。
+    - **飞书官方 CLI 权限**：授权读取用户身份支持的权限范围，实际访问边界由供应商后台开通权限决定，平台只记录授权返回的真实权限事实。
+  </Tab>
+</Tabs>

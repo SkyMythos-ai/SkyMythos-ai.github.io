@@ -1,0 +1,59 @@
+---
+title: Core Concepts & Domain Model
+description: A structured reference to SkyMythos's four-layer domain objects, ownership boundaries, and execution vs. acceptance semantics.
+---
+
+To prevent transient chat state, raw materials, and authoritative organizational assets from blurring together, SkyMythos enforces a strict four-layer domain model. Understanding these objects and their boundaries helps teams collaborate cleanly and govern enterprise rollouts accurately.
+
+<DomainModelDiagram />
+
+## Layer 1: Governance Scope [#governance-scope]
+
+| Domain Object | Core Responsibility | Key Governance Constraints |
+| --- | --- | --- |
+| `Organization` | Single enterprise governance boundary per deployment | Exactly one Organization exists per deployment; manages authentication, global gateways, and enterprise connectors without cross-org switching. |
+| `Workspace` | Logical collaboration scope for access, work, and shared assets | Belongs to the Organization; includes one system-wide `Public Workspace` (auto-joined by active members) plus team or private workspaces. |
+| `User` & `IdentityLink` | Stable human account and external SSO binding | Local or enterprise identities (e.g., Lark/Feishu) bind via explicit `IdentityLink`; accounts never auto-merge by email. Disabling preserves access history; deletion leaves a permanent tombstone. |
+| Dual-Layer Roles | Organization- and workspace-level access control | Org roles: `Admin`, `Operations`, `Member`. Workspace roles: `Admin`, `Member`, `Viewer`. Platform admin privileges do not automatically grant read access to private workspace sessions. |
+
+## Layer 2: Execution Surfaces [#execution-surfaces]
+
+SkyMythos offers four complementary work surfaces tailored to different levels of structure and determinism:
+
+1. **SkyBot Conversation & Agent Turn**: A continuous chat container inside a workspace. Each processing cycle runs as a persistent, resumable asynchronous `Agent Turn` backed by append-only events (text, tool calls, approvals, usage). Best suited for exploration, ad-hoc analysis, and interactive steering.
+2. **Project**: A long-lived scope organizing shared working directories, project descriptions, sourced project memory, and one or more linked Git `Repositories`. Multiple threads in a project can share files while retaining isolated conversation histories; project threads do not automatically become formal engineering Tasks.
+3. **Engineering Task & TaskSpec**: A deterministic delivery instance bound to requirements, a repository, a base branch, a Flow version, models, and a `CapabilityLock`. At creation, inputs resolve into an immutable `TaskSpec` (containing zero plaintext secrets) and execute inside an isolated Sandbox.
+4. **Automation Definition & Run**: Organizes recurring work into saved workflow definitions and trigger rules (manual, cron schedule, webhook, or connector events). The `Automation Definition` stores configuration, whereas each actual execution produces an independent `Automation Run`.
+
+<Callout type="info" title="Keep Execution Objects Distinct from Traces">
+  SkyBot Turns, Engineering Tasks, and Automation Runs remain distinct business entities. In Observability, always navigate from the originating business object to inspect its correlated OpenTelemetry `Trace` and `Span` records.
+</Callout>
+
+## Layer 3: Reusable Capabilities [#reusable-capabilities]
+
+- **AI Employee**: A reusable configuration holding a role name, visibility scope, instructions (Prompt), default model, and linked extensions. Analyzing past work generates a **proposed improvement** for review; only explicit human confirmation updates the employee definition, and in-flight jobs keep their launch-time snapshots.
+- **Enterprise Knowledge Base & Release**: Organized across personal, workspace, explicitly shared, and `Public Knowledge Release` scopes. Content moves from draft to per-document release to indexed search, ensuring unreviewed edits never pollute live retrieval.
+- **Memory & Memory Candidate**: Structured cues distilled asynchronously from `Memory Evidence` (sessions, tasks, artifacts). Memory supports personal preferences and project continuity after review, but stays strictly separated from authoritative Knowledge Bases.
+- **Flow & WorkNode**: A `Flow Template` defines node invocations and dependencies in structured YAML (rendered visually as a DAG). A `WorkNode` (historically `Stage`) is a reusable, versioned agent execution definition; nodes defined solely inside one Flow are `Inline WorkNodes`.
+- **Skill & MCP**: Skills package domain instructions and scripts, while MCP servers expose standardized external tool capabilities. Both are pinned with exact versions and digests via `CapabilityLock` when a task starts.
+
+## Layer 4: Runtime & Credentials [#runtime-and-credentials]
+
+| Concept | Lifecycle & Role | Key Boundary |
+| --- | --- | --- |
+| `Personal Development Environment` | Persistent developer machine | Globally unique per user across the deployment; backed by a dedicated Kubernetes PVC (`/workspace` and `/home/fusion`) that survives stop/restart cycles and pod rebuilds. |
+| `Task Sandbox` | Per-task isolated sandbox | One isolated container per engineering Task hosting the DAG supervisor, coding agent, and stage artifacts. |
+| `Platform Model Gateway` | Deployment-wide AI service catalog | `LLM Gateway` (chat/reasoning, VLM, Rerank) and `Embedding Gateway` (vectorization) keep separate endpoints, catalogs, and health contracts. |
+| `Platform` vs `User Credential` | Layered secret isolation | Platform credentials serve system agents and cannot be read by members; private user model/Git tokens remain user-owned and are never leaked by sharing an asset. |
+
+## Five Distinct States: Never Conflate Completion with Acceptance [#state-semantics-distinction]
+
+During operational reviews and POC sign-off, distinguish these five independent facts:
+
+| State Fact | What It Actually Proves | What It Does Not Replace |
+| --- | --- | --- |
+| Request Accepted / Running | Control plane validated inputs and queued execution | Does not mean the Sandbox is ready or business goals are met |
+| Environment Ready / Healthy | Dev machine or sandbox pod and managed service probes pass | Does not guarantee model credentials work or outputs are valid |
+| Run Finished / Unit Gate Passed | Agent process exited or deterministic stage checks passed | Does not replace human verification of citations and scope |
+| Human Acceptance Approved | Accountable reviewer checked artifacts, sources, and diffs | In engineering workflows, does not mean code is merged to main |
+| Code Merged & Released | Team merged changes via Git review and deployed via CI/CD | SkyMythos hands over reviewable changes; release remains yours |

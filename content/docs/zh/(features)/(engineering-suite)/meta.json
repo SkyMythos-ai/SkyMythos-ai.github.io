@@ -1,0 +1,9 @@
+{
+  "title": "Git 集成与研发编排",
+  "collapsible": true,
+  "defaultOpen": false,
+  "pages": [
+    "tasks",
+    "flows-worknodes"
+  ]
+}

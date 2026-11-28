@@ -1,0 +1,64 @@
+---
+title: Workspace & Platform Administration
+description: Govern organization and workspace dual-layer roles, team quotas and cost views, sandbox runtime pools, and enterprise SSO/IM integrations.
+---
+
+SkyMythos divides governance into **Workspace Team Settings** and **Organization Platform Settings**, giving business and engineering teams autonomy inside their workspaces while keeping infrastructure, security policies, and external connectors centrally controlled.
+
+## Dual-Layer Role Matrix [#dual-layer-role-matrix]
+
+| Layer | Role | Core Administrative Scope | Explicit Boundary |
+| --- | --- | --- | --- |
+| Organization | `Admin` | User lifecycle, workspace provisioning, sandbox clusters/images, AI Gateways, enterprise IM & connectors | Platform admin status does not automatically grant read access to private workspace sessions or projects |
+| Organization | `Operations` | Full infrastructure ops parity with `Admin` (gateways, clusters, images, runtime monitoring) | Does not manage user account provisioning or workspace membership assignments |
+| Organization | `Member` | Participates in authorized workspaces; manages personal credentials and Personal Dev Machine | Automatically joins the system-wide `Public Workspace` |
+| Workspace | `Workspace Admin` | Manages workspace members, model quotas, shared credentials, policies, and explicit doc imports | Scoped strictly to the assigned workspace |
+| Workspace | `Member` / `Viewer` | `Member` builds and runs projects, tasks, knowledge, and assets; `Viewer` holds read access | Bound by individual resource grants and private credential isolation |
+
+<Callout type="info" title="Account Disable vs. Permanent Deletion">
+  All directory members represent real human accounts (legacy machine/service accounts are excluded). **Disabling** preserves memberships and can be reversed; **deleting** revokes all login and membership grants while keeping an immutable tombstone with timestamp and operator. Re-registering with a freed email creates a fresh UUID without transferring historical permissions or private data.
+</Callout>
+
+## Team Settings: Workspace Governance [#workspace-team-settings]
+
+Workspace Admins open **Team Settings** (`settings?section=team-overview`) from the primary rail to manage day-to-day collaboration:
+
+- **Member Management**: Assign `Admin`, `Member`, or `Viewer` roles inside the workspace. Removing a member from a workspace only revokes that workspace's membership without affecting their organization account.
+- **Usage & Cost Attribution**: Inspect per-member activity, token volume, and known model spend (`team-members` / `team-cost`).
+- **Model Quotas & Policies**: Control workspace-approved models, quotas (`workspace-settings?section=models`), shared workspace credentials, and security policies.
+
+<DocScreenshot
+  name="team-settings"
+  alt="Workspace Team Settings page showing members/usage/cost/quotas sidebar and workspace identity settings form"
+  caption="Workspace Team Settings: govern members, token usage, cost breakdowns, model quotas, and policies"
+  annotations={[
+    { step: "1", title: "Members, Usage, Cost & Quotas", description: "Navigate across member permissions, usage, cost attribution, model quotas, shared tokens, and policies." },
+    { step: "2", title: "Workspace Identity & Settings Form", description: "Maintain the active workspace name and collaboration description." },
+    { step: "3", title: "Save Workspace Settings", description: "Commit workspace changes under Workspace Admin permissions and revision checks." },
+  ]}
+/>
+
+## Platform Settings: Infrastructure & Enterprise Integrations [#organization-platform-settings]
+
+Org Admins and Operations engineers manage deployment-wide services under **Platform Settings** (`settings?section=platform-home`):
+
+<Tabs items={["Sandbox Runtimes & Clusters", "Models & Memory Engine", "Enterprise IM & Connectors"]}>
+  <Tab value="Sandbox Runtimes & Clusters">
+    Under **Runtime Environments**, operators configure:
+    - **Kubernetes & E2B Sandbox Pools**: Manage built-in Kubernetes `agent-sandbox` clusters or attach external multi-cluster cloud pools via the standard E2B protocol (`e2bpool`).
+    - **Runtime Images**: Maintain versioned base images and upgrade plans across SkyBot Dev Machines, Tasks, and Automations.
+    - **Runtime Monitor**: Inspect live sandbox instances and health across the deployment (`runtimes?view=overview`).
+  </Tab>
+  <Tab value="Models & Memory Engine">
+    Under **Model Services**, operators configure:
+    - **AI Gateway**: Manage deployment-wide LLM and Embedding gateway endpoints and platform credentials.
+    - **Platform Assistant**: Configure the backend model and capability scope powering the global helper.
+    - **Memory & Agent CLI**: Administer PostgreSQL-backed Mem0 memory distillation settings and curated Agent CLI catalogs.
+  </Tab>
+  <Tab value="Enterprise IM & Connectors">
+    Under **Organization Integrations** and **Connector Providers**, Org Admins manage SSO and external doc providers:
+    - **Lark / Feishu & Slack Integration**: Configure region, App ID, write-only App Secret, and `Public Base URL`—changes take effect immediately without restarting. Register a single OAuth callback URL per provider (`/auth/enterprise/lark/callback`, `/auth/enterprise/feishu/callback`, or `/auth/enterprise/slack/callback`).
+    - **Auto-Provisioning Policy**: When enabled, new logins auto-create a `Member` solely in `Public Workspace`. When disabled, an explicit `IdentityLink` must exist beforehand—accounts never auto-merge by email.
+    - **Official Lark/Feishu CLI Grants**: Member OAuth requests user-scoped permissions defined by the enterprise app; SkyMythos records only the actual scopes returned by the provider.
+  </Tab>
+</Tabs>

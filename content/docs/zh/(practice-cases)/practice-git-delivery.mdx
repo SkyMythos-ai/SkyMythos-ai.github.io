@@ -1,0 +1,60 @@
+---
+title: 实践六：基于 Git 仓库的研发需求端到端交付
+description: 在研发 Tasks 中绑定 Git 仓库与开发分支，通过隔离沙箱、多阶段 Flow 与 Unit Gate 门禁产出可审查代码变更并完成人工合入。
+---
+
+本案例演示研发工程师如何利用 **Tasks + Flows + 隔离 Sandbox** 完成一次规范的新功能/校验增强交付，从需求描述出发直到产生可审查的代码 Diff 与单测证据。
+
+## 场景目标与准备工作 [#goal-and-prerequisites]
+
+- **预期交付**：一个包含参数校验逻辑、新增单元测试、全量门禁检查日志及交付摘要的 Git 分支变更。
+- **准备工作**：
+  1. 在[连接器](/zh/docs/connectors)完成个人 Git Token 授权，确保对目标测试仓库具备读取权限。
+  2. 确认工作空间已开启兼容研发执行的模型网关，并准备好团队标准研发 Flow（或使用智能动态编排）。
+
+## 分步操作实战 [#step-by-step-walkthrough]
+
+<Steps>
+  <Step>
+    ### 1. 在 Tasks 打开新建抽屉并绑定仓库基线
+
+    进入 **研发任务（`tasks`）** 点击“新建任务”，选择目标 `Repository` 与 `dev` 基线分支（避免直接指向生产发布分支），并选用发布的研发 Flow。
+
+    <DocScreenshot
+      name="tasks-list"
+      alt="在 Tasks 页面选择研发流程并查看基线分支与 Unit Gate 门禁状态"
+      caption="在 Tasks 列表核对仓库基线、Unit Gate 通过率并跟踪沙箱执行结果"
+      annotations={[
+        { step: "1", title: "任务列表与 Task Flow 切换", description: "查看全部研发 Task，或切至 Task Flow 核对流程模板。" },
+        { step: "2", title: "新建研发任务入口", description: "从此打开新建抽屉并填报目标、Repository、Base branch 与 Flow。" },
+        { step: "3", title: "任务状态、基线分支与详情操作", description: "确认任务基于 dev/main 正确分支执行，并在完成后打开 Diff 与门禁日志。" },
+      ]}
+    />
+  </Step>
+  <Step>
+    ### 2. 填写含约束与验收标准的需求正文
+
+    ```text
+    目标：为配置保存接口补充空名称和纯空白名称校验，非法请求返回 400 及明确错误提示。
+    约束：保持现有权限校验和正常保存的响应字段不变，不改动无关模块。
+    产物：代码变更 Diff、新增及现有单元测试通过记录（Unit Gate）与交付摘要。
+    验收：空名称与纯空白名称被拒绝；有效名称保存与全部单测运行通过。
+    后续：生成变更与交付说明供人工 Code Review，不自动合并分支或触发上线。
+    ```
+  </Step>
+  <Step>
+    ### 3. 跟踪隔离沙箱节点执行与定向恢复
+
+    提交后控制面冻结 `TaskSpec` 并分配隔离 Sandbox。在详情页观察“需求理解 → 编码实现 → 测试门禁”各阶段进展。若某个 `Unit Gate` 检查未通过，可在对应节点查看真实报错日志，并通过 `Fusion Resume` 补充修正说明重跑该节点。
+  </Step>
+  <Step>
+    ### 4. 审阅 Diff、门禁证据并人工合入
+
+    确认测试全部实测通过、改动未越界后，打开生成的 MR/PR 链接回到 Git 托管平台完成人工 Code Review 与代码合并。
+  </Step>
+</Steps>
+
+## 验收与规范要点 [#acceptance-checklist]
+
+- **拒绝“跳过检查”的虚假通过**：务必在 `Unit Gate` 日志中看到测试命令实际运行且退出码为 0。
+- **合并与上线归团队控制**：SkyMythos 负责高质量交付准备，最终合并主干与 CI/CD 部署仍由仓库维护者拍板。

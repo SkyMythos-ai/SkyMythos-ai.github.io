@@ -1,0 +1,54 @@
+---
+title: 常见问题（FAQ）
+description: 集中解答关于 SkyMythos 产品定位、角色权限、数字员工训练、知识库发布、私有化数据流与企业 POC 评估的高频疑问。
+---
+
+以下整理了使用者、团队管理员与企业评估团队最常提出的问题。
+
+## 产品定位与工作模式 [#product-and-work-modes]
+
+<Accordions type="multiple">
+  <Accordion id="faq-chat-vs-platform" title="SkyMythos 是聊天机器人，还是工作平台？">
+    对话只是发起工作的入口之一。SkyMythos 将业务目标、数字员工、项目目录、研发 Tasks、自动化 Automations、企业知识库与隔离沙箱组织在一起，核心关注“工作如何受控推进、交付物如何检查、经验如何沉淀留存”。
+  </Accordion>
+
+  <Accordion id="faq-project-vs-task" title="在 SkyBot 项目里写的线程（Thread）会变成研发 Task 吗？">
+    不会。项目 Thread 与正式研发 Task 是两类独立的领域对象：项目适合围绕长期目标多轮探索与共享工作目录；研发 Task 则会冻结需求、Repository、基线分支与 Flow 版本进入隔离沙箱，产出自测门禁记录与代码 Diff。
+  </Accordion>
+
+  <Accordion id="faq-personal-dev-machine" title="切换工作空间（Workspace）时，我的个人开发机会新建一台吗？">
+    不会。`Personal Development Environment` 以 `User` 为单位全局唯一，绑定独立 Kubernetes PVC（持久化 `/workspace` 与 `/home/fusion`），确保你的代码和工具环境跨工作空间与停机重启保持连续。
+  </Accordion>
+</Accordions>
+
+## 数字员工、知识库与权限治理 [#employees-knowledge-and-governance]
+
+<Accordions type="multiple">
+  <Accordion id="faq-employee-training" title="数字员工的“训练”会修改底层大模型参数吗？">
+    不会。SkyMythos 中的员工训练是指根据工作经验分析提炼待审阅的改进方案，经人工确认后更新员工的 Prompt 指令、方法规则与能力绑定，不修改底层模型权重；且运行中的旧任务仍保留启动时的配置快照。
+  </Accordion>
+
+  <Accordion id="faq-knowledge-draft-vs-release" title="为什么我在知识库保存了文档，却在检索测试里搜不到？">
+    知识库严格区分“保存草稿”“发布新版本”和“索引可检索”三个步骤。保存草稿不会进入检索索引；请回到文档详情点击“发布新版本”，等待状态变为 `可检索` 后再测试检索（同时确认单独配置的 Embedding Gateway 运行正常）。
+  </Accordion>
+
+  <Accordion id="faq-shared-credentials" title="把数字员工、Skill 或知识库共享给同事，会泄露我的个人 API Key 或 Git Token 吗？">
+    绝对不会。能力定义与成员个人凭据在底座上严格隔离。其他成员使用你共享的员工或 Skill 时，必须使用其本人完成授权的凭据或团队配额；涉及未授权的外部连接器时会提示本人授权。
+  </Accordion>
+
+  <Accordion id="faq-admin-privacy" title="组织管理员（Org Admin）能直接查看普通成员的所有私有对话吗？">
+    不能。拥有平台基础设施管理权不等于自动拥有普通工作空间的私有会话读取权，成员账号与工作空间受双层角色与资源授权矩阵约束。
+  </Accordion>
+</Accordions>
+
+## 私有化部署与 POC 评估 [#private-deployment-and-poc]
+
+<Accordions type="multiple">
+  <Accordion id="faq-zero-egress" title="私有化部署是否等于“100% 数据零外发”？">
+    需要按实际配置逐项核对。控制面、知识库与执行环境可部署在企业自有集群中，但如果配置了外部公有云模型网关、外部代码托管或第三方 IM 连接器，相关请求就会按配置出站。请参考[企业接入准备与 POC 验收](/zh/docs/private-deployment)核对完整数据流。
+  </Accordion>
+
+  <Accordion id="faq-poc-and-pricing" title="产品支持个人在线免费注册试用吗？企业怎么评估合作？">
+    当前产品定位面向企业私有化部署与团队级落地，不提供公开自助试用。需要评估时请[预约 POC](/zh/poc)，团队会配合约定 1–2 个真实场景及验收标准；商业授权采用 POC 与企业项目单独报价模式，详情见[授权、用量与联系支持](/zh/docs/licensing-and-support)。
+  </Accordion>
+</Accordions>

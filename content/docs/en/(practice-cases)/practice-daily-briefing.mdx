@@ -1,0 +1,49 @@
+---
+title: "Practice 4: Scheduled Weekly Briefing Automation"
+description: Build a recurring briefing workflow in Automations, validate with a scoped Test Run first, configure timezone-safe Cron triggers, and inspect each Run.
+---
+
+For recurring Monday morning tasks—such as summarizing weekly team updates or compiling triage digests—turning the routine into an **Automation** replaces manual copy-pasting with auditable, repeatable Runs.
+
+## Goal & Prerequisites [#goal-and-prerequisites]
+
+- **Expected Deliverable**: An automated weekly briefing generated every Monday at 09:00, stored in its own `Automation Run` record (and optionally routed to an approved notification target).
+- **Prerequisites**:
+  1. An active runtime environment and an assigned AI Employee (e.g., "Weekly Digest Specialist").
+  2. A sanitized sample payload ready for initial Test Run validation.
+
+## Step-by-Step Walkthrough [#step-by-step-walkthrough]
+
+<Steps>
+  <Step>
+    ### 1. Create a Single-Agent Automation Workflow
+
+    Open **Automations** (`agents/flows`) and click **New Workflow**. Name it "Weekly Operations Briefing", attach the runtime environment and AI employee, and define instructions with clean runtime input parameters.
+  </Step>
+  <Step>
+    ### 2. Save & Validate with a Test Run First
+
+    Click **Save** to establish a runnable revision, then execute a **Test Run** with sample inputs. Confirm the generated briefing format and citations before scheduling (remember Test Runs suppress final notifications but still invoke real bound tools).
+  </Step>
+  <Step>
+    ### 3. Enable Timezone-Checked Cron Triggers & Inspect Runs
+
+    Enable a Cron schedule, explicitly verifying frequency, run time, and **timezone** (e.g., Monday 09:00 `Asia/Shanghai`). After the first scheduled or manual run completes, inspect its exact inputs, outputs, and telemetry under **Runs** (`agents/runs`).
+  </Step>
+</Steps>
+
+<DocScreenshot
+  name="automations-flows"
+  alt="Automations workflow list highlighting Weekly Customer Feedback Digest and Webhook triage workflows"
+  caption="Manage weekly digest schedules, Test Runs, and trace links inside Automations"
+  annotations={[
+    { step: "1", title: "Flows, Envs, Webhooks & Traces", description: "Inspect runtime environments, webhooks, traces, and cost analytics from the left rail." },
+    { step: "2", title: "New Automation Workflow", description: "Create a recurring briefing definition and verify with Test Run first." },
+    { step: "3", title: "Scheduled & Event Workflow List", description: "Review active state, trigger type, and trigger ad-hoc runs safely." },
+  ]}
+/>
+
+## Acceptance Checklist [#acceptance-checklist]
+
+- **Separate Definition from Run**: Keep workflow schedule edits distinct from individual Run retries or cancellations.
+- **Review Before External Sharing**: Have an accountable owner review generated digests before distributing broadly.

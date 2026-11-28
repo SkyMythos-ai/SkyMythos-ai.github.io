@@ -1,0 +1,43 @@
+---
+title: Memory
+description: Understand SkyMythos's scoped memory architecture—Personal Memory, sourced Project Memory, async distillation pipelines, and strict boundaries from Knowledge.
+---
+
+To preserve helpful preferences and project continuity without turning unverified chat logs into permanent truth, SkyMythos implements **Memory** as a **scoped, asynchronously distilled, and strictly separated** layer distinct from Enterprise Knowledge.
+
+## Three Scoped Memory Layers [#memory-scope-isolation]
+
+| Memory / Context Type | Scope | Contents & Purpose | Strict Isolation Boundary |
+| --- | --- | --- | --- |
+| **Personal Memory** | Individual `User` | Preferred output styles, coding habits, and personal working preferences | Consumed only in the owner's `PersonalContext`; never leaks across users |
+| **Project Memory** | Individual `Project` | Sourced project facts, confirmed decisions, working leads, and effective patterns | Shared strictly among threads in that Project—never replaces workspace Knowledge |
+| **Employee Memory** | Individual `AI Employee` | Work records, distilled experience, and recall traces tied to that specialist | Scoped per employee definition; never mixes another employee's history |
+
+## From Execution Evidence to Reviewed Memory [#distillation-and-indexing-pipeline]
+
+Rather than stuffing raw conversation archives into future prompts, SkyMythos runs a controlled distillation pipeline backed by PostgreSQL as the source of truth and Mem0 retrieval projections:
+
+<Steps>
+  <Step>
+    ### Capture Memory Evidence
+
+    Persisted session turns, tasks, and artifacts produce `Memory Evidence` retaining exact scope and provenance—never injected directly into prompts as raw transcripts.
+  </Step>
+  <Step>
+    ### Distill Candidates Asynchronously
+
+    Retryable `Memory Distillation Jobs` synthesize evidence into reviewable **Memory Candidates** rather than silently altering agent behavior.
+  </Step>
+  <Step>
+    ### Project Indexes Transactionally
+
+    Confirmed Memory revisions commit in PostgreSQL alongside a `Memory Index Outbox`, asynchronously syncing bounded, sanitized `Memory Retrieval Projections` so search stays consistent with authoritative state.
+  </Step>
+</Steps>
+
+## Memory vs. Enterprise Knowledge [#memory-vs-knowledge]
+
+<Callout type="warn" title="Keep Memory and Knowledge Distinct">
+  - **Enterprise Knowledge** stores authoritative specs, policies, and business facts using Draft → Per-Document Release → LightRAG indexing with source revision citations.
+  - **Memory** stores working preferences and continuity cues. When a Task starts, personal preferences enter via an immutable `PersonalContext` projection, keeping raw session archives strictly out of authoritative team Knowledge.
+</Callout>

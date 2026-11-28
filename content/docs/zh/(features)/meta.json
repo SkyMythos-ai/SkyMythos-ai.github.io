@@ -1,0 +1,22 @@
+{
+  "title": "功能说明",
+  "collapsible": true,
+  "defaultOpen": false,
+  "pages": [
+    "workspace-guide",
+    "platform-assistant",
+    "projects",
+    "dev-environments",
+    "(engineering-suite)",
+    "employees",
+    "marketplace-connectors",
+    "connectors",
+    "(knowledge-suite)",
+    "memory",
+    "automations",
+    "security-sandbox",
+    "models-tools",
+    "observability",
+    "administration"
+  ]
+}

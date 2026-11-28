@@ -1,0 +1,69 @@
+---
+title: 异常提示与故障排查说明
+description: 涵盖工作台界面常见异常提示处置速查表，以及集群、镜像、PVC 持久化存储、模型网关、知识检索和脱敏反馈的完整排障手册。
+---
+
+当在工作台操作或集群部署中遇到阻断或报错时，可先对照第一部分的**界面常见异常速查表**快速处置；若涉及底座运行与部署异常，则继续按第二部分的**基础设施分层排查**定位根因。
+
+## 一、工作台常见异常提示速查 [#ui-error-prompts-quick-triage]
+
+| 界面现象 / 异常提示 | 常见原因 | 一键处置建议 |
+| --- | --- | --- |
+| **下拉列表无可用模型 / 提交提示模型缺失** | 平台未启用兼容该入口协议的网关模型，或当前读取异常 | 点击页面重试保留表单内容；联系管理员核对[模型网关](/zh/docs/models-tools)支持协议交集 |
+| **新建研发任务按钮不可用** | 缺少个人模型/Git 凭据、无仓库读取权或所选 Flow 必填项未填 | 逐项按表单红字提示补齐授权与输入；切勿借用他人高权限账号绕过 |
+| **提示所需外部连接器 / MCP 未授权** | 选用的员工或 Skill 依赖某个 `Connector Slot` 但本人未绑定 | 点击引导前往[连接器](/zh/docs/connectors)完成个人 OAuth 或 Token 绑定 |
+| **请求超时或提交回执状态未知** | 网络波动或后端响应延迟 | 保留输入内容，先刷新状态查看是否已创建成功，避免连续点击产生重复任务 |
+| **知识库已保存但检索不到** | 仅保存草稿未发布版本、索引仍在处理中/失败，或无权访问 | 打开文档详情点击“发布新版本”，检查状态是否为`可检索`及 Embedding 状态 |
+| **经验来源在创建页不可选中** | 经验条目状态为待验证、不可复用、已排除或版本变化 | 查看来源卡片上的状态原因，改选有效经验来源重新分析 |
+| **项目点停止后后台仍有运行** | 停止项目主会话只中止当前协调轮次 | 进入具体执行 Thread 或对应任务详情页单独停止 |
+
+## 二、固定环境基线与集群只读诊断 [#identify-the-affected-environment-first]
+
+涉及环境部署与底层异常时，先记录**产品版本、集群 context、namespace、发生时间**及**受影响工作入口**，并运行只读诊断命令检查集群状态（健康检查要求已有端口转发或外部入口，不会自动重启服务）：
+
+```bash
+helm --kube-context minikube-ubuntu -n fusion status fusion
+kubectl --kube-context minikube-ubuntu -n fusion get deploy,pod,svc,pvc,job
+kubectl --context minikube-ubuntu get crd sandboxes.agents.x-k8s.io
+curl --fail http://localhost:8080/readyz
+```
+
+## 三、基础设施高频专题排查 [#topic-based-troubleshooting]
+
+<Accordions type="multiple">
+  <Accordion id="preflight-fails-or-a-sandbox-cannot-be-created" title="1. 预检失败、Sandbox 无法创建或网络隔离异常">
+    - 若提示无法连接集群，核对 `kubeconfig` 当前 context 与操作账号 RBAC 权限；缺少 `sandboxes.agents.x-k8s.io` 时按前置手册检查 Agent Sandbox Controller 安装状态。
+    - CRD 存在仅表示声明已注册，仍需查看 Controller Pod 日志与实际 Sandbox Pod 是否能调度运行。
+    - 若启用 gVisor，工作节点必须真实安装并运行 `runsc` handler（仅创建同名 `RuntimeClass` 不会安装运行时）；网络策略依赖 CNI 真实执行。切勿通过关闭预检跳过校验。
+  </Accordion>
+
+  <Accordion id="image-pulls-fail-or-startup-times-out" title="2. 镜像拉取失败（ImagePullBackOff）或启动超时">
+    - 依次核对：**节点 CPU 架构（amd64/arm64）与镜像匹配度**、固定 digest 拼写、**集群节点自身**到镜像仓库的网络可达性（本机 Docker 已登录不代表集群节点能拉取），以及 namespace 内的 `imagePullSecrets`。
+    - Pod 卡在初始化下载时查看 `kubectl describe pod` 事件，勿靠盲目拉大超时掩盖凭据或架构问题。
+  </Accordion>
+
+  <Accordion id="a-pvc-is-unbound-or-files-disappear-after-restart" title="3. PVC 持久化存储未绑定或重启后看不到文件">
+    - 先检查 PVC 状态、关联 `StorageClass` 与底层卷身份，并核对文件是否保存在 `/workspace` 或 `/home/fusion`（`/tmp` 等临时路径重建即丢失）。
+    - **严禁通过新建空卷或直接删除原 PVC 强行让 Pod 启动**。已有环境恢复务必保留原 Secret、配置与备份。
+  </Accordion>
+
+  <Accordion id="console-works-but-models-or-knowledge-fail" title="4. Console 可打开，但模型调用或知识检索失败">
+    - `/healthz` 和 `/readyz` 通过仅说明主服务存活。模型报错请核对 AI Gateway 真实 Base URL、支持协议、当前调用凭据及配额，并用一条最小请求复现。
+    - 知识检索异常请检查：文档已发布、索引达`可检索`、独立 Embedding Gateway 与 LightRAG 已启用、`site.yaml` 中的真实 `Organization ID` 已正确初始化、查询者具备该库读取权限。
+  </Accordion>
+
+  <Accordion id="pages-previews-or-authorization-callbacks-fail" title="5. 端口转发预览、Cookie 或企业 OAuth 回调异常">
+    - 端口转发访问时若 Cookie、Web Terminal 或 OAuth 回调失败，检查浏览器实际访问来源是否与 `publicURL` 一致，检查企业应用登记回调路径（如 `/auth/enterprise/lark/callback`）与可信 TLS 证书链（勿跳过 TLS 校验）。
+    - 升级后若仅存量任务或旧开发机报错，核对这些存量实例持有的旧 Runtime 镜像版本与控制面兼容性。
+  </Accordion>
+</Accordions>
+
+## 四、提交脱敏排障报告的标准清单 [#write-a-useful-issue-report]
+
+向技术支持团队求助前，请整理一份结构化、**严格脱敏**的问题记录：
+
+1. **环境与复现路径**：产品版本号、集群 context/namespace、发生时间窗口、工作入口与精确复现步骤。
+2. **预期 vs 实际结果**：预期效果、界面错误提示及只读命令输出（区分“停止请求已受理”“进程退出”与“业务成功”）。
+3. **严格脱敏移除秘密**：提交前**彻底删除**所有 API Key、Git Token、OAuth Secret、个人隐私数据与受保护文档正文。
+
+准备好上述记录后，可通过[联系团队页面](/zh/poc)或查看[授权、用量与联系支持](/zh/docs/licensing-and-support)提交协助范围；安装流程可回查[Kubernetes 集群部署与升级](/zh/docs/deployment)。

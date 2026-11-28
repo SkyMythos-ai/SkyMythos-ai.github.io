@@ -1,0 +1,9 @@
+{
+  "title": "常见问题与异常排查",
+  "collapsible": true,
+  "defaultOpen": false,
+  "pages": [
+    "faq",
+    "troubleshooting"
+  ]
+}

@@ -1,0 +1,79 @@
+---
+title: 模型网关、协议与个人凭据
+description: 区分平台模型网关目录、LLM 与 Embedding 独立配置、支持协议以及成员个人凭据绑定和验证方式。
+---
+
+模型与连接管理是所有智能工作能够真实跑通的基础。SkyMythos 通过严格分离**平台服务目录**与**成员使用授权**，既让管理员集中管控合规模型出口，又避免把单个用户的密钥扩散给整个团队。
+
+## 平台服务配置 vs 成员个人凭据 [#separate-service-configuration-from-usage-authorization]
+
+| 治理维度 | 平台配置（Admin / Operations 维护） | 个人授权（成员本人维护） |
+| --- | --- | --- |
+| 回答的问题 | 企业允许接入哪些模型网关与连接地址？ | 当前成员是否有权使用自己的配额或账号发起调用？ |
+| 典型对象 | `LLM Gateway`、`Embedding Gateway`、企业 `Git Connector`、`Platform Gateway Credential` | `User Gateway Credential`、`User Git Credential`、OAuth 个人授权 |
+| 隔离约束 | 平台托管凭据供后台系统能力使用，普通成员不可读取；各网关独立隔离 | 个人凭据归用户本人所有，可跨有权访问的工作空间使用，绝不随共享资产外泄 |
+
+<Callout type="warn" title="数据流向与密钥安全提醒">
+  每次模型推理或工具调用的请求内容都可能离开本地工作台前往所配置的网关地址。接入前请先与管理员确认网关所在地及允许发送的数据密级；切勿将 API Key 或应用 Secret 写入任务指令或共享 Skill 正文。
+</Callout>
+
+## 配置 LLM Gateway 与模型目录 [#configure-the-llm-gateway-and-model-catalog]
+
+由组织管理员（`Admin`）或运维人员（`Operations`）进入平台设置的 **AI Gateway**（`settings?section=platform-ai-gateway`）维护部署级对话与推理模型入口：
+
+<Steps>
+  <Step>
+    ### 选择网关形态并填写真实端点
+
+    选择平台预设或自定义网关，填写可访问的真实 `Base URL`，并通过受控密钥输入框保存默认平台凭据（`Platform Gateway Credential`）。
+  </Step>
+  <Step>
+    ### 拉取或登记模型与协议能力
+
+    从网关拉取模型目录，或按交付清单添加模型。保留供应方返回的精确 `Model ID`，并核对显示名称、上下文容量以及模型确实支持的协议类型：
+    - `OpenAI Responses`
+    - `OpenAI Chat Completions`
+    - `Anthropic Messages`
+    - 其他专用能力（如视觉 VLM、重排 Rerank，须按各自原生能力声明，不伪装成普通 Chat 接口）。
+  </Step>
+  <Step>
+    ### 核对入口兼容性并完成实测
+
+    保存网关与模型条目后，在具体工作面（如 SkyBot、数字员工或研发 Task）选择兼容模型完成一次真实请求测试。某个工作入口下拉框未显示某模型，通常是因为该入口与模型已声明协议的交集为空。
+  </Step>
+</Steps>
+
+## 为知识库单独配置 Embedding Gateway [#configure-embedding-separately-for-knowledge-processing]
+
+负责文档向量化检索的 **Embedding Gateway** 与 LLM Gateway 在领域模型和设置页面中**完全独立**维护：
+
+1. 即使 LLM 与 Embedding 指向同一家模型供应商的底层网关，也必须分别保存地址、模型与凭据，不能假定保存一个即自动配好另一个。
+2. 当前 Embedding 接入兼容标准 OpenAI `/v1/embeddings` 协议。由管理员选择内置服务或外部网关，填写真实模型 ID 并执行**向量维度探测**，确认维度来自真实响应后再保存。
+3. 对话模型能正常回复，不代表文档解析与向量化已经就绪。保存后应立即在[企业知识库](/zh/docs/knowledge)导入一份小文档，验证从发布、索引到检索命中的完整链路。
+
+## 成员完成个人连接与凭据授权 [#complete-personal-connections-and-authorization]
+
+普通成员可在当前工作区的连接与个人设置入口完成个人消费密钥与代码托管绑定：
+
+- **确认作用域**：先确认当前登录账号、目标工作区与连接用途，再保存个人模型凭据或 Git Token，或依提示完成企业 OAuth 授权。
+- **独立检查三项状态**：网关地址是否通畅、个人授权状态是否有效、对具体仓库或模型的访问权是否充足，三者需分别核对。
+- **凭据过期与轮换**：若状态提示已过期、已撤销或读取失败，先刷新权威状态再重新授权，不要凭过往的“已连接”记录推断当前一定有效。密钥轮换后，使用一次最小请求验证通畅即可，历史工作记录将继续保留当次执行时的身份与结果。
+
+<DocScreenshot
+  name="connectors-auth"
+  alt="在连接与授权页查看企业统一 LLM Gateway、个人模型资源与 Git OAuth 授权状态"
+  caption="模型网关目录与成员个人凭据状态统一检查视图（连接与授权页）"
+  annotations={[
+    { step: "1", title: "授权状态筛选页签", description: "筛选全部、可使用或待配置状态，排查密钥过期与待确认项。" },
+    { step: "2", title: "前往能力市场关联 MCP", description: "快速进入 Marketplace 为工作空间挑选合规工具与模型辅助资产。" },
+    { step: "3", title: "Git、企业连接与个人凭据列表", description: "清晰展示企业 LLM Gateway 与个人模型资源（可使用/已连接），与仓库凭据相互隔离。" },
+  ]}
+/>
+
+## 用一项最小工作完成端到端校验 [#verify-with-a-minimal-piece-of-work]
+
+全部配置就绪后，推荐按“先只读、后受控写”的顺序验证：
+
+1. 在 SkyBot 发起一句简单问答，验证 LLM Gateway 与个人凭据返回真实响应。
+2. 读取一个你已有权限的代码仓库文件或已索引知识库片段，验证连接与授权链路无误。
+3. 若过程中出现“模型可用但工具报错”或“知识搜不到内容”，请分别对照[能力市场与连接器](/zh/docs/marketplace-connectors)或[常见问题与故障排查手册](/zh/docs/troubleshooting)定位原因。

@@ -1,0 +1,13 @@
+{
+  "title": "Getting Started",
+  "collapsible": true,
+  "defaultOpen": true,
+  "pages": [
+    "scenarios",
+    "create-task",
+    "task-management",
+    "conversation",
+    "results",
+    "getting-started"
+  ]
+}

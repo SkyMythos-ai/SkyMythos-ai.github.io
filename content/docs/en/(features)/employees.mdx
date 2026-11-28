@@ -1,0 +1,102 @@
+---
+title: AI Employees & Experience Evolution
+description: Configure AI employee roles, models, and tools, then refine capabilities safely through experience analysis and explicit human approval.
+---
+
+AI Employees package recurring, standardized team roles into reusable definitions. When a definition is shared across a workspace, each member still runs tasks under their own context and authorization—combining repeatable methods with strict credential isolation.
+
+## Employee Capability Model [#employee-capability-model]
+
+Open **AI Employees** (`my-ai?section=employees`) from the primary rail to browse workspace or organization-public employees, or click **Create Employee** to open the creation form. Each AI employee comprises six fields:
+
+| Field | Purpose & Authoring Guidance |
+| --- | --- |
+| Name | Clearly identifies the role (e.g., "Customer Feedback Analyst" or "Compliance Pre-Reviewer"). |
+| Visibility | Controls whether the definition is personal, workspace-scoped, or organization-public (subject to admin permissions). |
+| Description | One-line summary of strengths and output style for directory discovery (optional). |
+| Prompt | Operating instructions: expected inputs, step-by-step method, output format, and when to pause for human confirmation. |
+| Model | Selected from active compatible models in your deployment so execution adapts to the right protocol. |
+| Capabilities | Linked knowledge bases, Skills, or MCP tools—always start with the minimal scope required for the role. |
+
+<DocScreenshot
+  name="employees-config"
+  alt="AI Employees workbench showing hired specialist list, Start Collaboration button, and structured Role Prompt/Skills editor"
+  caption="Key configuration and collaboration controls in the AI Employees workbench"
+  annotations={[
+    { step: "1", title: "Hired Employees & Create", description: "Switch between SkyBot and specialist AI Employees, or create a new definition." },
+    { step: "2", title: "Start Collaboration & Actions", description: "Open SkyBot pre-loaded with this employee's prompt and approved capabilities." },
+    { step: "3", title: "Role Prompt & Capabilities", description: "Maintain structured instructions, bound Skills, and compatible model settings." },
+  ]}
+/>
+
+<Callout type="info" title="Save-to-Activate Contract">
+  Submitting a valid Name, Prompt, and available Model saves the employee immediately—there is no separate "publish employee" step required. Seeing a shared employee in the directory does not automatically grant access to its external tool credentials; runtime checks still enforce the caller's permissions.
+</Callout>
+
+## Two Ways to Create an AI Employee [#two-ways-to-create-an-employee]
+
+<Tabs items={["Define Directly", "Draft from Experience"]}>
+  <Tab value="Define Directly">
+    Best when role responsibilities and workflows are already clear:
+
+    1. Select **Define Directly** on the creation page.
+    2. Enter the Name, Visibility, and Description, then author structured instructions in the Prompt field.
+    3. Verify the default or chosen Model and attach only the Knowledge Bases and tools required for the job.
+    4. Click **Create Employee** and verify the saved detail view.
+
+    Use this template as a starting point for structured role prompts:
+
+    ```text
+    Role: You are the Customer Feedback Triage Assistant for Product and Engineering.
+    Inputs: Accept raw feedback logs and release notes; never fabricate unverified facts.
+    Method: Group issues by domain, then query the "Product Specs" knowledge base to verify intended design.
+    Output: Produce a Markdown list with exact source citations and suggested validation checks.
+    Boundaries: Draft recommendations only; request human confirmation before replying externally or reprioritizing tickets.
+    ```
+  </Tab>
+  <Tab value="Draft from Experience">
+    Best when a SkyBot session or project already succeeded and you want to turn that method into a reusable role:
+
+    1. Switch to **Learn from Work Experience** and describe the intended responsibility goal.
+    2. Inspect available experience entries—including title, source employee, version, content, and eligibility status (ineligible, pending, or excluded items show explicit reasons).
+    3. Select valid entries and click **Analyze Selected Experience**, then review the suggested name, prompt, and cited sources.
+    4. Click **Use Proposal & Edit Employee** to populate the main form (replacing existing text fields prompts for confirmation while keeping your chosen model, avatar, capabilities, and visibility).
+    5. Complete model/tool selection and submit to create.
+  </Tab>
+</Tabs>
+
+## Training Existing Employees & Boundaries [#train-existing-employees-and-boundaries]
+
+For an existing AI employee, open its detail page and use **Train Employee Definition** to refine its instructions over time:
+
+<Steps>
+  <Step>
+    ### Select Experience & State Training Goal
+
+    Pick verified work experience entries for the target employee and state which steps, constraints, or formatting habits should be strengthened.
+  </Step>
+  <Step>
+    ### Review the Proposed Revision
+
+    The system generates an improvement proposal from the chosen evidence without altering the active employee configuration yet. Compare the proposed prompt against the current version.
+  </Step>
+  <Step>
+    ### Explicitly Confirm & Save
+
+    Click **Confirm Training & Save Results** to commit the updated configuration to the employee definition.
+  </Step>
+</Steps>
+
+<Callout type="warn" title="What Training Means Under the Hood">
+  Employee training distills effective working methods into updated prompts, rules, and capability bindings—it **does not modify underlying LLM weights**. Furthermore, active in-flight jobs preserve their launch-time configuration snapshots and are never silently mutated mid-run.
+</Callout>
+
+## Starting Real Collaboration & FAQ [#start-collaboration-and-troubleshooting]
+
+From an employee's detail page, inspect historical **Records**, **Memory**, **Experience**, and knowledge recall logs. Clicking **Start Collaboration** opens SkyBot pre-loaded with that employee's context—simply enter your concrete goal to begin. Before rolling out broadly, test the updated employee on a comparable small task and record human acceptance.
+
+- **Empty Model List or Submit Error**: Ask an administrator to verify enabled gateway models; on transient fetch failures, use retry without discarding your form inputs.
+- **Experience Entry Disabled**: Check the eligibility status reason (e.g., pending verification or version drift) and select valid sources rather than bypassing checks.
+- **Training Conflict**: Reload the latest employee definition and status before retrying training instead of creating duplicate employees.
+
+To prepare curated materials for your employees to query, continue to [Enterprise Knowledge & Memory System](/docs/knowledge).

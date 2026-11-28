@@ -1,0 +1,53 @@
+---
+title: Viewing Results
+description: Inspect Artifacts, workspace files, Git diffs, Unit Gate logs, and source-version citations in the result views to complete reliable human acceptance.
+---
+
+When a conversation Turn, Engineering Task, or Automation Run finishes, never rely solely on a final "Done" message—inspect the **Artifacts, workspace files, code diffs, and source citations** directly.
+
+## Four Result & Evidence Views [#four-result-views]
+
+| View Category | Applicable Surfaces | What You Can Inspect |
+| --- | --- | --- |
+| **Deliverables (Artifacts)** | SkyBot / Tasks / Automations | Contractual Markdown reports, `result.md`, `artifacts.json` manifests, and downloadable output files |
+| **Workspace & Project Files** | SkyBot Projects / Dev Machines | Files created or edited inside shared project directories or `/workspace` |
+| **Code Changes (Diff) & Gate Logs** | Engineering Tasks | Git diffs against the target `Repository` and `Base branch`, real `Unit Gate` test/lint output logs, and MR/PR links |
+| **Knowledge Citations & Traces** | All Surfaces / Observability | Matched passages linked to their exact published revision, plus OpenTelemetry Trace/Span tool records |
+
+<DocScreenshot
+  name="tasks-list"
+  alt="Annotated Engineering Tasks list showing navigation toggle, Create task trigger, and branch/Unit Gate status columns"
+  caption="Verify target branches, Unit Gate pass status, and review links from the Tasks list"
+  annotations={[
+    { step: "1", title: "Tasks & Task Flow Nav", description: "Toggle between active Engineering Tasks and reusable Flow Templates." },
+    { step: "2", title: "Create Engineering Task", description: "Launch a new Task bound to a repository, Base branch, and Flow." },
+    { step: "3", title: "Status, Base Branch & Actions", description: "Inspect stage progress, Unit Gate execution rates, branch pairs, and view/rebuild actions." },
+  ]}
+/>
+
+## Acceptance Checklist by Deliverable Type [#verification-checklist-by-type]
+
+<Tabs items={["Documents & Reports", "Code Changes & Engineering", "Scheduled Automations"]}>
+  <Tab value="Documents & Reports">
+    1. Confirm every output file opens cleanly in the requested format.
+    2. Verify all required questions and constraints were addressed.
+    3. **Open every cited source**: confirm quoted policies or figures match the surrounding context in that exact published document revision.
+  </Tab>
+  <Tab value="Code Changes & Engineering">
+    1. Confirm changes target the exact `Repository` and `Base branch`.
+    2. Review the Git diff file by file for scope adherence and secret hygiene.
+    3. Verify `Unit Gate` logs show unit tests, typechecks, and builds **actually ran and passed** (treat unexecuted checks as unverified).
+    4. Complete human code review in your Git host before merging.
+  </Tab>
+  <Tab value="Scheduled Automations">
+    1. Open the specific `Automation Run` to verify actual runtime inputs and step outputs.
+    2. Check whether result notifications and token usage match expectations.
+    3. Keep human confirmation intact before external communications or production changes.
+  </Tab>
+</Tabs>
+
+<Callout type="info" title="Separate Execution Completion from Business Acceptance">
+  A `Completed` status or passing automated gate confirms the system executed as configured and captured evidence. Accountable human reviewers always decide whether deliverables meet business criteria, merge code, or publish externally.
+</Callout>
+
+Ready to run your first end-to-end task? Continue to [Start Your First Task](/docs/getting-started).

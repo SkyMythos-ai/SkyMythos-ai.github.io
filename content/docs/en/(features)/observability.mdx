@@ -1,0 +1,51 @@
+---
+title: Observability, Tracing & Cost Analysis
+description: Use the four Observability views to drill down from business objects into OpenTelemetry traces and spans, inspect latency, and analyze token usage and costs.
+---
+
+As teams run multiple SkyBot conversations, engineering Tasks, and Automations concurrently, **Observability** gives operators and builders unified visibility into what agents actually did, where latency or failures occurred, and how token consumption is distributed.
+
+## Four Core Observability Views [#four-observability-views]
+
+Open **Observability** (`observability`) from the primary rail to switch across four linked views:
+
+| View | Query Scope | Primary Purpose |
+| --- | --- | --- |
+| Overview | `observability` | Summarizes recent execution activity, success/failure rates, latency trends, and quick drill-downs |
+| Executions | `?scope=runs` | Lists execution records across surfaces with deep links into run, worknode, and context inspections |
+| Usage & Cost | `?scope=cost` | Breaks down input/output tokens, call counts, and known spend by model and workflow surface |
+| Collection | `?scope=collection` | Monitors health and ingestion status of OpenTelemetry Collectors and GreptimeDB telemetry pipelines |
+
+## Drilling Down from Business Objects to Traces & Spans [#drill-down-from-business-objects]
+
+SkyMythos keeps observability anchored to familiar business entities rather than exposing raw internal runtime IDs as top-level objects:
+
+<Steps>
+  <Step>
+    ### Start from the Originating Work Object
+
+    Identify whether you are investigating a **SkyBot Turn**, an **Engineering Task (WorkNode Attempt)**, or an **Automation Run**—never conflate IDs across these separate surfaces.
+  </Step>
+  <Step>
+    ### Inspect Context & Stage Evidence
+
+    Drill down into run, worknode, and context pages to verify which knowledge passages, capabilities, and inputs entered execution.
+  </Step>
+  <Step>
+    ### Trace Individual Spans
+
+    Follow the correlated OpenTelemetry `Trace` (execution evidence) and `Span` tree (individual LLM calls, tool invocations, or Unit Gate commands) to pinpoint exact timings and error payloads, consulting raw runtime Session IDs only when deep diagnostics are needed.
+  </Step>
+</Steps>
+
+## Reading Token Usage & Diagnostic Signals [#interpreting-usage-and-diagnostic-signals]
+
+During operational reviews, watch for three common telemetry signals:
+
+- **Context Bloat**: If input tokens climb sharply across consecutive turns while outputs remain small, tighten named input bindings or switch from pasting raw files to scoped Knowledge retrieval.
+- **Repeated Gate Failures**: Multiple `Attempt` retries failing on the same deterministic Unit Gate error indicate a missing constraint or environment mismatch—step in via `Fusion Resume` with targeted guidance instead of looping blindly.
+- **Telemetry Collection Health**: If charts appear empty or cost metrics are missing, inspect the **Collection** tab to confirm OTel Collector and GreptimeDB connectivity and verify whether model pricing metadata was configured. **Missing cost data never implies zero spend.**
+
+<Callout type="info" title="Visibility & Cost Rollup Scope">
+  Workspace members only see telemetry for runs they are authorized to view. Team-wide and organization-level member usage and cost rollups are governed in [Workspace & Platform Administration](/docs/administration).
+</Callout>

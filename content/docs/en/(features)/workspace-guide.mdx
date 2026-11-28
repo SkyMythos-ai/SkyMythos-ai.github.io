@@ -1,0 +1,49 @@
+---
+title: Sidebar & Console Layout
+description: Understand the four-zone SkyMythos Web Console layout, all 13 primary navigation modules, resizable context sidebars, and user preferences.
+---
+
+The SkyMythos Web Console brings daily collaboration, software delivery, reusable capabilities, and platform governance into one layout that adapts dynamically to each user's role (`Member`, `Operations`, `Admin`).
+
+## Four-Zone Console Layout [#four-zone-console-layout]
+
+1. **Top Status & Utility Bar**: Houses the brand mark, Workspace switcher, Personal Dev Machine health indicator (`SandboxHealthIndicator`), upgrade alerts, language/theme toggles, and the Platform Assistant trigger.
+2. **Primary Navigation Rail**: Far-left vertical rail for switching between top-level product modules.
+3. **Context Sidebar**: Adapts to the active module—displaying sub-navigation groups, SkyBot Quick Chats, and Project trees with a draggable resizer.
+4. **Main Canvas & Right Drawer**: The center canvas renders active threads, task drawers, diffs, or editors, while the right drawer opens the global `Platform Assistant` or context files on demand.
+
+<DocScreenshot
+  name="console-overview"
+  alt="Annotated SkyMythos Web Console layout showing four interactive regions"
+  caption="Annotated four-zone layout of the SkyMythos Web Console"
+  annotations={[
+    { step: "1", title: "Top Modules & Workspace Bar", description: "Switch primary modules, Workspace scope, Dev Machine health status, language, and Light/Dark appearance." },
+    { step: "2", title: "Conversations & Projects Rail", description: "Adaptive sidebar presenting module groups, Quick Chats, and persistent Project trees." },
+    { step: "3", title: "Goal Composer & Context", description: "Draft goals in the center workspace with bound Knowledge Bases and environment selectors." },
+    { step: "4", title: "Workspace, Memory & Live Runtime Bar", description: "Open Collaborate threads, Workspace files, AGENTS.md rules, Project Memory, and runtime status." },
+  ]}
+/>
+
+## Primary Navigation Module Reference [#primary-navigation-reference]
+
+| Module | Route Pattern | Visible To | Core Purpose |
+| --- | --- | --- | --- |
+| Overview | `overview` | All members | Landing summary of active projects, recent tasks, and pending items |
+| Inbox | `inbox` | All members | Central hub for pending approvals, agent questions, and system alerts |
+| SkyBot | `chat` | All members | Launch Quick Chats and collaborate inside persistent Projects |
+| Dev Machines | `development-environments` | Engineers | Manage your persistent Personal Dev Machine and Group Sandboxes |
+| Tasks | `tasks` / `flows` | Engineering teams | Submit Engineering Tasks and author Flow Templates & WorkNodes |
+| Automations | `agents/flows` | Business & engineering | Author scheduled or event-driven workflows and monitor Runs |
+| AI Employees | `my-ai?section=employees` | All members | Create and refine AI employees; inspect records, memory, and recalls |
+| Knowledge | `knowledge` | All members | Maintain Knowledge Bases, test retrieval, and audit sync/quality |
+| Observability | `observability` | Members & Ops | Inspect Executions, OpenTelemetry traces, and token usage/cost |
+| Marketplace | `marketplace` | All members | Browse and publish `MCP`, `Skill`, `Flow`, and `WorkNode` assets |
+| Connectors | `connectors` | All members | View enterprise connectors and authorize personal Git/IM/MCP tokens |
+| Team Settings | `settings?section=team-*` | Workspace Admins | Govern workspace members, member usage/cost, model quotas, and policies |
+| Platform | `settings?section=platform-*` | Org Admins / Ops | Govern workspaces, sandbox clusters/images, AI Gateways, and enterprise IM |
+
+## Workspace Switching & User Preferences [#account-and-preferences]
+
+- **Switch Workspaces**: Use the workspace switcher to move across authorized Workspaces—Projects, Tasks, Knowledge Bases, and connectors automatically scope to the selected Workspace (while your Personal Dev Machine remains globally unique per user).
+- **Theme & Language**: Toggle Light, Dark, or System appearance and switch English/Chinese UI labels at any time.
+- **Account & Credentials**: Open your profile menu to inspect linked SSO (`IdentityLink`), update passwords, or jump straight to personal model and Git tokens.

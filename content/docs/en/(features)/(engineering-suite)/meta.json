@@ -1,0 +1,9 @@
+{
+  "title": "Git & Engineering Flows",
+  "collapsible": true,
+  "defaultOpen": false,
+  "pages": [
+    "tasks",
+    "flows-worknodes"
+  ]
+}

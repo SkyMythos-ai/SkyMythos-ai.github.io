@@ -38,15 +38,15 @@
 .docsHeaderHost > header {
   z-index: 35;
 }
-.docsHeaderHost a {
+.docsHeaderHost :where(a) {
   color: inherit;
   text-decoration: none;
 }
-.docsHeaderHost button {
+.docsHeaderHost :where(button) {
   font: inherit;
   cursor: pointer;
 }
-.docsHeaderHost svg {
+.docsHeaderHost :where(svg) {
   flex-shrink: 0;
 }
 .fusionDocs #nd-docs-layout {
@@ -61,6 +61,19 @@
 .fusionDocs pre,
 .fusionDocs code {
   font-family: var(--f-mono);
+}
+.fusionDocs .prose figure,
+.fusionDocs .prose img {
+  max-width: 100%;
+}
+.fusionDocs .prose table {
+  font-size: 14px;
+  line-height: 1.6;
+}
+.fusionDocs .prose th {
+  font-weight: 600;
+  color: var(--f-text);
+  white-space: nowrap;
 }
 /* Shiki 的内置深色规则依赖 .dark，官网主题使用 data-theme。 */
 :root[data-theme="dark"]
@@ -79,11 +92,6 @@
   }
   .fusionDocs #nd-page {
     padding-top: 24px;
-  }
-}
-@media (max-width: 640px) {
-  .fusionDocs {
-    --fd-banner-height: 73px;
   }
 }
 @media (prefers-reduced-motion: reduce) {

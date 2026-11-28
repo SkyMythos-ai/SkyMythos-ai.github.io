@@ -1,0 +1,48 @@
+---
+title: 飞书 / Lark 与 Slack 接入指南
+description: 在已部署环境下配置飞书 / Lark 与 Slack 企业统一登录（SSO）、OAuth 回调地址、自动开户边界及指定文档拉取授权。
+---
+
+SkyMythos 支持将飞书（Feishu）、国际版 Lark 与 Slack 接入企业认证和受控资料拉取流程。企业连接配置由组织管理员在平台管理面板统一维护，保存后即时生效。
+
+## 前置条件与安全边界 [#prerequisites-and-boundaries]
+
+- **身份模式要求**：企业连接器纵向切片要求部署启用 PostgreSQL 持久化身份模式（当前一个唯一 `Organization` 可保存多组 Provider 配置，但同一时间仅激活一组生效配置）。
+- **Secret 只写不回显**：`App Secret` 在保存或轮换后仅加密写入数据库，页面与 RPC 接口均不回显明文。
+- **权限显式界定**：当前企业文档同步仅支持 Workspace Admin 输入明确的飞书 Docx URL 拉取受控正文，不会自动遍历整个外部知识空间，也不声称自动继承外部文档 ACL 权限树。
+
+## 在平台管理后台配置应用 [#configure-enterprise-app-in-platform-settings]
+
+<Steps>
+  <Step>
+    ### 登记应用凭据与区域
+
+    以 `Organization Admin` 身份登录 Web Console，进入 `平台管理 → 企业身份与文档`（`settings?section=platform-im`），选择服务区域（中国区飞书 / 国际版 Lark / Slack），填写 `App ID`、`App Secret` 与站点 `Public Base URL`（必须与浏览器实际访问域名一致）。
+  </Step>
+  <Step>
+    ### 登记单一 OAuth 回调地址
+
+    在飞书 / Lark 或 Slack 开发者后台中，只需为本应用登记**唯一一个** OAuth 重定向回调地址（统一登录与成员个人连接授权共用该地址，服务端通过一次性授权事务区分用途）：
+
+    | 企业 IM 平台 | 需登记的 OAuth 回调路径 |
+    | --- | --- |
+    | 国际版 Lark | `https://<your-domain>/auth/enterprise/lark/callback` |
+    | 中国区飞书（Feishu） | `https://<your-domain>/auth/enterprise/feishu/callback` |
+    | Slack | `https://<your-domain>/auth/enterprise/slack/callback` |
+  </Step>
+  <Step>
+    ### 分别启用登录、文档授权与自动开户策略
+
+    在配置面板按需启用「企业统一登录」与「文档内容授权」，保存后立即生效，无需重启服务。首次启动或灾难恢复时，亦可通过环境变量（如 `FUSION_LARK_APP_ID`、`FUSION_LARK_APP_SECRET`、`FUSION_PUBLIC_BASE_URL`、`FUSION_LARK_AUTO_PROVISION`）初始化，数据库已有管理员配置时环境变量不会覆盖。
+  </Step>
+</Steps>
+
+<Callout type="warn" title="自动开户（Auto Provision）与账号合并边界">
+  当开启自动开户时，首次通过飞书/Lark 登录的成员仅会在 `Public Workspace` 中自动创建 `Member` 身份。若关闭自动开户，则管理员必须预先为该成员建立显式的 `IdentityLink` 绑定；**平台绝不会仅凭邮箱相同而自动合并本地账号与企业账号**。
+</Callout>
+
+## 配置文档拉取与官方 CLI 授权 [#document-sync-and-official-cli]
+
+1. **文档内容拉取权限**：使用飞书 / Lark 指定文档拉取能力时，需在应用权限后台开通 `docs:document.content:read` 与 `offline_access`（具体拉取方法见[外部文档同步与协作治理](/zh/docs/knowledge-sync)）。
+2. **官方 CLI 成员授权**：启用飞书 / Lark 官方 CLI 时，无需在 SkyMythos 侧重复维护细粒度 scope 清单；成员授权时会自动读取应用支持用户身份的权限并跳转 OAuth，实际可访问边界以供应商后台开通权限为准，平台仅忠实记录授权返回的权限事实。如需在应用后台读取应用自身元信息，需开通 `application:application:self_manage` 或相应管理员读取权限；权限变更后需引导成员重新授权。
+3. **国际版 Lark 自定义端点**：接入国际版 Lark 时，可按需核对或配置 `FUSION_LARK_AUTHORIZATION_URL=https://accounts.larksuite.com/open-apis/authen/v1/authorize` 与 `FUSION_LARK_API_BASE_URL=https://open.larksuite.com`。

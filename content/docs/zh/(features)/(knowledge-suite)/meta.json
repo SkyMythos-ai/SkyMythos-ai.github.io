@@ -1,0 +1,9 @@
+{
+  "title": "企业知识库",
+  "collapsible": true,
+  "defaultOpen": false,
+  "pages": [
+    "knowledge",
+    "knowledge-sync"
+  ]
+}

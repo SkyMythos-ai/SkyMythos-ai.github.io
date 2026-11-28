@@ -1,0 +1,68 @@
+---
+title: Create a Task
+description: Express goals clearly using natural language and the four-part prompt pattern, pick the right work surface, and attach authorized context.
+---
+
+Starting work in SkyMythos does not require complex orchestration syntax. State your goal and boundaries clearly, pick the right surface for the job, and attach only the materials needed.
+
+## Describe Your Goal: From One Line to Four Parts [#describe-the-goal]
+
+You can start with a concise natural-language request or use the four-part **Goal + Materials + Deliverables + Boundaries** structure for higher reliability:
+
+- "Group this week's customer feedback by module and propose three priority fixes against the Onboarding Guide."
+- "Using the Attendance & Transfer section of the Employee Handbook, draft a Role Adjustment Agreement and list documents HR must verify."
+- "Inspect the OAuth callback validation logic in the linked repository and summarize potential edge cases."
+- "Add empty-name validation and unit tests to the config save endpoint while keeping success payloads unchanged; deliver diffs and test logs only."
+- "Every Monday morning, summarize new entries in the target folder into a reviewable product briefing."
+
+For work with strict acceptance criteria, adapt this template:
+
+```text
+Goal: State the specific problem to solve or change to implement.
+Materials: Name the authorized Knowledge Bases, uploaded files, or target repo and branch.
+Deliverables: Specify whether you expect a Markdown report, comparison table, or Git diff + test logs.
+Boundaries: List forbidden actions (e.g., draft only, do not touch production, do not auto-merge).
+```
+
+## Choose the Right Work Surface [#choose-the-right-work-surface]
+
+Pick the surface that matches how structured and repeatable the job is:
+
+| Work Pattern | Recommended Surface | Where & What to Prepare |
+| --- | --- | --- |
+| One-off analysis, Q&A, or quick exploration | **SkyBot Quick Chats** | `SkyBot → New Chat`; state your goal and attach relevant Knowledge Bases |
+| Ongoing initiative sharing files and project memory | **SkyBot Projects** | `SkyBot → New Project`; set a clear project name, directory, and optional repositories (see [Projects](/docs/projects)) |
+| Staged software delivery against a Git repo | **Engineering Tasks** | `Tasks → New Task`; bind Repository, Base branch, Flow, and required inputs (see [Engineering Tasks](/docs/tasks)) |
+| Recurring tasks triggered by schedule or events | **Automations** | `Automations → New Workflow`; configure instructions, runtime, triggers, and test runs (see [Automations](/docs/automations)) |
+
+## Attach Context & Materials Safely [#attach-context-and-materials]
+
+Provide context through four governed channels:
+
+1. **Attach Published Knowledge Bases**: Select only the Knowledge Bases needed and authorized for the task (unpublished drafts are excluded from search).
+2. **Upload Files or Screenshots**: Attach text files, PDFs, or images directly for inspection.
+3. **Bind Repository & Base Branch**: In Projects or Tasks, pick an authorized Git repository and choose a safe base branch rather than a protected release branch.
+4. **Select AI Employees & Skills**: Assign a specialized [AI Employee](/docs/employees) or Marketplace Skill instead of retyping long instruction blocks every time.
+
+<Callout type="warn" title="Never Paste Plaintext Secrets in Prompts">
+  Never enter API keys, Git tokens, or OAuth secrets inside chat messages or task descriptions. Store all credentials securely under [Model Configuration](/docs/models-tools) and [Connectors](/docs/connectors).
+</Callout>
+
+## What Happens After Creation [#after-task-creation]
+
+Once submitted, the Console transitions into the active work view:
+- **Left Sidebar**: Your new conversation, project, or task appears in its corresponding list for easy switching.
+- **Main Workspace**: Streams live turn progress, tool calls, stage status, or human confirmation requests.
+- **Right Panel & Details**: Surfaces bound context files, generated Artifacts, code diffs, and trace telemetry.
+
+<DocScreenshot
+  name="console-overview"
+  alt="Annotated SkyBot composer and navigation layout for creating a structured task"
+  caption="Where to select surfaces, bind context, and compose structured prompts"
+  annotations={[
+    { step: "1", title: "Top Modules & Workspace Bar", description: "Verify your active Workspace before launching work in SkyBot, Tasks, or Automations." },
+    { step: "2", title: "Conversations & Projects Rail", description: "Start a Quick Chat, open a persistent Project workspace, or jump to Tasks." },
+    { step: "3", title: "Goal Composer & Context", description: "Write your four-part Goal/Materials/Deliverables/Boundaries prompt and bind files or models." },
+    { step: "4", title: "Workspace, Memory & Live Runtime Bar", description: "Inspect attached project Workspace directories, AGENTS.md guidelines, and live runtime health." },
+  ]}
+/>

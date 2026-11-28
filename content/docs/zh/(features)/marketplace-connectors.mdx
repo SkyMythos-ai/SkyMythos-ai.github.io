@@ -1,0 +1,39 @@
+---
+title: 技能与能力市场（Marketplace）
+description: 在能力市场浏览、复用和发布 MCP、Skill、Flow 与 WorkNode 资产，理解工作空间与组织公开两档可见性及 CapabilityLock 锁定机制。
+---
+
+当团队积累了一批成熟的工作指令包、工具协议或研发模板后，可以通过**能力市场（Marketplace）**将其资产化并在团队或全组织内按权限共享。
+
+## 能力市场四大资产类型 [#four-marketplace-asset-types]
+
+进入一级导航 **能力市场**（`marketplace`），页面按资产类型分为四个目录页签：
+
+| 资产类型 | 路由参数 | 核心内容与职责 | 典型复用场景 |
+| --- | --- | --- | --- |
+| `MCP` | `?type=mcp` | Model Context Protocol 工具服务定义、参数 Schema 与凭据槽位（`Connector Slot`） | 让数字员工或研发任务安全调用内部工单、监控或只读查询接口 |
+| `Skill` | `?type=skill` | 封装专业领域检查规范、指令集与脚本资源的标准化方法包 | 注入代码评审基线、财务核对规范或特定技术栈最佳实践 |
+| `Flow` | `?type=flow` | 包含多阶段调用、依赖拓扑与产物绑定的研发流程模板 | 标准化团队“需求理解 → 编码 → 单测门禁 → 交付”工程流 |
+| `WorkNode` | `?type=worknode` | 独立维护与版本化的单个可执行 Agent 阶段模板 | 在多条 Flow 中直接复用“安全扫描节点”或“接口测试节点” |
+
+<DocScreenshot
+  name="marketplace-assets"
+  alt="能力市场（Marketplace）四大资产分类、搜索筛选、新建入口与资产卡片标注"
+  caption="在能力市场统一管理 MCP、Skill、Flow 与 WorkNode 的工作区与组织公开资产"
+  annotations={[
+    { step: "1", title: "四大资产分类", description: "按 MCP、Skill、Task Flow 与 Task Node 快速切换浏览目录。" },
+    { step: "2", title: "搜索过滤与卡片/列表切换", description: "按名称、可见范围（工作区/公开）、分类与作者过滤能力。" },
+    { step: "3", title: "新建 Skill 能力入口", description: "在此创建并保存能力定义（保存即对授权作用域生效）。" },
+    { step: "4", title: "资产卡片与版本可见范围", description: "展示当前可见性标签、作者、版本与已关联员工数，执行期经 CapabilityLock 锁定摘要。" },
+  ]}
+/>
+
+## 可见性、草稿协作与 CapabilityLock [#asset-visibility-and-capability-lock]
+
+1. **两档可见性与协同维护**：能力市场资产支持**工作空间共享（Workspace）**与**组织公开（Public）**两档可见性。草稿支持工作空间内成员协同修改并留存创建与编辑审计，面向全组织公开的发布版则使用不可变的 SemVer 版本号。
+2. **保存即用与删除分级**：当前内容保存即生效，同时删除权限严格按照创建者、Workspace Admin 与平台 Admin 分级控制，防止正在被线上流程引用的能力被误删。
+3. **任务启动摘要锁定（CapabilityLock）**：研发 Task 或流程启动时，控制面会将实际引用的 Skill 与 MCP 版本及内容摘要锁定进 `CapabilityLock`；隔离沙箱只消费这一锁定快照，运行中途不会受外部草稿修改影响。
+
+<Callout type="info" title="能力定义与使用授权分离">
+  在能力市场装配一个带有 `Connector Slot` 的 MCP 或 Skill 时，只表示声明了工具能力结构，**不会把原作者的个人账号凭据一并共享给其他人**。使用者仍需前往[连接器（Connectors）](/zh/docs/connectors)完成本人授权。
+</Callout>

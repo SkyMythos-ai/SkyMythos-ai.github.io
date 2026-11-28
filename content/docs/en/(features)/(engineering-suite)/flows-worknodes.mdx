@@ -1,0 +1,59 @@
+---
+title: Engineering Flows & WorkNode Authoring
+description: Author versioned Flow Templates (YAML and DAG), reusable WorkNodes, typed Artifact handoffs, deterministic Unit Gates, and promote verified snapshots.
+---
+
+When engineering teams want to standardize their delivery pipeline—from analysis and planning to implementation, review, and test verification—**Flows** and **WorkNodes** turn those practices into versioned, repeatable workflows.
+
+<EngineeringFlowDiagram />
+
+## Core Orchestration Concepts [#core-orchestration-concepts]
+
+Inside **Tasks → Flow Templates** (`flows`) and **WorkNodes**, orchestration relies on four clean abstractions:
+
+| Object | Role & Representation | Authoring Rule |
+| --- | --- | --- |
+| `Flow Template` | Editable, publishable workflow asset defined in structured YAML (with DAG view as its visual projection) | Tasks consume immutable `Flow Releases`; draft edits never disrupt running tasks |
+| `WorkNode` | Independently versioned, reusable Agent execution definition (historically `Stage`) | Packages runtime, model protocol, prompt, Skills/MCP, and Unit Gate commands without hardcoding graph edges |
+| `Inline WorkNode` | Execution node defined directly inside a single Flow Template | Scoped strictly to that Flow; does not appear as a standalone shared marketplace asset |
+| `Flow Invocation` | A specific call to a WorkNode inside a Flow | Declares node ID, `Flow Prerequisites`, named input bindings, and artifact routing |
+
+<DocScreenshot
+  name="task-flow-editor"
+  alt="Task Flow management surface highlighting Flows/Task Node tabs, New Flow Template button, and published Flow Release card"
+  caption="Manage Flow Templates and reusable WorkNodes, or launch a Task directly from a published Flow"
+  annotations={[
+    { step: "1", title: "Flows & Reusable Nodes Tabs", description: "Switch between multi-stage Flow Templates and standalone reusable WorkNodes." },
+    { step: "2", title: "Create Flow Template", description: "Author a new YAML/DAG pipeline with optional Platform Assistant Design Sessions." },
+    { step: "3", title: "Published Flow & Launch Task", description: "Inspect immutable Flow versions, node stages, and launch tasks directly." },
+  ]}
+/>
+
+<Callout type="info" title="Keep Complexity Out of Daily Tasks">
+  Everyday developers submitting a Task do not need to manage raw DAG graphs—they can pick a published Flow or let Preflight orchestrate one. Platform engineers and tech leads curate Flow Templates and WorkNodes to encode team standards.
+</Callout>
+
+## Designing a Reliable WorkNode [#authoring-a-reliable-worknode]
+
+When authoring a reusable WorkNode, define four contracts clearly:
+
+1. **Role Prompt & Typed I/O**: State which named inputs the node consumes and which deliverable files it must produce.
+2. **Model & Locked Capabilities**: Select a compatible model protocol and bind Marketplace `Skills` or `MCP` servers (pinned via `CapabilityLock` at task launch).
+3. **Artifact Output Contract**: Require structured handoff artifacts (`result.md`, `artifacts.json` manifest, or immutable `Code Change Artifacts`) rather than free-form chat claims.
+4. **Deterministic Unit Gate**: Attach executable verification commands (such as `npm run typecheck` or `go test ./...`). Failing gates block downstream nodes automatically and preserve exact diagnostic logs.
+
+## Wiring Dependencies & Typed Input Bindings [#composing-flow-dependencies-and-bindings]
+
+Whether editing YAML directly, inspecting the visual DAG, or collaborating with the Platform Assistant inside a `Design Session`, follow these wiring principles:
+
+- **Declare Direct Prerequisites (`Flow Prerequisite`)**: List only direct upstream execution dependencies; transitive prerequisites do not need redundant edges.
+- **Bind Specific Artifacts (`WorkNode Input Binding`)**: Map upstream artifacts explicitly into named downstream inputs rather than dumping an entire upstream chat transcript—keeping every stage context focused and predictable.
+- **Enable Parallel Stages**: Independent branches (such as parallel review angles or test generation alongside implementation) can share the same upstream prerequisite and run concurrently inside the Sandbox Supervisor.
+
+## Dynamic Flow Snapshots & Asset Promotion [#generated-flows-and-promotion]
+
+When creating a Task without pinning a custom Flow, Preflight follows a governed two-step strategy:
+
+1. Prefer an existing published `Flow Release` from your workspace or the Marketplace if one fits.
+2. Otherwise, synthesize an auditable `Generated Flow Snapshot` tailored to the task. This snapshot **belongs solely to that Task** and does not clutter the workspace Flow catalog.
+3. Once a dynamically generated plan proves valuable across real deliveries, promote it into a workspace `Flow Template` draft, refine its Unit Gates, and publish it as a reusable team standard.

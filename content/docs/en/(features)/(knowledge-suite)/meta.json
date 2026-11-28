@@ -1,0 +1,9 @@
+{
+  "title": "Enterprise Knowledge",
+  "collapsible": true,
+  "defaultOpen": false,
+  "pages": [
+    "knowledge",
+    "knowledge-sync"
+  ]
+}

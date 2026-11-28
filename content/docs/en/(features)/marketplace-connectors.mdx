@@ -1,0 +1,39 @@
+---
+title: Skills & Capability Marketplace
+description: Browse, share, and publish MCP, Skill, Flow, and WorkNode assets across workspace and public scopes with CapabilityLock digest pinning.
+---
+
+Once teams refine effective instructions, tool integrations, or engineering pipelines, the **Marketplace** packages them into governed, reusable assets for workspace or organization-wide discovery.
+
+## Four Marketplace Asset Types [#four-marketplace-asset-types]
+
+Open **Marketplace** (`marketplace`) from the primary rail to filter assets across four categories:
+
+| Asset Type | Query Filter | Contents & Role | Typical Reuse |
+| --- | --- | --- | --- |
+| `MCP` | `?type=mcp` | Model Context Protocol tool definitions, parameter schemas, and logical `Connector Slots` | Enable employees and tasks to query internal ticket systems or read-only APIs |
+| `Skill` | `?type=skill` | Curated domain instructions, checklists, and helper scripts | Inject code review standards, expense audit rules, or framework conventions |
+| `Flow` | `?type=flow` | Multi-stage engineering DAG templates with typed input/output bindings | Standardize "Understand → Implement → Unit Gate → Deliver" pipelines |
+| `WorkNode` | `?type=worknode` | Independently versioned single-stage Agent execution definitions | Reuse a "Security Audit Node" or "Test Coverage Node" across multiple Flows |
+
+<DocScreenshot
+  name="marketplace-assets"
+  alt="Marketplace browser highlighting 4 asset types, search filter, Create Skill trigger, and asset visibility badges"
+  caption="Browse and govern workspace-shared and public MCP, Skill, Flow, and WorkNode assets"
+  annotations={[
+    { step: "1", title: "4 Asset Types", description: "Filter catalog views across MCP, Skill, Task Flow, and Task Node." },
+    { step: "2", title: "Search & View Toggle", description: "Filter assets by query, visibility scope, category, and maintainer." },
+    { step: "3", title: "Create New Skill", description: "Create and save modular Skills directly inside your authorized scope." },
+    { step: "4", title: "Asset Card & Visibility Scope", description: "Displays Workspace vs. Public badges, maintainer, timestamp, and CapabilityLock-ready version metadata." },
+  ]}
+/>
+
+## Visibility, Collaboration & CapabilityLock [#asset-visibility-and-capability-lock]
+
+1. **Workspace vs. Public Visibility**: Assets support **Workspace-shared** and **Organization-public** visibility. Workspace members collaborate on drafts with creator/editor audit logs, while public Marketplace releases use immutable SemVer tags.
+2. **Save-to-Use & Tiered Deletion**: Saved updates apply immediately for authorized maintainers, while deletion is governed by creator, Workspace Admin, and Platform Admin rules to protect active Flows.
+3. **Launch-Time Digest Pinning (`CapabilityLock`)**: When an engineering Task starts, the Control Plane pins exact Skill and MCP revisions and digests into `CapabilityLock` so running sandboxes stay deterministic even if upstream drafts change.
+
+<Callout type="info" title="Definitions Never Bundle Personal Secrets">
+  Attaching an MCP or Skill asset that declares a `Connector Slot` never copies the original author's personal credentials. Each user authorizes their own tokens under [Connectors](/docs/connectors).
+</Callout>

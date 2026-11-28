@@ -1,0 +1,9 @@
+{
+  "title": "上手技巧与精选能力",
+  "collapsible": true,
+  "defaultOpen": false,
+  "pages": [
+    "efficient-tips",
+    "playbooks"
+  ]
+}

@@ -2,19 +2,14 @@
   "title": "产品文档",
   "pages": [
     "index",
-    "---开始使用---",
-    "getting-started",
-    "projects",
-    "tasks",
-    "automations",
-    "---组织能力---",
-    "employees",
-    "knowledge",
-    "models-tools",
-    "---企业接入---",
-    "private-deployment",
-    "architecture",
-    "deployment",
-    "troubleshooting"
+    "(getting-started)",
+    "---从入门到精通指南---",
+    "(deployment-guide)",
+    "(features)",
+    "(practice-cases)",
+    "(tips-and-skills)",
+    "(faq-troubleshooting)",
+    "---白皮书、授权与支持---",
+    "(enterprise-reference)"
   ]
 }

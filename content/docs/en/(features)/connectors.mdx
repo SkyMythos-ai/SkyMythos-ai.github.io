@@ -1,0 +1,51 @@
+---
+title: Connectors
+description: Connect Git providers, enterprise IM, and governed MCP servers through separated admin catalogs and private member OAuth or token authorizations.
+---
+
+**Connectors** link SkyMythos to your existing enterprise toolchain—including Git hosts, Lark/Feishu, Slack, and MCP tool servers. By separating **admin-defined catalogs** from **personal member authorizations**, private tokens never leak when teams share workflows.
+
+## Two-Layer Model: Enterprise Catalog vs. Personal Grants [#two-layer-connector-model]
+
+| Layer | Operated By | What It Defines | Security Boundary |
+| --- | --- | --- | --- |
+| **Enterprise Catalog** (`settings?section=platform-connectors`) | `Organization Admin` | Approved provider URLs, API endpoints, custom CA bundles, and OAuth app configs | Catalog never holds or exposes any member's private tokens |
+| **Personal Connections** (`connectors`) | Individual Members | Browse open enterprise connectors and bind personal OAuth grants or private tokens | Sharing Skills, AI employees, or Projects never transfers the author's personal credentials |
+
+<DocScreenshot
+  name="connectors-auth"
+  alt="Connectors catalog highlighting status tabs, Browse Marketplace button, and per-service Manage/Configure state"
+  caption="Personal Connectors workbench keeping Enterprise LLM Gateways, Git OAuth, Lark/Feishu, and private keys cleanly isolated"
+  annotations={[
+    { step: "1", title: "Authorization Status Tabs", description: "Filter services across All, Ready to use, Needs setup, and Status unconfirmed." },
+    { step: "2", title: "Browse Marketplace MCPs", description: "Jump to the Marketplace MCP catalog to review available tool integrations." },
+    { step: "3", title: "Git, Enterprise & Personal Tokens", description: "Inspect personal readiness per service and manage or revoke tokens independently." },
+  ]}
+/>
+
+## Authorizing an External Service [#authorize-a-connector]
+
+<Steps>
+  <Step>
+    ### Inspect Available Connectors & Scopes
+
+    Open **Connectors** (`connectors`) from the primary rail to view approved Git providers, enterprise IM integrations, and MCP servers alongside their required permission scopes.
+  </Step>
+  <Step>
+    ### Complete OAuth or Save a Personal Token
+
+    Open the target connector detail page to run the OAuth flow or enter a private token (such as `User Git Credential`) in the credential dialog. Personal Git credentials follow you across authorized workspaces securely.
+  </Step>
+  <Step>
+    ### Inspect MCP Tools & Parameter Schemas
+
+    For MCP connectors, inspect the list of exposed tools, descriptions, and parameter schemas directly on the detail view and verify connectivity with a safe read-only call before attaching to agents.
+  </Step>
+</Steps>
+
+## Handling Missing or Revoked Connections [#when-a-required-service-is-disconnected]
+
+- **Missing Connector Prompt**: If an AI employee, Skill, or Flow requires a `Connector Slot` you have not yet authorized, SkyMythos surfaces an explicit connection prompt rather than falling back to another user's credentials.
+- **Refresh, Rotation & Revocation**: When a token expires or status fails to load, refresh authoritative status and re-authorize. Revoking a grant blocks all new requests immediately, though prior completed external writes cannot be undone automatically.
+
+To learn how Skills and MCP definitions are packaged and version-pinned, read [Skills & Capability Marketplace](/docs/marketplace-connectors).

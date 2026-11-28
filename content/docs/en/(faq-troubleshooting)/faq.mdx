@@ -1,0 +1,54 @@
+---
+title: Frequently Asked Questions
+description: Answers to common questions about SkyMythos architecture, workspace isolation, AI employee training, knowledge publishing, private deployment, and POCs.
+---
+
+Below are answers to the most common questions from daily users, workspace admins, and enterprise evaluation teams.
+
+## Product Positioning & Work Modes [#product-and-work-modes]
+
+<Accordions type="multiple">
+  <Accordion id="faq-chat-vs-platform" title="Is SkyMythos a chatbot or an enterprise work platform?">
+    Chat is only one entry point. SkyMythos brings together business goals, AI employees, persistent projects, engineering Tasks, Automations, Enterprise Knowledge, and isolated sandboxes—focusing on governed execution, inspectable deliverables, and compounding team capabilities.
+  </Accordion>
+
+  <Accordion id="faq-project-vs-task" title="Do threads created inside a SkyBot Project become Engineering Tasks automatically?">
+    No. Project threads and formal Engineering Tasks are distinct domain objects. Projects suit iterative exploration over shared working directories, while Tasks freeze requirements, repository baselines, and Flow revisions inside isolated sandboxes with deterministic Unit Gates and Git diffs.
+  </Accordion>
+
+  <Accordion id="faq-personal-dev-machine" title="Does switching Workspaces create a new Personal Dev Machine?">
+    No. Your `Personal Development Environment` is globally unique per `User` and backed by a dedicated Kubernetes PVC (`/workspace` and `/home/fusion`), preserving files and tooling seamlessly across workspaces and restarts.
+  </Accordion>
+</Accordions>
+
+## AI Employees, Knowledge & Access Control [#employees-knowledge-and-governance]
+
+<Accordions type="multiple">
+  <Accordion id="faq-employee-training" title="Does 'training' an AI Employee modify underlying LLM weights?">
+    No. Training distills verified work experience into a proposed revision of the employee's prompt, operating rules, and capability bindings. Updates save only after explicit human approval, and active jobs retain their launch-time snapshots.
+  </Accordion>
+
+  <Accordion id="faq-knowledge-draft-vs-release" title="Why can't Retrieval Test find a document I just saved?">
+    Knowledge separates **Save Draft**, **Publish New Version**, and **Searchable Index**. Unsaved or unpublished drafts never enter search. Publish the saved draft per document, wait for indexing to report `Searchable`, and verify your separate Embedding Gateway is healthy.
+  </Accordion>
+
+  <Accordion id="faq-shared-credentials" title="Does sharing an AI Employee, Skill, or Knowledge Base expose my API keys or Git tokens?">
+    Never. Capability definitions and private credentials stay strictly isolated. Teammates using your shared assets always run under their own authorized credentials or workspace quotas, and are prompted to connect if a required slot is unauthorized.
+  </Accordion>
+
+  <Accordion id="faq-admin-privacy" title="Can an Organization Admin automatically read every user's private workspace conversations?">
+    No. Platform infrastructure privileges do not grant automatic read access to private workspace sessions—visibility follows dual-layer Organization and Workspace role boundaries.
+  </Accordion>
+</Accordions>
+
+## Private Deployment & POC Evaluation [#private-deployment-and-poc]
+
+<Accordions type="multiple">
+  <Accordion id="faq-zero-egress" title="Does private deployment guarantee 100% zero outbound traffic?">
+    Every integration path must be audited explicitly. While the Control Plane, Knowledge, and Sandboxes run inside your infrastructure, configuring external LLM gateways, Git hosts, or IM connectors sends scoped payloads to those endpoints. Audit egress paths using [Enterprise Readiness & POC](/docs/private-deployment).
+  </Accordion>
+
+  <Accordion id="faq-poc-and-pricing" title="Is there a public self-serve trial, and how do teams evaluate SkyMythos?">
+    SkyMythos targets enterprise private deployments rather than public self-serve trials. Teams start by [requesting a POC](/poc) around 1–2 measurable scenarios with clear acceptance criteria. Commercial terms are quoted per POC and enterprise scope; see [Licensing, Usage & Support](/docs/licensing-and-support).
+  </Accordion>
+</Accordions>

@@ -1,0 +1,9 @@
+{
+  "title": "Tips & Curated Capabilities",
+  "collapsible": true,
+  "defaultOpen": false,
+  "pages": [
+    "efficient-tips",
+    "playbooks"
+  ]
+}

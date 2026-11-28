@@ -1,0 +1,41 @@
+---
+title: 右侧全局平台助手
+description: 在右侧边栏随时呼出部署级 Platform Assistant，进行功能问答、运行状态查询、Flow/WorkNode 辅助起草与行动提案确认。
+---
+
+在 Web Console 右侧边栏中，你可以随时展开或固定 **Platform Assistant（全局平台助手）**。与在具体业务里干活的项目数字员工或研发 Task Agent 不同，Platform Assistant 是面向全部署获授权用户的**平台向导与辅助协作者**。
+
+## 全局助手的核心定位与权限边界 [#role-and-boundaries]
+
+- **部署级跨页面上下文**：无论你当前停留在知识库、研发任务还是设置页面，右侧助手都能感知当前工作区与页面上下文，协助解释配置含义与状态提示。
+- **不代替执行数字员工**：Platform Assistant 不直接替你运行编码沙箱、也不绕过工作空间授权偷偷读写外部生产系统；涉及实际业务操作时，它会桥接到受治理的执行入口。
+
+## 三大典型使用场景 [#three-core-use-cases]
+
+<Tabs items={["平台答疑与状态查询", "Flow / WorkNode 辅助编排", "结构化行动提案（ActionProposal）"]}>
+  <Tab value="平台答疑与状态查询">
+    当你不确定某个设置项含义、或某个任务停留在特定状态时，直接在右侧输入框提问即可。助手可基于当前页面状态提供排查线索与相关文档指引，不会产生任何后台写入副作用。
+  </Tab>
+  <Tab value="Flow / WorkNode 辅助编排">
+    在编辑 `Flow Template` 或 `WorkNode` 草稿时呼出右侧助手，会创建一个绑定当前草稿版本（`revision`）与操作者权限的 **Design Session**。助手产出的修改建议以可审阅、可撤销的 **AI Change Set** 形式呈现，只有通过控制面乐观锁（CAS）校验并由你明确应用后，才会更新草稿内容。
+  </Tab>
+  <Tab value="结构化行动提案（ActionProposal）">
+    当助手建议执行某项受治理平台操作（如创建资源或触发动作）时，会生成一张清晰的 `ActionProposal` 确认卡片，完整列出目标对象与参数。只有经过你的点击确认，服务端 `ActionExecutor` 才会调用对应领域服务真正执行。
+  </Tab>
+</Tabs>
+
+## 右侧助手面板常用操作 [#panel-controls]
+
+- **展开与收起 / 固定**：点击顶栏助手图标打开或折叠右侧面板；宽屏下支持将其固定在右侧，并在分隔线拖拽调节舒适宽度。
+- **独立会话边界**：全局平台助手的对话不绑定你的个人开发机进程，也不会混入项目工作目录或变成某个数字员工的私人工作记忆。
+
+<DocScreenshot
+  name="task-flow-editor"
+  alt="SkyMythos 控制台右下角全局平台助手入口与 Flow 编排工作台（支持 Design Session 辅助起草）"
+  caption="在 Flow 编排与日常控制台页面中，可通过右下角悬浮入口呼出全局平台助手开展 Design Session 或查询状态"
+  annotations={[
+    { step: "1", title: "流程编排与可复用节点库切换", description: "切换 Flow 流程模板与可复用 WorkNode 节点视图。" },
+    { step: "2", title: "新建 Flow Template", description: "新建工程流程草稿并可结合平台助手发起 Design Session。" },
+    { step: "3", title: "已发布流程版本与发起任务", description: "审阅不可变 Flow Release 版本，并通过右下角红标悬浮按钮呼出平台助手答疑或起草方案。" },
+  ]}
+/>

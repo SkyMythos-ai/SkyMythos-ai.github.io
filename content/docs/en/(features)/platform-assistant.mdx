@@ -1,0 +1,41 @@
+---
+title: Right Sidebar & Platform Assistant
+description: Open the deployment-wide Platform Assistant in the right sidebar for product guidance, status checks, Flow/WorkNode drafting, and confirmed ActionProposals.
+---
+
+From the right sidebar of the Web Console, you can open or pin the **Platform Assistant** at any time. Unlike workspace AI employees or task execution agents, the Platform Assistant serves as a **deployment-wide guide and governed authoring helper** for all authorized users.
+
+## Role & Safety Boundaries [#role-and-boundaries]
+
+- **Page-Aware Guidance**: Regardless of whether you are inspecting Knowledge, Tasks, or Platform Settings, the assistant reads active workspace and page context to explain controls and surface diagnostic hints.
+- **Never Bypasses Governed Surfaces**: The Platform Assistant does not replace your execution agents or silently mutate production systems; any real state change routes through explicit confirmation gates.
+
+## Three Core Use Cases [#three-core-use-cases]
+
+<Tabs items={["Product Q&A & Status Checks", "Flow & WorkNode Authoring Aid", "Structured ActionProposals"]}>
+  <Tab value="Product Q&A & Status Checks">
+    Ask the assistant what a configuration setting does or why a task is paused. It explains domain semantics and points to exact logs without causing background write side effects.
+  </Tab>
+  <Tab value="Flow & WorkNode Authoring Aid">
+    Opening the assistant inside a Flow Template or WorkNode draft launches a **Design Session** pinned to that draft revision and your permissions. Suggested edits arrive as reviewable, reversible **AI Change Sets** that update the draft only after explicit acceptance and Control Plane concurrency (CAS) validation.
+  </Tab>
+  <Tab value="Structured ActionProposals">
+    When suggesting a governed platform action, the assistant renders an `ActionProposal` card detailing target entities and parameters. Nothing runs until you explicitly approve it for the backend `ActionExecutor`.
+  </Tab>
+</Tabs>
+
+## Panel Controls & Session Scope [#panel-controls]
+
+- **Toggle, Pin & Resize**: Open or collapse the right sidebar from the top utility bar, pin it alongside wide views, and drag the panel resizer to adjust width.
+- **Clean Context Separation**: Platform Assistant conversations never bind to your Personal Dev Machine processes or pollute Project directories and AI employee memory.
+
+<DocScreenshot
+  name="task-flow-editor"
+  alt="SkyMythos Task Flow workspace with bottom-right Platform Assistant launcher for Design Sessions and Q&A"
+  caption="Launch the global Platform Assistant via the bottom-right trigger on Flow authoring and console pages"
+  annotations={[
+    { step: "1", title: "Flows & Reusable Nodes Tabs", description: "Switch between Flow Templates and reusable Task Node definitions." },
+    { step: "2", title: "Create Flow Template", description: "Start a Flow draft or pair it with a Platform Assistant Design Session." },
+    { step: "3", title: "Published Flow & Launch Task", description: "Inspect immutable Flow Releases while keeping the bottom-right assistant one click away." },
+  ]}
+/>

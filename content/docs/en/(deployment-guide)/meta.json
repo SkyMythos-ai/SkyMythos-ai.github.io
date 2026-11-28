@@ -1,0 +1,11 @@
+{
+  "title": "Deployment & Onboarding",
+  "collapsible": true,
+  "defaultOpen": false,
+  "pages": [
+    "private-deployment",
+    "deployment",
+    "im-integration",
+    "architecture"
+  ]
+}

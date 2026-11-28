@@ -1,0 +1,52 @@
+---
+title: External Sync & Quality Governance
+description: Collaborate across workspace knowledge bases, import explicit Lark/Feishu Docx links, monitor sync jobs, and govern quality and retirement.
+---
+
+Enterprise Knowledge supports collaborative team maintenance, controlled external document imports, and ongoing quality analytics so shared team documentation stays accurate and trustworthy.
+
+## Workspace Collaboration & Ownership [#workspace-collaboration-and-roles]
+
+Inside a `Workspace Knowledge Base`, members collaborate according to their workspace roles:
+
+- **Drafting & Conflict Safety**: Authorized maintainers edit drafts with full revision tracking. If a concurrent save or publish conflict occurs, reload the latest revision and merge changes carefully instead of overwriting teammates' work.
+- **External vs. Native Editing Rights**: Externally synced documents preserve their source provenance and may remain read-only inside SkyMythos so teams update truth in the upstream origin rather than creating diverging local forks.
+
+## Explicit Lark / Feishu Import & Sync Jobs [#lark-doc-sync-and-jobs]
+
+<Steps>
+  <Step>
+    ### Verify App Scopes & Grants
+
+    Confirm an Org Admin enabled document grants (`docs:document.content:read` and `offline_access`) under [Lark, Feishu & Slack Setup](/docs/im-integration).
+  </Step>
+  <Step>
+    ### Import by Explicit Docx URL
+
+    Workspace Admins provide a specific Lark/Feishu Docx URL to pull Markdown into a target Knowledge Base. **SkyMythos never bulk-crawls entire external workspaces or claims to mirror external ACL trees automatically.**
+  </Step>
+  <Step>
+    ### Monitor Sync Jobs
+
+    Open `Knowledge Sync` (`knowledge/sync`) in the context sidebar to track import jobs, destination bases, and failure reasons, retrying individual jobs once URL or token issues are fixed.
+  </Step>
+</Steps>
+
+## Quality Analytics & Retirement Lifecycle [#quality-analytics-and-lifecycle]
+
+Use `Knowledge Quality` (`knowledge/quality`) to keep knowledge bases healthy over time:
+
+<DocScreenshot
+  name="knowledge-base"
+  alt="Knowledge sidebar highlighting Knowledge Sync and Knowledge Quality views alongside published bases"
+  caption="Navigate directly between Scopes, Knowledge Sync jobs, and Quality Analytics"
+  annotations={[
+    { step: "1", title: "Scopes, Sync & Quality Nav", description: "Jump between collection scopes, external sync job status, and quality diagnostics." },
+    { step: "2", title: "Retrieval Test & New Base", description: "Run retrieval checks after importing updated Markdown or publishing a new revision." },
+    { step: "3", title: "Published Knowledge Bases", description: "Confirm updated timestamps and visibility scope on destination Knowledge Bases." },
+  ]}
+/>
+
+- **Spot Stale or Unsourced Entries**: Audit outdated documents, entries missing maintainers, or guidelines superseded by newer decisions; update drafts, publish new revisions, and re-run key retrieval checks.
+- **Archive Instead of Destructive Deletion**: When retiring obsolete documents referenced by past tasks, check downstream impact and archive cleanly rather than deleting bases teams still rely on.
+- **Keep Transcripts Out of Knowledge**: Never dump raw chat logs directly into authoritative Knowledge Bases—route distilled insights through [Memory](/docs/memory) or [AI Employee](/docs/employees) review flows first.

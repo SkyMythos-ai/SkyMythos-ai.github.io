@@ -1,0 +1,59 @@
+---
+title: 核心概念与领域模型
+description: 系统梳理 SkyMythos 的四层核心领域对象、所有权与访问范围规则，以及执行与验收的状态语义。
+---
+
+为了避免把临时会话状态、原始资料与长期权威资产混为一谈，SkyMythos 在平台底层定义了一套清晰、严格的四层领域模型。理解这组对象及其边界，有助于团队在日常协作与企业治理中做出准确设计。
+
+<DomainModelDiagram />
+
+## 第一层：组织与访问边界（Governance Scope） [#governance-scope]
+
+| 领域对象 | 核心职责 | 关键治理约束 |
+| --- | --- | --- |
+| `Organization` | 一套部署内唯一的企业治理边界 | 每套部署恰好对应一个 Organization，统一管理认证登录、全局模型网关与企业连接目录，不跨部署切换。 |
+| `Workspace` | 承载团队成员授权、工作与资产的逻辑协作空间 | 明确归属于唯一 Organization；包含一个全员自动加入的共享 `Public Workspace`，以及成员按需创建的私有/团队工作空间。 |
+| `User` & `IdentityLink` | 人类成员稳定身份与企业 SSO 绑定关系 | 本地或外部身份（如飞书/Lark）经显式 `IdentityLink` 绑定；不支持凭同邮箱隐式合并账号。账户禁用可恢复，账户删除保留永久墓碑且历史数据不随邮箱复用转移。 |
+| 角色分级 | 组织级与工作空间级双层权限体系 | 组织级区分 `Admin`、`Operations`、`Member`；工作空间级区分 `Admin`、`Member`、`Viewer`。平台管理权不自动等价于工作空间私有会话的读取权。 |
+
+## 第二层：四大工作入口（Execution Surfaces） [#execution-surfaces]
+
+SkyMythos 提供四类互补的工作与调度对象，分别对应不同的协作颗粒度与确定性要求：
+
+1. **SkyBot 对话（Conversation & Agent Turn）**：工作空间内的连续对话容器。每一次处理过程对应一个持久化、可恢复的异步 `Agent Turn`，内部通过追加式事件记录文本、工具调用、审批请求与用量。适用于快速问答、单次分析或发起受控工作。
+2. **项目（Project）**：围绕长期目标组织的协作范围，持有共享项目工作目录、项目说明与带来源的项目记忆，并可关联一个或多个代码仓库（Repository）。项目内多个会话可共享目录协作，但保留各自独立的上下文记录；普通项目 Thread 不会自动进入正式研发 Task 列表。
+3. **研发任务（Task & TaskSpec）**：面向确定性软件交付的工程实例。创建时解析并冻结需求、Repository、基线分支、Flow 版本、模型、能力锁（`CapabilityLock`）与输入摘要为不可变的 `TaskSpec`（不包含任何明文密钥），并在独立隔离的 Sandbox 中异步推进。
+4. **自动化（Automation Definition & Run）**：将重复性任务组织为版本化自动化流程与触发规则（手动、定时、Webhook、连接器事件）。`Automation Definition` 描述工作方法与配置，每次实际触发产生的记录是独立的 `Automation Run`，二者在界面与审计上严格分离。
+
+<Callout type="info" title="注意区分执行对象与观测对象">
+  SkyBot 对话（Turn）、研发任务（Task）与自动化运行（Automation Run）都是彼此独立的业务对象。在可观测性视图中，请先定位原业务对象，再下钻查看其关联的 OpenTelemetry `Trace` 与 `Span` 执行证据。
+</Callout>
+
+## 第三层：可复用能力资产（Reusable Capabilities） [#reusable-capabilities]
+
+- **数字员工（AI Employee）**：承载角色名称、可见范围、工作指令（Prompt）、默认模型与关联扩展能力的可复用配置。当用户针对已有工作发起经验分析时，系统生成的是一份**待确认的改进提案**；只有人工显式审阅并确认保存，才会更新员工配置，且不会强行篡改正在运行中的旧任务快照。
+- **企业知识库（Knowledge Base & Release）**：区分个人知识库、工作空间知识库、授权共享知识库与公开市场发布版本（`Public Knowledge Release`）。知识以“草稿 → 单篇发布版本 → 解析索引”推进，确保未校对草稿不会污染在线检索。
+- **记忆机制（Memory & Memory Candidate）**：从会话、任务或产物证据（`Memory Evidence`）中异步提炼出的可审阅候选记忆（`Memory Candidate`）。它服务于个人偏好或项目线索召回，但**不等同于长期权威知识库**，也不会将完整聊天流水账直接混入检索索引。
+- **研发流程与工作节点（Flow & WorkNode）**：`Flow Template` 以结构化 YAML 定义节点调用与依赖关系（DAG 是其可视化投影）；`WorkNode`（历史兼容拼写为 `Stage`）是可独立版本化的 Agent 执行定义；只在当前流程内使用且未独立发布的节点称为 `Inline WorkNode`。
+- **扩展能力（Skill & MCP）**：Skill 封装方法指令与脚本规范，MCP（Model Context Protocol）封装标准化外部工具接口。在任务启动时通过 `CapabilityLock` 固化版本与内容摘要，防止运行期间外部资产漂移。
+
+## 第四层：运行环境与凭据模型（Runtime & Credentials） [#runtime-and-credentials]
+
+| 概念 | 职责与生命周期 | 核心边界 |
+| --- | --- | --- |
+| `Personal Development Environment` | 个人持久化开发机 | 全平台以用户为单位全局唯一（不按工作空间重复创建），绑定独立 Kubernetes PVC 持久卷（`/workspace` 与 `/home/fusion`），支持启停与空闲休眠，停机与重建不丢失工作区文件。 |
+| `Task Sandbox` | 任务级隔离执行沙箱 | 一任务一隔离沙箱，内部运行 Supervisor、DAG 调度与编码 Agent；任务结束后按策略归档或清理。 |
+| `Platform Model Gateway` | 部署级 AI 网关目录 | `LLM Gateway`（对话/推理、VLM、Rerank）与 `Embedding Gateway`（文本向量化）各自拥有独立地址、能力目录与健康状态。 |
+| `Platform` vs `User Credential` | 分层凭据授权 | 平台托管凭据供后台系统能力使用，普通成员不可读取；成员个人模型密钥与 Git Token 加密归属个人，跨工作空间共享资产时绝不外泄个人凭据。 |
+
+## 状态语义辨析：不要混淆这五类“完成” [#state-semantics-distinction]
+
+在实际业务协作与验收评审中，请务必区分以下五种各自独立的客观状态：
+
+| 状态事实 | 真实含义 | 不能用来替代的结论 |
+| --- | --- | --- |
+| 请求已受理 / 正在运行 | 控制面已校验输入并创建执行记录 | 不代表沙箱环境已就绪，也不代表业务目标已完成 |
+| 运行环境 Ready / 健康 | 开发机或沙箱容器、托管服务探测正常 | 不代表模型调用成功或当前任务已产出正确结果 |
+| 执行结束 / 自动检查通过 | Agent 运行退出，或代码单测等 Unit Gate 返回通过 | 不代表产物完全符合业务预期，仍需负责人核查内容与引用 |
+| 人工业务验收通过 | 责任人已核对产物、来源原文与变更范围并确认接受 | 在研发流程中，仍不等同于代码已合并进受保护分支 |
+| 代码合并与生产发布 | 团队经 Code Review 合入仓库并通过既有 CI/CD 发布 | SkyMythos 交付可审查变更，合并与上线由团队流程控制 |

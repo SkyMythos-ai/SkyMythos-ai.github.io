@@ -17,17 +17,27 @@ try {
   await page.goto(`${baseURL}/pricing`, { waitUntil: "networkidle" });
   assert(
     await page
-      .getByRole("heading", { name: "POC 验证", exact: true })
+      .getByRole("heading", { name: "场景试点验证", exact: true })
       .isVisible(),
   );
   assert(
     await page
-      .getByRole("heading", { name: "企业项目", exact: true })
+      .getByRole("heading", { name: "企业正式部署", exact: true })
+      .isVisible(),
+  );
+  assert(
+    await page
+      .getByRole("heading", { name: "一套席位授权，内置完整企业智能体套件", exact: true })
+      .isVisible(),
+  );
+  assert(
+    await page
+      .getByRole("heading", { name: "企业私有化架构与定制集成", exact: true })
       .isVisible(),
   );
   assert.equal(
     await page
-      .getByRole("link", { name: "咨询企业项目报价", exact: true })
+      .getByRole("link", { name: "获取席位报价方案", exact: true })
       .getAttribute("href"),
     "/zh/poc?enquiry=enterprise",
   );
@@ -58,7 +68,7 @@ try {
     fullPage: true,
   });
   await page
-    .getByRole("link", { name: "咨询企业项目报价", exact: true })
+    .getByRole("link", { name: "获取席位报价方案", exact: true })
     .click();
   await page.waitForURL(/enquiry=enterprise/);
   assert(

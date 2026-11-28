@@ -5,7 +5,6 @@ import { ArrowRight, BookOpen, Bot, Layers3, Pause, Play, Users, Wrench } from "
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { localizeHref, type Locale } from "@/lib/i18n";
 import { useSiteMotion } from "./site-motion";
-import { BrandCompanion } from "./brand-companion";
 import site from "./site.module.css";
 import home from "./home.module.css";
 import motion from "./hero-motion.module.css";
@@ -105,7 +104,6 @@ export function HomeHero({ locale, children }: { locale: Locale; children: React
           <Link href={localizeHref("/poc", locale)} className={site.primaryLink}>{text("预约演示", "Book a Demo")}<ArrowRight size={16} /></Link>
           <a href="#product-demo" className={site.secondaryLink}>{text("查看工作台演示", "Watch live workflow")}<ArrowRight size={15} /></a>
         </div>
-        <BrandCompanion locale={locale} />
       </div>
       <div className={`${home.heroProduct} ${motion.cameraAnchor}`} id="product-demo" ref={cameraRef}>
         <div className={motion.controls}>

@@ -1,0 +1,27 @@
+---
+title: Default Permissions & Security Sandbox
+description: Learn how SkyMythos enforces real platform security through RBAC, credential isolation, isolated sandbox runtimes, NetworkPolicy, and human approval gates.
+---
+
+Asking an LLM inside a prompt to "be careful and never leak secrets" is not a security control. SkyMythos operates on a clear rule: **prompts, Skills, and agent self-discipline never constitute security boundaries**. Real enforcement comes from Control Plane authorization, credential isolation, sandboxed runtimes, and human confirmation gates.
+
+## Four Platform-Level Security Layers [#four-platform-security-layers]
+
+| Security Layer | Platform Mechanism | What It Enforces |
+| --- | --- | --- |
+| **1. Dual-Layer RBAC** | Organization (`Admin`/`Operations`/`Member`) + Workspace (`Admin`/`Member`/`Viewer`) enforcement | Members access only authorized workspaces, knowledge, and connections; platform admins cannot bypass into private chats |
+| **2. Credential & Spec Isolation** | Personal LLM/Git tokens stay user-owned; frozen `TaskSpec` payloads hold zero plaintext secrets | Sharing employees, Skills, or Flows never leaks personal keys; revoked tokens block new requests immediately |
+| **3. Container Sandboxes & NetworkPolicy** | Dev Machines and Tasks run in isolated Kubernetes `agent-sandbox` / E2B pools governed by cluster `NetworkPolicy` | Constrains outbound sandbox traffic at the CNI layer; exposes only manifest-declared managed services |
+| **4. Human Confirmation Gates** | Explicit `ActionProposal` approvals, Inbox prompts, and Git review workflows | High-impact actions—merging code, production edits, external sends—require accountable human sign-off |
+
+## Sandbox Runtime Options (OCI / gVisor / E2B) [#sandbox-runtime-options]
+
+- **Default Kubernetes Runtime**: Built-in `agent-sandbox` deployments default to the node's standard OCI runtime (`default`).
+- **Kernel-Level Isolation (gVisor)**: Clusters requiring stronger syscall isolation can install and verify `runsc` handlers on worker nodes (always validate with actual sandbox and network smoke tests).
+- **External Cloud Sandbox Pools (E2B)**: The Control Plane supports attaching external multi-cluster sandbox pools via the standard E2B protocol (`e2bpool`) under unified scheduling.
+
+## Auditing Real Data Flows Before Rollout [#understanding-security-boundaries]
+
+<Callout type="warn" title="Audit Every Outbound Path">
+  Private deployment gives you control over your infrastructure, not automatic zero-egress guarantees—if your configured LLM gateway, Git host, or IM connector lives outside your VPC, payloads flow there as configured. Review [Enterprise Readiness & POC](/docs/private-deployment) and the [Security overview](/security) to audit every egress boundary.
+</Callout>

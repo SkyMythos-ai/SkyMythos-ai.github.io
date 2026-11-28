@@ -1,20 +1,15 @@
 {
-  "title": "Product documentation",
+  "title": "Documentation",
   "pages": [
     "index",
-    "---Get started---",
-    "getting-started",
-    "projects",
-    "tasks",
-    "automations",
-    "---Reusable capabilities---",
-    "employees",
-    "knowledge",
-    "models-tools",
-    "---Enterprise integration---",
-    "private-deployment",
-    "architecture",
-    "deployment",
-    "troubleshooting"
+    "(getting-started)",
+    "---From Beginner to Expert---",
+    "(deployment-guide)",
+    "(features)",
+    "(practice-cases)",
+    "(tips-and-skills)",
+    "(faq-troubleshooting)",
+    "---Whitepaper, Licensing & Support---",
+    "(enterprise-reference)"
   ]
 }

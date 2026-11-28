@@ -1,72 +1,88 @@
 ---
-title: Product documentation
-description: Work with projects, engineering tasks, digital employees, and enterprise integrations using the product's current capabilities.
+title: SkyMythos Overview
+description: An enterprise AI-Native Harness for private deployment—connecting structured goals, verified knowledge, AI employees, and isolated runtimes into auditable deliverables.
 ---
 
-These guides are for members with workspace access and for business and technical teams evaluating an integration. Confirm your role, available environment, and permissions before choosing a work surface. Models, tools, and execution environments can differ between installations; use the configuration available in your environment.
+**SkyMythos** is an enterprise **AI-Native Harness** designed for private deployment. Describe your objective in plain language, and SkyMythos coordinates authorized team knowledge, connected enterprise tools, and specialized AI employees inside isolated execution environments—handing over source-cited reports, reviewable code diffs, and check logs while turning approved methods into reusable organizational assets.
 
-Start with [Getting started](/docs/getting-started) if you are new to the product. For commercial evaluation, see [Pricing](/pricing): POCs and enterprise projects are assessed and quoted separately.
+<Callout type="info" title="Scope & Evaluation Notice">
+  This documentation covers product overview, beginner quickstarts, full feature reference, hands-on practice cases, and Kubernetes operations. Available models, connectors, and runtimes depend on your active deployment. Teams evaluating enterprise onboarding can [request a POC](/poc) or review [Pricing & Licensing](/pricing).
+</Callout>
 
-## Choose an entry point for your work [#choose-an-entry-point-for-your-work]
+## Core Capabilities [#core-capabilities]
 
-| What you want to do | Where to start | What to prepare |
+- **Natural Language & Structured Intent**: Launch work by stating clear goals, authorized materials, deliverables, and human boundaries—without fragile glue scripts.
+- **Governed Planning & Multi-Stage Execution**: Progress smoothly from instant SkyBot chats to persistent Projects and deterministic multi-stage engineering Flows.
+- **Code & Multi-Format Document Handling**: Read and process text, Markdown, PDFs, images, and Git repositories to produce structured reports, summaries, or reviewable diffs.
+- **Persistent Dev Machines & Isolated Sandboxes**: Give engineers a dedicated persistent machine backed by Kubernetes storage while running formal engineering Tasks in isolated per-task Sandboxes.
+- **Concurrent Threads & Background Runs**: Run multiple Project threads, Tasks, and scheduled Automations in parallel while handling approvals centrally in your Inbox.
+- **Verifiable Delivery & Compounding Capabilities**: Keep full tool traces, exact document citations, and Unit Gate logs—promoting only human-reviewed methods into AI employees and Knowledge releases.
+
+## Applicable Scenarios [#applicable-scenarios]
+
+| Scenario Category | What You Can Do with SkyMythos | Where to Start |
 | --- | --- | --- |
-| Collaborate toward an ongoing goal | [Projects and SkyBot](/docs/projects) | Goal, project materials, collaborators, and acceptance criteria |
-| Produce a reviewable code change | [Engineering tasks](/docs/tasks) | Requirements, repository, flow, and execution environment |
-| Repeat a type of work | [Automations](/docs/automations) | Run rules, inputs, permissions, and result handling |
-| Reuse employee responsibilities and methods | [Digital employees](/docs/employees) | Responsibilities, prompt, model, skills, and tools |
-| Make team materials searchable | [Enterprise knowledge](/docs/knowledge) | Sources, maintainers, publication, and access scope |
+| Daily Office & Business Ops | Draft and verify policy documents, triage customer feedback, pre-check compliance terms, and build operational digests | [Create a Task](/docs/create-task) / [Projects](/docs/projects) |
+| Software Engineering Delivery | Explore repositories, implement bounded features, add unit tests, run pre-review checks, and hand over Git diffs | [Engineering Tasks](/docs/tasks) / [Dev Machines](/docs/dev-environments) |
+| Long-Lived Project Collaboration | Maintain shared project directories, repositories, and sourced project memory across multi-day initiatives | [Projects](/docs/projects) |
+| Specialized AI Employees | Invoke configured role specialists (HR, Finance, Legal, Engineering) to reuse standardized methods | [AI Employees](/docs/employees) |
+| External Service Integrations | Connect Git hosts, Lark/Feishu, Slack, and governed MCP servers to operate across enterprise tools | [Connectors](/docs/connectors) / [Lark & Slack Setup](/docs/im-integration) |
+| Enterprise Knowledge Compounding | Curate team knowledge bases with strict version releases and permissions so every claim links back to source | [Enterprise Knowledge](/docs/knowledge) |
 
-## Get started [#get-started]
+For a detailed breakdown across business and engineering roles, see [Applicable Scenarios](/docs/scenarios).
+
+## How SkyMythos Differs from Traditional AI Chat [#difference-from-traditional-ai-chat]
+
+| Dimension | Traditional AI Chat | SkyMythos Enterprise Platform |
+| --- | --- | --- |
+| Execution Reach | Text suggestions inside a single chat box | Executes in isolated sandboxes with authorized repos and tools |
+| Context Handling | Manual copy-paste on every new conversation | Real-time permission-checked knowledge recall and frozen TaskSpecs |
+| Workflow Structure | One long thread mixing exploration and edits | Dedicated surfaces for Quick Chats, Projects, Flows, and Automations |
+| Delivery Standard | Ends with an unverified text reply | Hands over Artifacts, source citations, Git diffs, and Unit Gate logs |
+| Capability Retention | Useful prompts stay buried in personal history | Curated into reviewable AI employee proposals and versioned Knowledge |
+
+## Understand the Workspace UI [#understand-the-workspace-ui]
+
+Inside the SkyMythos Web Console, work happens across four coordinated zones (detailed in [Sidebar & Console Layout](/docs/workspace-guide)):
+
+| UI Region | Location & Core Function |
+| --- | --- |
+| Top Bar & Status Strip | Switch active Workspaces, monitor Dev Machine service health, open notifications, and toggle language or Light/Dark theme |
+| Left Navigation Rail | Switch top-level modules (Overview, Inbox, SkyBot, Dev Machines, Tasks, Automations, AI Employees, Knowledge, Observability, Marketplace, Connectors, Settings) and context sidebars |
+| Main Workspace Canvas | Displays conversation threads, task creation drawers, code diffs, artifact details, or Flow editors |
+| Right Assistant & Context Area | Toggle the global Platform Assistant for help or draft proposals, and inspect run context, files, and deliverables |
+
+<DocScreenshot
+  name="console-overview"
+  alt="SkyMythos Web Console workspace overview showing top module bar, left conversations/projects rail, main goal composer, and Platform Assistant launcher"
+  caption="Annotated four-zone workspace layout in SkyMythos Web Console"
+  annotations={[
+    { step: "1", title: "Top Modules & Workspace Bar", description: "Switch between SkyBot, Employees, Automations, Knowledge, Marketplace, active Workspaces, language, and Light/Dark themes." },
+    { step: "2", title: "Conversations & Projects Rail", description: "Move cleanly between Quick Chats, persistent Projects, and formal Engineering Tasks without cross-thread leakage." },
+    { step: "3", title: "Goal Composer & Context", description: "Enter structured four-part goals and attach authorized Knowledge Bases, workspace directories, or compatible models." },
+    { step: "4", title: "Workspace, Memory & Live Runtime Bar", description: "Inspect Project collaboration threads, Workspace files, AGENTS.md, Project Memory, and active runtime health." },
+  ]}
+/>
+
+## Recommended Reading Order [#recommended-reading-order]
 
 <Cards>
-  <Card title="Getting started" href="/docs/getting-started">
-    Prepare a goal and context, then complete a first piece of work with clear acceptance criteria.
+  <Card title="1. Create a Task" href="/docs/create-task">
+    Learn how to pick the right entry point, structure your prompt, and bind context.
   </Card>
-  <Card title="Projects and SkyBot" href="/docs/projects">
-    Create a project, organize materials, and advance a goal within its working context.
+  <Card title="2. Task Management" href="/docs/task-management">
+    Track active work across Overview and Inbox, handle approvals, and resume failed stages.
   </Card>
-  <Card title="Engineering tasks" href="/docs/tasks">
-    Prepare a repository and flow, then inspect stages, changes, and delivery evidence.
+  <Card title="3. Task Conversation" href="/docs/conversation">
+    Steer ongoing threads, upload supplementary materials, summon employees, and control runs.
   </Card>
-  <Card title="Automations" href="/docs/automations">
-    Configure repeatable work and distinguish a saved automation from each actual run.
+  <Card title="4. Viewing Results" href="/docs/results">
+    Inspect Artifacts, workspace files, Git diffs, Unit Gate checks, and exact source citations.
   </Card>
-</Cards>
-
-## Organize reusable capabilities [#organize-reusable-capabilities]
-
-<Cards>
-  <Card title="Digital employees" href="/docs/employees">
-    Configure responsibilities, capabilities, and tools; understand how reviewed experience takes effect.
+  <Card title="5. Start Your First Task" href="/docs/getting-started">
+    Follow a five-step walkthrough to complete your first verifiable piece of work.
   </Card>
-  <Card title="Enterprise knowledge" href="/docs/knowledge">
-    Organize documents, publish versions, check indexing, and verify retrieval and citations.
-  </Card>
-  <Card title="Models and tools" href="/docs/models-tools">
-    Check model protocols, LLM and embedding configuration, and connection authorization.
+  <Card title="6. 10 Essential Usage Tips" href="/docs/efficient-tips">
+    Avoid common pitfalls with good-vs-bad prompt examples and staged execution habits.
   </Card>
 </Cards>
-
-## Enterprise integration and operations [#enterprise-integration-and-operations]
-
-<Cards>
-  <Card title="Enterprise readiness" href="/docs/private-deployment">
-    Confirm deployment, data flows, responsibilities, and pilot acceptance requirements.
-  </Card>
-  <Card title="Technical architecture" href="/docs/architecture">
-    Understand the boundaries between the control plane, execution environments, storage, and knowledge pipeline.
-  </Card>
-  <Card title="Deployment and operation" href="/docs/deployment">
-    Run preflight checks, deploy, and verify using the installation materials you are authorized to use.
-  </Card>
-  <Card title="Troubleshooting" href="/docs/troubleshooting">
-    Investigate cluster, image, storage, model, and knowledge issues using their actual states.
-  </Card>
-</Cards>
-
-## Separate completion from acceptance [#separate-completion-from-acceptance]
-
-Work status, tool execution, automated checks, and business acceptance describe different outcomes. After reviewing the run records and artifacts, an accountable person should check that the result meets expectations. Merging code, publishing content, changing production, and broadening data access require their own authorization and follow-up actions.
-
-The checklists in these guides help structure an evaluation. They do not mean the system performs all business acceptance automatically. Product scenarios on the website illustrate capabilities and do not create real tasks.

@@ -1,72 +1,88 @@
 ---
-title: 产品文档
-description: 从项目协作到研发任务、数字员工与企业接入，按当前产品能力完成真实工作。
+title: SkyMythos 简介
+description: 私有化部署的企业级数字员工与 AI-Native Harness 工作平台。用结构化目标、企业知识、专业数字员工与隔离执行环境，交付有据可查的工作成果。
 ---
 
-这份文档面向已获得工作空间访问权限的使用者，以及正在评估接入的企业与技术团队。先确认自己的角色、可用环境和授权范围，再选择对应工作入口。不同安装版本的可用模型、工具和运行环境可能不同，以当前环境配置为准。
+**SkyMythos** 是面向企业私有化部署的 **AI-Native Harness** 工作平台。你可以使用自然语言描述工作目标，由 SkyMythos 结合团队知识、连接器工具与专业数字员工，在受控的隔离环境中规划并执行任务，交付带原文引用、代码变更与检查记录的可验收成果，并将确认后的经验沉淀为企业可复用的长期能力。
 
-第一次接触产品，可从[使用入门](/zh/docs/getting-started)开始。需要评估合作投入，请查看[价格与合作](/zh/pricing)：POC 与企业项目分别评估、单独报价。
+<Callout type="info" title="使用与评估提示">
+  本手册覆盖从产品介绍、新手入门、全功能说明、实践案例到私有化部署运维的完整指南。不同企业部署环境的可用模型、连接器与运行配置以当前工作空间为准；尚未接入的企业团队可先[预约 POC](/zh/poc) 或查看[定价与授权说明](/zh/pricing)。
+</Callout>
 
-## 按工作任务选择入口 [#choose-an-entry-point-for-your-work]
+## 核心能力 [#core-capabilities]
 
-| 希望完成的工作         | 从哪里开始                      | 先准备什么                         |
-| ---------------------- | ------------------------------- | ---------------------------------- |
-| 围绕一个目标持续协作   | [项目与 SkyBot](/zh/docs/projects) | 目标、项目资料、协作员工与验收要求 |
-| 形成可审查的代码变更   | [研发任务](/zh/docs/tasks)         | 需求、仓库、流程与可用执行环境     |
-| 重复执行一类工作       | [自动化](/zh/docs/automations)     | 运行规则、输入、权限与结果处理方式 |
-| 复用员工职责与工作方法 | [数字员工](/zh/docs/employees)     | 职责、Prompt、模型及技能/工具范围  |
-| 提供可检索的团队资料   | [企业知识](/zh/docs/knowledge)     | 来源、内容维护者、发布与访问范围   |
+- **自然语言与结构化意图交互**：通过清晰的目标、资料、交付物与边界描述发起工作，无需手写复杂脚本或反复拷贝背景。
+- **受控规划与多阶段执行**：支持从即问即答的 SkyBot 对话，到围绕长期目标的 Project 协作，再到严格分阶段门禁的研发 Flow 编排。
+- **代码与多格式文档处理**：支持读取与解析文本、Markdown、PDF、图片及代码仓库，产出文档报告、结构化数据摘要或可审查的 Git Diff。
+- **工作空间与持久开发机操作**：每位研发成员拥有独立持久化的个人开发机，每个正式研发任务在隔离 Sandbox 内执行，文件与权限边界清晰。
+- **多会话与后台任务并行**：支持同时推进多个 Project Thread、研发 Task 与定时自动化 Run，并在统一收件箱处理等待人工确认的事项。
+- **结果交付与能力复利**：每项交付保留工具日志、原文引用与门禁检查证据；人工确认后的有效做法可提炼为数字员工技能与企业知识版本。
 
-## 开始使用 [#get-started]
+## 适用场景 [#applicable-scenarios]
+
+| 场景类别 | 可以用 SkyMythos 做什么 | 推荐起点 |
+| --- | --- | --- |
+| 日常办公与职能协作 | 撰写与校对制度文书、归因客户反馈、起草合规核对清单、生成经营分析简报 | [创建任务](/zh/docs/create-task) / [SkyBot 项目](/zh/docs/projects) |
+| 代码开发与工程交付 | 阅读代码仓库、实现限定功能需求、补全单元测试、开展审查并交付 Git Diff | [研发任务（Tasks）](/zh/docs/tasks) / [个人开发机](/zh/docs/dev-environments) |
+| 长期项目协同 | 围绕同一业务或技术专项持续补充资料、共享项目目录与积累项目记忆 | [项目（Projects）](/zh/docs/projects) |
+| 专业数字员工任务 | 召唤已配置的岗位数字员工（HR、财务、法务、研发等），复用标准工作方法 | [数字员工（专家）](/zh/docs/employees) |
+| 外部服务与 IM 协同 | 通过连接器对接 Git 仓库、飞书 / Lark、Slack 与受控 MCP 服务执行工作 | [连接器](/zh/docs/connectors) / [飞书与 Slack 接入](/zh/docs/im-integration) |
+| 企业资料与知识复利 | 集中维护团队知识库、控制版本发布与权限范围，让每次结论都能回到原文 | [企业知识库](/zh/docs/knowledge) |
+
+更多岗位与行业场景清单，请查看[适用场景详情](/zh/docs/scenarios)。
+
+## 与传统 AI 对话的区别 [#difference-from-traditional-ai-chat]
+
+| 对比维度 | 传统 AI 对话工具 | SkyMythos 企业工作平台 |
+| --- | --- | --- |
+| 能力边界 | 只能对话与提供文字建议 | 能在隔离环境读取仓库、运行命令并连接受权工具 |
+| 上下文准备 | 每次手动复制粘贴文档和要求 | 按工作空间授权实时召回已发布知识，任务启动冻结规格 |
+| 执行方式 | 单一长会话混杂讨论与修改 | 区分即时对话、项目协同、分阶段研发 Flow 与定时 Run |
+| 交付标准 | 输出一段文本回复作为结束 | 交付带原文引用、Artifact 产物、Code Diff 与检查日志的成果 |
+| 能力沉淀 | 有效方法随个人聊天记录散失 | 沉淀为待人工确认的数字员工技能提案与可追溯知识版本 |
+
+## 认识工作界面 [#understand-the-workspace-ui]
+
+登录 SkyMythos Web Console 后，工作台主要由四个协作区域组成（详情见[左侧导航栏与工作台布局](/zh/docs/workspace-guide)）：
+
+| 界面区域 | 所在位置与核心功能 |
+| --- | --- |
+| 顶部工具与状态栏 | 切换当前 Workspace、查看个人开发机健康指示器、打开通知中心与切换中英文/明暗主题 |
+| 左侧导航栏 | 一级模块入口（工作总览、收件箱、SkyBot、开发机、研发任务、自动化、数字员工、知识库、可观测性、市场、连接器、设置）及上下文侧栏 |
+| 中央对话与工作区 | 承载对话消息流、项目任务创建表单、代码差异/产物明细或流程编排视图 |
+| 右侧助手与结果区 | 呼出全局平台助手（Platform Assistant）辅助问答或起草提案，以及查看执行详情、文件上下文与交付产物 |
+
+<DocScreenshot
+  name="console-overview"
+  alt="SkyMythos Web Console 工作台总览：顶部模块切换、左侧会话与项目导航、中央目标输入框与全局平台助手入口"
+  caption="SkyMythos Web Console 四区协同界面实景（带功能分区标注）"
+  annotations={[
+    { step: "1", title: "顶部模块与空间切换栏", description: "切换 SkyBot、Employees、Automations、Knowledge 与 Marketplace，并开关工作空间与中英文/明暗主题。" },
+    { step: "2", title: "左侧会话与项目导航", description: "在 Quick Chat、持久化 Projects 与正式 Tasks 之间快速切换，不混杂上下文。" },
+    { step: "3", title: "目标输入框与上下文区", description: "用自然语言与四要素描述目标，并安全绑定已发布知识库、目录或模型。" },
+    { step: "4", title: "项目协作、工作区与记忆工具栏", description: "快速打开项目协作线程、共享工作区文件、AGENTS.md、项目记忆与当前运行实况。" },
+  ]}
+/>
+
+## 建议阅读顺序 [#recommended-reading-order]
 
 <Cards>
-  <Card title="使用入门" href="/zh/docs/getting-started">
-    准备目标与上下文，完成第一项有验收标准的工作。
+  <Card title="1. 创建任务" href="/zh/docs/create-task">
+    了解如何选择合适的工作入口、填写结构化指令并绑定上下文资料。
   </Card>
-  <Card title="项目与 SkyBot" href="/zh/docs/projects">
-    创建项目、整理资料，在工作上下文中推进目标。
+  <Card title="2. 任务管理" href="/zh/docs/task-management">
+    了解如何查看全局任务状态、处理收件箱审批以及恢复失败阶段。
   </Card>
-  <Card title="研发任务" href="/zh/docs/tasks">
-    准备仓库与流程，查看阶段执行、变更与交付证据。
+  <Card title="3. 任务对话" href="/zh/docs/conversation">
+    了解如何在对话中追问微调、补充材料、召唤数字员工与控制运行。
   </Card>
-  <Card title="自动化" href="/zh/docs/automations">
-    配置可重复工作，区分自动化配置与每一次实际运行。
+  <Card title="4. 结果查看" href="/zh/docs/results">
+    了解如何核查交付产物、代码 Diff、测试门禁与知识引用原文。
   </Card>
-</Cards>
-
-## 组织可复用的能力 [#organize-reusable-capabilities]
-
-<Cards>
-  <Card title="数字员工" href="/zh/docs/employees">
-    配置员工职责、能力和工具，核对经验改进与生效范围。
+  <Card title="5. 开启你的第一个任务" href="/zh/docs/getting-started">
+    跟着五步实战演练，完成第一项带有清晰验收标准的工作。
   </Card>
-  <Card title="企业知识" href="/zh/docs/knowledge">
-    整理文档、发布版本、检查索引，并验证检索与引用。
-  </Card>
-  <Card title="模型与工具" href="/zh/docs/models-tools">
-    核对模型协议、LLM/Embedding 配置和连接授权。
+  <Card title="6. 10 个高效上手技巧" href="/zh/docs/efficient-tips">
+    掌握正反面提问示范与分段推进技巧，快速提升交付稳定度。
   </Card>
 </Cards>
-
-## 企业接入与运维 [#enterprise-integration-and-operations]
-
-<Cards>
-  <Card title="企业接入准备" href="/zh/docs/private-deployment">
-    确认部署、数据流、职责分工和试点验收要求。
-  </Card>
-  <Card title="技术架构" href="/zh/docs/architecture">
-    理解控制面、执行环境、存储与知识链路的职责边界。
-  </Card>
-  <Card title="部署与运行" href="/zh/docs/deployment">
-    按已授权安装材料执行前置检查、部署与验证。
-  </Card>
-  <Card title="常见问题排查" href="/zh/docs/troubleshooting">
-    从集群、镜像、存储、模型与知识状态定位问题。
-  </Card>
-</Cards>
-
-## 把完成与验收分开 [#separate-completion-from-acceptance]
-
-工作状态、工具执行、自动检查和业务验收表达不同结论。阅读运行记录与产物后，还应由责任人核对结果是否满足预期。合并代码、发布内容、变更生产环境和扩大数据访问范围，需要另外确认授权及后续动作。
-
-文档中的验证清单用于组织评估，不表示系统自动完成全部业务验收。官网中的产品场景也只用于说明能力，不会创建真实任务。

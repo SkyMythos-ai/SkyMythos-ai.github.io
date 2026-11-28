@@ -1,0 +1,43 @@
+---
+title: 记忆（Memory）
+description: 理解 SkyMythos 的分层记忆机制：个人工作偏好、带来源的项目记忆、异步记忆提炼与审阅管道，以及记忆与权威知识库的严格边界。
+---
+
+为了让 AI 协作既能记住团队和个人的工作习惯，又不会把未经核实的历史对话当成真理，SkyMythos 将 **记忆（Memory）** 设计为一套**有作用域隔离、可异步提炼、须审阅确认、且严格区别于知识库**的分层机制。
+
+## 三类上下文记忆的作用域隔离 [#memory-scope-isolation]
+
+| 记忆与上下文类型 | 归属作用域 | 核心内容与用途 | 关键隔离边界 |
+| --- | --- | --- | --- |
+| **个人记忆（Personal Memory）** | 单个 `User` | 个人沟通习惯、常用输出格式、编码偏好等长期工作风格 | 仅在本人工作上下文（`PersonalContext`）消费，不跨用户泄露 |
+| **项目记忆（Project Memory）** | 单个 `Project` | 属于该项目的事实、已拍板决策、有效经验与问题线索，均附带来源 | 仅服务于同一项目内共享上下文，不等同于整个工作空间的权威知识 |
+| **数字员工记忆（Employee Memory）** | 单个专业 `AI Employee` | 绑定该员工职责的工作经验、记忆条目与知识召回记录 | 与员工自身详情对应，不把别人的历史运行混成新员工经历 |
+
+## 从执行证据到可审阅记忆的提炼管道 [#distillation-and-indexing-pipeline]
+
+SkyMythos 不把原始聊天流水账直接灌进长期记忆，而是通过一条受控的异步提炼管道（由 PostgreSQL 权威存储与 Mem0 检索投影协同支撑）：
+
+<Steps>
+  <Step>
+    ### 收集记忆证据（Memory Evidence）
+
+    持久化保存的 Session 交互、Task 结果或 Artifact 构成原始 `Memory Evidence`，保留其原始作用域与出处，但其本身**不会被直接注入后续 Prompt**。
+  </Step>
+  <Step>
+    ### 异步提炼候选记忆（Memory Distillation Job）
+
+    可重试的后台提炼任务将原始证据归纳为结构化的 **Memory Candidate（候选记忆）**，供使用方审阅核对，而非静默生效。
+  </Step>
+  <Step>
+    ### 事务一致性索引（Memory Index Outbox）
+
+    经确认的权威 Memory 存储在 PostgreSQL 中，并通过同事务 `Memory Index Outbox` 异步更新为有界、脱敏的 `Memory Retrieval Projection`，确保检索索引始终忠实于权威状态。
+  </Step>
+</Steps>
+
+## 记忆 vs 企业知识库：不要混为一谈 [#memory-vs-knowledge]
+
+<Callout type="warn" title="核心治理边界">
+  - **企业知识库（Knowledge）** 存放团队制度、架构规范与业务事实，采用草稿 → 单篇发布 → LightRAG 索引，强调多人共识与版本溯源。
+  - **记忆（Memory）** 存放偏好与动态线索，强调个性化延续与辅助召回。在团队研发 Task 创建时，系统只将个人偏好按不可变 `PersonalContext` 冻结带入，绝不把未经确认的原始聊天归档直接混入团队权威知识。
+</Callout>

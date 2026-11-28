@@ -1,0 +1,61 @@
+---
+title: Personal Dev Machines & Sandboxes
+description: Operate your persistent PVC-backed Personal Development Environment, monitor managed service health, and apply runtime upgrades safely.
+---
+
+To support both continuous hands-on engineering and strict per-task isolation, SkyMythos separates execution environments into three distinct surfaces managed by the Control Plane.
+
+## Three Execution Environments Compared [#three-execution-environments]
+
+| Environment Type | Console Path | Ownership Boundary | Persistence Guarantee |
+| --- | --- | --- | --- |
+| Personal Development Environment | `Dev Machines → My Sandboxes` (`development-environments`) | Globally unique per `User` across workspaces | Backed by a dedicated Kubernetes PVC (`/workspace` and `/home/fusion`) that survives stop, idle exit, and pod rebuilds |
+| Group Sandboxes | `Dev Machines → Group Sandboxes` (`group-chats`) | Shared environment bound to collaborative or IM group threads | Lifecycle scoped to group collaboration sessions |
+| Task Sandbox | Provisioned automatically by `Tasks` | One isolated sandbox pod per Task, separate from your personal machine | Holds runtime stage journals and artifacts; durable code outputs hand over via Git diffs and deliverables |
+
+## Core Mechanics of Personal Dev Machines [#personal-dev-machine-mechanics]
+
+1. **Single Persistent Workspace per User**: Every member has one persistent `Personal Development Environment` across the deployment rather than duplicate machines per workspace. Code under `/workspace` and profile data under `/home/fusion` live on a dedicated PVC that stays attached across idle sleep, manual stop, and Control Plane restarts.
+2. **Governed Managed Services (`Managed Service Manifest`)**: Platform-hosted entries—such as Workspace API and Web Terminal—are defined in the runtime's frozen manifest. **SkyMythos never auto-exposes arbitrary ports discovered by scanning listening processes inside your container.**
+3. **Protocol-Level Health Checks (`Managed Service Health`)**: The header indicator and machine view probe managed services along real access paths, reporting `healthy`, `unhealthy`, `checking`, or `unknown` independently of pod lifecycle state.
+
+<DocScreenshot
+  name="dev-machine"
+  alt="Personal Cloud Computer view highlighting persistent volume info, WebTerminal launcher, and Managed Services Health table"
+  caption="Personal Dev Machine overview showing PVC-backed storage and live Managed Services health checks"
+  annotations={[
+    { step: "1", title: "Personal Dev Machine & Status", description: "Displays your globally unique machine status, vCPU/RAM specs, persistent PVC, and `/workspace` path." },
+    { step: "2", title: "Start Session & WebTerminal", description: "Launch a governed browser terminal routed safely through the Sandbox Gateway." },
+    { step: "3", title: "Managed Services Health Table", description: "Monitors protocol-level health (`Workspace API`, `Web Terminal`) with live check timestamps." },
+  ]}
+/>
+
+<Callout type="info" title="Web Terminal Access">
+  Interactive shell access routes through the governed Sandbox Gateway Web Terminal rather than exposing unauthenticated raw host ports.
+</Callout>
+
+## Daily Operations & Safe Runtime Upgrades [#daily-operations-and-upgrades]
+
+<Steps>
+  <Step>
+    ### Start & Connect
+
+    Open **Dev Machines**, start the machine if stopped or idle, wait for managed services to report `healthy`, and launch Web Terminal or link the environment in SkyBot.
+  </Step>
+  <Step>
+    ### Check Upgrade Notices
+
+    When platform ops release a new runtime image, an upgrade banner appears in notifications and the Dev Machine page. Existing machines **are never forcibly restarted or swapped mid-session** when ops update platform templates.
+  </Step>
+  <Step>
+    ### Apply Upgrades on Your Schedule
+
+    Once active terminal commands have finished, trigger the upgrade action. Because `/workspace` and `/home/fusion` reside on your persistent PVC, standard runtime upgrades preserve your files.
+  </Step>
+</Steps>
+
+<Callout type="warn" title="Where to Store Durable Files">
+  Always place repositories and persistent scripts inside `/workspace` or `/home/fusion`. Files stored in ephemeral container paths like `/tmp` are lost whenever a pod is recreated.
+</Callout>
+
+If a PVC remains `Pending` or files seem missing after a restart, see [Troubleshooting & Diagnostics](/docs/troubleshooting).

@@ -1,0 +1,59 @@
+---
+title: 研发流程（Flows）与工作节点编排
+description: 理解 Flow Template（YAML/DAG）、可复用 WorkNode、Artifact 契约交接、Unit Gate 质量门禁与动态生成流程的固化方法。
+---
+
+当研发团队希望把“需求分析 → 方案设计 → 编码实现 → 测试审查 → 交付摘要”的团队规范固化下来时，可以通过 **Flows** 与 **WorkNodes** 将最佳实践编排为可版本化、可重复调用的工程流水线。
+
+<EngineeringFlowDiagram />
+
+## 核心编排概念：Flow 与 WorkNode [#core-orchestration-concepts]
+
+在 `研发任务 → 流程模板`（`flows`）与 `工作节点` 页面中，编排模型由四个基本概念组成：
+
+| 核心对象 | 职责与表达形式 | 使用原则 |
+| --- | --- | --- |
+| `Flow Template` | 可编辑、可发布的完整研发流程资产；底层以结构化 YAML 定义节点调用与依赖，DAG 图是同一份 YAML 的可视化投影 | 研发过程以发布版本 `Flow Release` 供任务稳定消费，草稿修改不影响已启动的 Task |
+| `WorkNode` | 可独立维护和版本化的可复用 Agent 执行定义（历史兼容名称为 `Stage`） | 封装特定阶段所需的运行环境、模型协议、Prompt、Skill/MCP 与门禁命令，不绑定具体某条连线 |
+| `Inline WorkNode` | 直接内嵌定义在单个 Flow 内部的执行节点 | 仅服务于当前流程，不会因为创建而自动变成全工作空间可引用的独立资产 |
+| `Flow Invocation` | Flow 内部对某个 WorkNode 的一次具体调用实例 | 定义节点 ID、前置依赖（`Flow Prerequisite`）、具名输入绑定与产物路径 |
+
+<DocScreenshot
+  name="task-flow-editor"
+  alt="研发 Task Flow 流程编排页：流程编排/可复用节点库切换、新建 Flow Template 与已发布版本卡片"
+  caption="在 Task Flow 视图管理流程模板、可复用 WorkNode 节点库并直接发起研发任务"
+  annotations={[
+    { step: "1", title: "流程编排与可复用节点库切换", description: "在同一工作区管理完整 Flow 模板与跨流程复用的 Task Node 定义。" },
+    { step: "2", title: "新建 Flow Template", description: "新建工程流水线模板（支持 YAML、DAG 视图与 Platform Assistant 辅助起草）。" },
+    { step: "3", title: "已发布流程版本与发起任务", description: "展示已发布不可变版本（v1.2.0）、包含节点序与一键“发起任务”入口。" },
+  ]}
+/>
+
+<Callout type="info" title="产品体验重心提示">
+  SkyMythos 不把复杂庞大的连线画布强推给普通一线用户。日常开发者在 Tasks 发起需求时，优先使用标准已发布 Flow 或智能编排；只有在需要将团队规范资产化时，才由研发效能负责人维护 Flow 与 WorkNode。
+</Callout>
+
+## 定义一个高可靠的 WorkNode [#authoring-a-reliable-worknode]
+
+创建或编辑 WorkNode 时，重点配置以下四项契约：
+
+1. **职责 Prompt 与输入输出声明**：清晰说明本节点接收上游哪些具名输入，最终必须产出哪些文件。
+2. **模型与冻结能力装配**：为节点选择适配的模型协议，并按需装配能力市场中的 `Skill` 或 `MCP`。任务启动后将经 `CapabilityLock` 锁定摘要。
+3. **Artifact 输出契约**：阶段完成不仅依赖一句口头答复，而是要求在指定目录生成标准化交付物（如 `result.md` 与 `artifacts.json` 摘要清单，或代码变更产物 `Code Change Artifact`）。
+4. **确定性质量门禁（Unit Gate）**：配置可自动执行的验证命令（例如 `npm run typecheck`、`go test ./...` 或代码规范检查）。门禁不通过时，阶段将被准确标记为检查失败，防止带病产出流入下游节点。
+
+## 编排 Flow 依赖与数据绑定 [#composing-flow-dependencies-and-bindings]
+
+在 Flow 编辑器中（支持直接编辑结构化 YAML、使用可视化节点图查看，或呼出右侧 Platform Assistant 进行 `Design Session` 辅助起草），按以下原则组织数据流：
+
+- **声明直接前置（Flow Prerequisite）**：仅声明必须先于当前节点完成的直接上游；可传递成立的先后关系无需重复连线。
+- **使用具名输入绑定（WorkNode Input Binding）**：明确将上游节点的特定 Artifact 绑定到下游节点的具名输入变量，**不要把整段上游聊天历史毫无过滤地灌入下游**，从而保持下游上下文干净聚焦。
+- **支持并行执行**：互不依赖的节点（例如“并行代码实现”与“测试用例编写”，或双视角独立 Code Review）可并列配置，由 Sandbox 内的 Supervisor 自动调度并行推进。
+
+## 智能动态编排与流程固化生命周期 [#generated-flows-and-promotion]
+
+在新建研发 Task 时，如果你没有指定固定流程，平台可在预检阶段（Preflight）：
+
+1. 优先匹配工作空间或能力市场中已有的合适 `Flow Release`。
+2. 若无现成匹配模板，Agent 可根据当前需求与仓库特征临时生成一份可审计的执行计划（`Generated Flow Snapshot`）。该快照**仅归属于当次 Task**，不会自动污染工作空间的正式 Flow 列表。
+3. 当团队验证某个动态生成的 Flow 在实际项目中效果极佳时，可以通过流程固化入口将其沉淀为工作空间的正式 `Flow Template` 草稿，进一步打磨后发布为团队标准流程，实现“从临时探索到组织标准”的闭环演进。

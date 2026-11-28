@@ -1,0 +1,61 @@
+---
+title: 个人开发机与协作沙箱
+description: 使用绑定独立持久卷的个人持久化开发机、群聊协作沙箱，监控托管服务健康状态并安全完成镜像升级。
+---
+
+为了兼顾研发日常连续编码与自动化任务强隔离的不同需求，SkyMythos 将运行环境分为**个人持久化开发机**、**群聊协作沙箱**与**任务隔离沙箱**三类，并统一由平台控制面调度与治理。
+
+## 三类运行环境选型对照 [#three-execution-environments]
+
+| 环境类型 | 导航入口 | 归属边界 | 数据持久化语义 |
+| --- | --- | --- | --- |
+| 个人开发机（Personal Development Environment） | `开发机 → 我的沙箱`（`development-environments`） | 按 `User` 全局唯一，跨工作空间共享同一台个人开发机 | 绑定独立 Kubernetes PVC（`/workspace` 与 `/home/fusion`），停机、空闲休眠与 Pod 重建均保留数据 |
+| 群聊协作沙箱（Group Sandboxes） | `开发机 → 群聊沙箱`（`group-chats`） | 围绕特定多人或企业 IM 群组协作场景创建的共享环境 | 按群组会话生命周期治理，供群内成员协同排查或执行共同任务 |
+| 研发任务沙箱（Task Sandbox） | 由 `Tasks` 自动调度（无需人工预先建机） | 一 Task 一隔离沙箱 Pod，与个人开发机互相独立 | 执行期保存节点日志与运行期 Artifact，代码成果通过 Git 变更与产物交付 |
+
+## 个人持久化开发机的核心机制 [#personal-dev-machine-mechanics]
+
+1. **单用户唯一持久化数据身份（Personal Development Workspace）**：每位成员在当前部署中拥有唯一的个人开发机，不会因为切换 Workspace 而重复创建多台。你的代码目录 `/workspace` 与用户主目录 `/home/fusion` 存储在独立持久卷（PVC）上；即使因空闲自动休眠、手动停止或控制面重建 Pod，重新启动后依然挂载同一 PVC。
+2. **受治理的平台托管服务（Managed Development Services）**：平台随开发机镜像清单（`Managed Service Manifest`）统一提供标准入口，例如 Workspace API、Web Terminal 与受控访问路径。**控制台不通过扫描容器中偶然监听的端口自动暴露应用**，从而防止未经授权的服务暴露。
+3. **独立的服务健康监测（Managed Service Health）**：控制台顶栏与开发机页的指示器会沿真实访问路径探测托管服务协议健康度，并明确区分 `healthy`（健康）、`unhealthy`（异常）、`checking`（检查中）与 `unknown`（未知），帮助区分“容器刚起但服务尚未就绪”和“持久卷异常”。
+
+<DocScreenshot
+  name="dev-machine"
+  alt="个人云电脑（Dev Machine）状态、WebTerminal 入口与平台托管服务健康状态表标注"
+  caption="个人持久化开发机概览：确认运行时规格、独立持久卷（PVC）与托管服务健康状态"
+  annotations={[
+    { step: "1", title: "个人持久化开发机与运行状态", description: "展示全局唯一的个人开发机运行态、vCPU/内存规格、20 GiB 持久卷与 `/workspace` 工作目录。" },
+    { step: "2", title: "发起会话与受控 WebTerminal", description: "通过受治理的 Sandbox Gateway 浏览器终端入口接入，不暴露未授权宿主机端口。" },
+    { step: "3", title: "托管服务协议健康状态表", description: "独立检测 `Workspace API` 与 `Web Terminal` 协议健康状态与最近检查时间戳。" },
+  ]}
+/>
+
+<Callout type="info" title="关于 Web Terminal 与开发预览">
+  当前平台通过控制面与 Sandbox Gateway 提供受控的浏览器 Web Terminal 访问，不依赖宿主机传统直连裸机 SSH 的暴露方式。
+</Callout>
+
+## 日常使用与环境升级步骤 [#daily-operations-and-upgrades]
+
+<Steps>
+  <Step>
+    ### 启动与连接开发机
+
+    进入 `开发机` 页面，查看当前机器状态与托管服务健康度。处于停止或休眠状态时点击启动；当托管服务显示健康后，即可打开 Web Terminal 或在 SkyBot 项目中选择该环境开展工作。
+  </Step>
+  <Step>
+    ### 关注环境升级通知
+
+    当平台管理员发布了新版运行时模板或工具链镜像时，顶栏通知区与开发机页面会提示可用升级计划（Upgrade Plan）。既有运行中的开发机**不会在管理员更新配置瞬间被强行踢下线或自动换版**。
+  </Step>
+  <Step>
+    ### 在合适时机执行安全升级
+
+    确认手头没有正在跑的临时命令后，点击升级入口完成环境换版。由于 `/workspace` 与 `/home/fusion` 位于独立持久化 PVC 上，常规镜像升级不会抹除你的代码文件。
+  </Step>
+</Steps>
+
+<Callout type="warn" title="容器内数据存放建议">
+  请务必将代码仓库、个人工具脚本与需要长期保存的数据放置在 `/workspace` 或 `/home/fusion` 目录下；放置在系统临时目录（如 `/tmp`）或未挂载持久卷路径中的文件，在 Pod 重建后不会保留。
+</Callout>
+
+如果在开发机重启后遇到 PVC 未绑定或找不到文件，请参考[常见问题与故障排查手册](/zh/docs/troubleshooting)。

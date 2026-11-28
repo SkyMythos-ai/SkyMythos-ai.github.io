@@ -1,0 +1,51 @@
+---
+title: 统一可观测性与成本分析
+description: 使用可观测性四大视图从业务对象下钻至 OpenTelemetry Trace 与 Span，分析运行状态、延迟瓶颈、Token 消耗与数据采集健康度。
+---
+
+当团队在工作空间中同时推进多条 SkyBot 会话、研发任务与自动化流程时，**可观测性（Observability）**工作面提供了统一的运行透视能力，帮助使用者与运维团队看清“Agent 实际执行了什么、为什么耗时或失败、以及资源消耗分布”。
+
+## 可观测性四大核心视图 [#four-observability-views]
+
+进入一级导航 **可观测性**（`observability`），二级侧栏提供四个紧密关联的视图：
+
+| 视图名称 | 路由参数 | 核心用途 |
+| --- | --- | --- |
+| 观测总览（Overview） | `observability` | 聚合展示近期执行活跃度、成功与失败分布、耗时趋势及快捷下钻入口 |
+| 执行追踪（Executions） | `?scope=runs` | 集中检索各业务执行记录，并下钻到节点运行、上下文装配与追踪链 |
+| 用量与成本（Usage & Cost） | `?scope=cost` | 按模型、时间与执行入口查看 Token 输入/输出量、调用频次及已知费用明细 |
+| 采集链路（Collection） | `?scope=collection` | 检查 OpenTelemetry Collector 与 GreptimeDB 等遥测数据管道的采集连通与落库状态 |
+
+## 从业务对象下钻到 Trace 与 Span [#drill-down-from-business-objects]
+
+SkyMythos 坚持“以业务对象为中心”的观测设计，不会把底层运行时 ID 直接当作用户主导航概念：
+
+<Steps>
+  <Step>
+    ### 从原始业务入口定位记录
+
+    先确认你要排查的工作属于 **SkyBot Turn**、**研发 Task（WorkNode Attempt）** 还是 **Automation Run**，并在执行列表中找到对应业务记录，不要把不同入口的运行 ID 混为一谈。
+  </Step>
+  <Step>
+    ### 查看上下文装配与阶段事实
+
+    进入下钻详情后，可分别查看本次执行实际装配的上下文（Context）、知识召回引用记录以及各阶段状态变化。
+  </Step>
+  <Step>
+    ### 展开 Trace 与 Span 调用树
+
+    基于 OpenTelemetry 关联的 `Trace`（单次完整执行证据）与 `Span`（具体的一次模型推理、工具调用或门禁命令），逐层查看精确起止时间、输入输出摘要与报错堆栈，需要深度诊断时再核对底层运行时 Session ID。
+  </Step>
+</Steps>
+
+## 解读 Token 用量、成本与常见诊断信号 [#interpreting-usage-and-diagnostic-signals]
+
+在日常运营与研发提效复盘中，可以重点关注三类观测信号：
+
+- **上下文膨胀信号**：如果某个节点连续多轮出现输入 Token 急剧攀升但输出很少，通常说明 Prompt 绑定了过宽的原始资料或上游全量历史，建议收窄具名输入绑定或改用知识库按需检索。
+- **门禁循环信号**：当某个研发 WorkNode 出现多次 `Attempt` 重试且失败原因集中在同一测试报错，建议人工介入查看具体 Span 日志并补充清晰约束，而不是无限制自动重试。
+- **采集状态核对**：如果观测图表为空或部分费用缺失，请先打开 `采集链路（Collection）` 确认 OTel Collector 与存储连接健康，以及网关模型配置是否登记了计价参数——**费用显示未知或缺失不代表本次调用免费**。
+
+<Callout type="info" title="数据边界与隐私说明">
+  工作空间成员在可观测性视图中只能查看自己有权访问的工作记录；团队与组织级全局成员用量及成本账单汇总入口位于[团队治理与平台管理指南](/zh/docs/administration)。
+</Callout>

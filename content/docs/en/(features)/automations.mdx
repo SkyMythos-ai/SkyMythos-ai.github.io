@@ -1,0 +1,71 @@
+---
+title: Automations & Event-Driven Runs
+description: Package repeatable work into versioned automation workflows and independent Run records with test runs, schedules, webhooks, and connector events.
+---
+
+**Automations** turn recurring tasks—such as weekly feedback digests, scheduled audit summaries, or webhook-driven triage—into repeatable workflows. SkyMythos separates the **Automation Definition** (rules and steps) from each **Automation Run** (a single triggered execution with its own inputs, logs, and outputs).
+
+<Callout type="info" title="Boundary vs. Engineering Task Flows">
+  Automations (`agents/flows`) and engineering Flows (`tasks` / `flows`) live on separate work surfaces and are not interchangeable. For a new repeatable workflow, start with a checkable target (such as drafting a reviewable summary from supplied inputs), test manually first, and then enable scheduled or event triggers.
+</Callout>
+
+## Configuring Workflow Tasks & Environments [#configure-tasks-and-the-environment]
+
+Open **Automations** (`agents/flows`) in the primary rail and click **New Workflow**. You can author in **Single-Agent** or **Multi-Agent** mode (start with a single agent unless clear multi-step delegation is needed):
+
+| Configuration Field | Purpose & Authoring Notes |
+| --- | --- |
+| Workflow Name | Clearly describes the recurring business objective for operators |
+| Task Instructions | Specify expected inputs, method steps, output structure, and when to pause for human confirmation |
+| Agent & Capabilities | Choose the AI employee and required Skills/MCP tools |
+| Runtime Environment & Env Vars | Select execution environment and variable bindings; multi-agent steps inherit the workflow default unless overridden |
+| Trigger Mode | Manual run, Cron schedule, Webhook endpoint, or active connector event |
+| Result Destination | Choose an approved delivery target if needed, or leave results stored solely on the Run |
+
+<DocScreenshot
+  name="automations-flows"
+  alt="Automations workspace showing Flows/Env/Webhooks/Traces navigation, New workflow trigger, and scheduled/webhook workflow table"
+  caption="Automations workbench: manage scheduled and webhook workflows independently from individual Runs"
+  annotations={[
+    { step: "1", title: "Flows, Envs, Webhooks & Traces", description: "Switch across Workflows, runtime environments, webhooks, execution traces, and spend." },
+    { step: "2", title: "New Automation Workflow", description: "Author single-agent or multi-agent recurring workflows and validate via Test Run." },
+    { step: "3", title: "Scheduled & Event Workflow List", description: "Monitor enabled status, trigger mode, attached environments, and one-click manual runs." },
+  ]}
+/>
+
+In multi-agent workflows, insert upstream outputs via the UI's step-output reference picker and verify dependency ordering. Parameters declared in instructions generate runtime input fields automatically. If a referenced environment variable is reported missing, fix it in environment configuration rather than hardcoding secrets into prompts.
+
+## Save Contract & Test Runs [#save-and-test-a-workflow]
+
+Editing drafts and runnable workflow revisions are managed separately:
+
+1. **Save-to-Activate**: Once task instructions, environment, and capabilities pass validation, click **Save**. The server verifies permissions and updates the runnable configuration (no separate "Publish" step is required). Saving an edit to a paused workflow does not automatically resume its triggers.
+2. **Test Run**: Validate drafts or updated configs via **Test Run** using form or JSON inputs. Test runs still validate required inputs, runtime environments, and caller permissions.
+
+<Callout type="warn" title="Test Runs Can Still Invoke Real Tools">
+  While a Test Run suppresses final workflow result notifications, intermediate steps may still execute real bound tools and cause side effects. Always test against authorized POC or non-production resources.
+</Callout>
+
+## Adding Schedules, Webhooks & Event Triggers [#add-a-schedule-or-event]
+
+<Tabs items={["Schedule (Cron)", "Webhook", "Connector Events"]}>
+  <Tab value="Schedule (Cron)">
+    Verify frequency, run time, and **timezone** together. Saved schedules preserve their stored timezone rather than silently shifting to match whichever browser opens the page later.
+  </Tab>
+  <Tab value="Webhook">
+    Webhook URLs and signing secrets are generated only after a runnable configuration is saved. Signing secrets are visible solely to authorized administrators—never share screenshots containing full webhook URLs or secrets.
+  </Tab>
+  <Tab value="Connector Events">
+    Select an active enterprise connector, event type, filter rules, and payload mappings. The admission layer evaluates routing and permissions before instantiating a Run. After saving, send one real sample event and verify rule persistence, event admission, and final output separately.
+  </Tab>
+</Tabs>
+
+## Inspecting Runs & Handling Exceptions [#read-individual-runs]
+
+Open individual records under **Runs** (`agents/runs`) to inspect inputs, step outputs, waiting approvals, and errors:
+
+- **Waiting for Confirmation**: Resolve pending approval prompts inside the Run detail view to let downstream steps proceed.
+- **Rerun & Cancellation**: Clicking **Rerun** after a failure or cancellation launches a **new Run** using the original inputs without overwriting old evidence. Requesting cancellation on a live Run does not automatically roll back completed external tool calls, and differs from pausing the workflow trigger.
+- **Uncertain Submission States**: Inspect the existing Run record via page recovery tools before submitting duplicates. Missing or unknown cost fields indicate uncollected telemetry rather than zero spend.
+
+To trace token consumption and latency down to individual spans, continue to [Observability, Tracing & Cost Analysis](/docs/observability).

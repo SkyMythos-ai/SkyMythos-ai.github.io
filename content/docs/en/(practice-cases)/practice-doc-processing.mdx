@@ -1,0 +1,56 @@
+---
+title: "Practice 1: Document Parsing & Feedback Triage"
+description: Combine a SkyBot Project with published Knowledge Bases to parse multi-format customer feedback, attribute root causes, and cite source specs.
+---
+
+When Support, Operations, or Product teams receive dozens of customer feedback items across exported logs, Markdown notes, and PDFs each week, manually cross-referencing product specs takes hours. This case walks through building a source-cited triage report in minutes using **SkyBot Projects + Enterprise Knowledge**.
+
+## Goal & Prerequisites [#goal-and-prerequisites]
+
+- **Expected Deliverable**: A categorized triage report ("UX Bug / Feature Gap / Documentation Clarity") linking every finding to its feedback source and published product spec.
+- **Prerequisites**:
+  1. Publish the latest "Product Boundaries & Onboarding Guide" in [Enterprise Knowledge](/docs/knowledge) and wait for status `Searchable`.
+  2. Prepare sanitized weekly feedback exports (text or PDF, stripped of PII and secrets).
+
+<DocScreenshot
+  name="knowledge-base"
+  alt="Enterprise Knowledge table confirming published Product Specs & Onboarding Guide is ready for retrieval"
+  caption="Confirm your specification Knowledge Base is published and testable before running triage"
+  annotations={[
+    { step: "1", title: "Scopes, Sync & Quality Nav", description: "Filter to Workspace or Public Knowledge Bases authorized for your project." },
+    { step: "2", title: "Retrieval Test & New Base", description: "Run a quick retrieval test against the published guide prior to agent execution." },
+    { step: "3", title: "Published Knowledge Bases", description: "Verify visibility scope and recent update date before attaching in SkyBot." },
+  ]}
+/>
+
+## Step-by-Step Walkthrough [#step-by-step-walkthrough]
+
+<Steps>
+  <Step>
+    ### 1. Create a Persistent Project & Upload Inputs
+
+    In **SkyBot**, create a Project named "Customer Feedback Triage" and upload this week's exported feedback files into the shared project directory so future weeks can compare trends in the same workspace.
+  </Step>
+  <Step>
+    ### 2. Submit a Four-Part Analysis Prompt
+
+    Attach the published "Product Boundaries & Onboarding Guide" Knowledge Base in the main thread and run:
+
+    ```text
+    Goal: Parse this week's feedback files in the project directory and identify the top 5 priority improvements.
+    Materials: Cross-check intended behavior against the attached "Product Boundaries & Onboarding Guide" knowledge base.
+    Deliverables: Output a Markdown table with Category, Affected Module, Feedback Excerpt, Spec Citation, and Suggested Check.
+    Boundaries: Produce a reviewable report only; do not modify external ticket systems or reply to customers.
+    ```
+  </Step>
+  <Step>
+    ### 3. Verify & Refine via Follow-Up Turns
+
+    Inspect the generated table, then refine specific items in follow-up turns—such as asking SkyBot to draft engineering requirement constraints for items 1 and 3.
+  </Step>
+</Steps>
+
+## Acceptance Checklist [#acceptance-checklist]
+
+- **Verify Every Citation**: Click each cited spec passage to confirm it matches the exact published document revision.
+- **Keep Prioritization Human-Led**: Final backlog prioritization and external responses remain with accountable product leads.

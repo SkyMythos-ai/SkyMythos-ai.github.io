@@ -1,0 +1,45 @@
+---
+title: "Practice 3: Business Data Analysis & Review Report"
+description: Analyze sanitized CSV exports in SkyBot using a two-step schema-first workflow to produce variance reports and audit checklists.
+---
+
+When reviewing monthly sales exports, expense sheets, or campaign conversion tables, analysts spend significant effort reconciling column definitions, spotting outliers, and writing executive summaries. This case shows a reliable two-step workflow in SkyBot.
+
+## Goal & Prerequisites [#goal-and-prerequisites]
+
+- **Expected Deliverable**: A structured Markdown review report containing metric summaries, anomaly explanations (>15% variance), formula notes, and a list of items needing human audit.
+- **Prerequisites**:
+  1. Prepare sanitized CSV or tabular text exports (stripping unrelated PII or banking numbers).
+  2. Optionally publish "KPI & Metric Calculation Definitions" in your workspace Knowledge Base.
+
+## Step-by-Step Walkthrough [#step-by-step-walkthrough]
+
+<Steps>
+  <Step>
+    ### 1. Upload Data & Align on Schema First
+
+    Upload the CSV inside a SkyBot thread or Project and start with a lightweight schema check: "Inspect the headers and sample rows of the attached CSV. Summarize column meanings, missing values, and any metric definition ambiguities before calculating totals."
+  </Step>
+  <Step>
+    ### 2. Confirm Rules & Run the Full Analysis
+
+    Once column interpretations are confirmed, submit the analysis instruction:
+
+    ```text
+    Goal: Summarize monthly conversion and average order value by region and product line, flagging variances above 15%.
+    Materials: Use only exact figures from the attached CSV and the published "KPI & Metric Calculation Definitions"; never estimate missing entries.
+    Deliverables: Output a structured report with explicit formulas and a "Flagged Items for Human Audit" section.
+    Boundaries: Produce an internal draft only; never write back to production BI or finance databases.
+    ```
+  </Step>
+  <Step>
+    ### 3. Spot-Check Key Totals Before Distribution
+
+    Verify key totals and anomaly rows directly against the raw sheet before incorporating the report into management reviews.
+  </Step>
+</Steps>
+
+## Acceptance Checklist [#acceptance-checklist]
+
+- **Zero Fabricated Estimates**: Missing values must be explicitly reported as missing—never interpolated silently.
+- **Schema Before Math**: Confirming column semantics in turn 1 prevents costly miscalculations in turn 2.

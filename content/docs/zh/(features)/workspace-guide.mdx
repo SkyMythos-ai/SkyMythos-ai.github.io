@@ -1,0 +1,49 @@
+---
+title: 左侧导航栏与工作台布局
+description: 熟悉 SkyMythos Web Console 的四区空间结构、左侧一级主导航栏 13 大功能入口、上下文侧栏与个人界面偏好。
+---
+
+SkyMythos Web Console 将日常协作、研发交付、能力资产管理与平台运维整合在统一工作台中，并按登录成员角色（`Member`、`Operations`、`Admin`）动态呈现对应入口。
+
+## Console 四区空间结构 [#four-zone-console-layout]
+
+1. **顶部状态与工具栏**：显示品牌标识、当前工作空间（Workspace）切换下拉、个人开发机托管服务健康指示器（`SandboxHealthIndicator`）、环境升级提醒、中英文/明暗主题开关与全局平台助手入口。
+2. **左侧一级主导航栏（Primary Rail）**：固定在最左侧的一级模块切换栏，方便在各产品工作面间快速切换。
+3. **左侧二级上下文侧栏（Context Sidebar）**：随一级导航动态展开子页面分组、SkyBot 即时对话列表与项目导航树（支持拖拽分隔线调整宽度）。
+4. **中央主工作区与右侧面板**：中部展示主交互画布；右侧可按需呼出全局平台助手（`Platform Assistant`）或项目/任务上下文详情。
+
+<DocScreenshot
+  name="console-overview"
+  alt="SkyMythos Web Console 工作台总览布局与四大核心交互分区标注"
+  caption="图：SkyMythos Web Console 四区协同空间布局标注"
+  annotations={[
+    { step: "1", title: "顶部模块与空间切换栏", description: "切换主模块、Workspace 作用域、个人开发机健康灯与中英文/外观主题。" },
+    { step: "2", title: "左侧会话与项目导航", description: "按当前模块展开会话列表、Projects 树或二级功能分组。" },
+    { step: "3", title: "目标输入框与上下文区", description: "在主画布输入工作指令、挂载已发布知识与检查上下文。" },
+    { step: "4", title: "项目协作、工作区与记忆工具栏", description: "查看并切换项目协作（Collaborate）、工作区文件、AGENTS.md 规则、项目记忆与运行实况。" },
+  ]}
+/>
+
+## 一级导航 13 大模块速查表 [#primary-navigation-reference]
+
+| 导航入口 | 默认路径特征 | 可见角色 | 核心用途 |
+| --- | --- | --- | --- |
+| 工作总览（Overview） | `overview` | 所有成员 | 汇总近期活跃项目、任务与待处理入口 |
+| 收件箱（Inbox） | `inbox` | 所有成员 | 集中处理待人工审批请求、Agent 追问与系统通知 |
+| SkyBot | `chat` | 所有成员 | 发起 Quick Chats 即时对话与管理长期 Projects |
+| 开发机（Dev Machines） | `development-environments` | 研发与技术成员 | 管理个人持久化开发机及群聊协作沙箱 |
+| 研发任务（Tasks） | `tasks` / `flows` | 研发团队 | 提交研发 Task，编排 Flow Template 与 WorkNode |
+| 自动化（Automations） | `agents/flows` | 业务与研发成员 | 配置定时或事件触发的自动化流程并查看 Run 记录 |
+| 数字员工（AI Employees） | `my-ai?section=employees` | 所有成员 | 创建、训练专业数字员工，查阅工作记录与记忆 |
+| 知识库（Knowledge） | `knowledge` | 所有成员 | 维护个人与工作空间知识库、执行检索测试与质量分析 |
+| 可观测性（Observability） | `observability` | 成员与运维 | 下钻 Execution、Trace/Span 与 Token 用量成本 |
+| 能力市场（Marketplace） | `marketplace` | 所有成员 | 按 `MCP`、`Skill`、`Flow`、`WorkNode` 发现与发布共享能力 |
+| 连接器（Connectors） | `connectors` | 所有成员 | 浏览企业连接目录，完成个人 Git/IM/MCP 凭据授权 |
+| 团队设置（Team） | `settings?section=team-*` | Workspace Admin | 管理团队成员、成员用量账单、模型配额与共享策略 |
+| 平台管理（Platform） | `settings?section=platform-*` | Org Admin / Ops | 管理全组织工作空间、沙箱集群与镜像、AI Gateway 与企业 IM |
+
+## 个人账号、主题与工作空间切换 [#account-and-preferences]
+
+- **切换工作空间**：在左上角切换器选择你有权进入的任意 Workspace；切换后，侧栏的项目、任务、知识库与连接状态会自动切换至目标工作空间作用域（个人开发机保持按用户全局唯一）。
+- **语言与主题偏好**：支持中/英文界面切换，以及浅色（Light）、深色（Dark）与跟随系统（System）三档外观模式。
+- **个人资料与凭据入口**：点击头像菜单可查看绑定登录方式（`IdentityLink`）、修改密码或直达个人模型/Git 凭据配置。

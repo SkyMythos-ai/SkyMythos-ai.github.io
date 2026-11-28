@@ -1,0 +1,60 @@
+---
+title: "Practice 6: End-to-End Git Feature Delivery"
+description: Bind a Git repository and base branch in Engineering Tasks, run staged Flows with deterministic Unit Gates in an isolated Sandbox, and hand over diffs for review.
+---
+
+This case walks software engineers through using **Tasks + Flows + Isolated Sandboxes** to deliver a bounded validation enhancement—from written requirements to reviewed Git diffs and passing unit test logs.
+
+## Goal & Prerequisites [#goal-and-prerequisites]
+
+- **Expected Deliverable**: A Git diff implementing parameter validation, new unit tests, verified `Unit Gate` execution logs, and a delivery summary.
+- **Prerequisites**:
+  1. Authorize your personal Git credential in [Connectors](/docs/connectors) with read access to the target repository.
+  2. Confirm a compatible model gateway is active and choose a published team Flow (or dynamic Preflight orchestration).
+
+## Step-by-Step Walkthrough [#step-by-step-walkthrough]
+
+<Steps>
+  <Step>
+    ### 1. Bind Repository & Base Branch in Tasks
+
+    Open **Tasks** (`tasks`), click **New Task**, select the target `Repository` and a `dev` base branch (avoid protected production release branches), and pick your engineering Flow.
+
+    <DocScreenshot
+      name="tasks-list"
+      alt="Tasks surface showing Task creation entry and branch/Unit Gate verification table"
+      caption="Verify target branches and Unit Gate pass status in Engineering Tasks"
+      annotations={[
+        { step: "1", title: "Tasks & Task Flow Nav", description: "Switch between running Tasks and Flow Templates." },
+        { step: "2", title: "Create Engineering Task", description: "Open the Task creation drawer to bind repo, branch, and Flow." },
+        { step: "3", title: "Status, Base Branch & Actions", description: "Confirm the source-to-target branch pair and inspect Unit Gate evidence." },
+      ]}
+    />
+  </Step>
+  <Step>
+    ### 2. Write Actionable Requirements with Clear Boundaries
+
+    ```text
+    Goal: Add empty and whitespace-only name validation to the configuration save endpoint, returning HTTP 400 with a clear error message.
+    Constraints: Preserve existing auth checks and success payload schemas; do not modify unrelated modules.
+    Deliverables: Git diff, Unit Gate execution logs covering new and existing unit tests, and a delivery summary.
+    Acceptance: Empty/whitespace names are rejected; valid saves and the full unit test suite pass.
+    Follow-up: Prepare diff and summary for human code review; do not auto-merge or deploy.
+    ```
+  </Step>
+  <Step>
+    ### 3. Monitor Isolated Stages & Resume Cleanly if Needed
+
+    The Control Plane freezes `TaskSpec` and launches an isolated Sandbox. Track "Understand → Implement → Unit Gate" progress on the detail page. If a gate fails, inspect the exact error logs and invoke `Fusion Resume` on that WorkNode with targeted guidance.
+  </Step>
+  <Step>
+    ### 4. Review Diffs, Verify Gates & Merge Manually
+
+    Confirm tests genuinely executed and changes stayed in scope, then follow the generated MR/PR link to complete human code review and merging in your Git host.
+  </Step>
+</Steps>
+
+## Acceptance Checklist [#acceptance-checklist]
+
+- **Verify Real Test Execution**: Confirm the `Unit Gate` log shows tests actually ran and exited 0—never accept skipped checks.
+- **Human Merge Control**: SkyMythos prepares verified changes; repository maintainers always control merges and CI/CD releases.

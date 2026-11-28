@@ -1,0 +1,10 @@
+{
+  "title": "Whitepaper, Licensing & Support",
+  "collapsible": true,
+  "defaultOpen": false,
+  "pages": [
+    "whitepaper",
+    "domain-model",
+    "licensing-and-support"
+  ]
+}

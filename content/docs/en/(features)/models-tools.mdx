@@ -1,0 +1,79 @@
+---
+title: Model Gateways, Protocols & Credentials
+description: Separate deployment-wide LLM and Embedding gateway catalogs from private user credentials, declare accurate protocols, and verify end-to-end connectivity.
+---
+
+Reliable model and connection management underpins every AI workflow. SkyMythos strictly separates the **platform service catalog** from **individual usage authorization**, giving administrators centralized egress control without ever leaking private user keys across teams.
+
+## Platform Catalog vs. Personal Credentials [#separate-service-configuration-from-usage-authorization]
+
+| Dimension | Platform Configuration (Admin / Operations) | Personal Authorization (Individual Member) |
+| --- | --- | --- |
+| Question Answered | Which model gateways and enterprise endpoints are approved for this deployment? | Is the current member authorized to consume a model or repository under their own quota/identity? |
+| Core Objects | `LLM Gateway`, `Embedding Gateway`, `Git Connector`, `Platform Gateway Credential` | `User Gateway Credential`, `User Git Credential`, personal OAuth grants |
+| Isolation Rule | Platform credentials power system agents and are unreadable by regular members; gateways stay separate | Personal tokens belong strictly to the user across authorized workspaces and never leak via shared assets |
+
+<Callout type="warn" title="Data Egress & Secret Hygiene">
+  Model inference and tool calls transmit payloads to the configured gateway endpoints. Verify approved endpoints and data classification rules with your admin before connecting, and never embed API keys or secrets inside prompts or shared Skills.
+</Callout>
+
+## Configure the LLM Gateway & Model Catalog [#configure-the-llm-gateway-and-model-catalog]
+
+Organization `Admin` or `Operations` roles manage chat and reasoning endpoints under **Platform Settings → AI Gateway** (`settings?section=platform-ai-gateway`):
+
+<Steps>
+  <Step>
+    ### Set the Endpoint & Platform Credential
+
+    Choose a preset or custom gateway, enter the reachable `Base URL`, and store the default `Platform Gateway Credential` in the masked credential input.
+  </Step>
+  <Step>
+    ### Register Models & Supported Protocols
+
+    Discover models from the gateway or register them manually using exact provider `Model ID` strings. Declare only protocols the endpoint genuinely supports:
+    - `OpenAI Responses`
+    - `OpenAI Chat Completions`
+    - `Anthropic Messages`
+    - Specialized capabilities (such as `VLM` or `Rerank`) must be registered under their native capability types rather than disguised as plain chat models.
+  </Step>
+  <Step>
+    ### Verify Surface Compatibility
+
+    Save the gateway and test an actual call from a compatible surface (SkyBot, AI Employee, or Task). If a model does not appear in a specific dropdown, check the intersection between that surface's required protocol and the model's declared protocols.
+  </Step>
+</Steps>
+
+## Configure Embedding Separately for Knowledge Processing [#configure-embedding-separately-for-knowledge-processing]
+
+The **Embedding Gateway** powering vectorization and retrieval is maintained **independently** from the LLM Gateway:
+
+1. Even when LLM and Embedding endpoints live behind the same upstream proxy, configure their URLs, model catalogs, and credentials separately—saving one never auto-provisions the other.
+2. Embedding ingestion supports OpenAI-compatible `/v1/embeddings`. Select the built-in or external provider, register the exact embedding model ID, and run **vector dimension detection** so the saved dimension matches a live response.
+3. Working chat inference does not prove knowledge indexing is ready. After saving, test by publishing and querying a small sample document in [Enterprise Knowledge](/docs/knowledge).
+
+## Complete Personal Connections & Authorization [#complete-personal-connections-and-authorization]
+
+Members manage personal model keys and repository tokens inside workspace connection settings:
+
+- **Verify Scope First**: Confirm your signed-in identity, active workspace, and target connection before saving a personal model key, Git token, or completing OAuth.
+- **Check Three Independent Gates**: Gateway reachability, personal credential validity, and repository/resource permissions are three separate checkpoints.
+- **Rotation & Expiration**: If status shows expired, revoked, or unreadable, refresh authoritative status and re-authorize rather than assuming past "Connected" badges still hold. After rotating a key, test with one minimal call; historical runs retain their original identity records.
+
+<DocScreenshot
+  name="connectors-auth"
+  alt="Connections and authorization view displaying Enterprise LLM Gateway, Personal model resources, Git OAuth, and Lark readiness"
+  caption="Checking gateway catalogs alongside personal model and Git credentials"
+  annotations={[
+    { step: "1", title: "Authorization Status Tabs", description: "Filter ready, incomplete, or unconfirmed gateway and repository credentials." },
+    { step: "2", title: "Browse Marketplace MCPs", description: "Browse approved Marketplace MCP packages matching workspace governance policies." },
+    { step: "3", title: "Git, Enterprise & Personal Tokens", description: "Verify Enterprise LLM Gateways, Personal model resources, and Git tokens separately." },
+  ]}
+/>
+
+## Verify with a Minimal Read-Only Workload [#verify-with-a-minimal-piece-of-work]
+
+Once configured, validate connectivity incrementally:
+
+1. Send a basic prompt in SkyBot to confirm LLM Gateway routing and credentials.
+2. Read an authorized repository file or query an indexed knowledge document to verify tool and retrieval paths.
+3. If the model responds but tools or knowledge fail, diagnose credentials in [Marketplace & Connectors](/docs/marketplace-connectors) or follow [Troubleshooting & Diagnostics](/docs/troubleshooting).

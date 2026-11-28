@@ -1,0 +1,79 @@
+---
+title: Enterprise Knowledge & Memory System
+description: Organize knowledge bases by scope, publish per-document versions, monitor indexing states, and trace retrieval hits back to exact source revisions.
+---
+
+Enterprise Knowledge connects team documentation, immutable release revisions, and authorized retrieval pipelines. SkyMythos keeps **saving a draft, publishing a release, completing indexing**, and **being adopted by a task** strictly separate so every fact entering an AI workflow remains verifiable.
+
+<KnowledgeLifecycleDiagram />
+
+## Knowledge Scopes & Access Matrix [#knowledge-scopes-and-permissions]
+
+Open **Knowledge** (`knowledge`) from the primary rail to view collections accessible in your active workspace. Knowledge Bases fall into four ownership and visibility tiers:
+
+| Scope Tier | Ownership | Read & Management Permissions | Typical Use Case |
+| --- | --- | --- | --- |
+| Personal Knowledge Base | Individual User | Visible and editable only by the owner unless explicitly shared | Personal research notes and private reference drafts |
+| Workspace Knowledge Base | Active Workspace | Maintained and queried collaboratively according to workspace roles | Team standards, architectural decisions, feedback archives |
+| Shared Knowledge Base | Original User or Workspace | Grants authorized read/query access without transferring ownership | Cross-team read-only reference to upstream department policies |
+| Public Knowledge Release | Original Maintainer (Snapshot) | Discoverable and queryable by any signed-in member in the Org | Company-wide security baselines, onboarding guides, tech specs |
+
+<DocScreenshot
+  name="knowledge-base"
+  alt="Enterprise Knowledge workbench highlighting scope/sync/quality navigation, retrieval test/create buttons, and published collections table"
+  caption="Annotated Enterprise Knowledge surface with scopes, retrieval test entry, and published catalog"
+  annotations={[
+    { step: "1", title: "Scopes, Sync & Quality Nav", description: "Filter collections by Workspace or Public visibility, or open Sync and Quality Analytics." },
+    { step: "2", title: "Retrieval Test & New Base", description: "Test semantic recall strictly against indexed releases, or create a new Knowledge Base." },
+    { step: "3", title: "Published Knowledge Bases", description: "Inspect names, descriptions, visibility scopes, and timestamps before opening revision history." },
+  ]}
+/>
+
+<Callout type="info" title="Supported Media & External Sync Scope">
+  The Knowledge ingestion pipeline accepts **text/Markdown, PDF, and images**. For Lark/Feishu sync, Workspace Admins import specific documents by explicit Docx URL—the platform does not bulk-crawl entire external spaces or claim to mirror external ACLs automatically.
+</Callout>
+
+## Authoring, Publishing & Indexing Workflow [#create-publish-and-index]
+
+<Steps>
+  <Step>
+    ### Create or Upload Documents
+
+    Inside a Knowledge Base where you hold management rights, create a new document inline or upload text, PDF, or image files. Include applicability conditions, factual sources, maintainers, and re-verification criteria inside the body.
+  </Step>
+  <Step>
+    ### Save Draft
+
+    Click **Save Draft** and confirm the success notice. Unsaved edits in the browser editor are not persisted and do not enter any release.
+  </Step>
+  <Step>
+    ### Publish Per-Document Release
+
+    Open the document detail view, click **Publish New Version**, and confirm. Publishing snapshots the **saved draft** into an immutable version per document—there is no bulk action that forces every draft across a Knowledge Base into a single release.
+  </Step>
+  <Step>
+    ### Verify Asynchronous Indexing Status
+
+    After publication, the dedicated Embedding Gateway and LightRAG parse and vectorize the content. Monitor the status column as it progresses from `Unpublished` → `Processing` → `Searchable`. If `Failed` appears, inspect the error details and fix underlying gateway or document issues before retrying; `Unknown` indicates missing confirmation rather than success.
+  </Step>
+</Steps>
+
+## Retrieval Testing & Source Provenance [#retrieval-testing-and-provenance]
+
+Before relying on a Knowledge Base in production tasks, verify recall using the built-in **Retrieval Test**:
+
+1. Open the **Retrieval Test** view inside the target Knowledge Base, enter a natural-language question or keywords (e.g., "Who approves customer feedback priorities?"), and click **Test Retrieval**.
+2. Search operates strictly on **published and indexed** revisions—unpublished drafts are excluded.
+3. Inspect each hit's document title, matched passage, release version, and score. Click the title to jump straight to that exact source revision and verify the surrounding context.
+
+<Callout type="warn" title="Similarity Scores Do Not Prove Truth">
+  A high retrieval score only indicates lexical or semantic proximity—always inspect the original document revision. Externally synced documents with read-only restrictions should be updated in the upstream system rather than duplicated locally.
+</Callout>
+
+## Sync Tasks, Quality Analytics & Maintenance [#sync-quality-and-lifecycle]
+
+- **Sync & Quality Views**: Use `Knowledge Sync` (`knowledge/sync`) and `Knowledge Quality` (`knowledge/quality`) in the context sidebar to track external import jobs and spot stale or low-quality entries.
+- **Updating & Archiving**: To update knowledge, edit the draft, publish a new release, and re-test key queries. Historical citations preserve their original revision identity. Archive retired documents carefully after checking downstream references instead of deleting collections still used by teams.
+- **Knowledge vs. Memory Boundary**: Asynchronously distilled `Memory Candidates` serve personal preferences and project continuity after review—never dump raw chat logs wholesale into authoritative Knowledge Bases.
+
+If retrieval returns nothing or indexing repeatedly fails, check the Embedding Gateway setup in [Model Gateways & Credentials](/docs/models-tools) or consult [Troubleshooting & Diagnostics](/docs/troubleshooting).

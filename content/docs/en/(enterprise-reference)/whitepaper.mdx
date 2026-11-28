@@ -1,0 +1,55 @@
+---
+title: Product Vision & Core Philosophy
+description: Explains SkyMythos as an enterprise AI-Native Harness, the six adoption bottlenecks it solves, its value closed loop, and ecosystem boundaries.
+---
+
+When enterprises move from individual LLM experimentation to team-wide daily production, the bottleneck is rarely raw model intelligence. What is missing is a governed engineering foundation that connects goals, context, tool permissions, isolated execution environments, and deliverable verification. SkyMythos is built to serve as that foundation—an enterprise **AI-Native Harness**.
+
+## Why Enterprises Need an AI-Native Harness [#why-enterprises-need-an-ai-native-harness]
+
+Without a unified Harness layer, applying AI agents to daily operations and software engineering typically hits six structural barriers:
+
+1. **Unreproducible Execution**: Prompts, model versions, reference docs, and tool setups drift across ad-hoc chats, making work impossible to replay or audit reliably.
+2. **Unbounded Long Conversations**: Requirements analysis, planning, implementation, review, and delivery get crammed into one growing chat thread where dependencies and failure boundaries blur.
+3. **Gap Between Output and Delivery**: Generating a text snippet or code block is not the same as producing verified, source-cited deliverables ready for accountable human sign-off.
+4. **Institutional Knowledge Loss**: Effective troubleshooting methods, policies, and design decisions remain trapped in personal chat histories, forcing teams to re-explain context repeatedly.
+5. **Security Relying on Prompt Discipline**: Without platform-level boundaries around credentials, repositories, and write actions, prompt injection or tool missteps create direct operational risk.
+6. **Opaque Execution**: Teams lack real-time visibility into which tools an agent invoked, where a workflow stalled, why a step failed, or how token costs accumulated.
+
+## Core Proposition: AI Completes Work, Capabilities Stay in the Enterprise [#core-proposition]
+
+SkyMythos turns one-off chat interactions into an enterprise production loop where **inputs are frozen, execution is observable, deliverables are inspectable, and verified capabilities compound over time**.
+
+<HarnessClosedLoopDiagram />
+
+Every workflow on the platform follows five foundational principles:
+
+- **Define Goals and Boundaries Before Running**: Separate exploratory chats from structured delivery tasks; explicitly bind authorized materials, repository baselines, and human approval gates upfront.
+- **Isolate Environments from Personal Credentials**: Sharing an AI employee or knowledge base never exposes the creator's private keys; every run executes strictly under the caller's authorized scope.
+- **Hand Over Inspectable Evidence, Not Just Summaries**: Engineering tasks deliver diffs, Unit Gate logs, and structured artifacts; knowledge tasks deliver reports with direct source citations.
+- **Separate Execution Completion from Business Acceptance**: Process completion, automated check passage, human acceptance, code merge, and production release are five distinct facts.
+- **Curate Before Compounding**: Only human-reviewed methods and verified facts become AI employee training updates or published knowledge releases—raw chat transcripts never auto-promote into authoritative truth.
+
+## Comparison with Traditional Chat Assistants [#comparison-with-chat-assistants]
+
+| Dimension | Traditional Chat Assistants | SkyMythos (AI-Native Harness) |
+| --- | --- | --- |
+| Work Entry Points | Single chat thread mixing exploration and delivery | Purpose-built SkyBot Projects, Engineering Tasks, and Automations |
+| Context Handling | Manual copy-paste for every new session | Permission-checked knowledge recall and frozen TaskSpec inputs |
+| Execution Runtime | Unmanaged local machines or stateless containers | Persistent per-user Dev Machines + per-task isolated Sandboxes |
+| Collaboration & Flows | One monolithic conversation from start to finish | Multi-stage Flow/WorkNode DAGs with typed Artifacts and targeted rework |
+| Capability Retention | Buried in individual chat histories | Reviewable AI employee training proposals and versioned Knowledge Bases |
+| Observability & Cost | Black-box generation with unclear tool/token traces | End-to-end links from business objects to OpenTelemetry traces and usage |
+
+## Ecosystem & Responsibility Boundaries [#ecosystem-boundaries]
+
+SkyMythos focuses on driving work from goal and context to inspectable delivery alongside your existing enterprise toolchain rather than replacing core infrastructure:
+
+- **Complements Git Hosting & Code Review**: Integrates with GitHub, GitLab, and other Git servers; Tasks produce reviewable diffs and MR summaries while teams retain full merge control.
+- **Complements CI/CD & Release Systems**: Sandbox Unit Gates validate stage-level correctness during execution without replacing Jenkins, GitHub Actions, or Argo CD production pipelines.
+- **Flexible Enterprise Identity & Docs**: Supports SSO and document sync with Lark/Feishu and Slack alongside a full standalone Web Console.
+- **Explicit Data Flow Governance**: Private deployment gives you infrastructure control, while external LLM gateways, Git providers, and connectors remain explicitly configured and auditable per egress path.
+
+<Callout type="info" title="Continue Reading the Whitepaper">
+  Next, review the [Core Concepts & Domain Model](/docs/domain-model) for exact entity definitions, followed by [Technical Architecture & Security Boundaries](/docs/architecture) for control-plane and sandbox internals.
+</Callout>

@@ -1,0 +1,52 @@
+---
+title: "Practice 5: Self-Evolution — Custom Employees & Skills"
+description: Distill proven methods from completed runs into specialized AI Employees and shared Skills via experience analysis and explicit confirmation.
+---
+
+The real payoff of an enterprise AI Harness is not a single lucky run—it is **making sure the next task starts stronger without repeating past trial and error**. This case shows how to evolve completed work into reusable AI Employees and Skills.
+
+## Goal & Prerequisites [#goal-and-prerequisites]
+
+- **Expected Deliverable**: A configured "API Convention Reviewer" AI Employee paired with a reusable workspace `Skill` for teammates.
+- **Prerequisites**: At least one completed SkyBot or engineering run with verified results, plus permission to author AI Employees and Marketplace assets.
+
+## Step-by-Step Walkthrough [#step-by-step-walkthrough]
+
+<Steps>
+  <Step>
+    ### 1. Draft an AI Employee from Experience
+
+    Open **AI Employees** (`my-ai?section=employees`), click **Create Employee**, and switch to **Learn from Work Experience**. State the target role (e.g., "Pre-screen new REST API changes against team error-code and pagination standards").
+  </Step>
+  <Step>
+    ### 2. Select Valid Sources & Review the Proposal
+
+    Pick eligible work experience records (avoiding entries flagged ineligible or pending), click **Analyze Selected Experience**, inspect the proposed name, prompt, and sources, and click **Use Proposal & Edit Employee**.
+  </Step>
+  <Step>
+    ### 3. Complete Model & Scope Settings
+
+    Verify the model, workspace visibility, and minimal required Skills or read-only Knowledge Bases, then click **Create Employee** to save immediately.
+  </Step>
+  <Step>
+    ### 4. Refine Over Time via Explicit Training Confirmation
+
+    As the employee handles new tasks, open its detail view and run **Train Employee Definition**. Review the generated revision diff carefully and click **Confirm Training & Save Results** (remember: this updates instructions and bindings—not underlying LLM weights—and leaves in-flight snapshots untouched).
+  </Step>
+</Steps>
+
+<DocScreenshot
+  name="employees-config"
+  alt="Customer Feedback Analyst employee configuration highlighting role prompt and bound Skill in AI Employees workbench"
+  caption="Refined AI Employee role prompt and bound Skill ready for team collaboration"
+  annotations={[
+    { step: "1", title: "Hired Employees & Create", description: "Browse specialized teammates or launch experience-driven employee drafting." },
+    { step: "2", title: "Start Collaboration & Actions", description: "Verify trained updates immediately inside a clean SkyBot session." },
+    { step: "3", title: "Role Prompt & Capabilities", description: "Keep curated instructions and verified Skills modular and auditable." },
+  ]}
+/>
+
+## Acceptance Checklist [#acceptance-checklist]
+
+- **Validate Before Sharing**: Only promote workflows you have personally verified on real work.
+- **Re-Test After Training**: Run a comparable small task after each training update to verify consistent output.

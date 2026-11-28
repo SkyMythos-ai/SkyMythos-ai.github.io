@@ -1,0 +1,43 @@
+---
+title: "Practice 7: Lark/Feishu Knowledge Compounding"
+description: Connect enterprise Lark/Feishu Docx links to Knowledge Bases, publish indexed revisions, and power source-traceable answers across Projects and Tasks.
+---
+
+Many teams keep product specs, SOPs, and postmortems inside Lark or Feishu Docs. This case shows how to bring high-value documents into SkyMythos Knowledge Bases under clear governance boundaries so Projects and AI Employees stay grounded in current truth.
+
+## Goal & Prerequisites [#goal-and-prerequisites]
+
+- **Expected Deliverable**: Key Lark/Feishu documents imported, published, indexed, and verified for source-traceable answers inside SkyBot Projects.
+- **Prerequisites**:
+  1. An Org Admin configured the integration per [Lark, Feishu & Slack Setup](/docs/im-integration) with `docs:document.content:read` and `offline_access`.
+  2. You hold `Workspace Admin` (or authorized maintainer) rights for the target Knowledge Base and have the exact Docx URLs to import.
+
+## Step-by-Step Walkthrough [#step-by-step-walkthrough]
+
+<Steps>
+  <Step>
+    ### 1. Import Explicit Docx URLs
+
+    In the target Knowledge Base's [sync view](/docs/knowledge-sync), paste the explicit Lark/Feishu Docx URL to pull its content into a controlled Markdown document (SkyMythos imports only the specified URL and never crawls your entire drive).
+  </Step>
+  <Step>
+    ### 2. Verify Sync Job & Publish Release
+
+    Confirm job completion under `Knowledge Sync`, inspect the imported content, and click **Publish New Version** to trigger vector indexing until the status reads `Searchable`.
+  </Step>
+  <Step>
+    ### 3. Validate Retrieval & Source Provenance
+
+    Run a **Retrieval Test** query targeting a concrete rule in that document, and verify clicking the hit opens the exact published revision with intact context.
+  </Step>
+  <Step>
+    ### 4. Use Across Projects & Engineering Tasks
+
+    Attach the Knowledge Base in SkyBot Projects or Engineering Tasks—every teammate can now ground analysis in the verified document without copying text into prompts manually.
+  </Step>
+</Steps>
+
+## Maintenance Checklist [#acceptance-checklist]
+
+- **Resync When Upstream Changes**: When the original Lark/Feishu doc receives major updates, trigger a clean resync and publish a new release instead of maintaining divergent local copies.
+- **Access Control Awareness**: Once imported, access follows the target SkyMythos Workspace's membership roles rather than mirroring upstream Lark document ACLs automatically.

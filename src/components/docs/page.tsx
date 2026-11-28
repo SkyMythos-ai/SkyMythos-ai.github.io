@@ -18,7 +18,12 @@ export function getDocumentationMetadata({
 }: PageProps): Metadata {
   const page = getDocsSource(locale).getPage(slug);
   if (!page) notFound();
-  return localizedMetadata(locale, `/docs${slug?.length ? `/${slug.join("/")}` : ""}`, page.data.title, page.data.description);
+  return localizedMetadata(
+    locale,
+    `/docs${slug?.length ? `/${slug.join("/")}` : ""}`,
+    page.data.title,
+    page.data.description,
+  );
 }
 
 export function DocumentationPageContent({ slug, locale }: PageProps) {
@@ -30,7 +35,7 @@ export function DocumentationPageContent({ slug, locale }: PageProps) {
       <DocsTitle>{page.data.title}</DocsTitle>
       <DocsDescription>{page.data.description}</DocsDescription>
       <DocsBody>
-        <Content components={getMDXComponents()} />
+        <Content components={getMDXComponents(locale)} />
       </DocsBody>
     </DocsPage>
   );

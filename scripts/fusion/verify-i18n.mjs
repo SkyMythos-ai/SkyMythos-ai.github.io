@@ -9,12 +9,15 @@ export async function verifyBilingual(page, baseURL, report) {
   const switchName = locale => locale === "en" ? "切换到中文" : "Switch to English";
   for (const locale of ["en", "zh"]) {
     const prefix = locale === "zh" ? "/zh" : "";
-    const docs = (await readdir(`content/docs/${locale}`)).filter(file => file.endsWith(".mdx"));
+    const docs = (await readdir(`content/docs/${locale}`, { recursive: true }))
+      .map(entry => String(entry).replaceAll("\\", "/"))
+      .filter(file => file.endsWith(".mdx"))
+      .map(file => file.slice(0, -4).split("/").filter(seg => !/^\(.+\)$/.test(seg)).join("/"));
     const roles = ["hr", "finance", "sales", "legal", "operations", "product", "engineering", "it-admin"];
     const routes = ["/", "/solutions/", "/pricing/", "/security/", "/poc/", "/privacy/",
       ...roles.map(role => `/solutions/${role}/`),
       ...["skybot", "employees", "flows", "automations", "knowledge", "environments"].map(slug => `/product/${slug}/`),
-      ...docs.map(file => file === "index.mdx" ? "/docs/" : `/docs/${file.slice(0, -4)}/`),
+      ...docs.map(slug => slug === "index" ? "/docs/" : `/docs/${slug}/`),
     ];
     for (const pathname of routes) {
       const response = await page.request.get(route(locale, pathname));
@@ -34,7 +37,7 @@ export async function verifyBilingual(page, baseURL, report) {
     await page.evaluate(() => document.fonts.ready);
     const text = await page.locator("main").innerText();
     if (locale === "en") assert(!/\p{Script=Han}/u.test(text), "英文首页不能残留中文可见文案");
-    else assert.match(text, /让 AI 完成工作/);
+    else assert.match(text, /让 AI\s+完成工作/);
     const headerText = await page.locator("header").first().innerText();
     const pricingLabel = locale === "en" ? "Pricing" : "定价";
     const securityLabel = locale === "en" ? "Security" : "安全合规";

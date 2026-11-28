@@ -1,0 +1,81 @@
+---
+title: Enterprise Readiness & POC Acceptance
+description: Scope an accountable enterprise POC, align stakeholder responsibilities, audit real data egress paths, and collect evidence across a six-step checklist.
+---
+
+When evaluating SkyMythos for enterprise adoption, we recommend starting with a well-scoped, measurable Proof of Concept (POC)—or proceeding straight to project scoping when requirements are already fixed. To arrange an evaluation environment, [request a POC with our team](/poc).
+
+## Scope an Accountable Pilot [#agree-on-a-pilot-with-acceptance-criteria]
+
+A useful POC answers whether the platform delivered real work against team standards—not merely whether a model generated text. Define four scope rules before kickoff:
+
+1. **Assign Accountable Reviewers**: Every pilot workload must have an explicit business or engineering owner who verifies results.
+2. **State Inputs, Deliverables & Exclusions**: For example, "implement a bounded feature in a test repository, deliver the diff, check logs, and summary—do not auto-merge protected branches or touch production."
+3. **Follow Least Privilege**: Avoid opening every repository, knowledge space, and write integration on day one; list only the resources required for the pilot.
+4. **Pre-Define Approval Gates**: Specify who approves code merges, external notifications, or production changes.
+
+## Gather Materials & Assign Ownership [#identify-participants-and-resource-ownership]
+
+Before installation, designate owners for five preparation areas (note that holding platform infrastructure privileges never automatically grants read access to private workspace content):
+
+| Preparation Area | Key Details to Confirm | Suggested Owner |
+| --- | --- | --- |
+| Pilot Workloads | 1–2 concrete target tasks, sample inputs, deliverables, reviewers, and explicit exclusions | Business or Engineering Lead |
+| Identity & Workspaces | Participating accounts, SSO integration method, role assignments, and access scopes | Org Admin / IT |
+| Models & Tools | Reachable LLM/Embedding gateway URLs, declared protocols, Git host, and tool grants | Platform Ops / Architect |
+| Runtime Infrastructure | Kubernetes version, StorageClass persistence, egress policies, and image registry access | Infrastructure / SRE |
+| Knowledge Sources | Approved test documents, source read permissions, update cadence, and retirement rules | Knowledge Maintainer |
+
+## Audit Real Data Egress Paths [#check-actual-data-flows]
+
+<Callout type="warn" title="Private Deployment Does Not Automatically Mean Zero External Traffic">
+  Even when the Control Plane and Sandboxes run inside your own cluster, prompts, code snippets, knowledge chunks, and tool payloads may travel along distinct integration paths. Audit every outbound endpoint against your security requirements before go-live.
+</Callout>
+
+- **Model Gateways**: Confirm whether LLM and Embedding gateways terminate at self-hosted internal inference clusters or approved external API providers.
+- **Code Hosts & Connectors**: Audit Git server URLs, IM connectors (Lark/Feishu, Slack), and external MCP server endpoints alongside allowed scopes.
+- **Persistence & Telemetry**: Verify storage locations and access controls for PostgreSQL, S3-compatible object storage, and OpenTelemetry / GreptimeDB telemetry pipelines.
+- **Credential Isolation & Revocation Test**: Confirm personal keys live in dedicated credential stores, and test revoking a member's grant during the pilot to verify subsequent calls are denied immediately.
+
+## Six-Step POC Verification Checklist [#verify-the-environment-and-business-outcome-separately]
+
+Collect evidence in the following sequence (interactive scenes on the marketing site illustrate concepts only and never replace real environment verification):
+
+<Steps>
+  <Step>
+    ### 1. Real Identity Sign-In & Role Scope
+
+    Log in with real user accounts (local or enterprise SSO) and verify workspace memberships and role boundaries.
+  </Step>
+  <Step>
+    ### 2. Live Model Inference Verification
+
+    Execute real LLM and Embedding calls under your identity and confirm the active Model ID and credential attribution.
+  </Step>
+  <Step>
+    ### 3. Dev Machine File Persistence Test
+
+    Launch a Personal Dev Machine, write test files inside `/workspace`, stop and restart (or recreate) the pod, and verify files remain intact.
+  </Step>
+  <Step>
+    ### 4. Knowledge Indexing & Source Traceability
+
+    Publish a test document, wait for indexing to report `Searchable`, run a Retrieval Test query, and verify clicking the hit opens the exact source revision.
+  </Step>
+  <Step>
+    ### 5. End-to-End Pilot Workload Delivery
+
+    Execute the agreed engineering Task (including a published Skill and Unit Gate) or business workflow, inspecting diffs, artifacts, tool logs, and telemetry traces.
+  </Step>
+  <Step>
+    ### 6. Accountable Human Sign-Off
+
+    Record "environment ready," "automated checks passed," and "human business acceptance" as separate outcomes, noting any rework items or out-of-scope boundaries.
+  </Step>
+</Steps>
+
+## Expanding Beyond the Pilot [#expand-after-the-pilot]
+
+After completing the pilot, compile a handoff record noting exact versions, cluster topology, deliverables, failure modes, and manual steps. Before expanding across departments or long-running production workloads, validate capacity sizing, backup/restore drills, maintenance windows, and high-availability requirements.
+
+The platform provides runnable local and cloud-native validation slices today; formal production SLAs and HA commitments are confirmed per delivery scope. Continue to [Technical Architecture & Security Boundaries](/docs/architecture), [Kubernetes Deployment & Upgrades](/docs/deployment), or [contact our team to plan a POC](/poc).

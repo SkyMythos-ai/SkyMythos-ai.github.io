@@ -1,0 +1,37 @@
+---
+title: Task Conversation
+description: Master multi-turn steering, mid-run clarifications, read receipts, invoking AI employees, and stop controls inside SkyBot and task conversations.
+---
+
+Complex work rarely finishes in a single prompt. Every interaction cycle inside SkyMythos persists as an asynchronous, resumable **Agent Turn**, letting you refine outputs iteratively, add new materials mid-flight, summon specialists, and steer execution cleanly.
+
+## Multi-Turn Steering & Refinement [#multi-turn-steering]
+
+When an initial outline or plan is close but needs adjustment, continuing inside the original conversation keeps context focused:
+
+- **Approve the Outline Before Expanding**: Ask SkyBot to draft a categorized plan or list of proposed edits first, then confirm before requesting full details.
+- **Target Specific Edits**: Give surgical instructions such as "Keep sections 1 and 3 unchanged; expand section 2 with direct citations from Chapter 4 of the Expense Policy" rather than restarting from scratch.
+
+## Mid-Run Clarifications & Receipts [#mid-run-clarifications-and-receipts]
+
+In Project main threads supporting continuous input, you can add constraints while coordination runs. Watch delivery receipts closely:
+
+| Status / Receipt | Exact Meaning | Recommended Action |
+| --- | --- | --- |
+| **Received / Queued** | Your message persisted and entered the coordination queue | Wait for the active Turn to pick it up without resending duplicates |
+| **Tool Call Logged** | Streaming UI shows the exact tool invoked, summary arguments, and result | Verify the agent queried the right file, repo, or knowledge base |
+| **Unknown Delivery State** | Network drop prevented confirmation | Refresh status first before re-submitting to avoid conflicting duplicates |
+
+## Attaching Materials & Summoning AI Employees [#attach-files-and-summon-employees]
+
+- **Add Files Mid-Conversation**: Upload extra text files, PDFs, or screenshots in follow-up turns, or attach newly published Knowledge Bases.
+- **Project Directory Continuity**: Conversations inside the same Project share a persistent directory, allowing follow-up threads to inspect and build on prior files.
+- **Collaborate with AI Employees**: Bring a configured [AI Employee](/docs/employees) into the conversation. Summoning a specialist never inherits someone else's private credentials, and you should still state the immediate task objective clearly.
+
+## Stopping Coordination vs. Background Threads [#stopping-turns-vs-threads]
+
+<Callout type="warn" title="Stopping the Main Turn Does Not Abort Background Threads">
+  Clicking **Stop** on a Project main thread halts the coordinator's current Turn only. Already-dispatched worker threads and completed external actions do not automatically cancel or roll back. Manage active background executions inside their dedicated thread or task controls.
+</Callout>
+
+Once execution wraps up, proceed to [Viewing Results](/docs/results) to inspect deliverables and source citations.

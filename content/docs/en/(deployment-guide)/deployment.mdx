@@ -1,0 +1,92 @@
+---
+title: Kubernetes Deployment & Upgrades
+description: Check cluster prerequisites and persistent storage, prepare three site configuration files, and run Helm server-side preflight, installation, and verification.
+---
+
+This guide is intended for engineering and operations teams with authorized access to source bundles, container images, and site configuration materials. Local examples below use the `minikube-ubuntu` context and the `fusion` namespace/release; substitute your target cluster values for enterprise deployments.
+
+<Callout type="info" title="Source Build Baseline vs. Container Deployment">
+  When building from authorized source, the current baseline requires **Node.js 24**, **pnpm 9.15.9**, and **Go 1.26.9 (toolchain go1.27.2)**. Standard Kubernetes deployments using published container images do not require these build toolchains on cluster nodes.
+</Callout>
+
+## Check Cluster Prerequisites & Persistent Storage [#check-persistent-storage-and-cluster-prerequisites]
+
+The Helm chart requires **Kubernetes 1.26+** and **Helm 3** (with `--dry-run=server` and `--hide-secret` support), while the operator workstation needs `kubectl`, `Bash`, `jq`, and `Python 3`.
+
+Start with these read-only commands to inspect nodes, **persistent storage** (`StorageClass`), and the Sandbox CRD:
+
+```bash
+kubectl --context minikube-ubuntu get nodes
+kubectl --context minikube-ubuntu get storageclass
+kubectl --context minikube-ubuntu get crd sandboxes.agents.x-k8s.io
+```
+
+Beyond seeing Kubernetes objects exist, confirm these runtime prerequisites are genuinely functional:
+
+- **Agent Sandbox Controller & Runtime**: Deploy the v0.5.4 CRD/Controller and pass the runtime smoke script. Local setups default to standard OCI runtime `default`; gVisor clusters require verified `runsc` handlers on worker nodes.
+- **Persistent Storage (PVC) & NetworkPolicy**: Confirm the `StorageClass` dynamically provisions and binds PVCs, and that your cluster CNI actively enforces `NetworkPolicy` rules.
+- **Pullable Digests & External Services**: Ensure nodes can pull architecture-matched pinned image digests, and prepare S3-compatible object storage, HTTPS ingress, and reachable model gateways for cloud deployments.
+
+## Prepare Three Out-of-Repo Site Configuration Files [#prepare-three-site-configuration-files]
+
+Keep all site-specific values and secrets outside the code repository (for example under `$HOME/.config/fusion/`) and reuse them across future upgrades:
+
+| Configuration File | Responsibility & Maintenance Focus |
+| --- | --- |
+| `helm-private.yaml` | Technical secrets for the platform and backing components (never auto-generates business LLM keys) |
+| `site.yaml` | Site `publicURL`, initialized `Organization ID`, Secret references, component toggles, and persistent storage classes |
+| `images.yaml` | Pinned, architecture-matched digests for Control Plane and Runtime images |
+
+<Callout type="warn" title="Fresh Install Sequence vs. Existing Upgrades">
+  **Fresh installations** follow the bootstrap flow first: prepare Secrets, launch a temporary bootstrap, create the initial admin user and sole real `Organization`, write that `orgId` back into `site.yaml`, configure platform models, and then run the standard install with LightRAG enabled (never treat a LightRAG-disabled bootstrap as a finished delivery). **Existing upgrades** must preserve existing Secrets and persistent PVCs—never replace them with empty volumes.
+</Callout>
+
+## Server-Side Preflight, Installation & Upgrades [#run-preflight-checks-before-installation-or-upgrade]
+
+With all three files ready, run a server-side Helm dry-run check first. Passing `--check` validates templates against the live cluster without installing, upgrading, or printing rendered secrets:
+
+```bash
+deploy/helm/deploy-local.sh "$HOME/.config/fusion/helm-private.yaml" \
+  -f "$HOME/.config/fusion/site.yaml" \
+  -f "$HOME/.config/fusion/images.yaml" --check
+```
+
+Once preflight passes, remove `--check` to execute the install or upgrade (this enforces `lightrag.required=true`, waits for workloads and init Jobs, and verifies capability materializer settings):
+
+```bash
+deploy/helm/deploy-local.sh "$HOME/.config/fusion/helm-private.yaml" \
+  -f "$HOME/.config/fusion/site.yaml" \
+  -f "$HOME/.config/fusion/images.yaml"
+```
+
+<Callout type="info" title="Maintenance Windows & Live Environments">
+  Back up all three configuration files, Secrets, and persistent volumes before upgrading. Updating Helm image values **does not automatically restart or swap images on already-running Personal Dev Machines or historical tasks**; schedule upgrades during an agreed maintenance window. Cloud presets for Alibaba Cloud ACK and AWS EKS are provided as configuration baselines and do not provision VPCs, IAM roles, or load balancers automatically.
+</Callout>
+
+## Access the Site & Run Layered Verification [#access-the-site-and-verify-actual-behavior]
+
+For local cluster evaluation, open a port-forward tunnel and visit `http://localhost:8080` (ensure `publicURL` in `site.yaml` matches the browser origin):
+
+```bash
+kubectl --context minikube-ubuntu -n fusion port-forward service/fusion-http 8080:8080
+```
+
+In a second terminal, run read-only release and health checks:
+
+```bash
+helm --kube-context minikube-ubuntu -n fusion status fusion
+kubectl --context minikube-ubuntu -n fusion get deploy,pod,svc,pvc,job
+curl --fail http://localhost:8080/healthz
+curl --fail http://localhost:8080/readyz
+```
+
+Passing `/healthz` and `/readyz` is only the infrastructure baseline. Complete end-to-end acceptance by testing real login, live LLM/Embedding calls, Dev Machine persistent file writes across restarts, Knowledge indexing and citation recall, a Task using a published Skill, and telemetry trace links.
+
+## Source Development & Verification Entry Points [#run-the-control-plane-for-source-development]
+
+For authorized source-code development environments, two root Makefile targets are available:
+
+- `make run-local`: Builds the Web Console and starts the host Control Plane against the Kubernetes coding driver (`http://127.0.0.1:8080`). It does not provision external clusters or backing data-plane services automatically.
+- `make verify`: Runs Proto/OpenAPI gates, static checks and tests across all Go modules, and TypeScript/Web build checks.
+
+If issues arise during cluster setup or operation, consult [Troubleshooting & Diagnostics](/docs/troubleshooting), or [contact our team to plan a POC](/poc).

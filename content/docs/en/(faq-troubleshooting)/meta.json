@@ -1,0 +1,9 @@
+{
+  "title": "FAQ & Troubleshooting",
+  "collapsible": true,
+  "defaultOpen": false,
+  "pages": [
+    "faq",
+    "troubleshooting"
+  ]
+}
