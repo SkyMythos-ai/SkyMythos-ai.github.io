@@ -77,12 +77,15 @@ export async function verifyBilingual(page, baseURL, report) {
       await page.getByRole("checkbox").check();
       await submit.click();
       await page.getByRole("status").filter({ hasText: "avatr@skymythos.ai" }).waitFor();
+      assert.equal(await page.locator("textarea[readonly]").count(), 0, "不应保留手动复制文本框");
       const mailHref = await page.locator('a[href^="mailto:avatr@skymythos.ai?"]').getAttribute("href");
       assert(mailHref && mailHref.includes("Example%20organization") && mailHref.includes("static-check%40example.com"), "mailto 链接未预填关键信息");
       const triggered = await page.evaluate(() => window.__mailtoClicks);
       assert(triggered.some((href) => href.startsWith("mailto:avatr@skymythos.ai?")), "提交后未同步触发 mailto");
+      const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
+      assert(clipboardText.includes("Example organization") && clipboardText.includes("static-check@example.com"), `提交后剪贴板未自动复制：${clipboardText}`);
       assert.equal(await page.locator('[name="email"]').inputValue(), "static-check@example.com");
-      report.enquiries.push({ locale, enterprise, mailtoReady: true, draftRetained: true });
+      report.enquiries.push({ locale, enterprise, mailtoReady: true, autoCopied: true, draftRetained: true });
       if (enterprise) {
         const languageLink = page.getByRole("link", { name: switchName(locale), exact: true }).first();
         const target = new URL(await languageLink.getAttribute("href"), baseURL);

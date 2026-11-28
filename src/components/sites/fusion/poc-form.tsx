@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useId, useRef, useState } from "react";
-import { ArrowRight, Check, Copy, LoaderCircle, Mail } from "lucide-react";
+import { ArrowRight, Check, LoaderCircle, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   pocScenarios,
@@ -16,11 +16,46 @@ import { useLocale } from "@/components/locale-provider";
 import { localizeHref } from "@/lib/i18n";
 import styles from "./poc.module.css";
 
+async function copyToClipboard(value: string): Promise<boolean> {
+  if (typeof navigator !== "undefined" && navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(value);
+      return true;
+    } catch {
+      /* Fallback to temporary textarea copy when clipboard API is blocked. */
+    }
+  }
+  if (typeof document === "undefined") return false;
+  const prevFocused =
+    document.activeElement instanceof HTMLElement
+      ? document.activeElement
+      : null;
+  const textarea = document.createElement("textarea");
+  textarea.value = value;
+  textarea.setAttribute("readonly", "");
+  textarea.style.position = "fixed";
+  textarea.style.top = "-9999px";
+  textarea.style.left = "-9999px";
+  textarea.style.opacity = "0";
+  textarea.style.pointerEvents = "none";
+  document.body.append(textarea);
+  textarea.select();
+  let ok = false;
+  try {
+    ok = document.execCommand("copy");
+  } catch {
+    ok = false;
+  }
+  textarea.remove();
+  prevFocused?.focus({ preventScroll: true });
+  return ok;
+}
+
 type Submission =
   | { status: "idle" }
   | { status: "sending" }
   | { status: "success" }
-  | { status: "email-ready"; content: string; mailtoHref: string }
+  | { status: "email-ready"; mailtoHref: string; copied: boolean }
   | { status: "error"; message: string };
 
 export function PocForm({
@@ -40,7 +75,6 @@ export function PocForm({
   const form = useRef<HTMLFormElement>(null);
   const [errors, setErrors] = useState<PocErrors>({});
   const [submission, setSubmission] = useState<Submission>({ status: "idle" });
-  const [copied, setCopied] = useState(false);
   const id = (field: string) => `${prefix}-${field}`;
   const errorProps = (field: keyof PocErrors) => ({
     "aria-invalid": Boolean(errors[field]),
@@ -103,14 +137,14 @@ export function PocForm({
           const subject = `SkyMythos ${requestLabel} · ${data.company}`;
           const content = `${requestLabel}\n\n${text("姓名", "Name")}: ${data.name}\n${text("公司/组织", "Company/organization")}: ${data.company}\n${text("工作邮箱", "Work email")}: ${data.email}\n${text("职位", "Role")}: ${data.role || text("未填写", "Not provided")}\n${text("关注方向", "Area of interest")}: ${getPocScenarioLabel(data.scenario, locale)}\n\n${text("项目目标与需求", "Project goals and requirements")}:\n${data.needs}`;
           const mailtoHref = `mailto:${channel.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(content)}`;
+          const copiedOk = await copyToClipboard(content);
           const anchor = document.createElement("a");
           anchor.href = mailtoHref;
           anchor.style.display = "none";
           document.body.append(anchor);
           anchor.click();
           anchor.remove();
-          setCopied(false);
-          setSubmission({ status: "email-ready", content, mailtoHref });
+          setSubmission({ status: "email-ready", mailtoHref, copied: copiedOk });
           return;
         }
         if (staticHosting) {
@@ -282,8 +316,8 @@ export function PocForm({
       {channel.mode === "email" && submission.status === "idle" && (
         <p className={styles.channelNotice}>
           {text(
-            `提交后将唤起您的本地邮件客户端，发送至 ${channel.email}。`,
-            `Submitting opens your local email app addressed to ${channel.email}.`,
+            `提交后将自动复制申请内容并唤起邮件客户端，发送至 ${channel.email}。`,
+            `Submitting copies your enquiry details and opens your email app addressed to ${channel.email}.`,
           )}
         </p>
       )}
@@ -299,43 +333,32 @@ export function PocForm({
       )}
       {submission.status === "email-ready" && (
         <div className={styles.emailReady} role="status">
-          <Mail size={18} />
+          <Check size={16} aria-hidden="true" />
           <p>
-            {text(
-              `已为您生成发送至 ${channel.mode === "email" ? channel.email : "团队邮箱"} 的邮件草稿，请在本地邮件客户端确认并发送。如未自动弹出邮件应用，可点击下方按钮或复制正文手动发送。`,
-              `Your draft email to ${channel.mode === "email" ? channel.email : "our team"} is ready. Confirm and send it in your local email app, or use the actions below to reopen or copy the message.`,
+            {locale === "zh" ? (
+              <>
+                {submission.copied
+                  ? "申请内容已自动复制到剪贴板，并已唤起本地邮件应用发送至 "
+                  : "已为您生成申请邮件草稿并尝试唤起本地邮件应用发送至 "}
+                <a href={submission.mailtoHref}>
+                  {channel.mode === "email" ? channel.email : "团队邮箱"}
+                </a>
+                {submission.copied ? "，直接粘贴（⌘V / Ctrl+V）即可发送。" : "。"}
+              </>
+            ) : (
+              <>
+                {submission.copied
+                  ? "Your request details have been automatically copied to the clipboard and your email app was opened for "
+                  : "Your draft email was prepared for "}
+                <a href={submission.mailtoHref}>
+                  {channel.mode === "email" ? channel.email : "our team"}
+                </a>
+                {submission.copied
+                  ? " — simply paste (⌘V / Ctrl+V) and send."
+                  : " — click the address to open your email app."}
+              </>
             )}
           </p>
-          <div className={styles.emailActions}>
-            <a
-              href={submission.mailtoHref}
-              className={styles.emailActionPrimary}
-            >
-              <Mail size={14} aria-hidden="true" />
-              {text("打开邮件应用", "Open Email App")}
-            </a>
-            <button
-              type="button"
-              className={styles.emailActionSecondary}
-              onClick={async () => {
-                try {
-                  await navigator.clipboard.writeText(submission.content);
-                  setCopied(true);
-                } catch {
-                  setCopied(false);
-                }
-              }}
-            >
-              {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
-              {copied ? text("已复制邮件内容", "Copied") : text("复制邮件全文", "Copy Email Body")}
-            </button>
-          </div>
-          <textarea
-            aria-label={text("申请邮件内容", "Enquiry email content")}
-            readOnly
-            rows={7}
-            value={submission.content}
-          />
         </div>
       )}
       <Button
@@ -347,6 +370,11 @@ export function PocForm({
           <>
             <LoaderCircle className={styles.spinner} size={16} />
             {text("正在提交", "Submitting")}
+          </>
+        ) : submission.status === "email-ready" ? (
+          <>
+            {text("已自动复制并唤起邮件（点击可重新打开）", "Copied & Email Opened (Click to Reopen)")}{" "}
+            <Mail size={16} />
           </>
         ) : channel.mode === "email" ? (
           <>

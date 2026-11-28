@@ -10,7 +10,11 @@ const browser = await chromium.launch({
   executablePath: process.env.CHROME_PATH,
   headless: true,
 });
-const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+const context = await browser.newContext({
+  viewport: { width: 1440, height: 1000 },
+  permissions: ["clipboard-read", "clipboard-write"],
+});
+const page = await context.newPage();
 const report = { baseURL, errors: [], viewports: [] };
 page.on("pageerror", (error) => report.errors.push(error.message));
 try {
@@ -98,6 +102,7 @@ try {
   });
   await page.getByRole("button", { name: "通过邮件发送项目询价", exact: true }).click();
   await page.getByRole("status").filter({ hasText: "avatr@skymythos.ai" }).waitFor();
+  assert.equal(await page.locator("textarea[readonly]").count(), 0);
   const mailHref = await page
     .locator('a[href^="mailto:avatr@skymythos.ai?"]')
     .getAttribute("href");
@@ -108,6 +113,8 @@ try {
   );
   const triggered = await page.evaluate(() => window.__mailtoClicks);
   assert(triggered.some((href) => href.startsWith("mailto:avatr@skymythos.ai?")));
+  const clipboardText = await page.evaluate(() => navigator.clipboard.readText());
+  assert(clipboardText.includes("示例企业") && clipboardText.includes("quote@example.com"));
   assert.equal(
     await page.getByLabel("工作邮箱", { exact: false }).inputValue(),
     "quote@example.com",
