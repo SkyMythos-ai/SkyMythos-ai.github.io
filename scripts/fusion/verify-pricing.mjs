@@ -86,18 +86,28 @@ try {
     .getByLabel("企业项目希望实现什么", { exact: false })
     .fill("希望评估企业部署、模型接入与服务范围，申请项目报价。");
   await page.getByRole("checkbox").check();
-  // 本地失败响应夹具仅用于核对客户端询价类型与资料保留，不发送外部信息。
-  let payload;
-  await page.route("**/api/poc", async (route) => {
-    payload = route.request().postDataJSON();
-    await route.fulfill({
-      status: 503,
-      json: { ok: false, message: "本地验证：当前资料未发送。" },
-    });
+  await page.evaluate(() => {
+    window.__mailtoClicks = [];
+    document.addEventListener("click", (event) => {
+      const anchor = event.target instanceof Element ? event.target.closest('a[href^="mailto:"]') : null;
+      if (anchor) {
+        window.__mailtoClicks.push(anchor.getAttribute("href") || "");
+        event.preventDefault();
+      }
+    }, true);
   });
-  await page.getByRole("button", { name: "提交项目询价", exact: true }).click();
-  await page.getByText("本地验证：当前资料未发送。", { exact: true }).waitFor();
-  assert.equal(payload.requestType, "enterprise");
+  await page.getByRole("button", { name: "通过邮件发送项目询价", exact: true }).click();
+  await page.getByRole("status").filter({ hasText: "avatr@skymythos.ai" }).waitFor();
+  const mailHref = await page
+    .locator('a[href^="mailto:avatr@skymythos.ai?"]')
+    .getAttribute("href");
+  assert(
+    mailHref &&
+      mailHref.includes(encodeURIComponent("企业项目询价")) &&
+      mailHref.includes("quote%40example.com"),
+  );
+  const triggered = await page.evaluate(() => window.__mailtoClicks);
+  assert(triggered.some((href) => href.startsWith("mailto:avatr@skymythos.ai?")));
   assert.equal(
     await page.getByLabel("工作邮箱", { exact: false }).inputValue(),
     "quote@example.com",
@@ -106,7 +116,7 @@ try {
   await page.goto(`${baseURL}/poc`, { waitUntil: "networkidle" });
   assert(
     await page
-      .getByRole("button", { name: "提交 POC 申请", exact: true })
+      .getByRole("button", { name: "通过邮件发送 POC 申请", exact: true })
       .isVisible(),
   );
   assert.deepEqual(report.errors, []);

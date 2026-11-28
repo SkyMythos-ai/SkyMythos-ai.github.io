@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useId, useRef, useState } from "react";
-import { ArrowRight, Check, LoaderCircle, Mail } from "lucide-react";
+import { ArrowRight, Check, Copy, LoaderCircle, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   pocScenarios,
@@ -20,7 +20,7 @@ type Submission =
   | { status: "idle" }
   | { status: "sending" }
   | { status: "success" }
-  | { status: "email-ready"; content: string }
+  | { status: "email-ready"; content: string; mailtoHref: string }
   | { status: "error"; message: string };
 
 export function PocForm({
@@ -40,6 +40,7 @@ export function PocForm({
   const form = useRef<HTMLFormElement>(null);
   const [errors, setErrors] = useState<PocErrors>({});
   const [submission, setSubmission] = useState<Submission>({ status: "idle" });
+  const [copied, setCopied] = useState(false);
   const id = (field: string) => `${prefix}-${field}`;
   const errorProps = (field: keyof PocErrors) => ({
     "aria-invalid": Boolean(errors[field]),
@@ -97,19 +98,27 @@ export function PocForm({
           return;
         }
         setErrors({});
+        if (channel.mode === "email") {
+          const data = result.data;
+          const subject = `SkyMythos ${requestLabel} · ${data.company}`;
+          const content = `${requestLabel}\n\n${text("姓名", "Name")}: ${data.name}\n${text("公司/组织", "Company/organization")}: ${data.company}\n${text("工作邮箱", "Work email")}: ${data.email}\n${text("职位", "Role")}: ${data.role || text("未填写", "Not provided")}\n${text("关注方向", "Area of interest")}: ${getPocScenarioLabel(data.scenario, locale)}\n\n${text("项目目标与需求", "Project goals and requirements")}:\n${data.needs}`;
+          const mailtoHref = `mailto:${channel.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(content)}`;
+          const anchor = document.createElement("a");
+          anchor.href = mailtoHref;
+          anchor.style.display = "none";
+          document.body.append(anchor);
+          anchor.click();
+          anchor.remove();
+          setCopied(false);
+          setSubmission({ status: "email-ready", content, mailtoHref });
+          return;
+        }
         if (staticHosting) {
           setSubmission({
             status: "error",
             message:
               text("申请接收通道尚未开放，您的资料尚未发送。资料仍保留在当前页面，请稍后再试。", "The receiving service is not available yet. Your details have not been sent and remain on this page. Please try again later."),
           });
-          return;
-        }
-        if (channel.mode === "email") {
-          const data = result.data;
-          const content = `${requestLabel}\n\n${text("姓名", "Name")}: ${data.name}\n${text("公司/组织", "Company/organization")}: ${data.company}\n${text("工作邮箱", "Work email")}: ${data.email}\n${text("职位", "Role")}: ${data.role || text("未填写", "Not provided")}\n${text("关注方向", "Area of interest")}: ${getPocScenarioLabel(data.scenario, locale)}\n\n${text("项目目标与需求", "Project goals and requirements")}:\n${data.needs}`;
-          window.location.href = `mailto:${channel.email}?subject=${encodeURIComponent(`SkyMythos ${requestLabel} · ${data.company}`)}&body=${encodeURIComponent(content)}`;
-          setSubmission({ status: "email-ready", content });
           return;
         }
         setSubmission({ status: "sending" });
@@ -270,6 +279,14 @@ export function PocForm({
         </label>
       </div>
       {errorText("consent")}
+      {channel.mode === "email" && submission.status === "idle" && (
+        <p className={styles.channelNotice}>
+          {text(
+            `提交后将唤起您的本地邮件客户端，发送至 ${channel.email}。`,
+            `Submitting opens your local email app addressed to ${channel.email}.`,
+          )}
+        </p>
+      )}
       {channel.mode === "unconfigured" && (
         <p className={styles.channelNotice}>
           {text("申请接收通道尚在准备中，当前不会发送您的资料。", "The receiving service is being prepared. Your details will not be sent at this time.")}
@@ -284,9 +301,35 @@ export function PocForm({
         <div className={styles.emailReady} role="status">
           <Mail size={18} />
           <p>
-            {text("申请邮件已准备好，请在邮件应用中确认并发送。若未打开邮件应用，可将以下内容发送至", "Your enquiry email is ready. Review and send it in your email app. If the app did not open, send the following message to")} {" "}
-            {channel.mode === "email" ? channel.email : text("团队邮箱", "the team email address")}{locale === "zh" ? "。" : "."}
+            {text(
+              `已为您生成发送至 ${channel.mode === "email" ? channel.email : "团队邮箱"} 的邮件草稿，请在本地邮件客户端确认并发送。如未自动弹出邮件应用，可点击下方按钮或复制正文手动发送。`,
+              `Your draft email to ${channel.mode === "email" ? channel.email : "our team"} is ready. Confirm and send it in your local email app, or use the actions below to reopen or copy the message.`,
+            )}
           </p>
+          <div className={styles.emailActions}>
+            <a
+              href={submission.mailtoHref}
+              className={styles.emailActionPrimary}
+            >
+              <Mail size={14} aria-hidden="true" />
+              {text("打开邮件应用", "Open Email App")}
+            </a>
+            <button
+              type="button"
+              className={styles.emailActionSecondary}
+              onClick={async () => {
+                try {
+                  await navigator.clipboard.writeText(submission.content);
+                  setCopied(true);
+                } catch {
+                  setCopied(false);
+                }
+              }}
+            >
+              {copied ? <Check size={14} aria-hidden="true" /> : <Copy size={14} aria-hidden="true" />}
+              {copied ? text("已复制邮件内容", "Copied") : text("复制邮件全文", "Copy Email Body")}
+            </button>
+          </div>
           <textarea
             aria-label={text("申请邮件内容", "Enquiry email content")}
             readOnly
@@ -307,7 +350,10 @@ export function PocForm({
           </>
         ) : channel.mode === "email" ? (
           <>
-            {text("生成申请邮件", "Prepare enquiry email")} <ArrowRight size={16} />
+            {enterprise
+              ? text("通过邮件发送项目询价", "Send Enterprise Enquiry via Email")
+              : text("通过邮件发送 POC 申请", "Send POC Request via Email")}{" "}
+            <Mail size={16} />
           </>
         ) : (
           <>

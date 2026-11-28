@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import { localizedMetadata, type Locale } from "@/lib/i18n";
-import { getPocChannel } from "@/lib/poc-server";
+import { DEFAULT_POC_CONTACT_EMAIL, getPocChannel } from "@/lib/poc-server";
 import { SiteShell } from "./site-shell";
 import { PocContent } from "./poc-content";
 
@@ -40,7 +40,11 @@ export async function PocPageContent({ locale = "en", searchParams }: PocPagePro
     <SiteShell>
       <Suspense fallback={<main id="main-content">{locale === "zh" ? "正在准备咨询页面…" : "Preparing the enquiry form…"}</main>}>
         <PocContent
-          channel={staticHosting ? { mode: "unconfigured" } : getPocChannel()}
+          channel={
+            staticHosting
+              ? { mode: "email", email: DEFAULT_POC_CONTACT_EMAIL }
+              : getPocChannel()
+          }
           initialEnquiry={initialEnquiry}
           staticHosting={staticHosting}
         />

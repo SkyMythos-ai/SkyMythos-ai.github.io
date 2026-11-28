@@ -266,6 +266,48 @@
   margin: 0;
   color: var(--f-muted);
 }
+.emailActions {
+  grid-column: 1/-1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.emailActionPrimary,
+.emailActionSecondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 140ms cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 140ms cubic-bezier(0.22, 1, 0.36, 1),
+    color 140ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.emailActionPrimary {
+  background: var(--f-accent-soft);
+  border: 1px solid color-mix(in srgb, var(--f-accent) 30%, var(--f-line));
+  color: var(--f-accent);
+}
+.emailActionPrimary:hover {
+  background: var(--f-action);
+  border-color: var(--f-action);
+  color: white;
+}
+.emailActionSecondary {
+  background: var(--f-surface);
+  border: 1px solid var(--f-line);
+  color: var(--f-text);
+}
+.emailActionSecondary:hover {
+  background: var(--f-raised);
+  border-color: color-mix(in srgb, var(--f-accent) 35%, var(--f-line));
+}
 .emailReady textarea {
   grid-column: 1/-1;
   font-size: 12px;

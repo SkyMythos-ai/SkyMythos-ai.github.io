@@ -1,11 +1,13 @@
 import type { PocChannel } from "./poc";
 
+export const DEFAULT_POC_CONTACT_EMAIL = "avatr@skymythos.ai";
+
 export function getPocChannel(): PocChannel {
   if (getPocWebhook()) return { mode: "webhook" };
-  const email = process.env.POC_CONTACT_EMAIL?.trim();
-  if (email && /^[^\s@?&]+@[^\s@?&]+\.[^\s@?&]+$/.test(email))
-    return { mode: "email", email };
-  return { mode: "unconfigured" };
+  const raw = process.env.POC_CONTACT_EMAIL?.trim();
+  if (raw && /^[^\s@?&]+@[^\s@?&]+\.[^\s@?&]+$/.test(raw))
+    return { mode: "email", email: raw };
+  return { mode: "email", email: DEFAULT_POC_CONTACT_EMAIL };
 }
 
 export function getPocWebhook(): URL | null {

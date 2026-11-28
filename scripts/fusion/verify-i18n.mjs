@@ -49,6 +49,16 @@ export async function verifyBilingual(page, baseURL, report) {
     assert.equal(await page.locator("html").getAttribute("data-theme"), "dark");
     await theme.click();
 
+    await page.addInitScript(() => {
+      window.__mailtoClicks = [];
+      document.addEventListener("click", (event) => {
+        const anchor = event.target instanceof Element ? event.target.closest('a[href^="mailto:"]') : null;
+        if (anchor) {
+          window.__mailtoClicks.push(anchor.getAttribute("href") || "");
+          event.preventDefault();
+        }
+      }, true);
+    });
     for (const enterprise of [false, true]) {
       await page.goto(route(locale, `/poc/${enterprise ? "?enquiry=enterprise#main-content" : ""}`), { waitUntil: "networkidle" });
       const title = await page.getByRole("heading", { level: 1 }).innerText();
@@ -66,9 +76,13 @@ export async function verifyBilingual(page, baseURL, report) {
       await page.locator('[name="needs"]').fill("Evaluate work delivery, integrations and acceptance criteria.");
       await page.getByRole("checkbox").check();
       await submit.click();
-      await page.getByRole("alert").filter({ hasText: locale === "en" ? "have not been sent" : "您的资料尚未发送" }).waitFor();
+      await page.getByRole("status").filter({ hasText: "avatr@skymythos.ai" }).waitFor();
+      const mailHref = await page.locator('a[href^="mailto:avatr@skymythos.ai?"]').getAttribute("href");
+      assert(mailHref && mailHref.includes("Example%20organization") && mailHref.includes("static-check%40example.com"), "mailto 链接未预填关键信息");
+      const triggered = await page.evaluate(() => window.__mailtoClicks);
+      assert(triggered.some((href) => href.startsWith("mailto:avatr@skymythos.ai?")), "提交后未同步触发 mailto");
       assert.equal(await page.locator('[name="email"]').inputValue(), "static-check@example.com");
-      report.enquiries.push({ locale, enterprise, unsent: true, draftRetained: true });
+      report.enquiries.push({ locale, enterprise, mailtoReady: true, draftRetained: true });
       if (enterprise) {
         const languageLink = page.getByRole("link", { name: switchName(locale), exact: true }).first();
         const target = new URL(await languageLink.getAttribute("href"), baseURL);
